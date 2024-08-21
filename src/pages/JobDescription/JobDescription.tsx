@@ -10,6 +10,7 @@ import icon from '../../assets/Employers Logo.svg'
 
 
 const JobDescription: React.FC = () => {
+
     return (
         <div className='w-full h-full'>
             <div className='w-full max-w-[1280px] h-[190px] m-auto rounded-xl shadow-lg p-5'  >
@@ -52,10 +53,10 @@ const JobDescription: React.FC = () => {
                         <JobCard />
                     </div>
                 </div>
-                <div className='max-w-[845px] w-full rounded-lg '>
-                    <div className='w-full'>
+                <div className='max-w-[845px] w-full rounded-lg  border'>
+                    <div className='w-full shadow-lg pb-8'>
                         <img src={Job_banner} alt="" />
-                        <div className='w-[95%] m-auto'>
+                        <div className='w-[95%] m-auto '>
                             <div className=' flex  justify-between '>
                                 <div className='flex gap-2 items-center'>
                                     <div className='relative w-[100px] h-[100px] '>
@@ -82,7 +83,7 @@ const JobDescription: React.FC = () => {
                             </div>
 
 
-                            <div className='flex flex-col gap-4'>
+                            <div className='flex flex-col gap-4 mt-2'>
                                 
                                 <div className='flex gap-2'>
                                     <img src={Location2} alt="" />
@@ -102,11 +103,17 @@ const JobDescription: React.FC = () => {
                                         <p className='text-[14px]'>Mid Senior level</p>
                                     </div>
                                 </div>
+                                <div className='flex gap-2'>
+                                    <img src={Location2} alt="" />
+                                    <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                        <p className='text-[14px]'>Visa Sponsorship</p>
+                                    </div>
+                                </div>
                               
 
                             </div>
 
-                            <div className=''>
+                            <div className='mt-8'>
 
                                 <p className='text-[14px] font-semibold'>Tech Stacks</p>
 
@@ -129,6 +136,27 @@ const JobDescription: React.FC = () => {
 
 
                         </div>
+                    </div>
+
+                    <div className='p-5'>
+                        <p className='text-[20px] font-semibold'>Summary</p>
+                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+                        <p className='text-[20px] font-semibold mt-3'>Job description</p>
+                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+                        <p className='text-[20px] font-semibold mt-3'>Additional benefits</p>
+                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+                        <p className='text-[20px] font-semibold mt-3'>Notes</p>
+                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+                        <div className='w-full flex justify-between items-center mt-10'>
+                <p className='text-[#8F90A6] text-[14px] font-normal '>Posted 1 day ago</p>
+                 <div className=' px-6 py-2 bg-[#114B53] rounded-full'>
+                    <p className='text-white text-base font-semibold'>Report</p>
+                 </div>
+            </div>
                     </div>
                 </div>
             </div>
