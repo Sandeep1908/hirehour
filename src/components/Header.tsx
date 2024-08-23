@@ -16,7 +16,7 @@ const Header: React.FC = () => {
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
 
   return (
-    <div className="w-full h-16 ">
+    <div className="w-full h-16  ">
       <div className="w-full max-w-[1300px] m-auto flex justify-between items-center p-3">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
