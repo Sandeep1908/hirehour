@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { IoSearchOutline } from "react-icons/io5";
-import { SlLocationPin } from "react-icons/sl";
+import { IoSearchOutline } from 'react-icons/io5';
+import { SlLocationPin } from 'react-icons/sl';
 
-import { ResourseCard } from "../../config/home";
-import { BsUpload } from "react-icons/bs";
+import { ResourseCard } from '../../config/home';
+import { BsUpload } from 'react-icons/bs';
 
 const Home: React.FC = () => {
   const [homeCards, setHomeCards] = useState<HomeCardTypes[]>();
@@ -22,14 +22,12 @@ const Home: React.FC = () => {
           <div className="w-full max-w-3xl flex flex-col space-y-4">
             <h1 className=" relative text-4xl text-white font-bold">
               Find Your Perfect
-              <span className="text-[#E9F358] ml-1 mr-1  relative box  ">
-                Job or Post
-              </span>
+              <span className="text-[#E9F358] ml-1 mr-1  relative box  ">Job or Post</span>
               One Today!
             </h1>
             <p className="text-sm text-white">
-              Discover top opportunities and connect with talent on HireHours –
-              your go-to platform for seamless job searching and posting.
+              Discover top opportunities and connect with talent on HireHours – your go-to platform
+              for seamless job searching and posting.
             </p>
           </div>
 
@@ -39,12 +37,8 @@ const Home: React.FC = () => {
             {/* Left Search  */}
             <div className="w-full  bg-white  md:col-span-3  p-4 rounded-lg  ">
               <div className="flex space-x-2 ">
-                <span className="text-[#146085] text-2xl font-[500]">
-                  1000 + Jobs{" "}
-                </span>
-                <span className="text-2xl font-[600]">
-                  Listed here ! Your dream job is waiting
-                </span>
+                <span className="text-[#146085] text-2xl font-[500]">1000 + Jobs </span>
+                <span className="text-2xl font-[600]">Listed here ! Your dream job is waiting</span>
               </div>
 
               <div className="border-[#E7E7E7] border w-full mt-5 rounded-lg flex  justify-center items-center ">
@@ -101,9 +95,7 @@ const Home: React.FC = () => {
             {/* Right Upload  */}
             <div className="bg-white w-full    space-y-4 p-3  flex justify-center items-center flex-col rounded-lg ">
               <div className="flex flex-col  space-x-2 text-center ">
-                <span className="text-[#146085] text-lg font-[500]">
-                  Upload Your Resume -{" "}
-                </span>
+                <span className="text-[#146085] text-lg font-[500]">Upload Your Resume - </span>
                 <span className="text-sm ">Let employers find you</span>
               </div>
 
@@ -112,9 +104,7 @@ const Home: React.FC = () => {
                 className={`flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#E9F358]   `}
               >
                 <BsUpload size={13} color="#104B53" className="" />
-                <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>
-                  Upload Resume
-                </span>
+                <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>Upload Resume</span>
                 <input type="file" className="hidden" />
               </label>
             </div>
@@ -122,9 +112,9 @@ const Home: React.FC = () => {
 
           <div className="mt-2">
             <p className="text-[#88A5A9] text-xs">
-              {" "}
-              <span className="text-white font-[500]">Popular:</span> Java
-              Developer, UI/UX Designer, Data Engineer, Business Associate
+              {' '}
+              <span className="text-white font-[500]">Popular:</span> Java Developer, UI/UX
+              Designer, Data Engineer, Business Associate
             </p>
           </div>
         </div>
@@ -140,10 +130,7 @@ const Home: React.FC = () => {
           <div className="w-full mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
             {homeCards?.map((item, id) => {
               return (
-                <div
-                  className="flex flex-col justify-center items-center max-w-80 h-96 "
-                  key={id}
-                >
+                <div className="flex flex-col justify-center items-center max-w-80 h-96 " key={id}>
                   <img
                     src={item.imgUrl}
                     alt="home-card"
@@ -153,14 +140,10 @@ const Home: React.FC = () => {
                   <div className="flex flex-col justify-between w-full space-y-3 p-2 h-[60%]  pt-1 border-[2px] border-[#F3F3F3] rounded-b-md">
                     <div className="flex flex-col space-y-2  justify-center items-center ">
                       <h1 className="text-lg font-semibold">{item.title}</h1>
-                      <p className="text-xs text-justify text-[#1A202E]">
-                        {item.description}
-                      </p>
+                      <p className="text-xs text-justify text-[#1A202E]">{item.description}</p>
                     </div>
 
-                    <p className="w-full   text-xs flex justify-end cursor-pointer">
-                      Read More
-                    </p>
+                    <p className="w-full   text-xs flex justify-end cursor-pointer">Read More</p>
 
                     <hr />
                   </div>
