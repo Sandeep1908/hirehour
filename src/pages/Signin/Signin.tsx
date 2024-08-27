@@ -12,22 +12,23 @@ const Signin:React.FC = () => {
         setShowPassword(!showPassword)
     }
   return (
-    <div className='bg-[#114B53] h-full w-full pt-20 pb-20 px-20'>
+    <div className='bg-[#114B53]   w-full pt-10 lg:pt-20 pb-10 md:pb-20 px-5  lg:px-10'>
     <div className='w-full h-full flex gap-20'>
-        <div className='w-[50%]'>
+        <div className='hidden md:flex w-[50%]'>
         <p className='text-white text-[32px] font-semibold'>Hire Hours</p>
         </div>
-        <div className='w-[50%] flex justify-end '>
-           <div className='w-[519px] h-[704px]  bg-white px-10 py-12 rounded-md'>
-               <p className='text-black text-2xl font-bold'>Welcome</p>
-               <p className='text-black text-base font-normal mt-2' >Log in to your existing account with email</p>
+
+        <div className='w-full  md:w-[50%] flex justify-center  md:justify-end '>
+           <div className='w-[335px] h-[771px]  md:w-[519px] md:h-[584px]  bg-white px-5 md:px-10 py-4 rounded-xl'>
+               <p className='text-black text-[20px] md:text-2xl font-bold'>Welcome</p>
+               <p className='text-black text-[14px] md:text-base font-normal mt-1' >Log in to your existing account with email</p>
               <form action="">
                
                 
 
 
-                  <div className='mt-4'>
-                         <label htmlFor="firstName" className='text-base'>
+                  <div className='mt-4 md:mt-2'>
+                         <label htmlFor="firstName" className='text-[14px] md:text-base'>
                             Email <span className='text-[#E71717]'>*</span>
                          </label>
                          <div className='w-full h-[48px] mt-2'>
@@ -36,9 +37,9 @@ const Signin:React.FC = () => {
                          </div>
                      </div>
 
-                     <div className='w-full flex gap-5 mt-4'>
+                     <div className='w-full flex gap-5 mt-2'>
                      <div className=' w-full'>
-                         <label htmlFor="firstName" className='text-base'>
+                         <label htmlFor="firstName" className='text-[14px] md:text-base'>
                          Password <span className='text-[#E71717]'>*</span>
                          </label>
                          <div className='relative w-full h-[48px] mt-2'>
@@ -56,17 +57,28 @@ const Signin:React.FC = () => {
                    
                   </div>
 
-                  <div className='w-full h-[48px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-8'>
-                     <p className='text-base font-semibold'>Sign up</p>
+                  <div className='flex justify-between items-end mt-8 md:mt-4'>
+                  <div className='  flex gap-2'>
+                      <input type="checkbox" name="" id="" className='w-5 h-5 md:w-6 md:h-6 border border-[#E1E1E2]' />
+                      <p className='text-[14px] '>Remember me</p>
                   </div>
 
-                  <div className="flex mt-8 mb-4 items-center justify-center ">
-                   <hr className="w-[30%] border-1 border-gray-300" />
-                   <p className="text-gray-500 text-[20px] font-normal mx-[10px]">or continue with</p>
-                   <hr className="w-[30%] border-1 border-gray-300" />
+                  <div className='font-medium text-[14px] md:text-base underline'>
+                  Forgot Password?
+                  </div>
+                  </div>
+
+                  <div className='w-full h-[48px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4'>
+                     <p className='text-base font-semibold'>Log in</p>
+                  </div>
+
+                  <div className="flex mt-4 mb-4 items-center justify-center ">
+                   <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
+                   <p className="text-gray-500 text-[14px] md:text-[20px] font-normal mx-[10px]">or continue with</p>
+                   <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
                </div>
 
-               <div className="flex justify-between mt-8">
+               <div className="flex flex-col md:flex-row gap-2 justify-center items-center md:justify-between mt-4">
        <button
          
          className="w-[206px] h-[48px] text-base flex items-center rounded-3xl gap-1 justify-center md:gap-2 text-black p-2 box-radius border border-black"
@@ -83,10 +95,10 @@ const Signin:React.FC = () => {
        </button>
      </div>
 
-     <p className='text-base font-normal mt-8'>
+     <p className='text-[14px] md:text-base font-normal mt-8 md:mt-4 text-center md:text-left'>
      By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
      </p>
-     <p className='text-[16px] font-semibold mt-8 text-center'>
+     <p className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
      New to Hirehours ? Sign up 
      </p>
                 
