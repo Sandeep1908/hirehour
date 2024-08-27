@@ -1,21 +1,18 @@
 import React from 'react';
 import Header from './components/Header';
-import Home from './pages/home/Home';
 import Footer from './components/Footer';
-import Signin from './pages/Signin/Signin';
-import Signup from './pages/Signup/Signup';
-import JobDescription from './pages/JobDescription/JobDescription';
+import {Outlet} from 'react-router-dom'
+ 
+
+ 
 
 const App: React.FC = () => {
   return (
-    <>
+    <div className='w-full h-full'>
       <Header />
-      <Home/>
-      <Signin/>
-      <Signup/>
-      <JobDescription/>
+        <Outlet/>
       <Footer/>
-    </>
+    </div>
   );
 };
 

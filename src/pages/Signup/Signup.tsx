@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import google_logo from "../../assets/Google.svg";
-import apple_logo from "../../assets/apple.svg";
+import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import google_logo from '../../assets/Google.svg';
+import apple_logo from '../../assets/apple.svg';
 
+const Signup: React.FC = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-const Signup:React.FC = () => {
-
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    
-    const togglePasswordVisibility =()=>{
-        setShowPassword(!showPassword)
-    }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div className='bg-[#114B53]  w-full pt-10 lg:pt-20 pb-10 md:pb-20 px-5  lg:px-10'>
     <div className='w-full h-full flex gap-20'>
@@ -133,9 +131,9 @@ const Signup:React.FC = () => {
            </div>
         
         </div>
+      </div>
     </div>
-</div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;

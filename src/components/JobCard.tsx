@@ -57,9 +57,22 @@ const JobCard: React.FC = () => {
                         <p className='text-[12px] font-semibold'>Design Thinking</p>
                     </div>
 
-                </div>
 
-            </div>
+      <div className="">
+        <p className="text-[12px] font-semibold">Tech Stacks</p>
+
+        <div className="flex gap-2 mt-1">
+          <div className="px-3 py-1 bg-[#CAFDFC] rounded-full">
+            <p className="text-[12px] font-semibold">Figma </p>
+          </div>
+          <div className="px-3 py-1 bg-[#CAFDFC] rounded-full">
+            <p className="text-[12px] font-semibold">Adobe Creative suit</p>
+          </div>
+          <div className="px-3 py-1 bg-[#CAFDFC] rounded-full">
+            <p className="text-[12px] font-semibold">Design Thinking</p>
+          </div>
+        </div>
+      </div>
 
             <div className='flex justify-between items-center'>
                 <p className='text-[#A9A9A9] text-[10px] font-normal '>Posted 1 day ago</p>
@@ -69,8 +82,11 @@ const JobCard: React.FC = () => {
 
                  </div>
             </div>
-        </div>
-    )
-}
 
-export default JobCard
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default JobCard;

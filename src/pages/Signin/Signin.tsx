@@ -1,16 +1,14 @@
-import React, { useState } from 'react'
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import google_logo from "../../assets/Google.svg";
-import apple_logo from "../../assets/apple.svg";
+import React, { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import google_logo from '../../assets/Google.svg';
+import apple_logo from '../../assets/apple.svg';
 
+const Signin: React.FC = () => {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-const Signin:React.FC = () => {
-
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    
-    const togglePasswordVisibility =()=>{
-        setShowPassword(!showPassword)
-    }
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   return (
     <div className='bg-[#114B53]   w-full pt-10 lg:pt-20 pb-10 md:pb-20 px-5  lg:px-10'>
     <div className='w-full h-full flex gap-20'>
@@ -56,6 +54,8 @@ const Signin:React.FC = () => {
                      </div>
                    
                   </div>
+                </div>
+              </div>
 
                   <div className='flex justify-between items-end mt-8 md:mt-4'>
                   <div className='  flex gap-2'>
@@ -106,9 +106,9 @@ const Signin:React.FC = () => {
            </div>
         
         </div>
+      </div>
     </div>
-</div>
-  )
-}
+  );
+};
 
-export default Signin
+export default Signin;

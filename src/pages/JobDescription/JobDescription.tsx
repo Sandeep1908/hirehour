@@ -19,6 +19,7 @@ const JobDescription: React.FC = () => {
 
     const [infoContentHidden,SetInfoContentHidden] = useState<boolean>(false);
 
+
     return (
         <div className='w-full h-full pb-10'>
             <div className='hidden md:block w-full max-w-[1280px] h-[190px] m-auto rounded-xl shadow-lg p-5'  >
@@ -92,8 +93,9 @@ const JobDescription: React.FC = () => {
               
                 <div className='hidden md:block max-w-[845px] w-full rounded-lg  border'>
                     <div className='w-full shadow-lg pb-8'>
+
                         <img src={Job_banner} alt="" />
-                        <div className='w-[95%] m-auto '>
+                        <div className='w-[95%] m-auto'>
                             <div className=' flex  justify-between '>
                                 <div className='flex gap-2 items-center'>
                                     <div className='relative w-[100px] h-[100px] '>
@@ -110,18 +112,18 @@ const JobDescription: React.FC = () => {
                                     </div>
                                 </div>
 
-
-                                <div className='flex justify-between items-center gap-4'>
-                                    <p className='text-[#A9A9A9] text-[12px] font-normal '>Posted 1 day ago</p>
-                                    <div className=' px-6 py-3 bg-[#E9F358] rounded-full'>
-                                        <p className='text-[#114B53] text-base font-semibold'>Quick Apply</p>
-                                    </div>
-                                </div>
-                            </div>
+                <div className="flex justify-between items-center gap-4">
+                  <p className="text-[#A9A9A9] text-[12px] font-normal ">Posted 1 day ago</p>
+                  <div className=" px-6 py-3 bg-[#E9F358] rounded-full">
+                    <p className="text-[#114B53] text-base font-semibold">Quick Apply</p>
+                  </div>
+                </div>
+              </div>
 
                            <div className={`h-auto ${infoContentHidden ===false ?"hidden":""}`}>
                           <div className='flex h-auto '>
                           <div className='flex flex-col gap-4 mt-2 max-w-[350px] w-full'>
+
                                 
                                 <div className='flex gap-2'>
                                     <img src={Location2} alt="" />
@@ -139,12 +141,6 @@ const JobDescription: React.FC = () => {
                                     <img src={Location2} alt="" />
                                     <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
                                         <p className='text-[14px]'>Mid Senior level</p>
-                                    </div>
-                                </div>
-                                <div className='flex gap-2'>
-                                    <img src={Location2} alt="" />
-                                    <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                        <p className='text-[14px]'>Visa Sponsorship</p>
                                     </div>
                                 </div>
                               
@@ -205,6 +201,7 @@ const JobDescription: React.FC = () => {
 
                             <div className='mt-8'>
 
+
                                 <p className='text-[14px] font-semibold'>Tech Stacks</p>
 
                                 <div className='flex gap-2 mt-1'>
@@ -257,11 +254,13 @@ const JobDescription: React.FC = () => {
                  </div>
             </div>
                     </div>
+
                 </div>
             </div>
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default  JobDescription
-
+export default JobDescription;
