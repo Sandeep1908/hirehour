@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Logo from '../assets/logo/hirehour.png';
+import Logo from '../assets/logo/hirehour.svg';
 import { RiTodoLine } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
 import { BsSuitcaseLg } from 'react-icons/bs';
@@ -22,8 +22,8 @@ const Header: React.FC = () => {
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
           <div className="flex justify-center items-center space-x-3">
-            <img src={Logo} className="w-10 h-10 object-contain" alt="logo-hirehour" />
-            <p className="font-bold text-xl tracking-wide">HireHours</p>
+            <img src={Logo} className="w-36 h-10 object-contain" alt="logo-hirehour" />
+            
           </div>
 
           <label
