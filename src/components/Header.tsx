@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Logo from '../assets/logo/hirehour.png';
+import Logo from '../assets/logo/hirehour.svg';
 import { RiTodoLine } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
 import { BsSuitcaseLg } from 'react-icons/bs';
@@ -10,19 +10,20 @@ import { IoIosMenu } from 'react-icons/io';
 import { BsUpload } from 'react-icons/bs';
 import NotificationModal from './modals/NotificationModal';
 import AccountModal from './modals/AccountModal';
+import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
 
   return (
-    <div className="w-full h-16  ">
-      <div className="w-full max-w-[1300px] m-auto flex justify-between items-center p-3">
+    <div className="w-full h-20 bg-white  ">
+      <div className="w-full max-w-[1300px] m-auto flex justify-between items-center p-5">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
           <div className="flex justify-center items-center space-x-3">
-            <img src={Logo} className="w-10 h-10 object-contain" alt="logo-hirehour" />
-            <p className="font-bold text-xl tracking-wide">HireHours</p>
+            <img src={Logo} className="w-36 h-10 object-contain" alt="logo-hirehour" />
+            
           </div>
 
           <label
@@ -56,22 +57,26 @@ const Header: React.FC = () => {
         <div className="md:flex justify-center items-center space-x-7 hidden">
           <div className="flex justify-center items-center space-x-5">
             <div className=" flex flex-col justify-center items-center cursor-pointer">
-              <RiTodoLine size={16} />
-              <p className="font-[200] text-[10px]">RTR</p>
+              <RiTodoLine size={25} />
+              <Link to={'/right-to-represent'} className="font-[200] text-[10px]">
+                RTR
+              </Link>
             </div>
 
             <div className=" flex flex-col justify-center items-center cursor-pointer">
-              <BiMessageDetail size={16} />
-              <p className="font-[200] text-[10px]">Message</p>
+              <BiMessageDetail size={25} />
+              <Link  to='/messages' className="font-[200] text-[10px]">Message</Link>
             </div>
 
             <div className=" flex flex-col justify-center items-center cursor-pointer">
-              <BsSuitcaseLg size={16} />
-              <p className="font-[200] text-[10px]">My jobs</p>
+              <BsSuitcaseLg size={25} />
+              <Link to={'/myjobs'} className="font-[200] text-[10px]">
+                My jobs{' '}
+              </Link>
             </div>
 
             <div className=" relative flex flex-col justify-center items-center cursor-pointer">
-              <IoNotificationsOutline size={20} onClick={() => setIsNotificationOpen(true)} />
+              <IoNotificationsOutline size={22} onClick={() => setIsNotificationOpen(true)} />
 
               <p className="w-2 h-2 bg-[#FF3837] rounded-full absolute  top-[-1px] right-[1px]"></p>
 

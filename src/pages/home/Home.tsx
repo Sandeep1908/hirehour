@@ -5,6 +5,7 @@ import { SlLocationPin } from 'react-icons/sl';
 
 import { ResourseCard } from '../../config/home';
 import { BsUpload } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const [homeCards, setHomeCards] = useState<HomeCardTypes[]>();
@@ -100,13 +101,12 @@ const Home: React.FC = () => {
               </div>
 
               {/* upload button  */}
-              <label
+              <Link to='/upload-resume'
                 className={`flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#E9F358]   `}
               >
                 <BsUpload size={13} color="#104B53" className="" />
                 <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>Upload Resume</span>
-                <input type="file" className="hidden" />
-              </label>
+              </Link>
             </div>
           </div>
 
