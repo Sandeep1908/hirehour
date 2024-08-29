@@ -63,14 +63,18 @@ const JobCard: React.FC = () => {
 
             <div className='flex justify-between items-center'>
                 <p className='text-[#A9A9A9] text-[10px] font-normal '>Posted 1 day ago</p>
-                 <div className={`w-[140px] h-[42px] flex justify-center items-center ${showIcon ? "bg-[#114B53]": "bg-[#E9F358]"}  rounded-full`} onMouseEnter={()=>{setShowIcon(!showIcon)}} onMouseLeave={()=>{setShowIcon(!showIcon)}}>
+                 <div  className={`w-[140px] h-[42px] flex justify-center items-center ${showIcon ? "bg-[#114B53]": "bg-[#E9F358]"}  rounded-full`} onMouseEnter={()=>{setShowIcon(!showIcon)}} onMouseLeave={()=>{setShowIcon(!showIcon)}}>
                   {showIcon?   <BsFillLightningFill className='text-white' />:    <p className='text-[#114B53] text-base font-semibold'>Quick Apply</p> }
                  
 
                  </div>
             </div>
         </div>
-    )
-}
+      
+ 
+    
 
-export default JobCard
+  );
+};
+
+export default JobCard;

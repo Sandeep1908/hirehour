@@ -16,16 +16,12 @@ const Header: React.FC = () => {
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
 
   return (
-    <div className="w-full h-16 ">
+    <div className="w-full h-16  ">
       <div className="w-full max-w-[1300px] m-auto flex justify-between items-center p-3">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
           <div className="flex justify-center items-center space-x-3">
-            <img
-              src={Logo}
-              className="w-10 h-10 object-contain"
-              alt="logo-hirehour"
-            />
+            <img src={Logo} className="w-10 h-10 object-contain" alt="logo-hirehour" />
             <p className="font-bold text-xl tracking-wide">HireHours</p>
           </div>
 
@@ -33,9 +29,7 @@ const Header: React.FC = () => {
             className={`md:flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#104B53]   hidden`}
           >
             <BsUpload size={13} color="#fff" className="" />
-            <span className={`text-xs text-white  font-[500] pl-2`}>
-              Upload Resume
-            </span>
+            <span className={`text-xs text-white  font-[500] pl-2`}>Upload Resume</span>
             <input type="file" className="hidden" />
           </label>
         </div>
@@ -50,9 +44,7 @@ const Header: React.FC = () => {
                 Sign In
               </p>
 
-              <p className="text-sm tracking-wide hidden">
-                Employer / Job Poster
-              </p>
+              <p className="text-sm tracking-wide hidden">Employer / Job Poster</p>
               <IoIosMenu size={40} />
             </div>
           </div>
@@ -79,10 +71,7 @@ const Header: React.FC = () => {
             </div>
 
             <div className=" relative flex flex-col justify-center items-center cursor-pointer">
-              <IoNotificationsOutline
-                size={20}
-                onClick={() => setIsNotificationOpen(true)}
-              />
+              <IoNotificationsOutline size={20} onClick={() => setIsNotificationOpen(true)} />
 
               <p className="w-2 h-2 bg-[#FF3837] rounded-full absolute  top-[-1px] right-[1px]"></p>
 
@@ -97,7 +86,10 @@ const Header: React.FC = () => {
 
           {/* Account  */}
 
-          <div className="flex justify-center items-center space-x-1 relative cursor-pointer"  onClick={() => setIsAccountOpen((p) => !p)} >
+          <div
+            className="flex justify-center items-center space-x-1 relative cursor-pointer"
+            onClick={() => setIsAccountOpen((p) => !p)}
+          >
             <div className="flex justify-center items-center space-x-3">
               <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
                 J
@@ -106,8 +98,7 @@ const Header: React.FC = () => {
             </div>
 
             <MdOutlineKeyboardArrowDown
-             
-              className={`${isAccountOpen?'rotate-180 transition-all duration-500':''}`}
+              className={`${isAccountOpen ? 'rotate-180 transition-all duration-500' : ''}`}
             />
 
             {/* Account Modal  */}
