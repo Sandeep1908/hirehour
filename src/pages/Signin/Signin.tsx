@@ -54,8 +54,7 @@ const Signin: React.FC = () => {
                      </div>
                    
                   </div>
-                </div>
-              </div>
+             
 
                   <div className='flex justify-between items-end mt-8 md:mt-4'>
                   <div className='  flex gap-2'>
