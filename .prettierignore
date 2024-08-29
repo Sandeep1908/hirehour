@@ -7,3 +7,11 @@
 .env
 .env.*
 
+
+
+ 
+build/
+dist/
+coverage/
+public/
+.vite/
