@@ -131,8 +131,7 @@ const JobDescription: React.FC = () => {
                 </div>
             </div>
         </div>
-      </div>
-    </div>
+    
   );
 };
 
