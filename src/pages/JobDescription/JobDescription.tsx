@@ -436,8 +436,8 @@ const JobDescription: React.FC = () => {
             </div>
 
             <div className='w-full max-w-[1280px] m-auto h-auto flex justify-center md:justify-between pt-7  md:px-0'>
-                <div className='w-[343px] md:max-w-[411px] md:w-full '>
-                    <div className=' w-full h-[800px] overflow-x-hidden overflow-y-auto '>
+                <div className=' md:max-w-[411px] md:w-full '>
+                    <div className=' w-full h-[800px] overflow-y-auto'>
                         <p className='text-[14px] '><span className='font-extrabold'>Upload Your Resume -</span> Let employers find you.</p>
                         <p className='text-[14px] mt-5 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
                         <div className='mt-4 flex flex-col gap-4 justify-center'>

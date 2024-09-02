@@ -1,7 +1,11 @@
 import React from 'react'
 import { IoMdClose } from 'react-icons/io'
 
-const AdditionalDetails:React.FC = () => {
+type AddInfo ={
+   setAdditionalInfoPopup: (agr:boolean)=>void
+}
+
+const AdditionalDetails:React.FC<AddInfo> = ({setAdditionalInfoPopup}) => {
   return (
     <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
@@ -9,7 +13,7 @@ const AdditionalDetails:React.FC = () => {
     <div className='max-w-[1005px] h-auto w-full bg-white rounded-lg overflow-y-auto z-[30] p-8'>
         <div className='  flex justify-between items-center'>
             <div className='text-base md:text-2xl font-bold'><p>Additional Details</p></div>
-            <IoMdClose size={30} className="cursor-pointer" />
+            <IoMdClose size={30} className="cursor-pointer"  onClick={()=>setAdditionalInfoPopup(false)}/>
         </div>
         <hr className='mt-5' />
        <div className='py-5 '>
@@ -49,7 +53,7 @@ const AdditionalDetails:React.FC = () => {
        </div>
 
         <div className='w-full flex justify-end  gap-10  items-center'>
-            <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
+            <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer ' onClick={()=>setAdditionalInfoPopup(false)}>
                 <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
             </div>
         </div>

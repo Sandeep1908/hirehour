@@ -2,7 +2,12 @@ import React from 'react'
 import { IoMdClose } from 'react-icons/io'
 import { RiDeleteBin4Line } from 'react-icons/ri'
 
-const Experience:React.FC = () => {
+
+type AddExperience ={
+   setExperiencePopup:(agr:boolean) => void
+}
+
+const Experience:React.FC<AddExperience> = ({setExperiencePopup}) => {
   return (
     <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
@@ -10,7 +15,7 @@ const Experience:React.FC = () => {
     <div className='max-w-[1005px] h-full w-full bg-white rounded-lg overflow-y-auto z-[30] p-8'>
         <div className='  flex justify-between items-center'>
             <div className='text-2xl font-bold'><p>Experience</p></div>
-            <IoMdClose size={30} className="cursor-pointer" />
+            <IoMdClose size={30} className="cursor-pointer"  onClick={()=>{setExperiencePopup(false)}} />
         </div>
         <hr className='mt-5' />
        <div className='py-5 flex flex-col gap-5 '>
