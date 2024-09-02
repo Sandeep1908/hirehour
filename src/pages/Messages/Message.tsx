@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaEdit } from 'react-icons/fa';
 import { HiOutlineDotsVertical } from "react-icons/hi";
-
+import { FaFlag } from "react-icons/fa";
+import { MdShare } from "react-icons/md";
 
 const Message : React.FC =()=>{
+
+    const [isShareModal,setIsShareModal]=useState<boolean>(false)
+    console.log(isShareModal);
     const titles = [
         {
             label:'My Jobs',
@@ -98,7 +102,7 @@ const Message : React.FC =()=>{
 
 
                                     {/* Right side  */}
-                            <div className="w-full h-full p-5    ">
+                            <div className="w-full h-full p-5 relative    ">
                                     <div className="  flex justify-between items-center">
                                         <div className="w-full flex  justify-center items-center space-x-3">       
 
@@ -118,8 +122,33 @@ const Message : React.FC =()=>{
 
                                         </div>
 
-                                        <HiOutlineDotsVertical />
 
+                                    <div className="relative ">
+                                    <HiOutlineDotsVertical onClick={()=>setIsShareModal(!isShareModal)} />
+                                    
+                                        {/* three dot menu  */}
+
+                                        <div className={`w-36  p-3 bg-[#FFFFFF] shadow-md absolute top-9 rounded-lg flex flex-col space-y-5 transition-all duration-300 ${isShareModal ? 'opacity-1 translate-y-[-10px]' : 'opacity-0 z-[-300]'}`}>
+
+                                            <div className="flex space-x-3 items-center">
+                                            <FaFlag />
+                                            <p>Report</p>
+                                            </div>
+
+                                        <hr />
+                                            <div className="flex space-x-3 items-center">
+                                            <MdShare />
+                                             
+                                            <p>Share</p>
+                                            </div>
+
+
+
+                                        </div>  
+                                 </div>
+
+
+                                       
 
                                          
                                     </div>
