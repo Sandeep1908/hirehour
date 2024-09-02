@@ -72,12 +72,12 @@ const MyJobs: React.FC = () => {
             </div>
           </div>
 
-          <div className="w-full mt-10 grid place-items-center sm:grid-cols-2 md:grid-cols-3 gap-5">
+          <div className="w-full mt-10 flex justify-around flex-wrap items-center gap-5">
             {Array.from({ length: 9 }).map((_, id) => {
               return (
                 <div
                   key={id}
-                  className="relative max-w-[357px] h-[197px] bg-white border border-[#E1E1E2] md:drop-shadow-lg rounded-lg p-3 flex flex-col justify-between"
+                  className="relative max-w-[357px] h-[197px] bg-white border border-[#E1E1E2] md:shadow-lg rounded-lg p-3 flex flex-col justify-between"
                 >
                   <div className="flex w-full space-x-3 items-center">
                     <img src="/images/emplogo.png" className="w-12 h-12" alt="emp-logo" />
@@ -120,11 +120,11 @@ const MyJobs: React.FC = () => {
                              
                              {/* more section  */}
 
-                             {/* {activeCard ===id && (
+                             {activeCard ===id && (
 
 
-<div className='w-36   bg-red-500 absolute right-[-40px] rounded-lg z-[10]'>
-<ul className='flex flex-col p-3 space-y-4 text-xs'>
+<div className='w-36   bg-white absolute  top-0 right-[-140px] rounded-lg  z-[10] transition-all '>
+<ul className='flex flex-col p-3 space-y-4 text-xs '>
     {moreSection.map((item,id)=>{
         return(
             <li key={id} className=' p-1 w-full text-xs border-b'>{item}</li>
@@ -138,7 +138,7 @@ const MyJobs: React.FC = () => {
 
 </ul>
 </div>
-                             )} */}
+                             )}
 
                            
 
