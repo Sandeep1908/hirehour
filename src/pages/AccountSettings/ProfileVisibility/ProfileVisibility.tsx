@@ -6,14 +6,14 @@ const ProfileVisibility:React.FC=()=>{
     const titles = [
         {
             label:'Profile Settings',
-            link:'/myjobs'
+            link:'/account'
         },
         {
             label:'Profile Visibility',
-            link:'/right-to-represent'
+            link:'/profile-visibility'
         },{
             label:'Privacy Settings',
-            link:'/messages'
+            link:''
         }
       ];
     
