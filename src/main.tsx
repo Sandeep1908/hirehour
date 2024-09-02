@@ -20,6 +20,7 @@ import RightToRepresent from './pages/RightToRepresent/RightToRepresent.tsx';
 import Message from './pages/Messages/Message.tsx';
 import AccountSetting from './pages/AccountSettings/AccountSettings.tsx';
 import ProfileVisibility from './pages/AccountSettings/ProfileVisibility/ProfileVisibility.tsx';
+import Profile from './pages/ProfilePage/Profile.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,6 +47,11 @@ const router = createBrowserRouter(
       {/* Account Setting  */}
       <Route path="/account" element={<AccountSetting/>}/> 
       <Route path="/profile-visibility" element={<ProfileVisibility/>}/> 
+
+    {/* Pofile Page  */}
+
+    <Route path="/profile" element={<Profile/>}/> 
+
 
 
 
