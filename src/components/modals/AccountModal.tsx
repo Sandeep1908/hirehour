@@ -4,38 +4,44 @@ import { RiListSettingsLine } from 'react-icons/ri';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { VscNotebook } from 'react-icons/vsc';
 import { GoSignOut } from 'react-icons/go';
+import { Link } from 'react-router-dom';
 
 type AccountModalProps = {
   isAccountOpen: boolean;
+  setIsAccountOpen:(e:boolean)=>void
 };
 
-const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen }) => {
+const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountOpen }) => {
   const accountOptions = [
     {
       icon: <CgProfile />,
       name: 'Profile',
+       link:''
     },
     {
       icon: <RiListSettingsLine />,
       name: 'Job Preference',
+       link:''
     },
 
     {
       icon: <RiUserSettingsLine />,
       name: 'Account Setting',
+      link:'/account'
     },
     {
       icon: <VscNotebook />,
       name: 'Our Blog',
+       link:''
     },
   ];
   return (
     <div
-      className={`w-40 h-56 overflow-auto p-3 bg-white absolute  top-16 left-0  rounded-lg transition-all duration-500 shadow-2xl ${isAccountOpen ? 'opacity-1 translate-y-[-10px]' : 'opacity-0   z-[-10]'}`}
+      className={`w-40  overflow-auto p-3 bg-white absolute z-[10]  top-16 left-0  rounded-lg transition-all duration-500 shadow-2xl ${isAccountOpen ? 'opacity-1 translate-y-[-10px]' : 'opacity-0   z-[-300]'}`}
     >
       <div className="flex flex-col justify-between items-center">
         <div className="flex justify-start items-center space-x-3 relative before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px] ">
-          <p className="text-xs text-[#104B53] w-6 h-6 flex justify-center items-center bg-[#CBFFFC] rounded-full ">
+          <p className="text-xs text-[#104B53] w-8 h-8 flex justify-center items-center bg-[#CBFFFC] rounded-full ">
             J
           </p>
 
@@ -48,10 +54,10 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen }) => {
         <ul className="flex flex-col space-y-2 pt-5 relative  before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px]">
           {accountOptions?.map((item, id) => {
             return (
-              <li className="flex justify-start items-center space-x-2 p-1" key={id}>
+              <Link  to={item.link || ''} className="flex justify-start items-center space-x-2 p-1" key={id} onClick={()=>setIsAccountOpen(false)}>
                 {item.icon}
                 <p className="text-[10px] ">{item.name}</p>
-              </li>
+              </Link>
             );
           })}
 

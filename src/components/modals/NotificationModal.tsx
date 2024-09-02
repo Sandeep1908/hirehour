@@ -13,7 +13,7 @@ const NotificationModal: React.FC<NotificationModalProps> = ({
 }) => {
   return (
     <div
-      className={`w-64 max-h-64 overflow-auto p-4 bg-white absolute  top-14 right-0 rounded-lg transition-all duration-500 shadow-2xl ${isNotification ? 'opacity-1 translate-y-[-10px]' : 'opacity-0  z-[-10]'}`}
+      className={`w-64 max-h-64 overflow-auto p-4 bg-white absolute z-[10]  top-14 right-0 rounded-lg transition-all duration-500 shadow-2xl ${isNotification ? 'opacity-1 translate-y-[-10px]' : 'opacity-0  z-[-20]'}`}
     >
       <div className="relative w-full flex justify-between p-2 items-center before:absolute before:w-full before:bottom-0 before:bg-[#E3E7EA] before:h-[1px]">
         <h1 className="font-semibold">Notifications</h1>
