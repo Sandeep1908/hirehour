@@ -2,7 +2,9 @@ import React, { useState } from 'react'
 import icon from '../assets/Employers Logo.svg'
 import { BsFillLightningFill } from "react-icons/bs";
 import { LuMoreVertical } from 'react-icons/lu';
-import { FaRegBookmark } from 'react-icons/fa6';
+import { FaFlag, FaRegBookmark } from 'react-icons/fa6';
+import { MdShare } from 'react-icons/md';
+import ReportJob from './ReportJob';
 
 type JobCardProps={
     setIsOpen:(e:boolean)=>void,
@@ -12,6 +14,9 @@ type JobCardProps={
 
 const JobCard: React.FC<JobCardProps> = ({setIsOpen}) => {
     const [showIcon, setShowIcon] = useState<boolean>(false);
+    const [showReport, setShowReport] = useState<boolean>(false);
+    const [isShareModal,setIsShareModal]=useState<boolean>(false)
+
     return (
         <div className='w-full h-auto p-3  md:px-3 py-5 border-2 border-black rounded-xl flex flex-col gap-3 md:gap-5 '>
             <div className='w-full flex justify-between'>
@@ -26,9 +31,32 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen}) => {
                         </ul>
                     </div>
                 </div>
-                <div className='flex gap-1 items-start'>
+                <div className='flex gap-1 items-start ' >
                 <FaRegBookmark size={20}/>
-                <LuMoreVertical size={25}/>
+                <div className='relative '>
+
+                <LuMoreVertical size={25} onClick={()=>setIsShareModal(!isShareModal)} className='cursor-pointer '/>
+                <div className={`  bg-[#FFFFFF]  shadow-md absolute top-9 right-0 rounded-lg flex flex-col  transition-all duration-300 ${isShareModal ? 'opacity-1 translate-y-[-10px] z-[40] ' : 'opacity-0 z-[-300]'}`}>
+
+                    <div className="flex  items-center px-5 py-2 gap-2 cursor-pointer" onClick={()=>{setShowReport(true)}}>
+                    <FaFlag />
+                    <p>Report</p>
+                    </div>
+
+                    <hr />
+                    <div className="flex  items-center px-5 py-2 gap-2">
+                    <MdShare />
+
+                    <p>Share</p>
+                    </div>
+
+
+
+                    </div>  
+                </div>
+
+
+             
                     </div>
 
                     
@@ -76,6 +104,9 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen}) => {
 
                  </div>
             </div>
+
+
+            {showReport ?<ReportJob setShowReport={setShowReport} />:" " }
 
             
         </div>

@@ -1,7 +1,12 @@
 import React from 'react'
 import { IoMdClose } from 'react-icons/io'
 
-const ReportJob: React.FC = () => {
+type ReportJobProps={
+  setShowReport : (arg:boolean) => void
+}
+
+const ReportJob: React.FC<ReportJobProps> = ({setShowReport}) => {
+
     return (
         <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
             <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
@@ -9,7 +14,7 @@ const ReportJob: React.FC = () => {
             <div className='max-w-[846px] w-full bg-white rounded-lg overflow-auto z-[30]'>
                 <div className=' px-10 py-8 flex justify-between items-center'>
                     <div className='text-2xl font-bold'><p>Apply to xyz Company</p> <p className='text-[#6B7588] text-base font-normal mt-3'>Select a reason for report a job</p></div>
-                    <IoMdClose size={30} className="cursor-pointer" />
+                    <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setShowReport(false)}} />
                 </div>
                 <hr />
                 <div className='px-10 py-5 flex flex-col gap-5' >
@@ -40,8 +45,8 @@ const ReportJob: React.FC = () => {
                 </div>
                 <hr />
                 <div className='w-full flex justify-end px-10 py-8 gap-10  items-center'>
-                    <p className='cursor-pointer text-[#114B53] font-semibold text-base'> Cancel</p>
-                    <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
+                    <p className='cursor-pointer text-[#114B53] font-semibold text-base' onClick={()=>{setShowReport(false)}}> Cancel</p>
+                    <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer ' onClick={()=>{setShowReport(false)}}>
                         <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
                     </div>
                 </div>
