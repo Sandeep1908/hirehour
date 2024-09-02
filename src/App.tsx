@@ -8,7 +8,7 @@ const App: React.FC = () => {
     <div className='w-full h-full bg-[#F2F2F5]'>
       <Header />
       <Outlet />
-      {/* <Footer/> */}
+      <Footer/>
     </div>
   );
 };

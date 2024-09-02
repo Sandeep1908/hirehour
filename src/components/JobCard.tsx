@@ -57,35 +57,23 @@ const JobCard: React.FC = () => {
                         <p className='text-[12px] font-semibold'>Design Thinking</p>
                     </div>
 
+                </div>
 
-      <div className="">
-        <p className="text-[12px] font-semibold">Tech Stacks</p>
-
-        <div className="flex gap-2 mt-1">
-          <div className="px-3 py-1 bg-[#CAFDFC] rounded-full">
-            <p className="text-[12px] font-semibold">Figma </p>
-          </div>
-          <div className="px-3 py-1 bg-[#CAFDFC] rounded-full">
-            <p className="text-[12px] font-semibold">Adobe Creative suit</p>
-          </div>
-          <div className="px-3 py-1 bg-[#CAFDFC] rounded-full">
-            <p className="text-[12px] font-semibold">Design Thinking</p>
-          </div>
-        </div>
-      </div>
+            </div>
 
             <div className='flex justify-between items-center'>
                 <p className='text-[#A9A9A9] text-[10px] font-normal '>Posted 1 day ago</p>
-                 <div className={`w-[140px] h-[42px] flex justify-center items-center ${showIcon ? "bg-[#114B53]": "bg-[#E9F358]"}  rounded-full`} onMouseEnter={()=>{setShowIcon(!showIcon)}} onMouseLeave={()=>{setShowIcon(!showIcon)}}>
+                 <div  className={`w-[140px] h-[42px] flex justify-center items-center ${showIcon ? "bg-[#114B53]": "bg-[#E9F358]"}  rounded-full`} onMouseEnter={()=>{setShowIcon(!showIcon)}} onMouseLeave={()=>{setShowIcon(!showIcon)}}>
                   {showIcon?   <BsFillLightningFill className='text-white' />:    <p className='text-[#114B53] text-base font-semibold'>Quick Apply</p> }
                  
 
                  </div>
             </div>
-
         </div>
-      </div>
-    </div>
+      
+ 
+    
+
   );
 };
 

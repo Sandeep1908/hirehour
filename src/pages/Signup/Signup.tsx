@@ -11,7 +11,7 @@ const Signup: React.FC = () => {
   };
   return (
     <div className='bg-[#114B53]  w-full pt-10 lg:pt-20 pb-10 md:pb-20 px-5  lg:px-10'>
-    <div className='w-full h-full flex gap-20'>
+     <div className='w-full h-full flex gap-20'>
         <div className=' hidden md:flex w-[50%]'>
         <p className='text-white text-[32px] font-semibold'>Hire Hours</p>
         </div>
@@ -87,6 +87,8 @@ const Signup: React.FC = () => {
                          </div>
                      </div>
                   </div>
+                {/* </div>
+              </div> */}
 
                   <div className='w-full mt-8 md:mt-4 flex gap-2'>
                       <input type="checkbox" name="" id="" className='w-5 h-5 md:w-6 md:h-6 border border-[#E1E1E2]' />
@@ -96,6 +98,26 @@ const Signup: React.FC = () => {
                   <div className='w-full h-[48px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-6'>
                      <p className='text-base font-semibold'>Sign up</p>
                   </div>
+                {/* </div> */}
+                <div className="grow">
+                  <label htmlFor="firstName" className="text-base">
+                    Confirm password <span className="text-[#E71717]">*</span>
+                  </label>
+                  <div className="relative w-full h-[48px] mt-2">
+                    <input
+                      type="text"
+                      className="border-2 border-[#E1E1E2] w-full h-full rounded-lg"
+                    />
+                    <button
+                      type="button"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+                </div>
+              {/* </div> */}
 
                   <div className="flex mt-4 mb-4 items-center justify-center ">
                    <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
