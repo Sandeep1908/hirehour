@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import search_icon from '../../assets/search-icon.svg'
 import Location from '../../assets/location.svg'
 import Location2 from '../../assets/location2.svg'
@@ -11,6 +11,16 @@ import { FaArrowRight } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { CiFilter } from "react-icons/ci";
 import { IoMdClose } from 'react-icons/io'
+import Logo from '../../assets/logo/hirehour.png';
+import { LuUpload } from "react-icons/lu";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import { FaRegEdit } from "react-icons/fa";
+import { MdOutlineMail } from "react-icons/md";
+import { IoCallOutline } from 'react-icons/io5'
+
+
+
+
 
 
 
@@ -20,8 +30,11 @@ import { IoMdClose } from 'react-icons/io'
 const JobDescription: React.FC = () => {
 
     const [infoContentHidden, SetInfoContentHidden] = useState<boolean>(false);
-    const [isQuickApply, setQuickApply] = useState<boolean>(true);
+    const [isQuickApplyDone, setQuickApplyDone] = useState<boolean>(false);
+    const [isQuickApply, setQuickApply] = useState<boolean>(false);
     const [isQuickApplyStep2, setQuickApplyStep2] = useState<boolean>(false);
+    const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
+    const [isQuickApplyEdit, setQuickApplyEdit] = useState<boolean>(false);
     const [dropdown, setDropdown] = useState<boolean>(false);
     const [dropdownLoc, setDropdownLoc] = useState<boolean>(false);
     const [dropdownExp, setDropdownExp] = useState<boolean>(false);
@@ -29,15 +42,49 @@ const JobDescription: React.FC = () => {
     const [dropdownEmp, setDropdownEmp] = useState<boolean>(false);
     const [dropdownSly, setDropdownSly] = useState<boolean>(false);
 
+    useEffect(() => {
+        const handleScroll = () => {
+          if (window.scrollY > 300) {
+            SetInfoContentHidden(false);
+          } else {
+            SetInfoContentHidden(true);
+          }
+        };
+    
+        window.addEventListener('scroll', handleScroll);
+    
+        // Cleanup the event listener on component unmount
+        return () => {
+          window.removeEventListener('scroll', handleScroll);
+        };
+      }, []);
+    
 
     const step2 =()=>{
         setQuickApply(false);
-        setQuickApplyStep2(true)
+        setQuickApplyStep2(true);
+        setQuickApplyEdit(false);
+    }
+    const step3 =()=>{
+        setQuickApplyStep2(false);
+        setQuickApplyStep3(true)
+    }
+    const editPop =()=>{
+        setQuickApplyStep2(false);
+        setQuickApplyEdit(true)
+    }
+    const backToStep =()=>{
+        setQuickApplyStep2(false);
+        setQuickApply(true)
+    }
+    const quickApplyDone =()=>{
+        setQuickApplyStep3(false);
+        setQuickApplyDone(true)
     }
 
 
     return (
-        <div className='w-full h-full pb-10'>
+        <div className='w-full h-full pb-10 bg-white'>
             <div className='hidden md:block w-full max-w-[1280px] h-[190px] m-auto rounded-xl shadow-lg p-5'  >
                 <div className='w-full h-[80px] border-2 border-[##DFDFDF] rounded-xl flex justify-between px-4'>
                     <div className='flex justify-center items-center gap-2'>
@@ -100,7 +147,7 @@ const JobDescription: React.FC = () => {
 
 
                         <div onClick={() => { setDropdown(!dropdown) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-                            <p className="text-[14px] font-normal text-[#114B53]">Remote</p>
+                            <p className="text-[14px] font-normal text-[#114B53]">24 hours</p>
                             {/* <img src={arrow_down} alt="" /> */}
                             <MdOutlineKeyboardArrowDown
                                 className={`${dropdown ? 'rotate-180 transition-all duration-500' : ''}`}
@@ -394,14 +441,16 @@ const JobDescription: React.FC = () => {
                         <p className='text-[14px] '><span className='font-extrabold'>Upload Your Resume -</span> Let employers find you.</p>
                         <p className='text-[14px] mt-5 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
                         <div className='mt-4 flex flex-col gap-4 justify-center'>
+                            <JobCard  setIsOpen={setQuickApply} setIsQuickApplyDone={setQuickApplyDone} />
+                            <JobCard  setIsOpen={setQuickApply} setIsQuickApplyDone={setQuickApplyDone}  />
+                            <JobCard  setIsOpen={setQuickApply} setIsQuickApplyDone={setQuickApplyDone} />
+                            {/* <JobCard />
                             <JobCard />
                             <JobCard />
                             <JobCard />
                             <JobCard />
                             <JobCard />
-                            <JobCard />
-                            <JobCard />
-                            <JobCard />
+                            <JobCard /> */}
                         </div>
                     </div>
                     <div className=''>
@@ -429,7 +478,7 @@ const JobDescription: React.FC = () => {
                 <div className='hidden md:block max-w-[845px] w-full rounded-lg  border'>
                     <div className='w-full shadow-lg pb-8'>
                         <img src={Job_banner} alt="" />
-                        <div className='w-[95%] m-auto'>
+                        <div className='w-[95%] m-auto transition-all ease-in-out duration-1000'>
                             <div className=' flex  justify-between '>
                                 <div className='flex gap-2 items-center'>
                                     <div className='relative w-[100px] h-[100px] '>
@@ -454,7 +503,7 @@ const JobDescription: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className={`h-auto ${infoContentHidden === false ? "hidden" : ""}`}>
+                            <div className={`h-auto transition-all ease-in-out duration-1000  ${infoContentHidden === false ? "hidden" : ""}`}>
                                 <div className='flex h-auto '>
                                     <div className='flex flex-col gap-4 mt-2 max-w-[350px] w-full'>
 
@@ -595,37 +644,42 @@ const JobDescription: React.FC = () => {
     <div
         className={`w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isQuickApply ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
       >
-        <div className='max-w-[1055px] w-full bg-white rounded-lg '>
+          <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+        <div className='max-w-[1055px] w-full bg-white rounded-lg overflow-auto z-[30]'>
             <div className=' p-10 flex justify-between items-center'>
                  <p className='text-2xl font-bold'>Apply to xyz Company</p>
-                 <IoMdClose size={30}  className="cursor-pointer" />
+                 <IoMdClose size={30} onClick={()=>{setQuickApply(false)}}  className="cursor-pointer" />
             </div>
             <hr />
             <div className='w-full p-10'>
 
 
-            <div className="w-full ">
-            <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
-              <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx- dark:after:border-gray-700">
-                <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-14 h-10 bg-[#104B53] text-white rounded-full">
-                    1
-                  </span>
-                  <p className="hidden md:block text-[12px]">Screening Questions</p>
-                </span>
-              </li>
-              <li className="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx- dark:after:border-gray-700">
-                <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-14 h-10 bg-[#C7C9D9] rounded-full">2</span>
-                  <p className="hidden md:block text-[12px]"> Review Application</p>
-                </span>
-              </li>
-              <li className="flex items-center">
-                <span className="me-2 p-2 w-10 h-10 bg-[#C7C9D9] rounded-full">3</span>
-                <p className="hidden md:block text-[12px]"> Applied Successfully</p>
-              </li>
-            </ol>
-          </div>
+            <div className="w-full flex justify-between items-center">
+                <div className='w-[167px] flex justify-center items-center gap-2'>
+                    <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                        <p className='text-base text-white font-semibold'>1</p>
+                    </div>
+                    <p className='text-[12px] font-medium text-[#114B53]'>Screening Questions</p>
+                </div>
+                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#C7C9D9]'>
+
+                </div>
+                <div className='w-[167px] flex justify-center items-center gap-2'>
+                    <div className='w-10 h-10 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
+                        <p className='text-base text-white font-semibold'>2</p>
+                    </div>
+                    <p className='text-[12px] font-medium text-[#C7C9D9]'>Review Application</p>
+                </div>
+                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#C7C9D9]'>
+
+</div>
+                <div className='w-[167px] flex justify-center items-center gap-2'>
+                    <div className='w-10 h-10 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
+                        <p className='text-base text-white font-semibold'>3</p>
+                    </div>
+                    <p className='text-[12px] font-medium text-[#C7C9D9]'>Applied Successfully</p>
+                </div>
+            </div>
 
 
                 <p className='text-xl font-semibold mt-5'>
@@ -651,7 +705,7 @@ const JobDescription: React.FC = () => {
             </div>
             <hr />
             <div className='w-full flex justify-end p-10'>
-                <div onClick={step2} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full '>
+                <div onClick={step2} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer'>
                     <p className='text-base font-semibold text-[#114B53]'>Continue</p>
                 </div>
             </div>
@@ -661,84 +715,286 @@ const JobDescription: React.FC = () => {
     <div
         className={`w-full h-full flex overflow-scroll justify-center items-center fixed inset-0 transition-all duration-500 ${isQuickApplyStep2 ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
       >
-        <div className='max-w-[1055px] w-full bg-white rounded-lg '>
+                  <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+
+                        <div className='z-[30] max-w-[1055px] w-full h-full bg-white rounded-lg overflow-auto relative top-[0px]'>
+                            <div className=' p-10 flex justify-between items-center'>
+                                <p className='text-2xl font-bold'>Apply to xyz Company</p>
+                                <IoMdClose size={30} onClick={()=>{setQuickApplyStep2(false)}} className="cursor-pointer" />
+                            </div>
+                            <hr />
+                            <div className='w-full p-10'>
+
+
+                            <div className="w-full flex justify-between items-center">
+                                    <div className='w-[167px] flex justify-center items-center gap-2'>
+                                        <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                            <p className='text-base text-white font-semibold'>1</p>
+                                        </div>
+                                        <p className='text-[12px] font-medium text-[#114B53]'>Screening Questions</p>
+                                    </div>
+                                    <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#114B53]'>
+
+                                    </div>
+                                    <div className='w-[167px] flex justify-center items-center gap-2'>
+                                        <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                            <p className='text-base text-white font-semibold'>2</p>
+                                        </div>
+                                        <p className='text-[12px] font-medium text-[#114B53]'>Review Application</p>
+                                    </div>
+                                    <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#C7C9D9]'>
+
+                                   </div>
+                                    <div className='w-[167px] flex justify-center items-center gap-2'>
+                                        <div className='w-10 h-10 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
+                                            <p className='text-base text-white font-semibold'>3</p>
+                                        </div>
+                                        <p className='text-[12px] font-medium text-[#C7C9D9]'>Applied Successfully</p>
+                                    </div>
+                                </div>
+
+
+                                <p className='text-xl font-semibold mt-5'>
+                                Review your application
+                                </p>
+                                <p className='text-[12px] font-normal mt-2'>
+                                Before Submit please review carefully
+                                </p>
+
+                            <div className='w-full mt-5'>
+                                    <div className='w-full flex gap-5'>
+                                            <div className='max-w-[411px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-5 py-6'>
+                                                <div className='flex justify-between items-center'>
+                                                    <p className='text-[20px] font-semibold'>Personal Information</p>
+                                                    <div onClick={editPop} className='cursor-pointer text-base font-semibold flex items-center gap-2 text-[#114B53]'><FaRegEdit />
+                                                    <p>Edit</p></div>
+                                                </div>
+                                                <hr  className='mt-6'/>
+                                                <div className='flex flex-col justify-center items-center mt-6'>
+                                                    <div className='w-[100px] h-[100px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
+                                                    <p className='text-[40px] font-extrabold'>J</p>
+                                                    </div>
+                                                    <p className='text-[20px] font-semibold mt-6'>John S Mathew</p>
+                                                </div>
+                                                <hr  className='mt-8'/>
+                                                <div className='mt-4 flex items-center justify-between'>
+                                                    <div className='flex items-center gap-2 '>
+                                                    <MdOutlineMail size={20} />
+
+                                                       <p className='text-[16px] font-medium text-[#3A3A3C] '>John@xyz.com</p>
+                                                    </div>
+
+                                                    </div> 
+                                                    <div className='mt-4 flex items-center justify-between'>
+                                                    <div className='flex items-center gap-2 '>
+                                                    <IoCallOutline size={20} />
+
+                                                       <p className='text-[16px] font-medium text-[#3A3A3C] '>+1 xxx-xxx-xxxx</p>
+                                                    </div>
+
+                                                    </div> 
+                                                <p className='text-[14px] font-medium text-[#8F90A6] mt-4'>Visa sponsorship</p>
+                                                <p className='text-[16px] font-semibold text-[#000000] mt-2'>Required</p>
+                                            </div>
+                                            <div className='max-w-[540px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-5 py-6'>
+                                               <div className='flex justify-between items-center'>
+                                                    <p className='text-[20px] font-semibold'>Resume</p>
+                                                      <div className='flex items-center gap-2'>
+                                                        <p className='text-[#8F90A6] text-[12px]'>Pdf, Doc, DocX (2MB)</p>
+                                                        <div className='text-base font-semibold flex items-center gap-2 px-2 py-1 border-2 border-[#114B53] rounded-full'> <LuUpload size={20} />
+                                                        <p>upload resume</p>
+                                                        </div>
+                                                    </div> 
+                                                </div>  
+                                                <hr className='mt-5' /> 
+                                                <div className='flex flex-col gap-4'>
+                                                    <div className='w-full border-2 border-black rounded-xl flex'>
+                                                        <div className='w-[95px] bg-[#E3EDFF] flex justify-center items-center rounded-tl-lg rounded-bl-lg'>
+                                                            <p className='text-[#1F4AF1] text-base font-bold'>PDF</p>
+                                                        </div>
+                                                        <div className='w-full flex justify-between items-center px-3 py-2'>
+                                                            <div>
+                                                            <p className='text-black text-base font-medium'>Resume 1</p>
+                                                            <p className='text-[#6B7588] text-[12px] font-medium mt-1'> Selected Resume</p>
+                                                            </div>
+                                                            <div className='flex gap-4'>
+                                                            <p className='text-[#114B53] text-[12px] font-semibold'> Preview</p>
+                                                            <RiDeleteBin6Line size={20} />
+
+
+ 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className='w-full border-[1px] border-[#D1D1D1] rounded-xl flex'>
+                                                        <div className='w-[95px] bg-[#E3EDFF] flex justify-center items-center rounded-tl-lg rounded-bl-lg'>
+                                                            <p className='text-[#1F4AF1] text-base font-bold'>PDF</p>
+                                                        </div>
+                                                        <div className='w-full flex justify-between items-center px-3 py-2'>
+                                                            <div>
+                                                            <p className='text-black text-base font-medium'>Resume 1</p>
+                                                            <p className='text-[#6B7588] text-[12px] font-medium mt-1'> Selected Resume</p>
+                                                            </div>
+                                                            <div className='flex gap-4'>
+                                                            <p className='text-[#114B53] text-[12px] font-semibold'> Preview</p>
+                                                            <RiDeleteBin6Line size={20} />
+
+
+ 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>             
+                                            </div>
+                                    </div>
+                                <div className='w-full border-[1px] border-[#D6DBDE] rounded-lg px-10 py-6 mt-5'>
+                                <div className='flex justify-between items-center'>
+                                                    <p className='text-[20px] font-semibold'>Screening Questions</p>
+                                                    <div onClick={backToStep} className=' cursor-pointer text-base font-semibold flex items-center gap-2 text-[#114B53]'><FaRegEdit />
+                                                    <p>Edit</p></div>
+                                                </div>
+                                                <hr  className='mt-6'/>
+
+                                                <p className='text-[#8F90A6] tex-[12px] font-normal mt-5'>How many years of experience do you have in Java ? ( in years)</p>
+                                                <p className='text-[#000000] tex-base font-normal mt-2'>4 years</p>
+                                                <p className='text-[#8F90A6] tex-[12px] font-normal mt-5'>Can you able to Relocate the Job Location ?</p>
+                                                <p className='text-[#000000] tex-base font-normal mt-2'>Yes</p>
+
+                                                <p className='text-[#8F90A6] tex-[12px] font-normal mt-5'>Immediate Joiner ?</p>
+                                                <p className='text-[#000000] tex-base font-normal mt-2'>Yes</p>
+
+                                </div>
+                            </div>
+
+                            </div>
+                            <hr />
+                            <div className='w-full flex justify-end p-10 gap-10  items-center'>
+                                <p onClick={backToStep} className='cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
+                                <div onClick={step3} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
+                                    <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
+                                </div>
+                            </div>
+                        </div>
+      </div>
+
+{/* Step 3 */}
+    <div
+        className={`w-full h-full flex overflow-scroll justify-center items-center fixed inset-0 transition-all duration-500 ${isQuickApplyStep3 ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+      >
+                  <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+
+                       
+                        <div className='z-[30] max-w-[1055px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px]'>
             <div className=' p-10 flex justify-between items-center'>
                  <p className='text-2xl font-bold'>Apply to xyz Company</p>
-                 <IoMdClose size={30}  className="cursor-pointer" />
+                 <IoMdClose size={30} onClick={()=>{setQuickApplyStep3(false)}}  className="cursor-pointer" />
             </div>
             <hr />
             <div className='w-full p-10'>
 
 
-            <div className="w-full ">
-            <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
-              <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-[#104B53] after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx- dark:after:border-gray-700">
-                <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-14 h-10 bg-[#104B53] text-white rounded-full">
-                    1
-                  </span>
-                  <p className="hidden md:block text-[12px]">Screening Questions</p>
-                </span>
-              </li>
-              <li className="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx- dark:after:border-gray-700">
-                <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-14 h-10 bg-[#104B53] text-white rounded-full">2</span>
-                  <p className="hidden md:block text-[12px]"> Review Application</p>
-                </span>
-              </li>
-              <li className="flex items-center">
-                <span className="me-2 p-2 w-10 h-10 bg-[#C7C9D9] rounded-full">3</span>
-                <p className="hidden md:block text-[12px]"> Applied Successfully</p>
-              </li>
-            </ol>
-          </div>
+                        <div className="w-full flex justify-between items-center">
+                                    <div className='w-[167px] flex justify-center items-center gap-2'>
+                                        <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                            <p className='text-base text-white font-semibold'>1</p>
+                                        </div>
+                                        <p className='text-[12px] font-medium text-[#114B53]'>Screening Questions</p>
+                                    </div>
+                                    <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#114B53]'>
+
+                                    </div>
+                                    <div className='w-[167px] flex justify-center items-center gap-2'>
+                                        <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                            <p className='text-base text-white font-semibold'>2</p>
+                                        </div>
+                                        <p className='text-[12px] font-medium text-[#114B53]'>Review Application</p>
+                                    </div>
+                                    <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#114B53]'>
+
+                                   </div>
+                                    <div className='w-[167px] flex justify-center items-center gap-2'>
+                                        <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                            <p className='text-base text-white font-semibold'>3</p>
+                                        </div>
+                                        <p className='text-[12px] font-medium text-[#114B53]'>Applied Successfully</p>
+                                    </div>
+                                </div>
+          
+            </div>
+                <div className='flex flex-col justify-center items-center'>
+                    <img src={Logo} alt="" />
+                    <p className='text-[20px] font-semibold text-[#3A3A3C] mt-5'>Your application was submitted successfully to XYZ Company</p>
+                    <p className='text-[14px] font-normal text-[#6B7588] mt-2'>You can track you application any time from my jobs</p>
+                </div>
+            
+            <div className='w-full flex justify-center p-10'>
+                <div onClick={quickApplyDone}  className='cursor-pointer bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full '>
+                    <p className='text-base font-semibold text-[#114B53]'>Done</p>
+                </div>
+            </div>
+                     </div>
+      </div>
 
 
-                <p className='text-xl font-semibold mt-5'>
-                Review your application
+      
+{/* Edit*/}
+    <div
+        className={`w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isQuickApplyEdit ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+      >
+          <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+        <div className='max-w-[1055px] w-full bg-white rounded-lg overflow-auto z-[30]'>
+            <div className=' p-10 flex justify-between items-center'>
+                 <p className='text-2xl font-bold'>Apply to xyz Company</p>
+                 <IoMdClose size={30} onClick={step2}  className="cursor-pointer" />
+            </div>
+            <hr />
+            <div className='w-full px-10 py-8'>
+
+               <p className='text-xl font-semibold '>
+                Personal information
                 </p>
                 <p className='text-[12px] font-normal mt-2'>
-                Before Submit please review carefully
+                Confirm the personal detail before apply
                 </p>
+             <div className='w-full flex gap-4 mt-5'>
+                <div className='w-full '>
+                   <p className='text-base font-medium'>First name <span className='text-red-600'>*</span></p>
+                   <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                </div>
+                <div className='w-full '>
+                   <p className='text-base font-medium'>Last name <span className='text-red-600'>*</span></p>
+                   <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                </div>
+             </div>
+             <div className='w-full flex gap-4 mt-5'>
+                <div className='w-full '>
+                   <p className='text-base font-medium'>Email<span className='text-red-600'>*</span></p>
+                   <input type="email" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                </div>
+                <div className='w-full '>
+                   <p className='text-base font-medium'>Phone number <span className='text-red-600'>*</span></p>
+                   <input type="number" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                </div>
+             </div>
+             <div className='w-full flex gap-4 mt-5'>
+                <div className='w-full '>
+                   <p className='text-base font-medium'>Visa Sponsership <span className='text-red-600'>*</span></p>
+                   <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                </div>
 
-               <div className='w-full mt-5'>
-                    <div className='w-full flex gap-5'>
-                            <div className='max-w-[411px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-5 py-6'>
-                                <div className='flex justify-between items-center'>
-                                    <p className='text-[20px] font-semibold'>Personal Information</p>
-                                    <p className='text-base font-semibold'>Edit</p>
-                                </div>
-                                <hr  className='mt-6'/>
-                                <div className='flex flex-col justify-center items-center mt-6'>
-                                    <div className='w-[100px] h-[100px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
-                                    <p className='text-[40px] font-extrabold'>J</p>
-                                    </div>
-                                    <p className='text-[20px] font-semibold mt-6'>John S Mathew</p>
-                                </div>
-                                <hr  className='mt-8'/>
-                                <p className='text-[16px] font-medium text-[#3A3A3C] mt-4'>John@xyz.com</p>
-                                <p className='text-[16px] font-medium text-[#3A3A3C] mt-4'>+1 xxx-xxx-xxxx</p>
-                                <p className='text-[14px] font-medium text-[#8F90A6] mt-4'>Visa sponsorship</p>
-                                <p className='text-[16px] font-semibold text-[#000000] mt-2'>Required</p>
-                            </div>
-                            <div className='max-w-[540px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-5 py-6'>
-kdjfksdf
-                            </div>
-                    </div>
-                 <div>
+             </div>
 
-                 </div>
-               </div>
 
             </div>
             <hr />
             <div className='w-full flex justify-end p-10'>
-                <div onClick={step2} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full '>
-                    <p className='text-base font-semibold text-[#114B53]'>Continue</p>
+                <div onClick={step2} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
+                    <p className='text-base font-semibold text-[#114B53]'>Update</p>
                 </div>
             </div>
         </div>
       </div>
+
         </div>
 
     );
