@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
  
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash ,FaEdit} from "react-icons/fa";
@@ -17,8 +17,24 @@ import { MdDeleteOutline } from "react-icons/md";
 import { BiPlus } from 'react-icons/bi';
  
 import { Link } from 'react-router-dom';
+import AboutMe from "../../components/profile/AboutMe";
+import AdditionalDetails from "../../components/profile/AdditionalDetails";
+import Experience from "../../components/profile/Experience";
+import Education from "../../components/profile/Education";
+import Summary from "../../components/profile/Summary";
+import AddJobAlert from "../../components/AddJobAlert";
+import ProfileComplition from "../../components/profile/ProfileComplition";
 
 const Profile:React.FC=()=>{
+
+  const [profilePopup, setProfilePopup] = useState<boolean>(false);
+  const [aboutusPop, setAboutusPop] = useState<boolean>(false);
+  const [additionalInfoPopup, setAdditionalInfoPopup] = useState<boolean>(false);
+  const [summaryPopup, setSummaryPopup] = useState<boolean>(false);
+  const [experiencePopup, setExperiencePopup] = useState<boolean>(false);
+  const [educationPopup, setEducationPopup] = useState<boolean>(false);
+
+
     return(
         <div className="w-full h-full ">
 
@@ -51,8 +67,8 @@ const Profile:React.FC=()=>{
                                         <div className="  bg-white p-3 rounded-lg mt-3">
                                              <div className="flex w-full justify-between items-center pb-3 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#EFF1F3]">
                                                 <h1 className="text-xl font-semibold">About me</h1>
-                                                <div className="flex justify-center items-center space-x-2">
-                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53]">Edit</span>
+                                                <div className="flex justify-center items-center space-x-2 cursor-pointer">
+                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53]" onClick={()=>{setAboutusPop(true)}}>Edit</span>
                                                 </div>
                                                
                                              </div>
@@ -142,8 +158,8 @@ const Profile:React.FC=()=>{
                 <div className="  bg-white p-3 rounded-lg mt-3">
                                              <div className="flex w-full justify-between items-center pb-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#EFF1F3]">
                                                 <h1 className="text-xl font-semibold">Additonal Information</h1>
-                                                <div className="flex justify-center items-center space-x-2">
-                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53]">Edit</span>
+                                                <div className="flex justify-center items-center space-x-2" onClick={()=>{setAdditionalInfoPopup(true)}}>
+                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53]" >Edit</span>
                                                 </div>
                                                
                                              </div>
@@ -214,7 +230,7 @@ const Profile:React.FC=()=>{
                                                
 
                                                <div className="w-1/4 flex justify-end items-center">
-                                               <p className="w-40 h-10 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center items-center p-3">Let's Go </p>
+                                               <p className="w-40 h-10 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center items-center p-3 " onClick={()=>{setProfilePopup(true)}}>Let's Go </p>
                                                </div>
                                             </div>
                                     </div>
@@ -297,9 +313,9 @@ const Profile:React.FC=()=>{
 <div className=" flex flex-col space-y-3">
             <h1 className="text-lg font-semibold">Summery</h1>
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
-              <div className="flex justify-end items-center space-x-2">
+              <div className="flex justify-end items-center space-x-2" onClick={()=>{setSummaryPopup(true)}}>
                 <FaEdit color="#104B53" />
-                <p className="text-[#104B53]">Edit</p>
+                <p className="text-[#104B53]" >Edit</p>
               </div>
               <p className="text-[#535354] text-base">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
@@ -327,7 +343,7 @@ const Profile:React.FC=()=>{
                 Work Experience (Total 4 years 4 months of experience)
               </h1>
 
-              <div className="flex justify-end items-center space-x-2">
+              <div className="flex justify-end items-center space-x-2" onClick={()=>{setExperiencePopup(true)}}>
                 <BiPlus color="#104B53" />
                 <p className="text-[#104B53] font-semibold">Add</p>
               </div>
@@ -335,7 +351,7 @@ const Profile:React.FC=()=>{
 
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               <div className="flex justify-end items-center space-x-4">
-                <div className="flex items-center  ">
+                <div className="flex items-center  " onClick={()=>{setExperiencePopup(true)}}>
                   <FaEdit color="#104B53" />
                   <p className="text-[#104B53]">Edit</p>
                 </div>
@@ -396,7 +412,7 @@ const Profile:React.FC=()=>{
                 Education
               </h1>
 
-              <div className="flex justify-end items-center space-x-2">
+              <div className="flex justify-end items-center space-x-2" onClick={()=>{setEducationPopup(true)}}>
                 <BiPlus color="#104B53" />
                 <p className="text-[#104B53] font-semibold">Add</p>
               </div>
@@ -404,7 +420,7 @@ const Profile:React.FC=()=>{
 
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               <div className="flex justify-end items-center space-x-4">
-                <div className="flex items-center  ">
+                <div className="flex items-center  " onClick={()=>{setEducationPopup(true)}}>
                   <FaEdit color="#104B53" />
                   <p className="text-[#104B53]">Edit</p>
                 </div>
@@ -529,6 +545,17 @@ const Profile:React.FC=()=>{
                         </div>
 
                     </div>
+
+
+{/* Edit About us Popup */}
+
+     {profilePopup && <ProfileComplition setProfilePopup={setProfilePopup}/>}
+     {aboutusPop && <AboutMe setAboutPop={setAboutusPop}/>}
+     {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup ={setAdditionalInfoPopup}/>}
+     {summaryPopup &&  <Summary setSummaryPopup ={setSummaryPopup}/>}
+     {experiencePopup && <Experience setExperiencePopup ={setExperiencePopup}/>}
+     {educationPopup && <Education setEducationPopup ={setEducationPopup}/>}
+
         </div>
     )
 }

@@ -1,7 +1,12 @@
 import React from 'react'
 import { IoMdClose } from 'react-icons/io'
 
-const Summary:React.FC = () => {
+
+type AddSummary={
+    setSummaryPopup:(agr:boolean) => void
+}
+
+const Summary:React.FC<AddSummary> = ({setSummaryPopup}) => {
   return (
     <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
@@ -9,7 +14,7 @@ const Summary:React.FC = () => {
     <div className='max-w-[1005px] h-auto w-full bg-white rounded-lg overflow-y-auto z-[30] p-8'>
         <div className='  flex justify-between items-center'>
             <div className='text-base md:text-2xl font-bold'><p>Summary</p></div>
-            <IoMdClose size={30} className="cursor-pointer" />
+            <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setSummaryPopup(false)}} />
         </div>
         <hr className='mt-5' />
        <div className='py-6 '>
