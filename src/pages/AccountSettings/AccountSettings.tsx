@@ -1,24 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
+import {IoMdClose} from 'react-icons/io'
 
 const AccountSetting:React.FC=()=>{
+    const [isChangeEmail,setIsChangeEmail]=useState<boolean>(false)
     const titles = [
         {
             label:'Profile Settings',
-            link:'/myjobs'
+            link:'/account'
         },
         {
             label:'Profile Visibility',
-            link:'/right-to-represent'
+            link:'/profile-visibility'
         },{
             label:'Privacy Settings',
-            link:'/messages'
+            link:''
         }
       ];
     
     return(
-        <div className="w-full  h-full bg-[#F2F2F5] p-2 " >
+        <div className="w-full  h-full bg-[#F2F2F5] p-2  relative" >
             <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-10 rounded-lg p-5">
                     <h1 className="text-3xl p-3 font-bold">Account Settings</h1>
                     <hr />
@@ -26,7 +27,7 @@ const AccountSetting:React.FC=()=>{
                                 <ul className="w-full  flex justify-start items-center space-x-6   ">
                                     {titles?.map((item,id)=>{
                                         return(
-                                            <Link to={item.link} className={` text-sm p-1 md:text-xl font-[600]  ${id==2?'border-[#104B53] border-b-4':''}  md:p-5`} key={id}>{item.label}</Link>
+                                            <Link to={item.link} className={` text-sm p-1 md:text-xl font-[600]  ${id==0?'border-[#104B53] border-b-4':''}  md:p-5`} key={id}>{item.label}</Link>
                                         )
                                     })}
                                 </ul>
@@ -59,7 +60,7 @@ const AccountSetting:React.FC=()=>{
                                                         </div>
                                                         
 
-                                                        <p className="p-2 text-[#104B53] text-xs rounded-full border border-[#104B53]">Change email</p>
+                                                        <p  className="p-2 text-[#104B53] text-xs rounded-full border border-[#104B53]">Change email</p>
                                                     </div>
 
 
@@ -72,7 +73,7 @@ const AccountSetting:React.FC=()=>{
                                                         </div>
                                                         
 
-                                                        <p className="p-2 text-[#104B53] text-xs rounded-full border border-[#104B53]">Change password</p>
+                                                        <p className="p-2 text-[#104B53] text-xs rounded-full border border-[#104B53]" onClick={()=>setIsChangeEmail(true)}>Change password</p>
                                                     </div>
 
 
@@ -118,6 +119,29 @@ const AccountSetting:React.FC=()=>{
 
                         </div>
             </div>
+
+
+<div className={`w-full h-full absolute top-0 transition-all ease-in-out duration-300  ${isChangeEmail ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}`}>
+        <div className='w-full h-full absolute bg-black opacity-80 z-10'>
+
+        </div>
+       <div className='w-full h-full flex justify-center items-center'>
+      
+           <div className='relative z-20 w-[617px]   bg-white rounded-lg p-10 flex flex-col gap-3'>
+            <div className="flex justify-end cursor-pointer"> <IoMdClose size={40} color="#585858" onClick={()=>setIsChangeEmail(false)} /></div>
+                <p className='font-bold text-2xl text-[#114B53]'>Change Password</p>
+                <p className='text-base font-normal text-[#C7C9D9] '>Enter your email for the verification process, we will send 4 digits code to your email.</p>
+                <form action="" className='h-full flex flex-col justify-between'>
+                    
+                    <label htmlFor="" className='text-[#8F90A6] font-medium'> Email</label>
+                    <input type="text" className='w-full h-[54px] border-2 rounded-lg border-[#EBEBF0]' />
+                    <button  className='w-full h-[58px] mt-5 font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                      Continue
+                    </button>
+                </form>
+           </div>
+       </div>
+    </div>
         </div>
     )
 }
