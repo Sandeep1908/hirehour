@@ -22,8 +22,10 @@ const Header: React.FC = () => {
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
           <div className="flex justify-center items-center space-x-3">
+            <Link to={'/'}>
+           
             <img src={Logo} className="w-36 h-10 object-contain" alt="logo-hirehour" />
-            
+            </Link>
           </div>
 
           <label
@@ -93,7 +95,7 @@ const Header: React.FC = () => {
 
           <div
             className="flex justify-center items-center space-x-1 relative cursor-pointer"
-            onClick={() => setIsAccountOpen((p) => !p)}
+            
           >
             <div className="flex justify-center items-center space-x-3">
               <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
@@ -104,11 +106,12 @@ const Header: React.FC = () => {
 
             <MdOutlineKeyboardArrowDown
               className={`${isAccountOpen ? 'rotate-180 transition-all duration-500' : ''}`}
+              onClick={() => setIsAccountOpen(!isAccountOpen)}
             />
 
             {/* Account Modal  */}
 
-            <AccountModal isAccountOpen={isAccountOpen} />
+            <AccountModal isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} />
           </div>
         </div>
       </div>
