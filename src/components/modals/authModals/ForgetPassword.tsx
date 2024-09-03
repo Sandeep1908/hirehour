@@ -2,10 +2,9 @@ import React from 'react'
 
 const ForgetPassword:React.FC = () => {
   return (
-    <div className='w-full h-[100vh]'>
-        <div className='w-full h-full absolute bg-black opacity-80 z-10'>
+    <div className='w-full h- flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
+           <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-        </div>
        <div className='w-full h-full flex justify-center items-center'>
            <div className='relative z-20 w-[617px] h-[359px] bg-white rounded-lg p-10 flex flex-col gap-3'>
                 <p className='font-bold text-2xl text-[#114B53]'>Forgot Password</p>

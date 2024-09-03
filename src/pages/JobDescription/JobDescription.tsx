@@ -31,7 +31,6 @@ import Footer from '../../components/Footer'
 const JobDescription: React.FC = () => {
 
     const [infoContentHidden, SetInfoContentHidden] = useState<boolean>(false);
-    const [isQuickApplyDone, setQuickApplyDone] = useState<boolean>(false);
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
     const [isQuickApplyStep2, setQuickApplyStep2] = useState<boolean>(false);
     const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
@@ -54,7 +53,6 @@ const JobDescription: React.FC = () => {
     
         window.addEventListener('scroll', handleScroll);
     
-        // Cleanup the event listener on component unmount
         return () => {
           window.removeEventListener('scroll', handleScroll);
         };
@@ -80,7 +78,6 @@ const JobDescription: React.FC = () => {
     }
     const quickApplyDone =()=>{
         setQuickApplyStep3(false);
-        setQuickApplyDone(true)
     }
 
 
@@ -104,7 +101,6 @@ const JobDescription: React.FC = () => {
 
                             <div onClick={() => { setDropdownLoc(!dropdownLoc) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
                                 <p className="text-[14px] font-normal text-[#114B53]">Remote</p>
-                                {/* <img src={arrow_down} alt="" /> */}
                                 <MdOutlineKeyboardArrowDown
                                     className={`${dropdownLoc ? 'rotate-180 transition-all duration-500' : ''}`}
                                 />
@@ -444,16 +440,10 @@ const JobDescription: React.FC = () => {
                         <p className='text-[14px] '><span className='font-extrabold'>Upload Your Resume -</span> Let employers find you.</p>
                         <p className='text-[14px] mt-5 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
                         <div className='mt-4 flex flex-col gap-4 justify-center'>
-                            <JobCard  setIsOpen={setQuickApply} setIsQuickApplyDone={setQuickApplyDone} />
-                            <JobCard  setIsOpen={setQuickApply} setIsQuickApplyDone={setQuickApplyDone}  />
-                            <JobCard  setIsOpen={setQuickApply} setIsQuickApplyDone={setQuickApplyDone} />
-                            {/* <JobCard />
-                            <JobCard />
-                            <JobCard />
-                            <JobCard />
-                            <JobCard />
-                            <JobCard />
-                            <JobCard /> */}
+                            <JobCard  setIsOpen={setQuickApply}  />
+                            <JobCard  setIsOpen={setQuickApply}  />
+                            <JobCard  setIsOpen={setQuickApply}  />
+                            
                         </div>
                     </div>
                     <div className=''>

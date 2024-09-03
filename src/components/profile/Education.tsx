@@ -93,15 +93,13 @@ const Education:React.FC<EducationProps> = ({setEducationPopup}) => {
                 <div className='w-full '>
                    <p className='text-base font-medium'>University/College <span className='text-red-600'>*</span></p>
                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      {/* <option value=""> xyz college </option>
-                      <option value=""> abc college </option> */}
+                     
                    </select>
                 </div>
                 <div className='w-full '>
                    <p className='text-base font-medium'>Location <span className='text-red-600'>*</span></p>
                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      {/* <option value=""> Texas, US</option>
-                      <option value=""> Londan, Uk</option> */}
+                  
                    </select>
                 </div>
              </div>
