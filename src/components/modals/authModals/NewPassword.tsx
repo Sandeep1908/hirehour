@@ -7,9 +7,7 @@ const NewPassword:React.FC = () => {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     
-    const togglePasswordVisibility =()=>{
-        setShowPassword(!showPassword)
-    }
+   
   return (
     <div className='w-full h-[100vh]'>
         <div className='w-full h-full absolute bg-black opacity-80 z-10'>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
  
 import { FaEye } from "react-icons/fa";
-import { FaEyeSlash ,FaEdit} from "react-icons/fa";
+import {FaEdit} from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -16,13 +16,11 @@ import { MdDeleteOutline } from "react-icons/md";
  
 import { BiPlus } from 'react-icons/bi';
  
-import { Link } from 'react-router-dom';
 import AboutMe from "../../components/profile/AboutMe";
 import AdditionalDetails from "../../components/profile/AdditionalDetails";
 import Experience from "../../components/profile/Experience";
 import Education from "../../components/profile/Education";
 import Summary from "../../components/profile/Summary";
-import AddJobAlert from "../../components/AddJobAlert";
 import ProfileComplition from "../../components/profile/ProfileComplition";
 
 const Profile:React.FC=()=>{
