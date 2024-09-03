@@ -17,6 +17,7 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { IoCallOutline } from 'react-icons/io5'
+import Footer from '../../components/Footer'
 
 
 
@@ -84,6 +85,8 @@ const JobDescription: React.FC = () => {
 
 
     return (
+        <>
+
         <div className='w-full h-full pb-10 bg-white'>
             <div className='hidden md:block w-full max-w-[1280px] h-[190px] m-auto rounded-xl shadow-lg p-5'  >
                 <div className='w-full h-[80px] border-2 border-[##DFDFDF] rounded-xl flex justify-between px-4'>
@@ -995,7 +998,11 @@ const JobDescription: React.FC = () => {
         </div>
       </div>
 
+
         </div>
+
+        <Footer/>
+        </>
 
     );
 };

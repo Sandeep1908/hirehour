@@ -26,7 +26,7 @@ const RightToRepresent: React.FC = () => {
   ];
   const tags = ['New (2)', 'Accepted (1)', 'Expired (1)'];
   return (
-    <div className="w-full  h-full bg-[#F2F2F5] p-2 relative ">
+    <div className="w-full  h-full bg-[#F2F2F5] p-2 relative  ">
       <div className=" w-full max-w-[1280px]  bg-white  m-auto mt-10 rounded-lg p-2 md:p-5">
         <div className="w-full flex justify-between p-2 ">
           <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
@@ -51,7 +51,7 @@ const RightToRepresent: React.FC = () => {
           </p>
         </div>
 
-        <div className="w-full overflow-auto">
+        <div className="w-full overflow-auto relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] p-3">
           <ul className="w-full flex">
             {tags?.map((item, id) => {
               return (
@@ -61,6 +61,24 @@ const RightToRepresent: React.FC = () => {
               );
             })}
           </ul>
+        </div>
+           
+        <div className=' p-5 flex justify-start space-x-3   items-center'>
+          <p>Recevied</p>
+              <select name="" id="" className='p-3 border outline-none '>
+                <option  className="p-2" value="">Anytime</option>
+
+
+                <option value="">24 Hours</option>
+                <option value="">Past 3 days</option>
+
+                <option value="">Past week</option>
+
+                <option value="">Past Month</option>
+
+
+
+              </select>
         </div>
 
         <div className="w-full pb-10 pt-5 md:hidden">
@@ -162,7 +180,7 @@ const RightToRepresent: React.FC = () => {
       {/* ADD RTR FORM  */}
 
       <div
-        className={`w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isRTROpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}  `}
+        className={`w-full h-fit flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isRTROpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-100]'}   `}
       >
         <div
           className="   z-[10] w-full max-w-[1000px] shadow-xl
@@ -434,12 +452,12 @@ const RightToRepresent: React.FC = () => {
 
 
       <div
-        className={`w-full h-full  flex justify-center items-center   fixed inset-0 transition-all ease-in-out duration-300  ${isPreviewRTR ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'} `}
+        className={`w-full h-full   flex justify-center items-center   fixed inset-0 transition-all ease-in-out duration-300  ${isPreviewRTR ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-1000]'} `}
       >
-              <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+              <div className='w-full h-screen absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
        
         <div
-          className="   z-[10] w-full max-w-[1000px] h-full shadow-xl
+          className="   z-[30] w-full max-w-[1000px] h-full shadow-xl
                          overflow-auto  bg-[#F2F2F5] rounded-lg"
         >
           <div className="flex justify-between items-start p-10">
@@ -530,32 +548,8 @@ const RightToRepresent: React.FC = () => {
 
           {/* Acceptance  */}
 
-            <div className="w-full flex flex-col space-y-4 p-5 bg-white mt-2">
-              <p>
-                I, give the exclusive permission to (Candidates name) (Job Title) (Recruitment
-                agency) resume and qualification to position located in (Location) to represent
-                (Client) for the
-              </p>
-
-              <p>
-                I confirm that neither I have submitted my resume or application for this specific
-                position to any other recruitment agency within the period of the last 30 days, nor
-                I submitted Right to Represent form with any other recruitment agency for this job
-                requisition.
-              </p>
-
-              <p>
-                As a candidate, my handwritten signature, date and requisition number acknowledges
-                my authorization for the above-listed vendor to represent me for this posted
-                requisition from the date on the form till 30 days.
-              </p>
-
-              <p>
-                {' '}
-                <strong>Note:</strong> If RTR is submitted to more than one staffing vendor for the
-                same job requisition, then you will be pulled out of the consideration. You might be
-                no longer eligible for this requisition.
-              </p>
+            <div className="w-full  flex flex-col space-y-4 p-5 bg-white mt-2">
+             
 
               <div className='flex justify-start items-center space-x-3'>
                 <input type="checkbox"  className='w-[32px] h-[32px]'/> <p className='text-[#7D8697]'>By accepting this and proceeding further you agreed to the terms &  condition</p>
