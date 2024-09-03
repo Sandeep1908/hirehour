@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TiTick } from 'react-icons/ti';
 
 import { FaPlus } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 
 const AdditionalInfo: React.FC = () => {
-  const [experiences, setExperiences] = useState();
   return (
     <div className="w-full   pb-20 bg-[#F6F6F8]">
       <div className="max-w-[1280px] h-48  m-auto">

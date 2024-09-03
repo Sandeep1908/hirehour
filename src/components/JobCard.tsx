@@ -8,7 +8,6 @@ import ReportJob from './ReportJob';
 
 type JobCardProps={
     setIsOpen:(e:boolean)=>void,
-    setIsQuickApplyDone:(e:boolean)=>void,
 }
 
 
