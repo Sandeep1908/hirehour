@@ -27,7 +27,6 @@ const Timer:React.FC = () => {
         </span>
       </p>
     )}
-    {/* <p onClick={() => setTime(10)}>Resend</p>}  */}
   </div>
   )
 }

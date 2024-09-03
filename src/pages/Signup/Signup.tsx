@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../assets/Google.svg';
 import apple_logo from '../../assets/apple.svg';
+import { Link } from 'react-router-dom';
 
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -99,7 +100,7 @@ const Signup: React.FC = () => {
                      <p className='text-base font-semibold'>Sign up</p>
                   </div>
                 {/* </div> */}
-                <div className="grow">
+                {/* <div className="grow">
                   <label htmlFor="firstName" className="text-base">
                     Confirm password <span className="text-[#E71717]">*</span>
                   </label>
@@ -116,7 +117,7 @@ const Signup: React.FC = () => {
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
                   </div>
-                </div>
+                </div> */}
               {/* </div> */}
 
                   <div className="flex mt-4 mb-4 items-center justify-center ">
@@ -145,9 +146,12 @@ const Signup: React.FC = () => {
      <p className='text-[14px] md:text-base font-normal mt-8 md:mt-4 text-center md:text-left'>
      By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
      </p>
-     <p className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
+    
+     <div className='flex justify-center'>
+     <Link to={"/signin"} className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
      Already on Hirehours ? Log in
-     </p>
+     </Link>
+     </div>
                 
               </form>
            </div>

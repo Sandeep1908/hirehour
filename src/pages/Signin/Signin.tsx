@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../assets/Google.svg';
 import apple_logo from '../../assets/apple.svg';
+import { Link } from 'react-router-dom';
+import ForgetPassword from '../../components/modals/authModals/ForgetPassword';
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -63,7 +67,7 @@ const Signin: React.FC = () => {
                       <p className='text-[14px] '>Remember me</p>
                   </div>
 
-                  <div className='font-medium text-[14px] md:text-base underline'>
+                  <div className='font-medium text-[14px] md:text-base underline cursor-pointer' onClick={()=>{setShowNewPassword(true)}}>
                   Forgot Password?
                   </div>
                   </div>
@@ -98,15 +102,19 @@ const Signin: React.FC = () => {
      <p className='text-[14px] md:text-base font-normal mt-8 md:mt-4 text-center md:text-left'>
      By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
      </p>
-     <p className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
+     <div className='flex justify-center'>
+     <Link to={"/signup"} className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
      New to Hirehours ? Sign up 
-     </p>
+     </Link>
+     </div>
+
                 
               </form>
            </div>
         
         </div>
       </div>
+      {showNewPassword && <ForgetPassword/> }
     </div>
   );
 };
