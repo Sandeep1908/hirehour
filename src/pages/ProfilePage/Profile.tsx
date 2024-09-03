@@ -38,7 +38,7 @@ const Profile:React.FC=()=>{
 
                     <div className="w-full max-w-[1280px] m-auto p-5 grid grid-cols-1 ">
 
-                        <div className="flex p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#C7C9D9] ">
+                        <div className="flex pb-3 md:p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#C7C9D9] ">
                             <p className="text-lg font-semibold">Profile</p>
                         </div>
                       
@@ -48,6 +48,39 @@ const Profile:React.FC=()=>{
                                 {/* //left section */}
 
                                 <div className="w-[450px] h-full pt-10   ">
+
+                                <div className="bg-white w-full mb-3   rounded-lg md:hidden  ">
+                                            <div className="p-3">
+                                                <h1 className="text-xl font-semibold">Hello John,</h1>
+                                                <p className="text-[#6B7588] text-sm">Recruiters are looking for Candidates like you, Complete your profile to Stand out</p>
+                                            </div>
+
+                                            <div className="w-full flex flex-col justify-between items-center p-3">
+                                                <div className="w-full flex justify-center items-center space-x-3">
+                                                <div className="w-full bg-[#FFF1C6] rounded-full  ">
+                    <div
+                      className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
+                      style={{ width: '75%' }}
+                    >
+                      {' '}
+                      75%
+                    </div>
+
+
+                  </div>   
+                  <p className="text-xs">4/7 Completed</p>
+                                                </div>
+
+                                               
+
+                                               <div className=" pt-4 flex justify-end items-end w-full">
+                                               <p className="w-32 text-sm h-8 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center items-center p-3 " onClick={()=>{setProfilePopup(true)}}>Let's Go </p>
+                                               </div>
+                                            </div>
+                                    </div>
+
+
+
                                         <div className="flex justify-between items-start bg-white p-3 rounded-lg">
                                              <div className="flex flex-col space-y-2">
                                                 <h1 className="text-xl font-semibold">Public</h1>
@@ -72,7 +105,7 @@ const Profile:React.FC=()=>{
                                              </div>
 
 
-                                             <div className="w-full flex flex-col  space-y-3 justify-center items-center p-5 elative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#EFF1F3]">
+                                             <div className="w-full flex flex-col  space-y-3 justify-center items-center p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:mb-3 before:bg-[#EFF1F3]">
                                                     <div className="w-24 h-24 bg-[#CBFFFC] rounded-full flex justify-center items-center">
                                                             <p className="text-xl text-[#104B53] font-semibold ">J</p>
                                                     </div>
@@ -199,7 +232,7 @@ const Profile:React.FC=()=>{
 
                                 {/* right Section  */}
 
-                                <div className="w-full h-full pt-10 p-3 ">
+                                <div className="w-full h-full pt-10 p-3 hidden md:block ">
 
 
 {/* Hello Section  */}
