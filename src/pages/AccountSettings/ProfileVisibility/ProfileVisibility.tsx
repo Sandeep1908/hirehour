@@ -51,7 +51,7 @@ const ProfileVisibility:React.FC=()=>{
                                                                 <p className="text-[#404040] text-sm">We will hide your name, email and contact details to employers and if they like your profile then then can send you a message.</p>
                                                             </div>
 
-                                                            <input type="radio" name="" id="" n className="w-10 h-9" />
+                                                            <input type="radio" name="Visible" id="Visible" className="w-10 h-9" />
                                                         
                                                     </div>
 
