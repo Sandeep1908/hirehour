@@ -46,7 +46,7 @@ const Message : React.FC =()=>{
                         <div className="w-full flex max-w-[1200px] mt-10  h-full m-auto border border-[#E1E1E2] rounded-lg">
                             {/* left Side bar  */}
 
-                            <div className="w-full  p-5 flex flex-col space-y-6 max-w-[307px] h-[774px] border border-[#D6DBDE] rounded-lg ">
+                            <div className="w-full  p-5 flex flex-col space-y-6  md:max-w-[307px] h-[774px] border border-[#D6DBDE] rounded-lg ">
                                     <div className="flex justify-between items-center p-4">
                                         <h1 className="text-xl font-semibold text-[#104B53]">Messages</h1>
                                         <FaEdit color="#104B53" size={25}/>
@@ -102,7 +102,7 @@ const Message : React.FC =()=>{
 
 
                                     {/* Right side  */}
-                            <div className="w-full h-full p-5 relative    ">
+                            <div className="w-full h-full p-5 relative hidden md:block    ">
                                     <div className="  flex justify-between items-center">
                                         <div className="w-full flex  justify-center items-center space-x-3">       
 
@@ -128,7 +128,7 @@ const Message : React.FC =()=>{
                                     
                                         {/* three dot menu  */}
 
-                                        <div className={`w-36  p-3 bg-[#FFFFFF] shadow-md absolute top-9 rounded-lg flex flex-col space-y-5 transition-all duration-300 ${isShareModal ? 'opacity-1 translate-y-[-10px]' : 'opacity-0 z-[-300]'}`}>
+                                        <div className={`w-36  p-3 bg-[#FFFFFF] shadow-md absolute top-9 rounded-lg flex flex-col space-y-5 transition-all duration-300 ${isShareModal ? 'block translate-y-[-10px]' : 'hidden'}`}>
 
                                             <div className="flex space-x-3 items-center">
                                             <FaFlag />
