@@ -6,6 +6,7 @@ import { BsSuitcaseLg } from 'react-icons/bs';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { IoIosMenu } from 'react-icons/io';
+import { IoMdClose } from "react-icons/io";
 
 import { BsUpload } from 'react-icons/bs';
 import NotificationModal from './modals/NotificationModal';
@@ -15,9 +16,10 @@ import { Link } from 'react-router-dom';
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
+  const [isNavOpen,setIsNavOpen]=useState<boolean>(false)
 
   return (
-    <div className="w-full h-20 bg-white  ">
+    <div className="w-full h-20 bg-white relative   ">
       <div className="w-full max-w-[1300px] m-auto flex justify-between items-center p-5">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
@@ -48,7 +50,7 @@ const Header: React.FC = () => {
               </p>
 
               <p className="text-sm tracking-wide hidden">Employer / Job Poster</p>
-              <IoIosMenu size={40} />
+              <IoIosMenu size={40} onClick={()=>setIsNavOpen(true)} />
             </div>
           </div>
         </div>
@@ -115,6 +117,46 @@ const Header: React.FC = () => {
           </div>
         </div>
       </div>
+
+
+      {/* mobile view  */}
+
+      <div className={`w-full h-screen bg-white fixed top-0 z-10 transition-all duration-500  ${isNavOpen?'left-[0%]':'left-[100%]'}`}>
+
+          <div className='w-full flex justify-between items-center p-4'>
+            <Link to={'/'}>
+                  <img src={Logo} alt="home-logo" className='w-32' />
+            </Link>
+
+            <IoMdClose size={30} onClick={()=>setIsNavOpen(false) }/>
+
+          </div>
+
+
+            <div className='w-full flex justify-center items-center p-5'>
+                <label
+                className={`flex justify-center items-center w-full h-12 p-0.5 rounded-full cursor-pointer bg-[#104B53]   `}
+              >
+                <BsUpload size={13} color="#fff" className="" />
+                <span className={`text-xs text-white  font-[500] pl-2`}>Upload Resume</span>
+                <input type="file" className="hidden" />
+              </label>
+
+            </div>
+
+            <hr />
+
+            <div className='w-full flex justify-center items-center p-5'>
+              <Link to={''}>
+
+                  Employer/Job Poster
+              </Link>
+            </div>
+            
+            <hr />
+ 
+      </div>
+
     </div>
   );
 };
