@@ -1,7 +1,6 @@
 import React, { useState } from "react";
  
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash ,FaEdit} from "react-icons/fa";
+import { FaEdit, FaEye } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaLinkedin } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
@@ -11,21 +10,18 @@ import { TbPhoneCalling } from "react-icons/tb";
 import { PiSuitcase } from "react-icons/pi";
 import { BsUpload } from 'react-icons/bs';
 import { MdDeleteOutline } from "react-icons/md";
- 
- 
- 
 import { BiPlus } from 'react-icons/bi';
- 
-import { Link } from 'react-router-dom';
 import AboutMe from "../../components/profile/AboutMe";
 import AdditionalDetails from "../../components/profile/AdditionalDetails";
 import Experience from "../../components/profile/Experience";
 import Education from "../../components/profile/Education";
 import Summary from "../../components/profile/Summary";
-import AddJobAlert from "../../components/AddJobAlert";
 import ProfileComplition from "../../components/profile/ProfileComplition";
+import { FaEyeSlash } from "react-icons/fa6";
 
 const Profile:React.FC=()=>{
+
+  const [showPublicPrivate, setShowPublicPrivate] = useState<boolean>(false);
 
   const [profilePopup, setProfilePopup] = useState<boolean>(false);
   const [aboutusPop, setAboutusPop] = useState<boolean>(false);
@@ -52,11 +48,21 @@ const Profile:React.FC=()=>{
                                 <div className="w-[450px] h-full pt-10   ">
                                         <div className="flex justify-between items-start bg-white p-3 rounded-lg">
                                              <div className="flex flex-col space-y-2">
-                                                <h1 className="text-xl font-semibold">Public</h1>
+                                             {showPublicPrivate ?<h1 className="text-xl font-semibold">Private</h1>
+                                                 :
+                                                 <h1 className="text-xl font-semibold">Public</h1>
+                                                 }
+                                                
                                                 <p className="text-sm text-[#A4A5B7]">Visible to Employer</p>
                                              </div>
                                                 
-                                                <FaEye size={23} color="#104B53"/>
+                                                {showPublicPrivate ?  <FaEyeSlash onClick={()=>{setShowPublicPrivate(false)}} size={23} color="#104B53"/> 
+                                                 :
+                                                 <FaEye onClick={()=>{setShowPublicPrivate(true)}} size={23} color="#104B53"/>
+                                                 }
+                                               
+                                                
+                                                
 
                                         </div>
 
