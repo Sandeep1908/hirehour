@@ -6,6 +6,7 @@ import { SlLocationPin } from 'react-icons/sl';
 import { ResourseCard } from '../../config/home';
 import { BsUpload } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
+import Footer from '../../components/Footer';
 
 const Home: React.FC = () => {
   const [homeCards, setHomeCards] = useState<HomeCardTypes[]>();
@@ -15,9 +16,11 @@ const Home: React.FC = () => {
   }, []);
 
   return (
+    <>
+    
     <div className="w-full mb-10 ">
       <div className="bg-[#104B53]">
-        <div className="w-full max-w-[1200px]  m-auto p-7 md:p-10 ">
+        <div className="w-full max-w-[1200px]  m-auto p-2 md:p-10 ">
           {/* Top Heading  */}
 
           <div className="w-full max-w-3xl flex flex-col space-y-4">
@@ -85,9 +88,11 @@ const Home: React.FC = () => {
                   </div>
 
                   <div className="mr-2">
+                    <Link to={'/searchjob'}>
                     <button className=" bg-[#E9F358] flex justify-center items-center text-[#104B53] w-28 h-9 rounded-full text-sm font-[500] cursor-pointer">
                       Search
                     </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -121,7 +126,7 @@ const Home: React.FC = () => {
       </div>
       {/* Resouces section */}
 
-      <div className="w-full max-w-[1200px] mt-10 m-auto bg-white">
+      <div className="w-full max-w-[1200px] mt-10 m-auto bg-white p-4 rounded-lg">
         <div className="w-full">
           <div className="flex justify-center items-center">
             <h1 className="text-xl font-bold">Resource</h1>
@@ -153,7 +158,11 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
+
+   
     </div>
+    <Footer/>
+    </>
   );
 };
 
