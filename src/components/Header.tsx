@@ -11,13 +11,45 @@ import { IoMdClose } from "react-icons/io";
 import { BsUpload } from 'react-icons/bs';
 import NotificationModal from './modals/NotificationModal';
 import AccountModal from './modals/AccountModal';
+ 
+import { CgProfile } from 'react-icons/cg';
+import { RiListSettingsLine } from 'react-icons/ri';
+import { RiUserSettingsLine } from 'react-icons/ri';
+import { VscNotebook } from 'react-icons/vsc';
+import { GoSignOut } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isNavOpen,setIsNavOpen]=useState<boolean>(false)
+  const handlNavBar=()=>{
+    setIsAccountOpen(false);
+    setIsNavOpen(false)
+  }
+  const accountOptions = [
+    {
+      icon: <CgProfile size={30} />,
+      name: 'Profile',
+       link:'/profile'
+    },
+    {
+      icon: <RiListSettingsLine size={30} />,
+      name: 'Job Preference',
+       link:''
+    },
 
+    {
+      icon: <RiUserSettingsLine size={30} />,
+      name: 'Account Setting',
+      link:'/account'
+    },
+    {
+      icon: <VscNotebook size={30} />,
+      name: 'Our Blog',
+       link:''
+    },
+  ];
   return (
     <div className="w-full h-20 bg-white relative   ">
       <div className="w-full max-w-[1300px] m-auto flex justify-between items-center p-5">
@@ -62,19 +94,19 @@ const Header: React.FC = () => {
           <div className="flex justify-center items-center space-x-5">
             <div className=" flex flex-col justify-center items-center cursor-pointer">
               <RiTodoLine size={25} />
-              <Link to={'/right-to-represent'} className="font-[200] text-[10px]">
+              <Link to={'/right-to-represent'} className="font-[200] text-sm">
                 RTR
               </Link>
             </div>
 
             <div className=" flex flex-col justify-center items-center cursor-pointer">
               <BiMessageDetail size={25} />
-              <Link  to='/messages' className="font-[200] text-[10px]">Message</Link>
+              <Link  to='/messages' className="font-[200] text-sm">Message</Link>
             </div>
 
             <div className=" flex flex-col justify-center items-center cursor-pointer">
               <BsSuitcaseLg size={25} />
-              <Link to={'/myjobs'} className="font-[200] text-[10px]">
+              <Link to={'/myjobs'} className="font-[200] text-sm">
                 My jobs{' '}
               </Link>
             </div>
@@ -133,7 +165,9 @@ const Header: React.FC = () => {
           </div>
 
 
-            <div className='w-full flex justify-center items-center p-5'>
+{/* before signin  */}
+<div className='hidden'>
+<div className='w-full flex justify-center items-center p-5'>
                 <label
                 className={`flex justify-center items-center w-full h-12 p-0.5 rounded-full cursor-pointer bg-[#104B53]   `}
               >
@@ -154,6 +188,44 @@ const Header: React.FC = () => {
             </div>
             
             <hr />
+</div>
+
+              {/* after signIn  */}
+
+              <div className='w-full'>
+       
+      <div className="flex flex-col   w-full">
+        <div className="w-full flex justify-start items-center space-x-3 p-5 relative before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px] ">
+          <p className="text-xs text-[#104B53] w-10 h-10 flex justify-center items-center bg-[#CBFFFC] rounded-full ">
+            J
+          </p>
+
+          <div className="flex flex-col">
+            <h1 className="text-lg">Johnson</h1>
+            <p className="text-sm">johnson@example.com </p>
+          </div>
+        </div>
+
+        <ul className="flex flex-col p-5 space-y-6 pt-5 relative  before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px]">
+          {accountOptions?.map((item, id) => {
+            return (
+              <Link  to={item.link || ''} className="flex justify-start items-center space-x-2 p-1" key={id} onClick={handlNavBar}>
+                {item.icon}
+                <p className="text-sm ">{item.name}</p>
+              </Link>
+            );
+          })}
+
+          <hr />
+
+          <li className="flex justify-start items-center space-x-2 p-1">
+            <GoSignOut color="#FF4444" size={30} />
+            <p className="text-sm text-[#FF4444] ">Sign Out</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+ 
  
       </div>
 
