@@ -21,7 +21,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
     {
       icon: <RiListSettingsLine />,
       name: 'Job Preference',
-       link:''
+       link:'/job-preference'
     },
 
     {
