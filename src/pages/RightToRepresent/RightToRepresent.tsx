@@ -34,7 +34,7 @@ const RightToRepresent: React.FC = () => {
               return (
                 <Link
                   to={item.link}
-                  className={` text-sm p-1 md:text-xl font-[600]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-5`}
+                  className={` text-sm p-1 md:text-xl font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-5`}
                   key={id}
                 >
                   {item.label}
@@ -44,7 +44,7 @@ const RightToRepresent: React.FC = () => {
           </ul>
 
           <p
-            className="hidden md:flex justify-center items-center space-x-2 bg-[#E9F358] w-[150px] h-[50px] text-sm text-[#104B53] rounded-full "
+            className="hidden md:flex justify-center cursor-pointer items-center space-x-2 bg-[#E9F358] w-[150px] h-[40px] text-sm text-[#104B53] rounded-full "
             onClick={() => setIsRTROpen(true)}
           >
             <BiPlus color="#104B53" /> <span>Add RTR</span>
@@ -55,7 +55,7 @@ const RightToRepresent: React.FC = () => {
           <ul className="w-full flex">
             {tags?.map((item, id) => {
               return (
-                <li className=" text-sm md:text-lg font-[600]  p-5" key={id}>
+                <li className=" text-sm md:text-lg font-[400]  p-5" key={id}>
                   {item}
                 </li>
               );
@@ -169,7 +169,7 @@ const RightToRepresent: React.FC = () => {
               <p className="w-[100px] bg-[#FF3837] text-white p-2 text-center rounded-full">
                 Decline
               </p>
-              <p onClick={()=>setIsSignRTR(true)} className="w-[140px] bg-[#07A560] text-white p-2 text-center rounded-full">
+              <p onClick={()=>setIsSignRTR(true)} className="w-[140px] cursor-pointer bg-[#07A560] text-white p-2 text-center rounded-full">
                 View & Sign
               </p>
             </div>
@@ -180,18 +180,20 @@ const RightToRepresent: React.FC = () => {
       {/* ADD RTR FORM  */}
 
       <div
-        className={`w-full h-fit flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isRTROpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-100]'}   `}
+        className={`w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500 ${isRTROpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-100]'}   `}
       >
+              <div className='w-full h-screen absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+
         <div
-          className="   z-[10] w-full max-w-[1000px] shadow-xl
-                        h-screen overflow-auto  bg-white rounded-lg"
+          className="   z-[10] w-full max-w-[1000px]  relative shadow-xl
+                        h-[700px] overflow-auto  bg-white rounded-lg"
         >
-          <div className="flex justify-between items-center p-5">
+          <div className="flex justify-between items-center p-5 sticky top-0 bg-white">
             <div className="flex flex-col space-y-3">
-              <h1 className="text-xl font-semibold">Create RTR</h1>
+              <h1 className="text-xl font-[500]">Create RTR</h1>
             </div>
 
-            <IoMdClose size={30} className="cursor-pointer" onClick={() => setIsRTROpen(false)} />
+            <IoMdClose size={30} color='#6B7588' className="cursor-pointer" onClick={() => setIsRTROpen(false)} />
           </div>
 
           <hr />
@@ -235,64 +237,94 @@ const RightToRepresent: React.FC = () => {
 
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Enter your Location"
                 className="p-4 border border-[#EBEBF0] rounded-md"
               />
             </div>
 
             <div className="w-full grid grid-cols-2 gap-3">
-              {/* Applicant Name  */}
+              {/* Sender Name  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Applicant Name</label>
+                  <label htmlFor="">Sender Name</label>
                 </div>
 
                 <input
                   type="text"
-                  placeholder="Applicant Name"
+                  placeholder="Sender Name"
                   className="p-4 border border-[#EBEBF0] rounded-md"
                 />
               </div>
 
-              {/* Applicant Email  */}
+              {/* Vendor Name  */}
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Applicant Email</label>
+                  <label htmlFor="">Vendor Name</label>
                 </div>
 
                 <input
-                  type="email"
-                  placeholder="Applicant Email"
+                  type="text"
+                  placeholder="Vendor Email "
                   className="p-4 border border-[#EBEBF0] rounded-md"
                 />
               </div>
             </div>
 
             <div className="w-full grid grid-cols-2 gap-3">
-              {/* Employer Name  */}
+              {/* Sender Email  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Employer Name</label>
-                </div>
-
-                <input
-                  type="text"
-                  placeholder="Employer Name"
-                  className="p-4 border border-[#EBEBF0] rounded-md"
-                />
-              </div>
-
-              {/* Employer Email  */}
-
-              <div className="flex flex-col space-y-2">
-                <div className="flex ">
-                  <label htmlFor="">Employer Email</label>
+                  <label htmlFor="">Sender Email</label>
                 </div>
 
                 <input
                   type="email"
-                  placeholder="Employer Email"
+                  placeholder="Sender Email"
+                  className="p-4 border border-[#EBEBF0] rounded-md"
+                />
+              </div>
+
+              {/* Vendor Email  */}
+
+              <div className="flex flex-col space-y-2">
+                <div className="flex ">
+                  <label htmlFor="">Vendor Email</label>
+                </div>
+
+                <input
+                  type="email"
+                  placeholder="Vendor Email"
+                  className="p-4 border border-[#EBEBF0] rounded-md"
+                />
+              </div>
+            </div>
+
+
+            <div className="w-full grid grid-cols-2 gap-3">
+              {/* Sender Company  */}
+              <div className="flex flex-col space-y-2">
+                <div className="flex ">
+                  <label htmlFor="">Sender Company</label>
+                </div>
+
+                <input
+                  type="email"
+                  placeholder="Sender Company"
+                  className="p-4 border border-[#EBEBF0] rounded-md"
+                />
+              </div>
+
+              {/* Vendor Company  */}
+
+              <div className="flex flex-col space-y-2">
+                <div className="flex ">
+                  <label htmlFor="">Vendor Company</label>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder="Vendor Company"
                   className="p-4 border border-[#EBEBF0] rounded-md"
                 />
               </div>
@@ -312,11 +344,11 @@ const RightToRepresent: React.FC = () => {
                 />
               </div>
 
-              {/* Submission (in Days)  */}
+              {/* RTR Validity (in Days)  */}
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Submission (in Days)</label>
+                  <label htmlFor="">RTR Validity (in Days)</label>
                 </div>
 
                 <input
@@ -457,14 +489,14 @@ const RightToRepresent: React.FC = () => {
               <div className='w-full h-screen absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
        
         <div
-          className="   z-[30] w-full max-w-[1000px] h-full shadow-xl
+          className="   z-[30] w-full max-w-[1000px]  h-[700px]  shadow-xl
                          overflow-auto  bg-[#F2F2F5] rounded-lg"
         >
-          <div className="flex justify-between items-start p-10">
+          <div className="flex justify-between items-start p-10 sticky top-0 bg-[#F2F2F5] z-[10]">
             <div className="w-full flex justify-center items-center">
               <img src={Logo} className="w-20 h-20" alt="img-logo" />
             </div>
-            <IoMdClose size={40} color="#585858" onClick={()=>setIsSignRTR(false)} />
+            <IoMdClose size={40} color="#585858" className='hover:scale-[1.1] cursor-pointer' onClick={()=>isSetPreviewRTR(false)} />
           </div>
 
           <div className="w-full max-w-[975px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
@@ -589,10 +621,10 @@ const RightToRepresent: React.FC = () => {
               <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
        
         <div
-          className="   z-[10] w-full max-w-[1000px] h-full shadow-xl
+          className="   z-[10] w-full max-w-[1000px] h-[700px] shadow-xl
                          overflow-auto  bg-[#F2F2F5] rounded-lg"
         >
-          <div className="flex justify-between items-start p-10">
+          <div className="flex justify-between items-start p-10 sticky top-0 bg-[#F2F2F5]">
             <div className="w-full flex justify-center items-center">
               <img src={Logo} className="w-20 h-20" alt="img-logo" />
             </div>

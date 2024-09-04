@@ -30,7 +30,7 @@ const Message : React.FC =()=>{
                                 <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-[1px] before:bg-[#ECECEC]">
                                     {titles?.map((item,id)=>{
                                         return(
-                                            <Link to={item.link} className={` text-sm p-1 md:text-xl font-[600]  ${id==2?'border-[#104B53] border-b-4':''}  md:p-5`} key={id}>{item.label}</Link>
+                                            <Link to={item.link} className={` text-sm p-1 md:text-xl font-[500]  ${id==2?'border-[#104B53] border-b-4':''}  md:p-5`} key={id}>{item.label}</Link>
                                         )
                                     })}
                                 </ul>

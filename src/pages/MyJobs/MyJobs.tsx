@@ -23,6 +23,7 @@ const MyJobs: React.FC = () => {
     'Applied(8)',
     'Saved(5)',
     'Application Started(2)',
+    'Sortlisted',
     'Interviewing',
     'Offer Received',
   ];
@@ -37,7 +38,7 @@ const MyJobs: React.FC = () => {
               return (
                 <Link
                   to={item.link}
-                  className={` text-sm p-1 md:text-xl font-[600]  ${id == 0 ? 'border-[#104B53] border-b-4' : ''}  md:p-5`}
+                  className={` text-sm p-1 md:text-xl font-[500] font-sans  ${id == 0 ? 'border-[#104B53] border-b-4' : ''}  md:p-5`}
                   key={id}
                 >
                   {item.label}
@@ -51,7 +52,7 @@ const MyJobs: React.FC = () => {
           <ul className="w-full flex">
             {tags?.map((item, id) => {
               return (
-                <li className=" text-sm md:text-lg font-[600]  p-5" key={id}>
+                <li className=" text-sm md:text-lg font-[500]  p-5" key={id}>
                   {item}
                 </li>
               );
