@@ -46,8 +46,8 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
           </p>
 
           <div className="flex flex-col">
-            <h1 className="text-xs">Johnson</h1>
-            <p className="text-[7px]">johnson@example.com </p>
+            <h1 className="text-sm">Johnson</h1>
+            <p className="text-[8px]">johnson@example.com </p>
           </div>
         </div>
 
@@ -56,7 +56,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
             return (
               <Link  to={item.link || ''} className="flex justify-start items-center space-x-2 p-1" key={id} onClick={()=>setIsAccountOpen(false)}>
                 {item.icon}
-                <p className="text-[10px] ">{item.name}</p>
+                <p className="text-[12px] ">{item.name}</p>
               </Link>
             );
           })}
@@ -65,7 +65,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
 
           <li className="flex justify-start items-center space-x-2 p-1">
             <GoSignOut color="#FF4444" />
-            <p className="text-[10px] text-[#FF4444] ">Sign Out</p>
+            <p className="text-[12px] text-[#FF4444] ">Sign Out</p>
           </li>
         </ul>
       </div>
