@@ -21,6 +21,7 @@ import Message from './pages/Messages/Message.tsx';
 import AccountSetting from './pages/AccountSettings/AccountSettings.tsx';
 import ProfileVisibility from './pages/AccountSettings/ProfileVisibility/ProfileVisibility.tsx';
 import Profile from './pages/ProfilePage/Profile.tsx';
+import JobPreference from './pages/Job Preference/JobPreference.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -51,6 +52,11 @@ const router = createBrowserRouter(
     {/* Pofile Page  */}
 
     <Route path="/profile" element={<Profile/>}/> 
+
+    {/* Job preference  */}
+
+    <Route path="/job-preference" element={<JobPreference/>}/> 
+
 
 
 
