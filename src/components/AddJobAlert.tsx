@@ -10,7 +10,7 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
     <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
       <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-        <div className='max-w-[1055px] w-full h-full bg-white rounded-lg  shadow-lg overflow-y-auto z-[30]'>
+        <div className='max-w-[1055px] h-[700px] w-full  bg-white rounded-lg  shadow-lg overflow-y-auto z-30'>
             <div className=' p-10 flex justify-between items-center'>
                  <p className='text-2xl font-bold'>Add Job Alert</p>
                  <IoMdClose size={30}  className="cursor-pointer" onClick={()=>{setJobAlertPopup(false)}} />
