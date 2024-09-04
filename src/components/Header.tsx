@@ -21,15 +21,20 @@ import msgLogo from '../assets/header/message.png'
 
 import jobLogo from '../assets/header/jobs.png'
 
+import { useLocation } from 'react-router-dom';
 
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isNavOpen,setIsNavOpen]=useState<boolean>(false)
+  const params=useLocation().pathname;
+  
   const handlNavBar=()=>{
     setIsAccountOpen(false);
     setIsNavOpen(false)
   }
+
+  
   const accountOptions = [
     {
       icon: <CgProfile size={30} />,
@@ -98,11 +103,11 @@ const Header: React.FC = () => {
 
 
               <Link to={'/right-to-represent'} >
-            <div className=" flex flex-col space-y-1 justify-center items-center cursor-pointer">
+            <div className={` flex flex-col space-y-1 justify-center items-center cursor-pointer  `}>
        
 
               <img src={rtrLogo} alt="rtr-header" />
-              <p className="font-[300] text-sm">  RTR</p>
+              <p className={`font-[300] text-sm ${params==='/right-to-represent'?'font-[500] text-[#104B53]':''}`}>  RTR</p>
               
             </div>
               </Link>
@@ -114,7 +119,7 @@ const Header: React.FC = () => {
        
 
               <img src={msgLogo} alt="rtr-header" />
-              <p className="font-[300] text-sm">  Messages</p>
+              <p className={`font-[300] text-sm ${params==='/messages'?'font-[500] text-[#104B53]':''}`}>  Message</p>
               
             </div>
               </Link>
@@ -126,7 +131,7 @@ const Header: React.FC = () => {
        
 
               <img src={jobLogo} alt="rtr-header" />
-              <p className="font-[300] text-sm">  MyJobs</p>
+              <p className={`font-[300] text-sm ${params==='/myjobs'?'font-[500] text-[#104B53]':''}`}>  MyJobs</p>
               
             </div>
               </Link>
