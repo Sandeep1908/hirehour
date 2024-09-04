@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import Logo from '../assets/logo/hirehour.svg';
-import { RiTodoLine } from 'react-icons/ri';
-import { BiMessageDetail } from 'react-icons/bi';
-import { BsSuitcaseLg } from 'react-icons/bs';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { IoIosMenu } from 'react-icons/io';
