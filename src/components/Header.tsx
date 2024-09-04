@@ -19,6 +19,12 @@ import { VscNotebook } from 'react-icons/vsc';
 import { GoSignOut } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
+import rtrLogo from '../assets/header/rtr.png'
+import msgLogo from '../assets/header/message.png'
+
+import jobLogo from '../assets/header/jobs.png'
+
+
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
@@ -36,7 +42,7 @@ const Header: React.FC = () => {
     {
       icon: <RiListSettingsLine size={30} />,
       name: 'Job Preference',
-       link:''
+       link:'/job-preference'
     },
 
     {
@@ -91,25 +97,43 @@ const Header: React.FC = () => {
         {/* With SignIn */}
 
         <div className="md:flex justify-center items-center space-x-7 hidden">
-          <div className="flex justify-center items-center space-x-5">
-            <div className=" flex flex-col justify-center items-center cursor-pointer">
-              <RiTodoLine size={25} />
-              <Link to={'/right-to-represent'} className="font-[200] text-sm">
-                RTR
-              </Link>
-            </div>
+          <div className="flex justify-center items-center space-x-7">
 
-            <div className=" flex flex-col justify-center items-center cursor-pointer">
-              <BiMessageDetail size={25} />
-              <Link  to='/messages' className="font-[200] text-sm">Message</Link>
-            </div>
 
-            <div className=" flex flex-col justify-center items-center cursor-pointer">
-              <BsSuitcaseLg size={25} />
-              <Link to={'/myjobs'} className="font-[200] text-sm">
-                My jobs{' '}
-              </Link>
+              <Link to={'/right-to-represent'} >
+            <div className=" flex flex-col space-y-1 justify-center items-center cursor-pointer">
+       
+
+              <img src={rtrLogo} alt="rtr-header" />
+              <p className="font-[300] text-sm">  RTR</p>
+              
             </div>
+              </Link>
+
+
+                     
+              <Link to={'/messages'} >
+            <div className=" flex flex-col  space-y-1 justify-center items-center cursor-pointer">
+       
+
+              <img src={msgLogo} alt="rtr-header" />
+              <p className="font-[300] text-sm">  Messages</p>
+              
+            </div>
+              </Link>
+
+
+                     
+              <Link to={'/myjobs'} >
+            <div className=" flex flex-col space-y-1 justify-center items-center cursor-pointer">
+       
+
+              <img src={jobLogo} alt="rtr-header" />
+              <p className="font-[300] text-sm">  MyJobs</p>
+              
+            </div>
+              </Link>
+ 
 
             <div className=" relative flex flex-col justify-center items-center cursor-pointer">
               <IoNotificationsOutline size={22} onClick={() => setIsNotificationOpen(true)} />
@@ -129,7 +153,7 @@ const Header: React.FC = () => {
 
           <div
             className="flex justify-center items-center space-x-1 relative cursor-pointer"
-            
+            onClick={() => setIsAccountOpen(!isAccountOpen)}
           >
             <div className="flex justify-center items-center space-x-3">
               <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
@@ -140,7 +164,7 @@ const Header: React.FC = () => {
 
             <MdOutlineKeyboardArrowDown
               className={`${isAccountOpen ? 'rotate-180 transition-all duration-500' : ''}`}
-              onClick={() => setIsAccountOpen(!isAccountOpen)}
+             
             />
 
             {/* Account Modal  */}
