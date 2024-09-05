@@ -4,6 +4,9 @@ import { FaEdit } from 'react-icons/fa';
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FaFlag } from "react-icons/fa";
 import { MdShare } from "react-icons/md";
+import { MdOutlineAttachment } from "react-icons/md";
+import { LuSendHorizonal } from "react-icons/lu";
+
 
 const Message : React.FC =()=>{
 
@@ -193,30 +196,98 @@ const Message : React.FC =()=>{
 
 
 
-                                    <div className="w-full p-5">
+                                    <div className="w-full  p-5">
+                                        <div className="w-full h-[340px] overflow-auto ">
                                             <div className="w-full flex flex-col justify-end items-start space-y-4">
-                                                    <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
-                                                        <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-                                                        <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
-                                                    </div>
+                                                        <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
+                                                            <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                                                            <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
+                                                        </div>
 
-
-                                                   
 
                                                     
-                                            </div>
+
+                                                        
+                                                </div>
 
 
-                                            <div className="w-full flex flex-col justify-end items-end space-y-4">
-                                                    <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
-                                                        <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
-                                                        <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
-                                                    </div>
+                                                <div className="w-full flex flex-col justify-end items-end space-y-4">
+                                                        <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
+                                                            <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                                                            <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
+                                                        </div>
+
+    
+
+                                                        
+                                                </div>
+
+                                                <div className="w-full flex flex-col justify-end items-end space-y-4">
+                                                        <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
+                                                            <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                                                            <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
+                                                        </div>
+
+    
+
+                                                        
+                                                </div>
+
+                                                 
+                                                <div className="w-full flex flex-col justify-end items-start space-y-4">
+                                                        <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
+                                                            <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                                                            <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
+                                                        </div>
+
+
+                                                    
+
+                                                        
+                                                </div>
+
+                                                <div className="w-full flex flex-col justify-end items-start space-y-4">
+                                                        <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
+                                                            <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                                                            <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
+                                                        </div>
+
+
+                                                    
+
+                                                        
+                                                </div>
+
+                                                <div className="w-full flex flex-col justify-end items-start space-y-4">
+                                                        <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
+                                                            <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                                                            <p className="text-[10px] text-[#C4C4C4]">5min ago</p>
+                                                        </div>
+
+
+                                                    
+
+                                                        
+                                                </div>
+                                                
 
  
+                                        </div>
 
-                                                    
+                                        {/* send button  */}
+
+                                        <div className="w-[90%] absolute bottom-10 bg-white   rounded-lg flex justify-between items-center  m-auto border border-[#E0E4E6] ">
+                                            <div className="flex w-full justify-center items-center ml-4  ">
+                                            <MdOutlineAttachment size={25} />
+                                            <input type="text" className="w-full p-2 outline-none placeholder:text-xs"  placeholder="Enter you message" />
                                             </div>
+
+                                            <p className=" bg-[#E9F358] p-3 cursor-pointer">
+                                            <LuSendHorizonal color="#104B53" />
+
+                                            </p>
+                                        </div>
+                                 
                                     </div>
                             </div>
                         </div>
