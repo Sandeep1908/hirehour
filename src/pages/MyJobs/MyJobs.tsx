@@ -33,12 +33,12 @@ const MyJobs: React.FC = () => {
     <div className="w-full  h-full bg-[#F2F2F5] p-2 ">
       <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-10 rounded-lg p-5">
         <div className="w-full">
-          <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+        <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {
               return (
                 <Link
                   to={item.link}
-                  className={` text-sm p-1 md:text-xl font-[500] font-sans  ${id == 0 ? 'border-[#104B53] border-b-4' : ''}  md:p-5`}
+                  className={` text-sm p-1  font-[500]  ${id == 0 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
                   key={id}
                 >
                   {item.label}
@@ -52,7 +52,7 @@ const MyJobs: React.FC = () => {
           <ul className="w-full flex">
             {tags?.map((item, id) => {
               return (
-                <li className=" text-sm md:text-lg font-[500]  p-5" key={id}>
+                <li className=" text-sm  font-[500]  p-5" key={id}>
                   {item}
                 </li>
               );
