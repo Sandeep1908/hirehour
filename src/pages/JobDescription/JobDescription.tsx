@@ -504,8 +504,8 @@ const JobDescription: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className={`h-auto transition-all ease-in-out duration-1000  ${infoContentHidden === false ? "hidden" : ""}`}>
-                                <div className='flex h-auto '>
+                            <div className={` transition-all ease-in-out duration-700  ${infoContentHidden?'h-[200px]':'h-0'}  `}>
+                                <div className={`flex h-auto relative transition-all delay-500  ${infoContentHidden ?'opacity-1':'opacity-0 z-[-30]'}   `}>
                                     <div className='flex flex-col gap-4 mt-2 max-w-[350px] w-full'>
 
                                         <div className='flex gap-2'>
@@ -535,7 +535,7 @@ const JobDescription: React.FC = () => {
                                     </div>
 
 
-                                    <div className='flex flex-col  gap-7 ml-4 justify-center'>
+                                    <div className={`flex flex-col  gap-7 ml-4 justify-center ${infoContentHidden ?'opacity-1':'opacity-0 z-[-30]'} `}>
 
                                         <div className=''>
 
@@ -582,7 +582,7 @@ const JobDescription: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className='mt-8'>
+                                <div className={`mt-8 delay-300  ${infoContentHidden ?'opacity-1':'opacity-0 z-[-30]'} `}>
 
                                     <p className='text-[14px] font-semibold'>Tech Stacks</p>
 
