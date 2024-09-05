@@ -32,335 +32,335 @@ const RightToRepresent: React.FC = () => {
   }
   return (
     <div className="w-full  min-h-screen bg-[#F2F2F5] p-2 relative  ">
-      <div className=" w-full max-w-[1280px]  bg-white  m-auto mt-10 rounded-lg p-2 md:p-5">
-        <div className="w-full flex justify-between p-2 ">
-          <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
-            {titles?.map((item, id) => {
-              return (
-                <Link
-                  to={item.link}
-                  className={` text-[10px] p-1  font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
-                  key={id}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </ul>
+    <div className=" w-full max-w-[1280px]  bg-white  m-auto mt-10 rounded-lg p-2 md:p-5">
+    <div className="w-full flex justify-between p-2 ">
+      <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+        {titles?.map((item, id) => {
+          return (
+            <Link
+              to={item.link}
+              className={` text-sm p-1  font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
+              key={id}
+            >
+              {item.label}
+            </Link>
+          );
+        })}
+      </ul>
 
-          <p
-            className="hidden md:flex justify-center cursor-pointer items-center  bg-[#E9F358] w-[130px] h-[30px] text-[10px] text-[#104B53] rounded-full "
-            onClick={() => setIsRTROpen(true)}
-          >
-            <BiPlus color="#104B53" /> <span className='text-[10px]'>Add RTR</span>
-          </p>
-        </div>
+      <p
+        className="hidden md:flex justify-center cursor-pointer items-center  bg-[#E9F358] w-[130px] h-[30px] text-sm text-[#104B53] rounded-full "
+        onClick={() => setIsRTROpen(true)}
+      >
+        <BiPlus color="#104B53" /> <span className='text-sm'>Add RTR</span>
+      </p>
+    </div>
 
-        <div className="w-full overflow-auto relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] p-3">
-          <ul className="w-full flex space-x-3 p-1">
-            {tags?.map((item, id) => {
-              return (
-                <li className=" text-[10px]  font-[400]  " key={id}>
-                  {item}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-           
-        <div className=' p-4 flex justify-start space-x-3   items-center'>
-          <p className='text-[10px]'>Recevied</p>
-              <select name="" id="" className='w-[100px] text-[10px]  border outline-none '>
-                <option  className="p-1" value="">Anytime</option>
-
-
-                <option value="">24 Hours</option>
-                <option value="">Past 3 days</option>
-
-                <option value="">Past week</option>
-
-                <option value="">Past Month</option>
+    <div className="w-full overflow-auto relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] p-3">
+      <ul className="w-full flex space-x-3 p-1">
+        {tags?.map((item, id) => {
+          return (
+            <li className=" text-sm  font-[400]  " key={id}>
+              {item}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+       
+    <div className=' p-4 flex justify-start space-x-3   items-center'>
+      <p className='text-sm'>Recevied</p>
+          <select name="" id="" className='w-[100px] text-sm  border outline-none '>
+            <option  className="p-1" value="">Anytime</option>
 
 
+            <option value="">24 Hours</option>
+            <option value="">Past 3 days</option>
 
-              </select>
-        </div>
+            <option value="">Past week</option>
 
-        <div className="w-full pb-10 pt-5 md:hidden">
-          <p
-            className="flex w-full justify-center items-center space-x-2 bg-[#E9F358]   h-[50px] text-[10px] text-[#104B53] rounded-full "
-            onClick={() => setIsRTROpen(true)}
-          >
-            <BiPlus color="#104B53" /> <span>Add RTR</span>
-          </p>
-        </div>
-        {/*RTR */}
+            <option value="">Past Month</option>
 
 
-        <div className='flex flex-col space-y-4'>
-            <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-          <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-            <div className="flex items-center space-x-4">
-              <span className="text-[10px] text-[#6B7588]">Job Title: </span>
-              <p className="text-[10px] font-semibold">Full Stack Java Developer</p>
-              <span className="text-[8px] text-[#7B8496]">- Allen, Texas, US</span>
-            </div>
 
-            <div>
-              <p className='text-[10px]'>Rate : $60 / HR</p>
-            </div>
-          </div>
+          </select>
+    </div>
 
-          <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-[10px]">From</h1>
-              <p className='text-[10px]'>
-                <strong >Send by</strong>: Erika Less
-              </p>
-              <p className='text-[10px]'>
-                <strong>Company</strong>:Insight Global
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-[10px]">To</h1>
-              <p className='text-[10px]'>
-                <strong>Employer name</strong>: Mathew
-              </p>
-              <p className='text-[10px]'>
-                <strong>Employer Company</strong>: AA Tech
-              </p>
-              <p className='text-[10px]'>
-                <strong>Applicant Name</strong>: Johnson
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-3  ">
-              <div className="flex justify- space-x-3 items-center">
-                <MdOutlineFileDownload size={20} color="#104B53" />
-                <p className="text-[#104B53] text-[10px] font-[600]">Export</p>
-                <p className="border text-[10px] text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-                  View
-                </p>
-              </div>
-
-              <p className='text-[10px]'>
-                <strong>Valid Till</strong>: 30 days (08/26/2024)
-              </p>
-            </div>
-          </div>
-
-          <hr />
-
-          <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-            <div className="flex justify-center items-center space-x-5">
-              <div className="flex flex-col space-y-3">
-                <p className='text-[10px]'>
-                  <strong>Client</strong>: AT & T
-                </p>
-                <p className='text-[10px]'>
-                  <strong>Prime Vendor </strong>: Insight Global
-                </p>
-              </div>
-
-              <div className="flex flex-col space-y-3">
-                <p className='text-[10px]'>
-                  <strong>Implementation</strong>: TCS
-                </p>
-                <p className='text-[10px]'>
-                  <strong>Vendor </strong>: AA Tech
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center space-x-5">
-              <p className="w-[80px] text-[10px] bg-[#FF3837] text-white p-2 text-center rounded-full">
-                Decline
-              </p>
-              <p onClick={()=>setIsSignRTR(true)} className="w-[120px] cursor-pointer text-[10px] bg-[#07A560] text-white p-2 text-center rounded-full">
-                View & Sign
-              </p>
-            </div>
-          </div>
-        </div>
+    <div className="w-full pb-10 pt-5 md:hidden">
+      <p
+        className="flex w-full justify-center items-center space-x-2 bg-[#E9F358]   h-[50px] text-sm text-[#104B53] rounded-full "
+        onClick={() => setIsRTROpen(true)}
+      >
+        <BiPlus color="#104B53" /> <span>Add RTR</span>
+      </p>
+    </div>
+    {/*RTR */}
 
 
+    <div className='flex flex-col space-y-4'>
         <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-          <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-            <div className="flex items-center space-x-4">
-              <span className="text-[10px] text-[#6B7588]">Job Title: </span>
-              <p className="text-[10px] font-semibold">Full Stack Java Developer</p>
-              <span className="text-[8px] text-[#7B8496]">- Allen, Texas, US</span>
-            </div>
-
-            <div>
-              <p className='text-[10px]'>Rate : $60 / HR</p>
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-[10px]">From</h1>
-              <p className='text-[10px]'>
-                <strong >Send by</strong>: Erika Less
-              </p>
-              <p className='text-[10px]'>
-                <strong>Company</strong>:Insight Global
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-[10px]">To</h1>
-              <p className='text-[10px]'>
-                <strong>Employer name</strong>: Mathew
-              </p>
-              <p className='text-[10px]'>
-                <strong>Employer Company</strong>: AA Tech
-              </p>
-              <p className='text-[10px]'>
-                <strong>Applicant Name</strong>: Johnson
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-3  ">
-              <div className="flex justify- space-x-3 items-center">
-                <MdOutlineFileDownload size={20} color="#104B53" />
-                <p className="text-[#104B53] text-[10px] font-[600]">Export</p>
-                <p className="border text-[10px] text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-                  View
-                </p>
-              </div>
-
-              <p className='text-[10px]'>
-                <strong>Valid Till</strong>: 30 days (08/26/2024)
-              </p>
-            </div>
-          </div>
-
-          <hr />
-
-          <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-            <div className="flex justify-center items-center space-x-5">
-              <div className="flex flex-col space-y-3">
-                <p className='text-[10px]'>
-                  <strong>Client</strong>: AT & T
-                </p>
-                <p className='text-[10px]'>
-                  <strong>Prime Vendor </strong>: Insight Global
-                </p>
-              </div>
-
-              <div className="flex flex-col space-y-3">
-                <p className='text-[10px]'>
-                  <strong>Implementation</strong>: TCS
-                </p>
-                <p className='text-[10px]'>
-                  <strong>Vendor </strong>: AA Tech
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center space-x-5">
-              <p className="w-[80px] text-[10px] bg-[#FF3837] text-white p-2 text-center rounded-full">
-                Decline
-              </p>
-              <p onClick={()=>setIsSignRTR(true)} className="w-[120px] cursor-pointer text-[10px] bg-[#07A560] text-white p-2 text-center rounded-full">
-                View & Sign
-              </p>
-            </div>
-          </div>
+      <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+        <div className="flex items-center space-x-4">
+          <span className="text-sm text-[#6B7588]">Job Title: </span>
+          <p className="text-sm font-semibold">Full Stack Java Developer</p>
+          <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
         </div>
 
-
-        <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-          <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-            <div className="flex items-center space-x-4">
-              <span className="text-[10px] text-[#6B7588]">Job Title: </span>
-              <p className="text-[10px] font-semibold">Full Stack Java Developer</p>
-              <span className="text-[8px] text-[#7B8496]">- Allen, Texas, US</span>
-            </div>
-
-            <div>
-              <p className='text-[10px]'>Rate : $60 / HR</p>
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-[10px]">From</h1>
-              <p className='text-[10px]'>
-                <strong >Send by</strong>: Erika Less
-              </p>
-              <p className='text-[10px]'>
-                <strong>Company</strong>:Insight Global
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-[10px]">To</h1>
-              <p className='text-[10px]'>
-                <strong>Employer name</strong>: Mathew
-              </p>
-              <p className='text-[10px]'>
-                <strong>Employer Company</strong>: AA Tech
-              </p>
-              <p className='text-[10px]'>
-                <strong>Applicant Name</strong>: Johnson
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-3  ">
-              <div className="flex justify- space-x-3 items-center">
-                <MdOutlineFileDownload size={20} color="#104B53" />
-                <p className="text-[#104B53] text-[10px] font-[600]">Export</p>
-                <p className="border text-[10px] text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-                  View
-                </p>
-              </div>
-
-              <p className='text-[10px]'>
-                <strong>Valid Till</strong>: 30 days (08/26/2024)
-              </p>
-            </div>
-          </div>
-
-          <hr />
-
-          <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-            <div className="flex justify-center items-center space-x-5">
-              <div className="flex flex-col space-y-3">
-                <p className='text-[10px]'>
-                  <strong>Client</strong>: AT & T
-                </p>
-                <p className='text-[10px]'>
-                  <strong>Prime Vendor </strong>: Insight Global
-                </p>
-              </div>
-
-              <div className="flex flex-col space-y-3">
-                <p className='text-[10px]'>
-                  <strong>Implementation</strong>: TCS
-                </p>
-                <p className='text-[10px]'>
-                  <strong>Vendor </strong>: AA Tech
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-center space-x-5">
-              <p className="w-[80px] text-[10px] bg-[#FF3837] text-white p-2 text-center rounded-full">
-                Decline
-              </p>
-              <p onClick={()=>setIsSignRTR(true)} className="w-[120px] cursor-pointer text-[10px] bg-[#07A560] text-white p-2 text-center rounded-full">
-                View & Sign
-              </p>
-            </div>
-          </div>
+        <div>
+          <p className='text-sm'>Rate : $60 / HR</p>
         </div>
-            </div>
-
-      
       </div>
+
+      <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">From</h1>
+          <p className='text-sm'>
+            <strong >Send by</strong>: Erika Less
+          </p>
+          <p className='text-sm'>
+            <strong>Company</strong>:Insight Global
+          </p>
+        </div>
+
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">To</h1>
+          <p className='text-sm'>
+            <strong>Employer name</strong>: Mathew
+          </p>
+          <p className='text-sm'>
+            <strong>Employer Company</strong>: AA Tech
+          </p>
+          <p className='text-sm'>
+            <strong>Applicant Name</strong>: Johnson
+          </p>
+        </div>
+
+        <div className="flex flex-col space-y-3  ">
+          <div className="flex justify- space-x-3 items-center">
+            <MdOutlineFileDownload size={20} color="#104B53" />
+            <p className="text-[#104B53] text-sm font-[600]">Export</p>
+            <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+              View
+            </p>
+          </div>
+
+          <p className='text-sm'>
+            <strong>Valid Till</strong>: 30 days (08/26/2024)
+          </p>
+        </div>
+      </div>
+
+      <hr />
+
+      <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
+        <div className="flex justify-center items-center space-x-5">
+          <div className="flex flex-col space-y-3">
+            <p className='text-sm'>
+              <strong>Client</strong>: AT & T
+            </p>
+            <p className='text-sm'>
+              <strong>Prime Vendor </strong>: Insight Global
+            </p>
+          </div>
+
+          <div className="flex flex-col space-y-3">
+            <p className='text-sm'>
+              <strong>Implementation</strong>: TCS
+            </p>
+            <p className='text-sm'>
+              <strong>Vendor </strong>: AA Tech
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center space-x-5">
+          <p className="w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
+            Decline
+          </p>
+          <p onClick={()=>setIsSignRTR(true)} className="w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full">
+            View & Sign
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
+      <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+        <div className="flex items-center space-x-4">
+          <span className="text-sm text-[#6B7588]">Job Title: </span>
+          <p className="text-sm font-semibold">Full Stack Java Developer</p>
+          <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+        </div>
+
+        <div>
+          <p className='text-sm'>Rate : $60 / HR</p>
+        </div>
+      </div>
+
+      <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">From</h1>
+          <p className='text-sm'>
+            <strong >Send by</strong>: Erika Less
+          </p>
+          <p className='text-sm'>
+            <strong>Company</strong>:Insight Global
+          </p>
+        </div>
+
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">To</h1>
+          <p className='text-sm'>
+            <strong>Employer name</strong>: Mathew
+          </p>
+          <p className='text-sm'>
+            <strong>Employer Company</strong>: AA Tech
+          </p>
+          <p className='text-sm'>
+            <strong>Applicant Name</strong>: Johnson
+          </p>
+        </div>
+
+        <div className="flex flex-col space-y-3  ">
+          <div className="flex justify- space-x-3 items-center">
+            <MdOutlineFileDownload size={20} color="#104B53" />
+            <p className="text-[#104B53] text-sm font-[600]">Export</p>
+            <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+              View
+            </p>
+          </div>
+
+          <p className='text-sm'>
+            <strong>Valid Till</strong>: 30 days (08/26/2024)
+          </p>
+        </div>
+      </div>
+
+      <hr />
+
+      <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
+        <div className="flex justify-center items-center space-x-5">
+          <div className="flex flex-col space-y-3">
+            <p className='text-sm'>
+              <strong>Client</strong>: AT & T
+            </p>
+            <p className='text-sm'>
+              <strong>Prime Vendor </strong>: Insight Global
+            </p>
+          </div>
+
+          <div className="flex flex-col space-y-3">
+            <p className='text-sm'>
+              <strong>Implementation</strong>: TCS
+            </p>
+            <p className='text-sm'>
+              <strong>Vendor </strong>: AA Tech
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center space-x-5">
+          <p className="w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
+            Decline
+          </p>
+          <p onClick={()=>setIsSignRTR(true)} className="w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full">
+            View & Sign
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
+      <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+        <div className="flex items-center space-x-4">
+          <span className="text-sm text-[#6B7588]">Job Title: </span>
+          <p className="text-sm font-semibold">Full Stack Java Developer</p>
+          <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+        </div>
+
+        <div>
+          <p className='text-sm'>Rate : $60 / HR</p>
+        </div>
+      </div>
+
+      <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">From</h1>
+          <p className='text-sm'>
+            <strong >Send by</strong>: Erika Less
+          </p>
+          <p className='text-sm'>
+            <strong>Company</strong>:Insight Global
+          </p>
+        </div>
+
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">To</h1>
+          <p className='text-sm'>
+            <strong>Employer name</strong>: Mathew
+          </p>
+          <p className='text-sm'>
+            <strong>Employer Company</strong>: AA Tech
+          </p>
+          <p className='text-sm'>
+            <strong>Applicant Name</strong>: Johnson
+          </p>
+        </div>
+
+        <div className="flex flex-col space-y-3  ">
+          <div className="flex justify- space-x-3 items-center">
+            <MdOutlineFileDownload size={20} color="#104B53" />
+            <p className="text-[#104B53] text-sm font-[600]">Export</p>
+            <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+              View
+            </p>
+          </div>
+
+          <p className='text-sm'>
+            <strong>Valid Till</strong>: 30 days (08/26/2024)
+          </p>
+        </div>
+      </div>
+
+      <hr />
+
+      <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
+        <div className="flex justify-center items-center space-x-5">
+          <div className="flex flex-col space-y-3">
+            <p className='text-sm'>
+              <strong>Client</strong>: AT & T
+            </p>
+            <p className='text-sm'>
+              <strong>Prime Vendor </strong>: Insight Global
+            </p>
+          </div>
+
+          <div className="flex flex-col space-y-3">
+            <p className='text-sm'>
+              <strong>Implementation</strong>: TCS
+            </p>
+            <p className='text-sm'>
+              <strong>Vendor </strong>: AA Tech
+            </p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-center space-x-5">
+          <p className="w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
+            Decline
+          </p>
+          <p onClick={()=>setIsSignRTR(true)} className="w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full">
+            View & Sign
+          </p>
+        </div>
+      </div>
+    </div>
+        </div>
+
+  
+  </div>
 
       {/* ADD RTR FORM  */}
 
