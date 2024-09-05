@@ -32,18 +32,34 @@ const RightToRepresent: React.FC = () => {
   }
   return (
     <div className="w-full  min-h-screen bg-[#F2F2F5] p-2 relative  ">
-    <div className=" w-full max-w-[1280px]  bg-white  m-auto mt-10 rounded-lg p-2 md:p-5">
-    <div className="w-full flex justify-between p-2 ">
-      <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+    <div className=" w-full max-w-[1280px] flex     m-auto mt-10 rounded-lg p-2 md:p-5">
+    <div className=" flex justify-between bg-white h-[200px] rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
+      <ul className="w-full  flex flex-col justify-start items-end p-1   space-y-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
         {titles?.map((item, id) => {
           return (
             <Link
               to={item.link}
-              className={` text-sm p-1  font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
+              className={`w-full text-xs  text-center p-2    hover:text-white hover:bg-[#104B53] transition-all duration-300    font-[500]  ${id == 1 ? 'border-[#104B53] border bg-[#104B53] text-white  ' : ' border'}  `}
               key={id}
             >
               {item.label}
             </Link>
+          );
+        })}
+      </ul>
+
+     
+    </div>
+
+    <div className='w-full  p-3 bg-white  '>
+
+        <div className="w-full overflow-auto flex justify-between items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] p-3">
+      <ul className="w-full flex space-x-3 p-1">
+        {tags?.map((item, id) => {
+          return (
+            <li className=" text-sm  font-[400]  " key={id}>
+              {item}
+            </li>
           );
         })}
       </ul>
@@ -54,18 +70,6 @@ const RightToRepresent: React.FC = () => {
       >
         <BiPlus color="#104B53" /> <span className='text-sm'>Add RTR</span>
       </p>
-    </div>
-
-    <div className="w-full overflow-auto relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] p-3">
-      <ul className="w-full flex space-x-3 p-1">
-        {tags?.map((item, id) => {
-          return (
-            <li className=" text-sm  font-[400]  " key={id}>
-              {item}
-            </li>
-          );
-        })}
-      </ul>
     </div>
        
     <div className=' p-4 flex justify-start space-x-3   items-center'>
@@ -358,6 +362,8 @@ const RightToRepresent: React.FC = () => {
       </div>
     </div>
         </div>
+    </div>
+
 
   
   </div>
