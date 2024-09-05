@@ -1,6 +1,6 @@
 import React, { useState } from "react";
  
-import { FaEye } from "react-icons/fa";
+
 import {FaEdit} from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaLinkedin } from "react-icons/fa";
@@ -15,6 +15,9 @@ import { MdDeleteOutline } from "react-icons/md";
  
  
 import { BiPlus } from 'react-icons/bi';
+import publicEye from '../../assets/icon/public.png'
+import privateEye from '../../assets/icon/private.png'
+
  
 import AboutMe from "../../components/profile/AboutMe";
 import AdditionalDetails from "../../components/profile/AdditionalDetails";
@@ -31,10 +34,10 @@ const Profile:React.FC=()=>{
   const [summaryPopup, setSummaryPopup] = useState<boolean>(false);
   const [experiencePopup, setExperiencePopup] = useState<boolean>(false);
   const [educationPopup, setEducationPopup] = useState<boolean>(false);
-
+  const [isPublic,setIsPublic]=useState<boolean>(true)
 
     return(
-        <div className="w-full h-full ">
+        <div className="w-full h-full relative ">
 
                     <div className="w-full max-w-[1280px] m-auto p-5 grid grid-cols-1 ">
 
@@ -43,15 +46,15 @@ const Profile:React.FC=()=>{
                         </div>
                       
 
-                        <div className="flex">
+                        <div className="flex relative">
 
                                 {/* //left section */}
 
-                                <div className="w-[450px] h-full pt-10   ">
+                                <div className="w-[450px] h-full pt-10     ">
 
                                 <div className="bg-white w-full mb-3   rounded-lg md:hidden  ">
                                             <div className="p-3">
-                                                <h1 className="text-xl font-semibold">Hello John,</h1>
+                                                <h1 className="text-lg font-semibold">Hello John,</h1>
                                                 <p className="text-[#6B7588] text-sm">Recruiters are looking for Candidates like you, Complete your profile to Stand out</p>
                                             </div>
 
@@ -81,13 +84,13 @@ const Profile:React.FC=()=>{
 
 
 
-                                        <div className="flex justify-between items-start bg-white p-3 rounded-lg">
+                                        <div className="flex justify-between items-start bg-white p-3 rounded-lg sticky top-1 ">
                                              <div className="flex flex-col space-y-2">
-                                                <h1 className="text-xl font-semibold">Public</h1>
-                                                <p className="text-sm text-[#A4A5B7]">Visible to Employer</p>
+                                                <h1 className="text-sm font-semibold">{isPublic?'Public':'Private'}</h1>
+                                                <p className="text-xs text-[#A4A5B7]">{isPublic?'Visible to employers':'Not Visible to employers'}</p>
                                              </div>
                                                 
-                                                <FaEye size={23} color="#104B53"/>
+                                                <img src={isPublic?publicEye:privateEye} className="w-8 h-8" alt="public-eye" onClick={()=>setIsPublic(p=>!p)} />
 
                                         </div>
 
@@ -95,34 +98,34 @@ const Profile:React.FC=()=>{
 
                 {/* About me  */}
 
-                                        <div className="  bg-white p-3 rounded-lg mt-3">
+                                        <div className="  bg-white p-3 rounded-lg mt-3 sticky top-20">
                                              <div className="flex w-full justify-between items-center pb-3 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#EFF1F3]">
-                                                <h1 className="text-xl font-semibold">About me</h1>
+                                                <h1 className="text-sm font-semibold">About me</h1>
                                                 <div className="flex justify-center items-center space-x-2 cursor-pointer">
-                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53]" onClick={()=>{setAboutusPop(true)}}>Edit</span>
+                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53] text-sm" onClick={()=>{setAboutusPop(true)}}>Edit</span>
                                                 </div>
                                                
                                              </div>
 
 
                                              <div className="w-full flex flex-col  space-y-3 justify-center items-center p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:mb-3 before:bg-[#EFF1F3]">
-                                                    <div className="w-24 h-24 bg-[#CBFFFC] rounded-full flex justify-center items-center">
+                                                    <div className="w-16 h-16 bg-[#CBFFFC] rounded-full flex justify-center items-center">
                                                             <p className="text-xl text-[#104B53] font-semibold ">J</p>
                                                     </div>
 
                                                     <div className="flex flex-col justify-center items-center">
-                                                        <h1 className="text-xl font-semibold">John S Methew</h1>
+                                                        <h1 className="text-lg font-semibold">John S Methew</h1>
                                                             <div className="flex justify-center items-center space-x-2">
                                                             <IoLocationOutline />
 
-                                                                <p>Allen, Texas, US</p>
+                                                                <p className="text-xs">Allen, Texas, US</p>
                                                             </div>
                                                     </div>
 
                                                     <div className="flex justify-center items-center space-x-3">
-                                                    <FaLinkedin size={20} />
+                                                    <FaLinkedin size={18} />
 
-                                                    <FaGithub size={20} />
+                                                    <FaGithub size={18} />
 
 
                                                     </div>
@@ -136,12 +139,12 @@ const Profile:React.FC=()=>{
                                              <div className="w-full flex flex-col space-y-3">
                                                             <div className="flex justify-between items-center">
                                                                 <div className="flex space-x-2 items-center">
-                                                                <MdOutlineEmail size={20} color="#3A3A3C" />
-                                                                <p className="text-[#3A3A3C]">John@example.com</p>
+                                                                <MdOutlineEmail size={18} color="#3A3A3C" />
+                                                                <p className="text-[#3A3A3C] text-xs">John@example.com</p>
                                                                 </div>
 
-                                                                <span className=" w-5  flex justify-center items-center  h-5 bg-[#07A560] text-white rounded-full">
-                    <TiTick />
+                                                                <span className=" w-4  flex justify-center items-center  h-4 bg-[#07A560] text-white rounded-full">
+                    <TiTick size={12} />
                   </span>
                                                             </div>
 
@@ -149,12 +152,12 @@ const Profile:React.FC=()=>{
 
                                                             <div className="flex justify-between items-center">
                                                                 <div className="flex space-x-2 items-center">
-                                                                <TbPhoneCalling size={20} color="#3A3A3C" />
-                                                                <p className="text-[#3A3A3C]">+1 xxxx98xx9</p>
+                                                                <TbPhoneCalling size={18} color="#3A3A3C" />
+                                                                <p className="text-[#3A3A3C] text-xs">+1 xxxx98xx9</p>
                                                                 </div>
 
-                                                                <span className=" w-5  flex justify-center items-center  h-5 bg-[#07A560] text-white rounded-full">
-                    <TiTick />
+                                                                <span className=" w-4  flex justify-center items-center  h-4 bg-[#07A560] text-white rounded-full">
+                    <TiTick size={12} />
                   </span>
                                                             </div>
 
@@ -162,8 +165,8 @@ const Profile:React.FC=()=>{
 
                                                             <div className="flex justify-between items-center">
                                                                 <div className="flex space-x-2 items-center">
-                                                                <PiSuitcase size={20} color="#3A3A3C" />
-                                                                <p className="text-[#3A3A3C]">Exp: 4 Year 5 Months</p>
+                                                                <PiSuitcase size={18} color="#3A3A3C" />
+                                                                <p className="text-[#3A3A3C] text-xs">Exp: 4 Year 5 Months</p>
                                                                 </div>
 
                                                                  
@@ -186,11 +189,11 @@ const Profile:React.FC=()=>{
 
                 {/* Additonal Info  */}
 
-                <div className="  bg-white p-3 rounded-lg mt-3">
+                <div className="  bg-white p-3 rounded-lg mt-3 sticky top-[420px]">
                                              <div className="flex w-full justify-between items-center pb-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#EFF1F3]">
-                                                <h1 className="text-xl font-semibold">Additonal Information</h1>
+                                                <h1 className="text-sm font-semibold">Additonal Information</h1>
                                                 <div className="flex justify-center items-center space-x-2" onClick={()=>{setAdditionalInfoPopup(true)}}>
-                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53]" >Edit</span>
+                                                <FaEdit size={16} color="#104B53"/> <span className="text-[#104B53] text-sm" >Edit</span>
                                                 </div>
                                                
                                              </div>
@@ -199,18 +202,18 @@ const Profile:React.FC=()=>{
                                              <div className="flex flex-col space-y-5 p-2">
                                                     <div className="flex flex-col space-y-2">
                                                         <p className="text-sm text-[#8F90A6]">Willing to work / Looking for job change</p>
-                                                        <h1 className="text-sm font-semibold">Yes</h1>
+                                                        <h1 className="text-xs font-semibold">Yes</h1>
                                                     </div>
 
 
                                                     <div className="flex flex-col space-y-2">
                                                         <p className="text-sm text-[#8F90A6]">Visa Sponsorship</p>
-                                                        <h1 className="text-sm font-semibold">Yes</h1>
+                                                        <h1 className="text-xs font-semibold">Yes</h1>
                                                     </div>
 
                                                     <div className="flex flex-col space-y-2">
                                                         <p className="text-sm text-[#8F90A6]">Security clearance</p>
-                                                        <h1 className="text-sm font-semibold">Yes</h1>
+                                                        <h1 className="text-xs font-semibold">Yes</h1>
                                                     </div>
  
 
@@ -236,14 +239,14 @@ const Profile:React.FC=()=>{
 
 
 {/* Hello Section  */}
-                                    <div className="bg-white w-full p-5 rounded-lg  ">
-                                            <div className="p-3">
-                                                <h1 className="text-3xl font-semibold">Hello John,</h1>
-                                                <p className="text-[#6B7588] text-sm">Recruiters are looking for Candidates like you, Complete your profile to Stand out</p>
+                                    <div className="bg-white w-full p-3 rounded-lg  ">
+                                            <div className="p-2">
+                                                <h1 className="text-2xl font-semibold">Hello John,</h1>
+                                                <p className="text-[#6B7588] text-xs">Recruiters are looking for Candidates like you, Complete your profile to Stand out</p>
                                             </div>
 
-                                            <div className="w-full flex justify-between items-center p-3">
-                                                <div className="w-3/5 flex items-center space-x-3">
+                                            <div className="w-full flex justify-between items-center p-2">
+                                                <div className="max-w-96 w-full flex items-center space-x-3">
                                                 <div className="w-full bg-[#FFF1C6] rounded-full  ">
                     <div
                       className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
@@ -255,13 +258,13 @@ const Profile:React.FC=()=>{
 
 
                   </div>   
-                  <p>4/7 Completed</p>
+                  <p className="text-sm">4/7 Completed</p>
                                                 </div>
 
                                                
 
                                                <div className="w-1/4 flex justify-end items-center">
-                                               <p className="w-40 h-10 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center items-center p-3 " onClick={()=>{setProfilePopup(true)}}>Let's Go </p>
+                                               <p className="w-36 h-10 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center text-xs cursor-pointer items-center p-3 " onClick={()=>{setProfilePopup(true)}}>Let's Go </p>
                                                </div>
                                             </div>
                                     </div>
@@ -271,7 +274,7 @@ const Profile:React.FC=()=>{
 {/* Resume Upload Section  */}
                                     <div className="bg-white w-full p-5 rounded-lg mt-3  ">
                                             <div className="p-3 flex justify-between items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#F0F1F3] pb-5">
-                                                <h1 className="text-3xl font-semibold">Resume</h1>
+                                                <h1 className="text-2xl font-semibold">Resume</h1>
                                                 
                                                 <div className="flex justify-center items-center space-x-3">
                                                     <p className="text-xs text-[#A4A5B8]">Pdf, Doc, DocX (2MB)</p>
@@ -294,17 +297,17 @@ const Profile:React.FC=()=>{
 
                                                     <div className="flex  h-[60px] justify-between items-center w-full border border-[#D1D1D1] rounded-lg ">
                                                             <div className=" w-[100px] h-full flex justify-center items-center bg-[#E3EDFF]">
-                                                                <p className="text-xl font-semibold text-[#1F4AF1] ">PDF</p>
+                                                                <p className="text-sm font-semibold text-[#1F4AF1] ">PDF</p>
                                                             </div>
 
                                                             <div className="flex flex-col space-y-1">
-                                                                <h1 className="text-lg font-semibold">Resume 1</h1>
-                                                                <p className="text-sm text-[#6B7588]">Default Resume</p>
+                                                                <h1 className="text-sm font-semibold">Resume 1</h1>
+                                                                <p className="text-xs text-[#6B7588]">Default Resume</p>
                                                             </div>
 
                                                             <div className="flex justify-center items-center space-x-4 pr-4">
-                                                                <p className="text-sm text-[#104B53]">Preview</p>
-                                                                <MdDeleteOutline size={25} />
+                                                                <p className="text-xs text-[#104B53]">Preview</p>
+                                                                <MdDeleteOutline size={20} />
 
                                                             </div>
                                                     </div>
@@ -314,17 +317,17 @@ const Profile:React.FC=()=>{
 
                                                     <div className="flex  h-[60px] justify-between items-center w-full border border-[#D1D1D1] rounded-lg ">
                                                             <div className=" w-[100px] h-full flex justify-center items-center bg-[#E3EDFF]">
-                                                                <p className="text-xl font-semibold text-[#1F4AF1] ">PDF</p>
+                                                                <p className="text-sm font-semibold text-[#1F4AF1] ">PDF</p>
                                                             </div>
 
                                                             <div className="flex flex-col space-y-1">
-                                                                <h1 className="text-lg font-semibold">Resume 1</h1>
-                                                                <p className="text-sm text-[#6B7588]">Default Resume</p>
+                                                                <h1 className="text-sm font-semibold">Resume 1</h1>
+                                                                <p className="text-xs text-[#6B7588]">Default Resume</p>
                                                             </div>
 
                                                             <div className="flex justify-center items-center space-x-4 pr-4">
-                                                                <p className="text-sm text-[#104B53]">Preview</p>
-                                                                <MdDeleteOutline size={25} />
+                                                                <p className="text-xs text-[#104B53]">Preview</p>
+                                                                <MdDeleteOutline size={20} />
 
                                                             </div>
                                                     </div>
@@ -340,15 +343,15 @@ const Profile:React.FC=()=>{
 {/* Summery  */}
 
 
-<div className="bg-white w-full p-5 rounded-lg mt-3">
+<div className="bg-white w-full p-4 rounded-lg mt-3">
 <div className=" flex flex-col space-y-3">
             <h1 className="text-lg font-semibold">Summery</h1>
-            <div className="border p-7 border-[#EBEBF0] rounded-lg">
+            <div className="border p-3 border-[#EBEBF0] rounded-lg">
               <div className="flex justify-end items-center space-x-2" onClick={()=>{setSummaryPopup(true)}}>
-                <FaEdit color="#104B53" />
-                <p className="text-[#104B53]" >Edit</p>
+                <FaEdit size={14} color="#104B53" />
+                <p className="text-[#104B53] text-xs" >Edit</p>
               </div>
-              <p className="text-[#535354] text-base">
+              <p className="text-[#535354] text-justify text-sm">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                 Ipsum has been the industry's standard dummy text ever since the 1500s, when an
                 unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -375,28 +378,28 @@ const Profile:React.FC=()=>{
               </h1>
 
               <div className="flex justify-end items-center space-x-2" onClick={()=>{setExperiencePopup(true)}}>
-                <BiPlus color="#104B53" />
-                <p className="text-[#104B53] font-semibold">Add</p>
+                <BiPlus size={14} color="#104B53" />
+                <p className="text-[#104B53] text-xs font-semibold">Add</p>
               </div>
             </div>
 
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               <div className="flex justify-end items-center space-x-4">
                 <div className="flex items-center  " onClick={()=>{setExperiencePopup(true)}}>
-                  <FaEdit color="#104B53" />
-                  <p className="text-[#104B53]">Edit</p>
+                  <FaEdit color="#104B53" size={14} />
+                  <p className="text-[#104B53] text-xs">Edit</p>
                 </div>
 
                 <div className="flex items-center ">
-                  <MdDeleteOutline color="#104B53" />
-                  <p className="text-[#104B53]">Delete</p>
+                  <MdDeleteOutline color="#104B53"  size={14} />
+                  <p className="text-[#104B53] text-xs">Delete</p>
                 </div>
               </div>
 
               <div className="flex flex-col space-y-5 ">
                 <div className="flex flex-col space-y-4">
-                  <h1 className="text-lg font-semibold">Java Fullstack</h1>
-                  <p className="text-[#6B7588]">xyz Company - Texas, United States</p>
+                  <h1 className="text-sm font-semibold">Java Fullstack</h1>
+                  <p className="text-[#6B7588] text-xs">xyz Company - Texas, United States</p>
                   <div className="flex space-x-3 flex-wrap  items-center w-full">
                     <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-3 rounded-full font-semibold text-xs">
                       Health Care
@@ -414,11 +417,11 @@ const Profile:React.FC=()=>{
 
                 <div className='flex flex-col space-y-4 '>
 
-                    <h1 className='text-lg '>Job summery</h1>
+                    <h1 className='text-sm font-[600] '>Job summery</h1>
                     <ul className='flex flex-col space-y-3'>
-                        <li className='text-[#3A3A3C]'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
+                        <li className='text-[#3A3A3C] text-sm text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
 
-                        <li className='text-[#3A3A3C]'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
+                        <li className='text-[#3A3A3C] text-sm text-justify'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
                     </ul>
                 </div>
 
@@ -444,7 +447,7 @@ const Profile:React.FC=()=>{
               </h1>
 
               <div className="flex justify-end items-center space-x-2" onClick={()=>{setEducationPopup(true)}}>
-                <BiPlus color="#104B53" />
+                <BiPlus size={14} color="#104B53" />
                 <p className="text-[#104B53] font-semibold">Add</p>
               </div>
             </div>
@@ -452,22 +455,22 @@ const Profile:React.FC=()=>{
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               <div className="flex justify-end items-center space-x-4">
                 <div className="flex items-center  " onClick={()=>{setEducationPopup(true)}}>
-                  <FaEdit color="#104B53" />
-                  <p className="text-[#104B53]">Edit</p>
+                  <FaEdit color="#104B53" size={14} />
+                  <p className="text-[#104B53] text-xs">Edit</p>
                 </div>
 
                 <div className="flex items-center ">
-                  <MdDeleteOutline color="#104B53" />
-                  <p className="text-[#104B53]">Delete</p>
+                  <MdDeleteOutline size={14} color="#104B53" />
+                  <p className="text-[#104B53] text-xs">Delete</p>
                 </div>
               </div>
 
               <div className="flex flex-col">
                 <div className="flex flex-col space-y-4">
-                  <h1 className="text-lg font-semibold">BE Computer Science</h1>
-                  <p className="text-[#6B7588]">xyz Collage- Texas, United State</p>
+                  <h1 className="text-sm font-semibold">BE Computer Science</h1>
+                  <p className="text-[#6B7588] text-xs">xyz Collage- Texas, United State</p>
                   <div className="flex space-x-3 items-center">
-                    <p className="text-[#7C8596] bg-[#F2F2F5] p-3 rounded-full font-semibold text-xs">
+                    <p className="text-[#7C8596] bg-[#F2F2F5] p-2  rounded-full font-semibold text-xs">
                     07/2016 - 06/2020
                     </p>
                      
@@ -492,17 +495,17 @@ const Profile:React.FC=()=>{
               </h1>
 
               <div className="flex justify-end items-center space-x-2">
-                <BiPlus color="#104B53" />
-                <p className="text-[#104B53] font-semibold">Add</p>
+                <BiPlus size={14} color="#104B53" />
+                <p className="text-[#104B53] text-sm font-semibold">Add</p>
               </div>
             </div>
 
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               
 
-              <div className='w-full max-w-[765px] h-[100px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
+              <div className='w-full max-w-[765px] h-[80px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
               '>
-                    <p>Added certificate will be shown here</p>
+                    <p className="text-xs">Added certificate will be shown here</p>
               </div>
             </div>
           </div>
@@ -521,17 +524,17 @@ const Profile:React.FC=()=>{
               </h1>
 
               <div className="flex justify-end items-center space-x-2">
-                <BiPlus color="#104B53" />
-                <p className="text-[#104B53] font-semibold">Add</p>
+                <BiPlus size={14} color="#104B53" />
+                <p className="text-[#104B53] font-semibold text-sm">Add</p>
               </div>
             </div>
 
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               
 
-              <div className='w-full max-w-[765px] h-[100px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
+              <div className='w-full max-w-[765px] h-[80px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
               '>
-                    <p>Added Achievement will be shown here</p>
+                    <p className="text-xs">Added Achievement will be shown here</p>
               </div>
             </div>
           </div>
@@ -539,7 +542,7 @@ const Profile:React.FC=()=>{
 
 
 
-{/* Acheivment  */}
+{/* Add More Section  */}
 
 
 <div className="bg-white w-full p-5 rounded-lg mt-3">
@@ -550,17 +553,17 @@ const Profile:React.FC=()=>{
               </h1>
 
               <div className="flex justify-end items-center space-x-2">
-                <BiPlus color="#104B53" />
-                <p className="text-[#104B53] font-semibold">Add</p>
+                <BiPlus size={14} color="#104B53" />
+                <p className="text-[#104B53] font-semibold text-xs">Add</p>
               </div>
             </div>
 
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               
 
-              <div className='w-full max-w-[765px] h-[100px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
+              <div className='w-full max-w-[765px] h-[80px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
               '>
-                    <p>Added more section will be shown here</p>
+                    <p className="text-xs">Added more section will be shown here</p>
               </div>
             </div>
           </div>

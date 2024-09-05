@@ -78,7 +78,7 @@ const MyJobs: React.FC = () => {
               return (
                 <div
                   key={id}
-                  className="relative max-w-[357px] h-[197px] bg-white border border-[#E1E1E2] md:shadow-lg rounded-lg p-3 flex flex-col justify-between"
+                  className="relative w-full  max-w-[370px] h-[197px] bg-white border border-[#E1E1E2]   rounded-lg p-3 flex flex-col justify-between"
                 >
                   <div className="flex w-full space-x-3 items-center">
                     <img src="/images/emplogo.png" className="w-12 h-12" alt="emp-logo" />

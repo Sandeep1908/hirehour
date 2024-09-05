@@ -27,7 +27,7 @@ const AccountSetting:React.FC=()=>{
                                 <ul className="w-screen  md:w-auto flex justify-start items-center space-x-6   ">
                                     {titles?.map((item,id)=>{
                                         return(
-                                            <Link to={item.link} className={` text-xs p-1 md:text-lg font-[500]  ${id==0?'border-[#104B53] border-b-4':''}  md:p-5`} key={id}>{item.label}</Link>
+                                            <Link to={item.link} className={` text-xs p-1  font-[500]  ${id==0?'border-[#104B53] border-b-2':''}  `} key={id}>{item.label}</Link>
                                         )
                                     })}
                                 </ul>
