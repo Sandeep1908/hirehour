@@ -22,7 +22,7 @@ const AdditionalInfo: React.FC = () => {
           <hr />
 
           <div className="w-full p-4">
-            <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
+            <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-sm">
               <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   <span className="me-2 p-2 w-10 flex justify-center items-center md:w-14 h-10 bg-[#104B53] text-white rounded-full">
@@ -50,12 +50,12 @@ const AdditionalInfo: React.FC = () => {
 
       {/* Informations  */}
 
-      <div className="max-w-[1280px] h-full rounded-lg   bg-white m-auto p-4 mt-10">
+      <div className="max-w-[1080px] h-full rounded-lg   bg-white m-auto p-4 pb-4 mt-3">
         <div className="w-full max-w-[1064px] m-auto pt-10 flex flex-col space-y-5">
           <div className=" flex flex-col space-y-3">
             <h1 className="text-lg font-semibold">Summery</h1>
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
-              <p className="text-[#535354] text-base">
+              <p className="text-[#535354] text-sm">
                 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                 Ipsum has been the industry's standard dummy text ever since the 1500s, when an
                 unknown printer took a galley of type and scrambled it to make a type specimen book.
@@ -77,7 +77,7 @@ const AdditionalInfo: React.FC = () => {
               {/* Total Experience  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Total Experience</label>
+                  <label htmlFor="" className="text-sm">Total Experience</label>
                   <span className="text-red-500">*</span>
                 </div>
 
@@ -85,7 +85,7 @@ const AdditionalInfo: React.FC = () => {
                   <input
                     type="text"
                     placeholder="In years"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
                   {/* in Months  */}
@@ -93,7 +93,7 @@ const AdditionalInfo: React.FC = () => {
                   <input
                     type="text"
                     placeholder="In Months"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -102,14 +102,14 @@ const AdditionalInfo: React.FC = () => {
                 {/* Role  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Role</label>
+                    <label htmlFor="" className="text-sm">Role</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
                     placeholder="Role"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -117,14 +117,14 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Select Company</label>
+                    <label htmlFor="" className="text-sm">Select Company</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
                     placeholder="company"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -133,14 +133,14 @@ const AdditionalInfo: React.FC = () => {
                 {/* Domain Worked  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Domain Worked</label>
+                    <label htmlFor="" className="text-sm">Domain Worked</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
                     placeholder="Domain Worked"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -148,14 +148,14 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Job Type</label>
+                    <label htmlFor="" className="text-sm">Job Type</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
                     placeholder="Job Type"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -164,14 +164,14 @@ const AdditionalInfo: React.FC = () => {
                 {/* Date Started  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Date Started</label>
+                    <label htmlFor="" className="text-sm">Date Started</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
                     placeholder="Date Started"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -179,14 +179,14 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Date Ended</label>
+                    <label htmlFor="" className="text-sm">Date Ended</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
                     placeholder="Date Ended"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -196,7 +196,7 @@ const AdditionalInfo: React.FC = () => {
                   <input
                     type="checkbox"
                     placeholder="Date Started"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
                   <p>I am currently work here</p>
@@ -205,21 +205,21 @@ const AdditionalInfo: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Location</label>
+                  <label htmlFor="" className="text-sm">Location</label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
                   type="email"
                   placeholder="Select location and country"
-                  className="p-4 border border-[#EBEBF0] rounded-md"
+                  className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
 
               <div className=" flex flex-col space-y-3">
                 <h1 className="text-lg font-semibold"> Work Summery</h1>
                 <div className="border p-7 border-[#EBEBF0] rounded-lg">
-                  <p className="text-[#535354] text-base">
+                  <p className="text-[#535354] text-sm">
                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                     Ipsum has been the industry's standard dummy text ever since the 1500s, when an
                     unknown printer took a galley of type and scrambled it to make a type specimen
@@ -252,7 +252,7 @@ const AdditionalInfo: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Collage Name</label>
+                  <label htmlFor="" className="text-sm">Collage Name</label>
                   <span className="text-red-500">*</span>
                 </div>
 
@@ -260,7 +260,7 @@ const AdditionalInfo: React.FC = () => {
                   type="email"
                   placeholder="
                 Enter Your Collage Name"
-                  className="p-4 border border-[#EBEBF0] rounded-md"
+                  className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
 
@@ -269,14 +269,14 @@ const AdditionalInfo: React.FC = () => {
               degree  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Degree</label>
+                    <label htmlFor="" className="text-sm">Degree</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
                     placeholder="Degree"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -284,14 +284,14 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Major</label>
+                    <label htmlFor="" className="text-sm">Major</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
                     placeholder="Major"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -300,14 +300,14 @@ const AdditionalInfo: React.FC = () => {
                 {/* Date Started  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Date Started</label>
+                    <label htmlFor="" className="text-sm">Date Started</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
                     placeholder="Date Started"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -315,14 +315,14 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="">Date Ended</label>
+                    <label htmlFor="" className="text-sm">Date Ended</label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
                     placeholder="Date Ended"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -332,7 +332,7 @@ const AdditionalInfo: React.FC = () => {
                   <input
                     type="checkbox"
                     placeholder="Date Started"
-                    className="p-4 border border-[#EBEBF0] rounded-md"
+                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
                   <p>I am currently work here</p>
@@ -341,14 +341,14 @@ const AdditionalInfo: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="">Location</label>
+                  <label htmlFor="" className="text-sm">Location</label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
                   type="email"
                   placeholder="Select location and country"
-                  className="p-4 border border-[#EBEBF0] rounded-md"
+                  className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
 

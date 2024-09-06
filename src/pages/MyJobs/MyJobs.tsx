@@ -31,7 +31,7 @@ const MyJobs: React.FC = () => {
   const moreSection:string[]=['Saved','Application Started','Shortlisted','Interviewing','Offer Received']
   return (
     <div className="w-full  h-full bg-[#F2F2F5] p-2 ">
-      <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-10 rounded-lg p-5">
+      <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-3 rounded-lg p-3">
         <div className="w-full">
         <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {
