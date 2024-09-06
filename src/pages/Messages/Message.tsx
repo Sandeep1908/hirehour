@@ -27,8 +27,8 @@ const Message : React.FC =()=>{
       ];
     
     return(
-        <div className="w-full  h-full bg-[#F2F2F5] p-2 " >
-            <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-10 rounded-lg p-5">
+        <div className="w-full  h-full bg-[#F2F2F5]  " >
+            <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-3  rounded-lg p-5">
                         <div className="w-full">
                         <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {
@@ -52,7 +52,7 @@ const Message : React.FC =()=>{
 
 {/* Message box  */}
 
-                        <div className="w-full flex max-w-[1200px] mt-10  h-[660px] m-auto border border-[#E1E1E2] rounded-lg">
+                        <div className="w-full flex max-w-[1200px]  mt-10  h-[660px] m-auto border border-[#E1E1E2] rounded-lg">
                             {/* left Side bar  */}
 
                             <div className="w-full  p-5 flex flex-col space-y-6  md:max-w-[307px] h-full border border-[#D6DBDE] rounded-lg ">
