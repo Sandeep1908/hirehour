@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Logo from '../assets/logo/hirehour.svg';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -16,10 +16,10 @@ import { VscNotebook } from 'react-icons/vsc';
 import { GoSignOut } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
-import rtrLogo from '../assets/header/rtr.png'
-import msgLogo from '../assets/header/message.png'
+import rtrLogo from '../assets/header/rtr.svg'
+import msgLogo from '../assets/header/message.svg'
 
-import jobLogo from '../assets/header/jobs.png'
+import jobLogo from '../assets/header/jobs.svg'
 
 import { useLocation } from 'react-router-dom';
 
@@ -33,6 +33,18 @@ const Header: React.FC = () => {
     setIsAccountOpen(false);
     setIsNavOpen(false)
   }
+  useEffect(() => {
+    if (isNavOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isNavOpen]);
+
 
   
   const accountOptions = [
@@ -233,6 +245,42 @@ const Header: React.FC = () => {
         </div>
 
         <ul className="flex flex-col p-5 space-y-6 pt-5 relative  before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px]">
+
+        <Link to={'/right-to-represent'} className="flex justify-start items-center space-x-2 p-1"  onClick={handlNavBar}>
+            <div className="flex justify-start items-center space-x-2 p-1">
+       
+
+              <img src={rtrLogo} className='w-[30px]' alt="rtr-header" />
+              <p className={` text-sm `}>  RTR</p>
+              
+            </div>
+              </Link>
+
+
+                     
+              <Link to={'/messages'} onClick={handlNavBar} >
+            <div className="flex justify-start items-center space-x-2 p-2">
+       
+
+              <img src={msgLogo} className='w-[30px]' alt="rtr-header" />
+              <p className={` text-sm `} >  Message</p>
+              
+            </div>
+              </Link>
+
+
+                     
+              <Link to={'/myjobs'} onClick={handlNavBar} >
+            <div className="flex justify-start items-center space-x-2 p-2">
+       
+
+              <img src={jobLogo} className='w-[30px]' alt="rtr-header" />
+              <p className={` text-sm `}>  MyJobs</p>
+              
+            </div>
+
+            <hr  className='mt-3'/>
+              </Link>
           {accountOptions?.map((item, id) => {
             return (
               <Link  to={item.link || ''} className="flex justify-start items-center space-x-2 p-1" key={id} onClick={handlNavBar}>
