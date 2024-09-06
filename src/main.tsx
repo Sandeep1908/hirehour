@@ -22,6 +22,9 @@ import AccountSetting from './pages/AccountSettings/AccountSettings.tsx';
 import ProfileVisibility from './pages/AccountSettings/ProfileVisibility/ProfileVisibility.tsx';
 import Profile from './pages/ProfilePage/Profile.tsx';
 import JobPreference from './pages/Job Preference/JobPreference.tsx';
+import Accepted from './pages/RightToRepresent/Accepted/Accepted.tsx';
+import Decline from './pages/RightToRepresent/Decline/Decline.tsx';
+import Expired from './pages/RightToRepresent/Expired/Expired.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +44,12 @@ const router = createBrowserRouter(
 
       {/* Right To Represent  */}
       <Route path="/right-to-represent" element={<RightToRepresent/>}/> 
+      <Route path="/rtr-accepted" element={<Accepted/>}/>
+      <Route path="/rtr-decline" element={<Decline/>}/>
+
+      <Route path="/rtr-expired" element={<Expired/>}/>
+
+
 
     {/* Messages  */}
       <Route path="/messages" element={<Message/>}/> 
