@@ -25,6 +25,8 @@ import Experience from "../../components/profile/Experience";
 import Education from "../../components/profile/Education";
 import Summary from "../../components/profile/Summary";
 import ProfileComplition from "../../components/profile/ProfileComplition";
+import Certification from "../../components/profile/Certification";
+import Achievement from "../../components/profile/Achievement";
 
 const Profile:React.FC=()=>{
 
@@ -34,6 +36,8 @@ const Profile:React.FC=()=>{
   const [summaryPopup, setSummaryPopup] = useState<boolean>(false);
   const [experiencePopup, setExperiencePopup] = useState<boolean>(false);
   const [educationPopup, setEducationPopup] = useState<boolean>(false);
+  const [certificationPopup, setCertificationPopup] = useState<boolean>(false);
+  const [achievementPopup, setAchievementPopup] = useState<boolean>(false);
   const [isPublic,setIsPublic]=useState<boolean>(true)
 
     return(
@@ -494,7 +498,7 @@ const Profile:React.FC=()=>{
                 Ceritification
               </h1>
 
-              <div className="flex justify-end items-center space-x-2">
+              <div className="flex justify-end items-center space-x-2" onClick={()=>{setCertificationPopup(true)}} >
                 <BiPlus size={14} color="#104B53" />
                 <p className="text-[#104B53] text-sm font-semibold">Add</p>
               </div>
@@ -523,7 +527,7 @@ const Profile:React.FC=()=>{
               Achievement
               </h1>
 
-              <div className="flex justify-end items-center space-x-2">
+              <div className="flex justify-end items-center space-x-2" onClick={()=>{setAchievementPopup(true)}}>
                 <BiPlus size={14} color="#104B53" />
                 <p className="text-[#104B53] font-semibold text-sm">Add</p>
               </div>
@@ -589,6 +593,8 @@ const Profile:React.FC=()=>{
      {summaryPopup &&  <Summary setSummaryPopup ={setSummaryPopup}/>}
      {experiencePopup && <Experience setExperiencePopup ={setExperiencePopup}/>}
      {educationPopup && <Education setEducationPopup ={setEducationPopup}/>}
+     {certificationPopup && <Certification setCerticationPopup ={setCertificationPopup}/>}
+     {achievementPopup && <Achievement setAchievementPopup ={setAchievementPopup}/>}
 
         </div>
     )
