@@ -4,7 +4,7 @@ import { MdOutlineFileDownload } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Logo from '../../assets/logo/hirehour.png';
-import { Editor } from '@tinymce/tinymce-react';
+ 
  
 const RightToRepresent: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
