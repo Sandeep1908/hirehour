@@ -118,8 +118,8 @@ const Header: React.FC = () => {
             <div className={` flex flex-col space-y-1 justify-center items-center cursor-pointer  `}>
        
 
-              <img src={rtrLogo} alt="rtr-header" />
-              <p className={`font-[300] text-sm ${params==='/right-to-represent'?'font-[500] text-[#104B53]':''}`}>  RTR</p>
+              <img src={rtrLogo} alt="rtr-header" className='w-5' />
+              <p className={`font-[300] text-xs ${params==='/right-to-represent'?'font-[500] text-[#104B53]':''}`}>  RTR</p>
               
             </div>
               </Link>
@@ -130,8 +130,8 @@ const Header: React.FC = () => {
             <div className=" flex flex-col  space-y-1 justify-center items-center cursor-pointer">
        
 
-              <img src={msgLogo} alt="rtr-header" />
-              <p className={`font-[300] text-sm ${params==='/messages'?'font-[500] text-[#104B53]':''}`}>  Message</p>
+              <img src={msgLogo} alt="rtr-header" className='w-5' />
+              <p className={`font-[300] text-xs ${params==='/messages'?'font-[500] text-[#104B53]':''}`}>  Message</p>
               
             </div>
               </Link>
@@ -142,8 +142,8 @@ const Header: React.FC = () => {
             <div className=" flex flex-col space-y-1 justify-center items-center cursor-pointer">
        
 
-              <img src={jobLogo} alt="rtr-header" />
-              <p className={`font-[300] text-sm ${params==='/myjobs'?'font-[500] text-[#104B53]':''}`}>  MyJobs</p>
+              <img src={jobLogo} alt="rtr-header"  className='w-5'/>
+              <p className={`font-[300] text-xs ${params==='/myjobs'?'font-[500] text-[#104B53]':''}`}>  MyJobs</p>
               
             </div>
               </Link>
