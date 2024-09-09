@@ -27,15 +27,18 @@ const Message : React.FC =()=>{
       ];
     
     return(
-        <div className="w-full  h-full bg-[#F2F2F5]  " >
-            <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-3  rounded-lg p-5">
-                        <div className="w-full">
-                        <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+        <div className="w-full  min-h-screen bg-[#F2F2F5]  " >
+            <div className=" w-full max-w-[1280px]  sm:flex justify-start items-start h-full   m-auto sm:mt-3  rounded-lg ">
+                        
+
+
+            <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg  w-full sticky top-2   mr-2 max-w-[200px] ">
+          <ul className="w-full  flex flex-col justify-start items-end h-[150px]        relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {
               return (
                 <Link
                   to={item.link}
-                  className={` text-sm p-1  font-[500]  ${id == 2 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
+                  className={`w-full text-xs  text-center  border-b  p-4     transition-all duration-300    font-[500]  ${id == 2 ? ' border-[#104B53]   text-[#104B53] ' : ' '}  `}
                   key={id}
                 >
                   {item.label}
@@ -43,16 +46,30 @@ const Message : React.FC =()=>{
               );
             })}
           </ul>
-                        </div>
+        </div>
 
-
-            
 
                                    
 
+        <div className="w-full overflow-auto sm:hidden bg-white p-4">
+            <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+              {titles?.map((item, id) => {
+                return (
+                  <Link
+                    to={item.link}
+                    className={`text-sm p-2 w-full font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
+                    key={id}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </ul>
+          </div>
+
 {/* Message box  */}
 
-                        <div className="w-full flex max-w-[1200px]  mt-10  h-[660px] m-auto border border-[#E1E1E2] rounded-lg">
+                        <div className="w-full flex max-w-[1200px] bg-white  p-2   h-[660px] m-auto border border-[#E1E1E2] rounded-lg">
                             {/* left Side bar  */}
 
                             <div className="w-full  p-5 flex flex-col space-y-6  md:max-w-[307px] h-full border border-[#D6DBDE] rounded-lg ">
@@ -111,7 +128,7 @@ const Message : React.FC =()=>{
 
 
                                     {/* Right side  */}
-                            <div className="w-full h-full p-5 relative hidden md:block    ">
+                            <div className="w-full h-full p-5 relative hidden md:block    " >
                                     <div className="  flex justify-between items-center">
                                         <div className="w-full flex  justify-center items-center space-x-3">       
 
@@ -197,7 +214,7 @@ const Message : React.FC =()=>{
 
 
                                     <div className="w-full  p-5">
-                                        <div className="w-full h-[340px] overflow-auto ">
+                                        <div className="w-full h-[340px] overflow-auto " id="message-box">
                                             <div className="w-full flex flex-col justify-end items-start space-y-4">
                                                         <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
                                                             <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>

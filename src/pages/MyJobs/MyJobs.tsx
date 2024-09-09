@@ -31,14 +31,16 @@ const MyJobs: React.FC = () => {
   const moreSection:string[]=['Saved','Application Started','Shortlisted','Interviewing','Offer Received']
   return (
     <div className="w-full  h-full bg-[#F2F2F5] p-2 ">
-      <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-3 rounded-lg p-3">
-        <div className="w-full">
-        <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+      <div className=" w-full max-w-[1280px] flex  h-full   m-auto mt-3 rounded-lg p-3">
+
+
+      <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
+          <ul className="w-full  flex flex-col justify-start items-end      relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {
               return (
                 <Link
                   to={item.link}
-                  className={` text-sm p-1  font-[500]  ${id == 0 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
+                  className={`w-full text-xs  text-center p-4 border-b      transition-all duration-300    font-[500]  ${id == 0 ? ' border-[#104B53]  text-[#104B53] ' : ' '}  `}
                   key={id}
                 >
                   {item.label}
@@ -48,11 +50,36 @@ const MyJobs: React.FC = () => {
           </ul>
         </div>
 
+    
+
+        {/* Job Cards  */}
+
+        <div className='w-full h-full p-3 bg-white'>
+
+
+        <div className="w-full overflow-auto sm:hidden">
+            <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+              {titles?.map((item, id) => {
+                return (
+                  <Link
+                    to={item.link}
+                    className={`text-sm p-2 w-full font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
+                    key={id}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </ul>
+          </div>
+
+
+
         <div className="w-full overflow-auto">
           <ul className="w-full flex">
             {tags?.map((item, id) => {
               return (
-                <li className=" text-sm  font-[500]  p-5" key={id}>
+                <li className=" text-xs  font-[500]  p-5" key={id}>
                   {item}
                 </li>
               );
@@ -60,14 +87,15 @@ const MyJobs: React.FC = () => {
           </ul>
         </div>
 
-        {/* Job Cards  */}
+
+
 
         <div className="w-full max-w-[1200px] p-5 h-full m-auto border border-[#E1E1E2] rounded-lg">
           <div className="flex flex-col space-y-3">
-            <h1 className="text-lg font-semibold">Applied</h1>
+            <h1 className="text-sm font-semibold">Applied</h1>
             <div className="flex items-center space-x-5">
-              <p className="text-sm">8 Job</p>
-              <p className="border border-[#E1E1E2] w-[167px] text-sm p-2 rounded-full">
+              <p className="text-xs">8 Job</p>
+              <p className="border border-[#E1E1E2]  text-xs p-2 rounded-full">
                 Posted in Last 7 Days
               </p>
             </div>
@@ -78,22 +106,22 @@ const MyJobs: React.FC = () => {
               return (
                 <div
                   key={id}
-                  className="relative w-full  max-w-[370px] h-[197px] bg-white border border-[#E1E1E2]   rounded-lg p-3 flex flex-col justify-between"
+                  className="relative w-full  max-w-[310px] h-[197px] bg-white border border-[#E1E1E2]   rounded-lg p-3 flex flex-col justify-between"
                 >
                   <div className="flex w-full space-x-3 items-center">
                     <img src="/images/emplogo.png" className="w-12 h-12" alt="emp-logo" />
                     <div className="flex flex-col space-y-1">
-                      <h1 className="text-base font-semibold">UI/UX Designer</h1>
+                      <h1 className="text-sm font-semibold">UI/UX Designer</h1>
                       <ul className="flex space-x-2">
-                        <li className="text-xs md:text-sm">Figma</li>
-                        <li className="text-xs md:text-sm">Allen, Texas, United States</li>
+                        <li className="text-xs  ">Figma</li>
+                        <li className="text-xs  ">Allen, Texas, United States</li>
                       </ul>
                     </div>
                   </div>
 
                   <div className="w-full">
                     <ul className="flex items-center space-x-4">
-                      <li className="p-2 pl-3 pr-3 text-xs bg-[#F2F2F5] text-[#3A3A3C] rounded-full">
+                      <li className="p-2 pl-2 pr-2 text-xs bg-[#F2F2F5] text-[#3A3A3C] rounded-full">
                         Full Time
                       </li>
                       <li className="p-2 pl-3 pr-3  text-xs bg-[#F2F2F5] text-[#3A3A3C] rounded-full">
@@ -105,14 +133,14 @@ const MyJobs: React.FC = () => {
                   <div className="w-full flex justify-between items-center space-x-6 ">
                
 
-                            <p className="w-full border border-[#104B53] rounded-full p-1 flex justify-center items-center text-sm">
+                            <p className="w-full border border-[#104B53] rounded-full p-1 flex justify-center items-center text-xs">
                             View
                             </p>
                     
 
                
 
-                            <p className="w-full border border-[#104B53] rounded-full p-1 flex justify-center items-center text-sm"
+                            <p className="w-full border border-[#104B53] rounded-full p-1 flex justify-center items-center text-xs"
                             onClick={() => setActiveCard(id === activeCard ? null : id)}
                             >
                             More
@@ -152,6 +180,9 @@ const MyJobs: React.FC = () => {
             })}
           </div>
         </div>
+        </div>
+
+       
       </div>
     </div>
   );

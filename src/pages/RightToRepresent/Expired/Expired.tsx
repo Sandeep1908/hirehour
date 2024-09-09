@@ -53,24 +53,21 @@ const Expired: React.FC = () => {
 
    
 
-
-<div className="hidden sm:flex justify-between bg-white h-[200px] rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
-  <ul className="w-full  flex flex-col justify-start items-end p-1   space-y-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
-    {titles?.map((item, id) => {
-      return (
-        <Link
-          to={item.link}
-          className={`w-full text-xs  text-center p-2    hover:text-white hover:bg-[#104B53] transition-all duration-300    font-[500]  ${id == 1 ? 'border-[#104B53] border bg-[#104B53] text-white  ' : ' border'}  `}
-          key={id}
-        >
-          {item.label}
-        </Link>
-      );
-    })}
-  </ul>
-
- 
-</div>
+       <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
+          <ul className="w-full  flex flex-col justify-start items-end      relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+            {titles?.map((item, id) => {
+              return (
+                <Link
+                  to={item.link}
+                  className={`w-full text-xs  text-center p-4 border-b      transition-all duration-300    font-[500]  ${id == 1 ? ' border-[#104B53]  text-[#104B53] ' : ' '}  `}
+                  key={id}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </ul>
+        </div>
 
 <div className='w-full  p-3 bg-white  '>
 
@@ -94,7 +91,7 @@ const Expired: React.FC = () => {
   <ul className="w-screen md:w-auto overflow-auto flex items-center space-x-7 p-2 sm:p-3">
     {tags?.map((item, id) => {
       return (
-        <Link to={item.link}  className={` text-xs sm:text-sm  font-[600] cursor-pointer  ${id===3?'text-[#104B53]':''}`} key={id}>
+        <Link to={item.link}  className={` text-xs    font-[600] cursor-pointer  ${id===3?'text-[#104B53]':''}`} key={id}>
         {item.label}
       </Link>
       );
