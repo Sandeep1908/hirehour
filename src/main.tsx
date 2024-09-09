@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
+ 
 import {
   RouterProvider,
   createBrowserRouter,
@@ -26,6 +27,7 @@ import Accepted from './pages/RightToRepresent/Accepted/Accepted.tsx';
 import Decline from './pages/RightToRepresent/Decline/Decline.tsx';
 import Expired from './pages/RightToRepresent/Expired/Expired.tsx';
 
+ 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
