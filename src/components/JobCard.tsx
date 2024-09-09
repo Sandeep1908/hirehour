@@ -25,7 +25,7 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
                 <div className='flex gap-2'>
                     <img className='w-[46px] h-[46px]' src={data.img} alt="" />
                     <div className='h-auto'>
-                        <p className=' font-semibold'>{data.title}</p>
+                        <p className='text-base font-semibold'>{data.title}</p>
                         <ul className='flex  gap-4 md:gap-6 text-[12px] mt-1'>
                            
                             <li>{data.company}</li>

@@ -521,7 +521,7 @@ const JobDescription: React.FC = () => {
 
     {/* Job Cards And Job Description */}
 
-                <div className='w-full max-w-[1280px] m-auto h-auto flex justify-center md:justify-between pt-7  md:px-0'>
+                <div className='w-full max-w-[1280px] m-auto relative h-auto flex justify-center md:justify-between pt-7  md:px-0'>
 
            {/* Job Card Component */}
 
@@ -563,7 +563,8 @@ const JobDescription: React.FC = () => {
                     {jobData.map((details) => {
                         if (details.id === jobDataId) {
                             return (
-                                <div className='hidden md:block max-w-[845px] w-full rounded-lg  border'>
+                                <div className='hidden md:block max-w-[845px]  w-full rounded-lg  border'>
+                                    <div className=' w-full  '>
                                     <div className='w-full shadow-lg pb-8'>
                                         <img src={Job_banner} alt="" />
                                         <div className='w-[95%] m-auto transition-all ease-in-out duration-1000'>
@@ -733,6 +734,8 @@ const JobDescription: React.FC = () => {
                                             </div>
                                         </div>
                                     </div>
+                                    </div>
+                                   
                                 </div>
                             )
                         }
@@ -747,44 +750,44 @@ const JobDescription: React.FC = () => {
                     className={`w-full h-full flex p-3 md:p-3    justify-center items-center  fixed inset-0 transition-all duration-500 ${isQuickApply ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
                 >
                     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
-                    <div className='max-w-[1055px] h-full md:h-auto w-full bg-white rounded-lg overflow-auto z-[30]'>
-                        <div className=' p-4 md:p-10 flex justify-between items-center'>
-                            <p className='text-2xl font-bold'>Apply to xyz Company</p>
+                    <div className='max-w-[600px] h-full md:h-auto w-full bg-white rounded-lg overflow-auto z-[30]'>
+                        <div className=' p-4  flex justify-between items-center'>
+                            <p className='text-xl font-bold'>Apply to xyz Company</p>
                             <IoMdClose size={30} onClick={() => { setQuickApply(false) }} className="cursor-pointer" />
                         </div>
                         <hr />
-                        <div className='w-full p-10'>
+                        <div className='w-full p-4'>
 
 
                             <div className="w-full flex justify-between items-center">
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>1</p>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                        <p className='text-[12px] text-white font-semibold'>1</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#114B53]'>Screening Questions</p>
                                 </div>
-                                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#C7C9D9]'>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#C7C9D9]'>
 
                                 </div>
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>2</p>
+                                    <div className='w-8 h-8 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
+                                        <p className='text-[12px] text-white font-semibold'>2</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#C7C9D9]'>Review Application</p>
                                 </div>
-                                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#C7C9D9]'>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#C7C9D9]'>
 
                                 </div>
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>3</p>
+                                    <div className='w-8 h-8 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
+                                        <p className='text-[12px] text-white font-semibold'>3</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#C7C9D9]'>Applied Successfully</p>
                                 </div>
                             </div>
 
 
-                            <p className='text-xl font-semibold mt-5'>
+                            <p className='text-base font-semibold mt-5'>
                                 Screening Questions
                             </p>
                             <p className='text-[12px] font-normal mt-2'>
@@ -792,21 +795,21 @@ const JobDescription: React.FC = () => {
                             </p>
 
                             <div className='mt-5'>
-                                <label htmlFor="" className='text-base font-medium'>How many years of experience do you have in Java ? ( in years) <span className='text-red-600'> *</span></label>
+                                <label htmlFor="" className='text-[14px] font-medium'>How many years of experience do you have in Java ? ( in years) <span className='text-red-600'> *</span></label>
                                 <input type="text" className='w-full h-[48px] mt-2 border-[1px] rounded-lg' />
                             </div>
                             <div className='mt-5'>
-                                <label htmlFor="" className='text-base font-medium'>Can you able to Relocate the Job Location ? <span className='text-red-600'> *</span></label>
+                                <label htmlFor="" className='text-[14px] font-medium'>Can you able to Relocate the Job Location ? <span className='text-red-600'> *</span></label>
                                 <input type="text" className='w-full h-[48px] mt-2 border-[1px] rounded-lg' />
                             </div>
                             <div className='mt-5'>
-                                <label htmlFor="" className='text-base font-medium'>Immediate Joiner ? <span className='text-red-600'> *</span></label>
+                                <label htmlFor="" className='text-[14px] font-medium'>Immediate Joiner ? <span className='text-red-600'> *</span></label>
                                 <input type="text" className='w-full h-[48px] mt-2 border-[1px] rounded-lg' />
                             </div>
 
                         </div>
                         <hr />
-                        <div className='w-full flex justify-end p-10'>
+                        <div className='w-full flex justify-end p-4'>
                             <div onClick={step2} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer'>
                                 <p className='text-base font-semibold text-[#114B53]'>Continue</p>
                             </div>
@@ -819,37 +822,37 @@ const JobDescription: React.FC = () => {
                 >
                     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-                    <div className='z-[30] max-w-[1055px] w-full h-full bg-white rounded-lg overflow-auto relative top-[0px]'>
-                        <div className=' p-4 md:p-10 flex justify-between items-center'>
-                            <p className='text-2xl font-bold'>Apply to xyz Company</p>
+                    <div className='z-[30] max-w-[600px] w-full h-full bg-white rounded-lg overflow-auto relative top-[0px]'>
+                        <div className=' p-4  flex justify-between items-center'>
+                            <p className='text-xl font-bold'>Apply to xyz Company</p>
                             <IoMdClose size={30} onClick={() => { setQuickApplyStep2(false) }} className="cursor-pointer" />
                         </div>
                         <hr />
-                        <div className='w-full p-4 md:p-10'>
+                        <div className='w-full p-4'>
 
 
                             <div className="w-full flex justify-between items-center">
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>1</p>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                        <p className='text-[14px] text-white font-semibold'>1</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#114B53]'>Screening Questions</p>
                                 </div>
-                                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#114B53]'>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]'>
 
                                 </div>
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
-                                        <p className=' text-base text-white font-semibold'>2</p>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                        <p className=' text-[14px] text-white font-semibold'>2</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#114B53]'>Review Application</p>
                                 </div>
-                                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#C7C9D9]'>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#C7C9D9]'>
 
                                 </div>
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>3</p>
+                                    <div className='w-8 h-8 bg-[#C7C9D9] rounded-full flex justify-center items-center'>
+                                        <p className='text-[14px] text-white font-semibold'>3</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#C7C9D9]'>Applied Successfully</p>
                                 </div>
@@ -865,21 +868,21 @@ const JobDescription: React.FC = () => {
 
                             <div className='w-full mt-5'>
                                 <div className='w-full flex flex-col md:flex-row gap-5'>
-                                    <div className='max-w-[411px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-5 md:py-6'>
+                                    <div className='max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
                                         <div className='flex justify-between items-center'>
-                                            <p className='text-[20px] font-semibold'>Personal Information</p>
+                                            <p className='text-base font-semibold'>Personal Information</p>
                                             <div onClick={editPop} className='cursor-pointer text-base font-semibold flex items-center gap-2 text-[#114B53]'><FaRegEdit />
                                                 <p>Edit</p></div>
                                         </div>
                                         <hr className='mt-6' />
-                                        <div className='flex flex-col justify-center items-center mt-6'>
+                                        <div className='flex flex-col justify-center items-center mt-3'>
                                             <div className='w-[100px] h-[100px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
                                                 <p className='text-[40px] font-extrabold'>J</p>
                                             </div>
-                                            <p className='text-[20px] font-semibold mt-6'>John S Mathew</p>
+                                            <p className='text-[20px] font-semibold mt-3'>John S Mathew</p>
                                         </div>
-                                        <hr className='mt-8' />
-                                        <div className='mt-4 flex items-center justify-between'>
+                                        <hr className='mt-3' />
+                                        <div className='mt-3 flex items-center justify-between'>
                                             <div className='flex items-center gap-2 '>
                                                 <MdOutlineMail size={20} />
 
@@ -887,7 +890,7 @@ const JobDescription: React.FC = () => {
                                             </div>
 
                                         </div>
-                                        <div className='mt-4 flex items-center justify-between'>
+                                        <div className='mt-3 flex items-center justify-between'>
                                             <div className='flex items-center gap-2 '>
                                                 <IoCallOutline size={20} />
 
@@ -895,23 +898,24 @@ const JobDescription: React.FC = () => {
                                             </div>
 
                                         </div>
-                                        <p className='text-[14px] font-medium text-[#8F90A6] mt-4'>Visa sponsorship</p>
+                                        <p className='text-[14px] font-medium text-[#8F90A6] mt-3'>Visa sponsorship</p>
                                         <p className='text-[16px] font-semibold text-[#000000] mt-2'>Required</p>
                                     </div>
-                                    <div className='max-w-[540px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-2 py-3 md:px-5 md:py-6'>
+                                    <div className='max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-2 py-3 md:px-3 md:py-2'>
                                         <div className='flex justify-between items-center'>
-                                            <p className='text-[20px] font-semibold hidden md:block'>Resume</p>
+                                            <p className='text-base font-semibold hidden md:block'>Resume</p>
                                             <div className='flex flex-row-reverse md:flex-row items-center justify-between gap-2'>
-                                                <p className='text-[#8F90A6] text-[12px]'>Pdf, Doc, DocX (2MB)</p>
-                                                <div className=' text-[13px] md:text-base font-semibold flex items-center gap-2 px-2 py-1 border-2 border-[#114B53] rounded-full'> <LuUpload size={20} />
+                                                <div className=' text-[13px] font-semibold flex items-center gap-2 px-2 py-1 border-2 border-[#114B53] rounded-full'> <LuUpload size={20} />
                                                     <p>upload resume</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr className='mt-5' />
-                                        <div className='flex flex-col gap-4'>
+                                        <p className='text-[#8F90A6] text-[12px] text-end mt-2'>Pdf, Doc, DocX (2MB)</p>
+
+                                        <hr className='mt-3' />
+                                        <div className='flex flex-col gap-4 mt-2'>
                                             <div className='w-full border-2 border-black rounded-xl flex'>
-                                                <div className='w-[95px] bg-[#E3EDFF] flex justify-center items-center rounded-tl-lg rounded-bl-lg'>
+                                                <div className='w-[60px] bg-[#E3EDFF] flex justify-center items-center rounded-tl-lg rounded-bl-lg'>
                                                     <p className='text-[#1F4AF1] text-base font-bold'>PDF</p>
                                                 </div>
                                                 <div className='w-full flex justify-between items-center px-3 py-2'>
@@ -920,7 +924,7 @@ const JobDescription: React.FC = () => {
                                                         <p className='text-[#6B7588] text-[12px] font-medium mt-1'> Selected Resume</p>
                                                     </div>
                                                     <div className='flex gap-4'>
-                                                        <p className='text-[#114B53] text-[12px] font-semibold'> Preview</p>
+                                                        {/* <p className='text-[#114B53] text-[12px] font-semibold'> Preview</p> */}
                                                         <RiDeleteBin6Line size={20} />
 
 
@@ -928,8 +932,9 @@ const JobDescription: React.FC = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className='w-full border-[1px] border-[#D1D1D1] rounded-xl flex'>
-                                                <div className='w-[95px] bg-[#E3EDFF] flex justify-center items-center rounded-tl-lg rounded-bl-lg'>
+
+                                            <div className='w-full border-2 border-black rounded-xl flex'>
+                                                <div className='w-[60px] bg-[#E3EDFF] flex justify-center items-center rounded-tl-lg rounded-bl-lg'>
                                                     <p className='text-[#1F4AF1] text-base font-bold'>PDF</p>
                                                 </div>
                                                 <div className='w-full flex justify-between items-center px-3 py-2'>
@@ -938,7 +943,7 @@ const JobDescription: React.FC = () => {
                                                         <p className='text-[#6B7588] text-[12px] font-medium mt-1'> Selected Resume</p>
                                                     </div>
                                                     <div className='flex gap-4'>
-                                                        <p className='text-[#114B53] text-[12px] font-semibold'> Preview</p>
+                                                        {/* <p className='text-[#114B53] text-[12px] font-semibold'> Preview</p> */}
                                                         <RiDeleteBin6Line size={20} />
 
 
@@ -946,31 +951,32 @@ const JobDescription: React.FC = () => {
                                                     </div>
                                                 </div>
                                             </div>
+                                           
                                         </div>
                                     </div>
                                 </div>
-                                <div className='w-full border-[1px] border-[#D6DBDE] rounded-lg px-5 py-3 md:px-10 md:py-6 mt-5'>
+                                <div className='w-full border-[1px] border-[#D6DBDE] rounded-lg px-5 py-3 md:px-4 md:py-3 mt-5'>
                                     <div className='flex justify-between items-center'>
-                                        <p className='text-[14px] md:text-[20px] font-semibold'>Screening Questions</p>
+                                        <p className='text-[14px] md:text-base font-semibold'>Screening Questions</p>
                                         <div onClick={backToStep} className=' cursor-pointer text-base font-semibold flex items-center gap-2 text-[#114B53]'><FaRegEdit />
-                                            <p>Edit</p></div>
+                                            <p className='text-base'>Edit</p></div>
                                     </div>
-                                    <hr className='mt-6' />
+                                    <hr className='mt-3' />
 
-                                    <p className='text-[#8F90A6] text-[12px] md:text-base font-normal mt-5'>How many years of experience do you have in Java ? ( in years)</p>
-                                    <p className='text-[#000000] text-[12px] md:text-base font-normal mt-2'>4 years</p>
-                                    <p className='text-[#8F90A6] text-[12px] md:text-base font-normal mt-5'>Can you able to Relocate the Job Location ?</p>
-                                    <p className='text-[#000000] text-[12px] md:text-base font-normal mt-2'>Yes</p>
+                                    <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-3'>How many years of experience do you have in Java ? ( in years)</p>
+                                    <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>4 years</p>
+                                    <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-5'>Can you able to Relocate the Job Location ?</p>
+                                    <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>Yes</p>
 
-                                    <p className='text-[#8F90A6] text-[12px] md:text-base font-normal mt-5'>Immediate Joiner ?</p>
-                                    <p className='text-[#000000] text-[12px] md:text-base font-normal mt-2'>Yes</p>
+                                    <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-5'>Immediate Joiner ?</p>
+                                    <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>Yes</p>
 
                                 </div>
                             </div>
 
                         </div>
                         <hr />
-                        <div className='w-full flex justify-end p-4 md:p-10 gap-10  items-center'>
+                        <div className='w-full flex justify-end p-3 gap-10  items-center'>
                             <p onClick={backToStep} className='cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
                             <div onClick={step3} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
                                 <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
@@ -986,36 +992,36 @@ const JobDescription: React.FC = () => {
                     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
 
-                    <div className='z-[30] max-w-[1055px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px]'>
-                        <div className='p-4 md:p-10 flex justify-between items-center'>
-                            <p className='text-2xl font-bold'>Apply to xyz Company</p>
+                    <div className='z-[30] max-w-[600px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px]'>
+                        <div className='p-4  flex justify-between items-center'>
+                            <p className='text-xl font-bold'>Apply to xyz Company</p>
                             <IoMdClose size={30} onClick={() => { setQuickApplyStep3(false) }} className="cursor-pointer" />
                         </div>
                         <hr />
-                        <div className='w-full p-4 md:p-10'>
+                        <div className='w-full p-4 '>
 
 
                             <div className="w-full flex justify-between items-center">
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
                                         <p className='text-base text-white font-semibold'>1</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#114B53]'>Screening Questions</p>
                                 </div>
-                                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#114B53]'>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]'>
 
                                 </div>
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
                                         <p className='text-base text-white font-semibold'>2</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#114B53]'>Review Application</p>
                                 </div>
-                                <div className='border-t-[1px] max-w-[200px] w-full border-dotted border-[#114B53]'>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]'>
 
                                 </div>
                                 <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-10 h-10 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
                                         <p className='text-base text-white font-semibold'>3</p>
                                     </div>
                                     <p className='hidden md:block text-[12px] font-medium text-[#114B53]'>Applied Successfully</p>
@@ -1024,13 +1030,13 @@ const JobDescription: React.FC = () => {
 
                         </div>
                         <div className='flex flex-col justify-center items-center p-4'>
-                            <p className='text-[14px] md:text-[20px] font-semibold text-[#3A3A3C] mt-5'>Applied Successfully</p>
+                            <p className='text-[14px] md:text-base font-semibold text-[#3A3A3C] mt-2'>Applied Successfully</p>
                             <img className='mt-5' src={Logo} alt="" />
-                            <p className='text-[12px] md:text-[20px] font-semibold text-[#3A3A3C] mt-5'>Your application was submitted to xyz company</p>
+                            <p className='text-[12px] md:text-base font-semibold text-[#3A3A3C] mt-5'>Your application was submitted to xyz company</p>
                             <p className='text-[12px] md:text-[14px] font-normal text-[#6B7588] mt-2'>You can track you application any time from my jobs</p>
                         </div>
 
-                        <div className='w-full flex justify-center p-4 md:p-10'>
+                        <div className='w-full flex justify-center p-4'>
                             <div onClick={quickApplyDone} className='cursor-pointer bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full '>
                                 <p className='text-base font-semibold text-[#114B53]'>Done</p>
                             </div>
@@ -1045,43 +1051,43 @@ const JobDescription: React.FC = () => {
                     className={`w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isQuickApplyEdit ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
                 >
                     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
-                    <div className='max-w-[1055px] w-full bg-white rounded-lg overflow-auto z-[30]'>
-                        <div className=' p-10 flex justify-between items-center'>
-                            <p className='text-2xl font-bold'>Apply to xyz Company</p>
+                    <div className='max-w-[600px] w-full bg-white rounded-lg overflow-auto z-[30]'>
+                        <div className=' p-4 flex justify-between items-center'>
+                            <p className='text-xl font-bold'>Apply to xyz Company</p>
                             <IoMdClose size={30} onClick={step2} className="cursor-pointer" />
                         </div>
                         <hr />
-                        <div className='w-full px-10 py-8'>
+                        <div className='w-full px-4 py-3'>
 
-                            <p className='text-xl font-semibold '>
+                            <p className='text-base font-semibold '>
                                 Personal information
                             </p>
                             <p className='text-[12px] font-normal mt-2'>
                                 Confirm the personal detail before apply
                             </p>
-                            <div className='w-full flex gap-4 mt-5'>
+                            <div className='w-full flex gap-4 mt-3'>
                                 <div className='w-full '>
-                                    <p className='text-base font-medium'>First name <span className='text-red-600'>*</span></p>
+                                    <p className='text-[14px] font-medium'>First name <span className='text-red-600'>*</span></p>
                                     <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
                                 </div>
                                 <div className='w-full '>
-                                    <p className='text-base font-medium'>Last name <span className='text-red-600'>*</span></p>
+                                    <p className='text-[14px] font-medium'>Last name <span className='text-red-600'>*</span></p>
                                     <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
                                 </div>
                             </div>
-                            <div className='w-full flex gap-4 mt-5'>
+                            <div className='w-full flex gap-4 mt-3'>
                                 <div className='w-full '>
-                                    <p className='text-base font-medium'>Email<span className='text-red-600'>*</span></p>
+                                    <p className='text-[14px] font-medium'>Email<span className='text-red-600'>*</span></p>
                                     <input type="email" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
                                 </div>
                                 <div className='w-full '>
-                                    <p className='text-base font-medium'>Phone number <span className='text-red-600'>*</span></p>
+                                    <p className='text-[14px] font-medium'>Phone number <span className='text-red-600'>*</span></p>
                                     <input type="number" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
                                 </div>
                             </div>
-                            <div className='w-full flex gap-4 mt-5'>
+                            <div className='w-full flex gap-4 mt-3'>
                                 <div className='w-full '>
-                                    <p className='text-base font-medium'>Visa Sponsership <span className='text-red-600'>*</span></p>
+                                    <p className='text-[14px] font-medium'>Visa Sponsership <span className='text-red-600'>*</span></p>
                                     <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
                                 </div>
 
@@ -1090,7 +1096,7 @@ const JobDescription: React.FC = () => {
 
                         </div>
                         <hr />
-                        <div className='w-full flex justify-end p-10'>
+                        <div className='w-full flex justify-end p-4'>
                             <div onClick={step2} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
                                 <p className='text-base font-semibold text-[#114B53]'>Update</p>
                             </div>
