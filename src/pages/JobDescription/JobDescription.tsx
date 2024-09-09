@@ -49,7 +49,7 @@ const JobDescription: React.FC = () => {
     const [isQuickApplyStep2, setQuickApplyStep2] = useState<boolean>(false);
     const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
     const [isQuickApplyEdit, setQuickApplyEdit] = useState<boolean>(false);
-    const [dropdown, setDropdown] = useState<boolean>(false);
+    // const [dropdown, setDropdown] = useState<boolean>(false);
     const [dropdownLoc, setDropdownLoc] = useState<boolean>(false);
     const [dropdownExp, setDropdownExp] = useState<boolean>(false);
     const [dropdownDis, setDropdownDis] = useState<boolean>(false);
@@ -125,9 +125,9 @@ const JobDescription: React.FC = () => {
   const [selectedOption, setSelectedOption] = useState("24 hours");
   const [isSelected, setIsSelected] = useState(false); 
 
-  const handleOptionClick = (value) => {
+  const handleOptionClick = (value:string) => {
     setSelectedOption(value);
-    setDropdown(false); // Close the dropdown after selecting an option
+    setDropdown2(false); 
     setIsSelected(true);
   };
 

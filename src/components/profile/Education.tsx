@@ -1,6 +1,5 @@
 import React from 'react'
 import { IoMdClose } from 'react-icons/io'
-import { RiDeleteBin4Line } from 'react-icons/ri'
 
 
 type EducationProps = {
