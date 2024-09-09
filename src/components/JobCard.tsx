@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import icon from '../assets/Employers Logo.svg'
 import { BsFillLightningFill } from "react-icons/bs";
 import { LuMoreVertical } from 'react-icons/lu';
 import { FaFlag, FaRegBookmark } from 'react-icons/fa6';
@@ -7,26 +6,31 @@ import { MdShare } from 'react-icons/md';
 import ReportJob from './ReportJob';
 
 type JobCardProps={
+    jobDataId:number,
     setIsOpen:(e:boolean)=>void,
-}
+    setId:(e:number)=>void,
+    data:jobDescriptionTypes
+  }
 
 
-const JobCard: React.FC<JobCardProps> = ({setIsOpen}) => {
+const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
     const [showIcon, setShowIcon] = useState<boolean>(false);
     const [showReport, setShowReport] = useState<boolean>(false);
     const [isShareModal,setIsShareModal]=useState<boolean>(false)
 
     return (
-        <div className='w-full h-auto p-3  md:px-3 py-5 border-2 border-black rounded-xl flex flex-col gap-3 md:gap-5 '>
+        <div onClick={()=>{setId(data.id)}} className={`${jobDataId === data.id ?"border-black":""} w-full h-auto p-3   md:px-3 py-5 border-2   rounded-xl flex flex-col gap-3 md:gap-5 `}>
             <div className='w-full flex justify-between'>
+                
                 <div className='flex gap-2'>
-                    <img className='w-[46px] h-[46px]' src={icon} alt="" />
+                    <img className='w-[46px] h-[46px]' src={data.img} alt="" />
                     <div className='h-auto'>
-                        <p className=' font-semibold'>UI/UX Designer</p>
-                        <ul className='flex list-disc gap-4 md:gap-6 text-[12px] mt-1'>
-                            <li>Figma</li>
-                            <li>Software</li>
-                            <li>Allen, Texas, US</li>
+                        <p className=' font-semibold'>{data.title}</p>
+                        <ul className='flex  gap-4 md:gap-6 text-[12px] mt-1'>
+                           
+                            <li>{data.company}</li>
+                            <li>{data.designation}</li>
+                            <li>{data.location}</li>
                         </ul>
                     </div>
                 </div>
@@ -63,14 +67,15 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen}) => {
 
             <div className='flex gap-1 md:gap-2 h-auto'>
 
+                
                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                    <p className='text-[14px]'>Hybrid</p>
+                    <p className='text-[14px]'>{data.mode}</p>
                 </div>
                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                    <p className='text-[14px]'>$58-$68 / hours</p>
+                    <p className='text-[14px]'>{data.pay} / hours</p>
                 </div>
                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                    <p className='text-[14px]'>Full Time</p>
+                    <p className='text-[14px]'>{data.workTime}</p>
                 </div>
 
             </div>
@@ -81,7 +86,13 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen}) => {
 
                 <div className='flex gap-1 md:gap-2 mt-1'>
 
-                    <div className='px-2 md:px-3 py-1 bg-[#CAFDFC] rounded-full'>
+                {data.techStacks.map(( value,id)=>(
+                                 
+                              <div key={id} className='px-2 md:px-3 py-1 bg-[#CAFDFC] rounded-full'>
+                                 <p className='text-[12px] font-semibold'>{value} </p>
+                             </div>
+                            ))}
+                    {/* <div className='px-2 md:px-3 py-1 bg-[#CAFDFC] rounded-full'>
                         <p className='text-[12px] font-semibold'>Figma </p>
                     </div>
                     <div className='px-2 md:px-3 py-1 bg-[#CAFDFC] rounded-full'>
@@ -89,7 +100,7 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen}) => {
                     </div>
                     <div className='px-2 md:px-3 py-1 bg-[#CAFDFC] rounded-full'>
                         <p className='text-[12px] font-semibold'>Design Thinking</p>
-                    </div>
+                    </div> */}
 
                 </div>
 
