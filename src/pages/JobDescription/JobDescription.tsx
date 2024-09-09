@@ -119,6 +119,18 @@ const JobDescription: React.FC = () => {
     //   const handleChange = (selected: any) => {
     //     setSelectedOption(selected);
     //   };
+
+
+    const [dropdown2, setDropdown2] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("24 hours");
+  const [isSelected, setIsSelected] = useState(false); 
+
+  const handleOptionClick = (value) => {
+    setSelectedOption(value);
+    setDropdown(false); // Close the dropdown after selecting an option
+    setIsSelected(true);
+  };
+
     
 
     return (
@@ -225,12 +237,39 @@ const JobDescription: React.FC = () => {
                                     </div> */}
 
 
-                        <div className='relative'>
+
+<div className='relative'>
+      <div onClick={() => setDropdown2(!dropdown2)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+  ${isSelected ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
+        <p className="text-[14px] font-normal text-[#114B53]">{selectedOption}</p>
+        <MdOutlineKeyboardArrowDown className={`${dropdown2 ? 'rotate-180 transition-all duration-500' : ''}`} />
+      </div>
+
+      {dropdown2 && (
+        <div className='absolute top-12 left-0 w-[140px]'>
+          <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+            {["24 hours", "Past 3 days", "Past week", "Past month", "Anytime"].map(option => (
+              <div key={option} className='w-full px-4 py-3 flex gap-2'>
+                <input
+                  type="radio"
+                  name="value1"
+                  checked={selectedOption === option}
+                  onChange={() => handleOptionClick(option)}
+                />
+                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+
+                        {/* <div className='relative'>
 
 
                             <div onClick={() => { setDropdown(!dropdown) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
                                 <p className="text-[14px] font-normal text-[#114B53]">24 hours</p>
-                                {/* <img src={arrow_down} alt="" /> */}
                                 <MdOutlineKeyboardArrowDown
                                     className={`${dropdown ? 'rotate-180 transition-all duration-500' : ''}`}
                                 />
@@ -269,7 +308,9 @@ const JobDescription: React.FC = () => {
 
                                 </div> : ""}
 
-                        </div>
+                        </div> */}
+
+
 
 
                         <div className='relative'>
@@ -563,7 +604,7 @@ const JobDescription: React.FC = () => {
                     {jobData.map((details) => {
                         if (details.id === jobDataId) {
                             return (
-                                <div className='hidden md:block max-w-[845px]  w-full rounded-lg  border'>
+                                <div className='hidden md:block max-w-[845px] sticky top-[50px] w-full rounded-lg  border'>
                                     <div className=' w-full  '>
                                     <div className='w-full shadow-lg pb-8'>
                                         <img src={Job_banner} alt="" />
