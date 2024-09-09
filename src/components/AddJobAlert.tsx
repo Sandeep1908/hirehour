@@ -10,13 +10,13 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
     <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
       <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-        <div className='max-w-[1055px] h-auto w-full  bg-white rounded-lg  shadow-lg overflow-y-auto z-30'>
-            <div className=' p-5 flex justify-between items-center'>
+        <div className='max-w-[600px]  h-full md:h-auto w-full  bg-white rounded-lg  shadow-lg overflow-y-auto z-30'>
+            <div className=' p-4 flex justify-between items-center'>
                  <p className='text-xl font-bold'>Add Job Alert</p>
                  <IoMdClose size={30}  className="cursor-pointer" onClick={()=>{setJobAlertPopup(false)}} />
             </div>
             <hr />
-            <div className='w-full p-10'>
+            <div className='w-full p-4'>
               
               <div className='border-[1px] rounded-lg p-3 border-black'>
                 <p className='text-[#3A3A3C] text-sm font-semibold'> Alert Active</p>
@@ -101,7 +101,7 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
             </div>
 
             <hr />
-            <div className='w-full flex justify-end p-10'>
+            <div className='w-full flex justify-end p-4'>
                 <div  className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full '>
                     <p className='text-sm font-semibold text-[#114B53]'>Add</p>
                 </div>
