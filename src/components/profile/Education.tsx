@@ -9,23 +9,20 @@ type EducationProps = {
 
 const Education:React.FC<EducationProps> = ({setEducationPopup}) => {
   return (
-    <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
+    <div className='w-full h-full flex p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-    <div className='max-w-[1005px] h-full w-full bg-white rounded-lg overflow-y-auto z-[30] p-8'>
+    <div className='max-w-[700px] h-full md:h-auto w-full bg-white rounded-lg overflow-y-auto z-[30] p-4'>
         <div className='  flex justify-between items-center'>
-            <div className='text-base md:text-2xl font-bold'><p>Education</p></div>
+            <div className='text-base md:text-xl font-bold'><p>Education</p></div>
             <IoMdClose size={30} className="cursor-pointer"  onClick={()=>{setEducationPopup(false)}}/>
         </div>
-        <hr className='mt-5' />
-       <div className='py-5 flex flex-col gap-5 '>
-          <div className='bg-[#F2F2F5] rounded-lg p-7'>
-              <div className='flex justify-end'>
-              <RiDeleteBin4Line  size={20}/>
-
-              </div>
+        <hr className='mt-3' />
+       <div className='py-4 flex flex-col gap-5 '>
+          <div className='bg-[#F2F2F5] rounded-lg p-4'>
+             
               <div>
-              <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
+              <div className='w-full flex gap-4 mt-3 flex-col md:flex-row'>
                 <div className='w-full '>
                    <p className='text-base font-medium'>Degree <span className='text-red-600'>*</span></p>
                    <input type="text" value={"BE"} className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
@@ -35,7 +32,7 @@ const Education:React.FC<EducationProps> = ({setEducationPopup}) => {
                    <input type="text" value={"Computer Science"} className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
                 </div>
              </div>
-             <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
+             <div className='w-full flex gap-4 mt-3 flex-col md:flex-row'>
                 <div className='w-full '>
                    <p className='text-base font-medium'>Start of Course <span className='text-red-600'>*</span></p>
                    <input type="date" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
@@ -45,7 +42,7 @@ const Education:React.FC<EducationProps> = ({setEducationPopup}) => {
                    <input type="date" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4' />
                 </div>
              </div>
-             <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
+             <div className='w-full flex gap-4 mt-3 flex-col md:flex-row'>
                 <div className='w-full '>
                    <p className='text-base font-medium'>University/College <span className='text-red-600'>*</span></p>
                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
@@ -63,50 +60,7 @@ const Education:React.FC<EducationProps> = ({setEducationPopup}) => {
              </div>
               </div>
           </div>
-          <div className='hidden md:block bg-[#F2F2F5] rounded-lg p-7'>
-              <div className='flex justify-end'>
-              <RiDeleteBin4Line  size={20}/>
-
-              </div>
-              <div>
-              <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>Degree <span className='text-red-600'>*</span></p>
-                   <input type="text"  className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
-                </div>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>Branch/Specialization <span className='text-red-600'>*</span></p>
-                   <input type="text"  className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
-                </div>
-             </div>
-             <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>Start of Course <span className='text-red-600'>*</span></p>
-                   <input type="date" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
-                </div>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>End of Course <span className='text-red-600'>*</span></p>
-                   <input type="date" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4' />
-                </div>
-             </div>
-             <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>University/College <span className='text-red-600'>*</span></p>
-                   <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      {/* <option value=""> xyz college </option>
-                      <option value=""> abc college </option> */}
-                   </select>
-                </div>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>Location <span className='text-red-600'>*</span></p>
-                   <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      {/* <option value=""> Texas, US</option>
-                      <option value=""> Londan, Uk</option> */}
-                   </select>
-                </div>
-             </div>
-              </div>
-          </div>
+         
        </div>
 
         <div className='w-full flex justify-end  gap-10  items-center'>
