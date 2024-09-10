@@ -50,7 +50,7 @@ const RightToRepresent: React.FC = () => {
   };
   return (
     <div className="w-full  min-h-screen bg-[#F2F2F5]  relative  ">
-      <div className=" w-full max-w-[1280px]  flex     m-auto mt-3 rounded-lg p-2 ">
+      <div className=" w-full max-w-[1280px]  flex     m-auto mt-3 rounded-lg  ">
         <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
           <ul className="w-full  flex flex-col justify-start items-end      relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {

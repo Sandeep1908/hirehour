@@ -30,8 +30,8 @@ const MyJobs: React.FC = () => {
 
   const moreSection:string[]=['Saved','Application Started','Shortlisted','Interviewing','Offer Received']
   return (
-    <div className="w-full  h-full bg-[#F2F2F5] p-2 ">
-      <div className=" w-full max-w-[1280px] flex  h-full   m-auto mt-3 rounded-lg p-3">
+    <div className="w-full  h-full bg-[#F2F2F5]  ">
+      <div className=" w-full max-w-[1280px] flex  h-full   m-auto mt-3 rounded-lg">
 
 
       <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
