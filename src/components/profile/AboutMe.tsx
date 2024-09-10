@@ -12,16 +12,16 @@ type AboutMeProps={
 
 const AboutMe:React.FC<AboutMeProps> = ({setAboutPop}) => {
   return (
-    <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
+    <div className='w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-    <div className='max-w-[1005px] h-full w-full bg-white rounded-lg overflow-y-auto z-[30] p-8'>
+    <div className='max-w-[700px] h-full w-full bg-white rounded-lg overflow-y-auto z-[30] p-4'>
         <div className='  flex justify-between items-center'>
-            <div className='text-base md:text-2xl font-bold'><p>About me</p></div>
+            <div className='text-base md:text-xl font-bold'><p>About me</p></div>
             <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setAboutPop(false)}} />
         </div>
-        <hr className='mt-5' />
-        <div className=' py-5 flex flex-col gap-5' >
+        <hr className='mt-3' />
+        <div className=' py-3 flex flex-col gap-5' >
            <div>
               <p className='text-[14px] md:text-xl font-semibold' >Profile picture</p>
               <div className='flex flex-col md:flex-row items-center gap-5 mt-3 '>
@@ -40,7 +40,7 @@ const AboutMe:React.FC<AboutMeProps> = ({setAboutPop}) => {
                 </div>
               </div>
               <div>
-              <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
+              <div className='w-full flex gap-4 mt-3 flex-col md:flex-row'>
                 <div className='w-full '>
                    <p className='text-base font-medium'>First name <span className='text-red-600'>*</span></p>
                    <input type="text" value={"John S"} className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4 ' />
@@ -60,7 +60,7 @@ const AboutMe:React.FC<AboutMeProps> = ({setAboutPop}) => {
                    <input type="email" value={"John@xyz.com"} className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
                 </div>
              </div>
-              <div className='w-full flex gap-4 mt-5 '>
+              <div className='w-full flex gap-4 mt-3 '>
                 <div className='w-full '>
                 <p className='text-base font-medium'>Location <span className='text-red-600'>*</span></p>
                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
@@ -70,7 +70,7 @@ const AboutMe:React.FC<AboutMeProps> = ({setAboutPop}) => {
                 </div>
                
              </div>
-             <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
+             <div className='w-full flex gap-4 mt-3 flex-col md:flex-row'>
                 <div className='w-full '>
                    <p className='text-base font-medium'>Experience <span className='text-red-600'>*</span></p>
                    <div className='w-full flex gap-4'>
@@ -90,7 +90,7 @@ const AboutMe:React.FC<AboutMeProps> = ({setAboutPop}) => {
                 </div>
                
              </div>
-             <div className='mt-5'>
+             <div className='mt-3'>
              <p className='text-base font-medium'>Social Profiles </p>
              <div className='mt-4'>
                  <div className='flex gap-4 items-center relative'>

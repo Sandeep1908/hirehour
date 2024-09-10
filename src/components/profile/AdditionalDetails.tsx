@@ -7,16 +7,16 @@ type AddInfo ={
 
 const AdditionalDetails:React.FC<AddInfo> = ({setAdditionalInfoPopup}) => {
   return (
-    <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
+    <div className='w-full h-full flex p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-    <div className='max-w-[1005px] h-auto w-full bg-white rounded-lg overflow-y-auto z-[30] p-8'>
+    <div className='max-w-[700px]  h-auto w-full bg-white rounded-lg overflow-y-auto z-[30] p-4'>
         <div className='  flex justify-between items-center'>
-            <div className='text-base md:text-2xl font-bold'><p>Additional Details</p></div>
+            <div className='text-base md:text-xl font-bold'><p>Additional Details</p></div>
             <IoMdClose size={30} className="cursor-pointer"  onClick={()=>setAdditionalInfoPopup(false)}/>
         </div>
-        <hr className='mt-5' />
-       <div className='py-5 '>
+        <hr className='mt-3' />
+       <div className='py-4 '>
        <div className='w-full flex gap-4 '>
                 <div className='w-full '>
                    <p className='text-base font-medium'>Willing to work / Looking for job change <span className='text-red-600'>*</span></p>
@@ -39,7 +39,7 @@ const AdditionalDetails:React.FC<AddInfo> = ({setAdditionalInfoPopup}) => {
                 </div>
 
              </div>
-       <div className='w-full flex gap-4 mt-5'>
+       <div className='w-full flex gap-4 mt-3'>
                 <div className='w-full '>
                    <p className='text-base font-medium'>Security Clearance <span className='text-red-600'>*</span></p>
               
