@@ -3,9 +3,9 @@ import { BiPlus } from 'react-icons/bi';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
-import Logo from '../../../assets/logo/hirehour.png';
+import Logo from '../../../../assets/logo/hirehour.png';
 
-const Expired: React.FC = () => {
+const Accepted: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
    
   const [isPreviewRTR, isSetPreviewRTR] = useState<boolean>(false);
@@ -53,6 +53,7 @@ const Expired: React.FC = () => {
 
    
 
+
        <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
           <ul className="w-full  flex flex-col justify-start items-end      relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {
@@ -91,7 +92,7 @@ const Expired: React.FC = () => {
   <ul className="w-screen md:w-auto overflow-auto flex items-center space-x-7 p-2 sm:p-3">
     {tags?.map((item, id) => {
       return (
-        <Link to={item.link}  className={` text-xs    font-[600] cursor-pointer  ${id===3?'text-[#104B53]':''}`} key={id}>
+        <Link to={item.link}  className={` text-xs   font-[600] cursor-pointer  ${id===1?'text-[#104B53]':''}`} key={id}>
         {item.label}
       </Link>
       );
@@ -213,8 +214,8 @@ const Expired: React.FC = () => {
 
     <div className="flex w-full md:w-auto items-center justify-center space-x-5">
        
-      <p   className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#FFF1C6] text-[#FFB51F] p-2 text-center rounded-full">
-        Expired
+      <p   className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#B4FEDD] text-[#07A560] p-2 text-center rounded-full">
+        Signed
       </p>
     </div>
   </div>
@@ -670,4 +671,4 @@ const Expired: React.FC = () => {
   );
 };
 
-export default Expired;
+export default Accepted;

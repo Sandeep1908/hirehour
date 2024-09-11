@@ -9,23 +9,26 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
-import Home from './pages/home/Home.tsx';
-import JobDescription from './pages/JobDescription/JobDescription.tsx';
-import Signup from './pages/Signup/Signup.tsx';
-import Signin from './pages/Signin/Signin.tsx';
-import AdditionalInfo from './pages/ProfileSetting/AdditionalInformation/AdditionalInfo.tsx';
-import UploadResume from './pages/ProfileSetting/UploadResume/UploadResume.tsx';
-import ReviewInfo from './pages/ProfileSetting/ReviewInfo/ReviewInfo.tsx';
-import MyJobs from './pages/MyJobs/MyJobs.tsx';
-import RightToRepresent from './pages/RightToRepresent/RightToRepresent.tsx';
-import Message from './pages/Messages/Message.tsx';
-import AccountSetting from './pages/AccountSettings/AccountSettings.tsx';
-import ProfileVisibility from './pages/AccountSettings/ProfileVisibility/ProfileVisibility.tsx';
-import Profile from './pages/ProfilePage/Profile.tsx';
-import JobPreference from './pages/Job Preference/JobPreference.tsx';
-import Accepted from './pages/RightToRepresent/Accepted/Accepted.tsx';
-import Decline from './pages/RightToRepresent/Decline/Decline.tsx';
-import Expired from './pages/RightToRepresent/Expired/Expired.tsx';
+import Home from './pages/job-seekers/home/Home.tsx';
+ 
+import Signup from './pages/auth/Signup/Signup.tsx';
+import Signin from './pages/auth/Signin/Signin.tsx';
+ 
+import JobDescription from './pages/job-seekers/JobDescription/JobDescription.tsx';
+ 
+import AdditionalInfo from './pages/job-seekers/ProfileSetting/AdditionalInformation/AdditionalInfo.tsx';
+import UploadResume from './pages/job-seekers/ProfileSetting/UploadResume/UploadResume.tsx';
+import ReviewInfo from './pages/job-seekers/ProfileSetting/ReviewInfo/ReviewInfo.tsx';
+import MyJobs from './pages/job-seekers/MyJobs/MyJobs.tsx';
+import RightToRepresent from './pages/job-seekers/RightToRepresent/RightToRepresent.tsx';
+import Message from './pages/job-seekers/Messages/Message.tsx';
+import AccountSetting from './pages/job-seekers/AccountSettings/AccountSettings.tsx';
+import ProfileVisibility from './pages/job-seekers/AccountSettings/ProfileVisibility/ProfileVisibility.tsx';
+import Profile from './pages/job-seekers/ProfilePage/Profile.tsx';
+import JobPreference from './pages/job-seekers/Job Preference/JobPreference.tsx';
+import Accepted from './pages/job-seekers/RightToRepresent/Accepted/Accepted.tsx';
+import Decline from './pages/job-seekers/RightToRepresent/Decline/Decline.tsx';
+import Expired from './pages/job-seekers/RightToRepresent/Expired/Expired.tsx';
 
  
 const router = createBrowserRouter(

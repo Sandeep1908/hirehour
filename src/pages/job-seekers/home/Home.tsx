@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import { SlLocationPin } from 'react-icons/sl';
 
-import { ResourseCard } from '../../config/home';
+import { ResourseCard } from '../../../config/home';
 import { BsUpload } from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import Footer from '../../components/Footer';
+import Footer from '../../../components/Footer';
 
 const Home: React.FC = () => {
   const [homeCards, setHomeCards] = useState<HomeCardTypes[]>();

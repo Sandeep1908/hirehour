@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { FaEdit } from 'react-icons/fa'
 import { MdDeleteOutline } from 'react-icons/md'
-import AddJobAlert from '../../components/AddJobAlert'
-
+import AddJobAlert from '../../../components/job-seekers/AddJobAlert'
 const JobPreference:React.FC = () => {
 
     const [showJobAlert, setShowjobAlert] = useState<boolean>(false)

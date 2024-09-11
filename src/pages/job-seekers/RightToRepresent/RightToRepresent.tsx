@@ -3,7 +3,7 @@ import { BiPlus } from 'react-icons/bi';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
-import Logo from '../../assets/logo/hirehour.png';
+import Logo from '../../../assets/logo/hirehour.png';
  
  
 const RightToRepresent: React.FC = () => {

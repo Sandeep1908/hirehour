@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TiTick } from 'react-icons/ti';
 import { FaEdit, FaPlus } from 'react-icons/fa';
-import { reviewInfo } from '../../../config/reviewinfo';
+import { reviewInfo } from '../../../../config/reviewinfo';
 import { BiPlus } from 'react-icons/bi';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';

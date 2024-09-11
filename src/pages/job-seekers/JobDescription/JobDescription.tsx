@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import search_icon from '../../assets/search-icon.svg'
-import Location from '../../assets/location.svg'
-import Location2 from '../../assets/location2.svg'
-import JobCard from '../../components/JobCard'
-import Job_banner from '../../assets/Rectangle.png'
+import search_icon from '../../../assets/search-icon.svg'
+import Location from '../../../assets/location.svg'
+import Location2 from '../../../assets/location2.svg'
+import JobCard from '../../../components/job-seekers/JobCard'
+import Job_banner from '../../../assets/Rectangle.png'
 import { FaChevronUp } from "react-icons/fa6";
 import { FaChevronDown } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { CiFilter } from "react-icons/ci";
 import { IoMdClose } from 'react-icons/io'
-import Logo from '../../assets/logo/hirehour.png';
+import Logo from '../../../assets/logo/hirehour.png';
 import { LuUpload } from "react-icons/lu";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { IoCallOutline } from 'react-icons/io5'
-import Footer from '../../components/Footer'
-import { JobDescriptionDetails } from '../../config/jobdescription'
+import Footer from '../../../components/Footer'
+import { JobDescriptionDetails } from '../../../config/jobdescription'
 // import Select from 'react-select';
 
 

@@ -6,8 +6,8 @@ import { IoIosMenu } from 'react-icons/io';
 import { IoMdClose } from "react-icons/io";
 
 import { BsUpload } from 'react-icons/bs';
-import NotificationModal from './modals/NotificationModal';
-import AccountModal from './modals/AccountModal';
+import NotificationModal from './job-seekers/modals/NotificationModal';
+import AccountModal from './job-seekers/modals/AccountModal';
  
 import { CgProfile } from 'react-icons/cg';
 import { RiListSettingsLine } from 'react-icons/ri';
