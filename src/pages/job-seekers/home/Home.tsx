@@ -29,7 +29,7 @@ const Home: React.FC = () => {
               <span className="text-[#E9F358] ml-1 mr-1  relative box  ">Job or Post</span>
               One Today!
             </h1>
-            <p className="text-sm text-white">
+            <p className="text-xs text-white">
               Discover top opportunities and connect with talent on HireHours – your go-to platform
               for seamless job searching and posting.
             </p>
@@ -39,14 +39,14 @@ const Home: React.FC = () => {
 
           <div className="w-full mt-10 grid  md:grid-cols-4  gap-5  ">
             {/* Left Search  */}
-            <div className="w-full  bg-white  md:col-span-3  p-4 rounded-lg  ">
+            <div className="w-full  bg-white  md:col-span-3  p-3 rounded-lg  ">
               <div className="flex space-x-2 ">
-                <span className="text-[#146085] text-2xl font-[500]">1000 + Jobs </span>
-                <span className="text-2xl font-[600]">Listed here ! Your dream job is waiting</span>
+                <span className="text-[#146085] text-xl font-[500]">1000 + Jobs </span>
+                <span className="text-xl font-[600]">Listed here ! Your dream job is waiting</span>
               </div>
 
               <div className="border-[#E7E7E7] border w-full mt-5 rounded-lg flex  justify-center items-center ">
-                <div className="flex md:ustify-start p-4 justify-center   items-center flex-wrap">
+                <div className="flex md:ustify-start p-3 justify-center   items-center flex-wrap">
                   <div className="relative">
                     <input
                       type="text"
@@ -78,7 +78,7 @@ const Home: React.FC = () => {
                     <select
                       name=""
                       id=""
-                      className="text-xs text-[#C6C6C6] border-[#C6C6C6]  p-2 rounded-full border-[1px] outline-none"
+                      className="text-xs text-[#C6C6C6] border-[#C6C6C6] w-20 text-center h-8  rounded-full border-[1px] outline-none"
                     >
                       <option>Remote</option>
                       <option>Hybrid</option>
@@ -89,7 +89,7 @@ const Home: React.FC = () => {
 
                   <div className="mr-2">
                     <Link to={'/searchjob'}>
-                    <button className=" bg-[#E9F358] flex justify-center items-center text-[#104B53] w-28 h-9 rounded-full text-sm font-[500] cursor-pointer">
+                    <button className=" bg-[#E9F358] flex justify-center text-xs items-center text-[#104B53] w-28 h-8 rounded-full text-sm font-[500] cursor-pointer">
                       Search
                     </button>
                     </Link>
