@@ -83,10 +83,10 @@ const Header: React.FC = () => {
           </div>
 
           <label
-            className={`md:flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#104B53]   hidden`}
+            className={`md:flex justify-center items-center w-32 h-7 p-0.5 rounded-full cursor-pointer bg-[#104B53]   hidden`}
           >
             <BsUpload size={13} color="#fff" className="" />
-            <span className={`text-xs text-white  font-[500] pl-2`}>Upload Resume</span>
+            <span className={`text-[10px] text-white  font-[500] pl-2`}>Upload Resume</span>
             <input type="file" className="hidden" />
           </label>
         </div>
@@ -94,15 +94,20 @@ const Header: React.FC = () => {
 
         {/* Right Header without signup */}
 
-        <div className="md:hidden">
+        <div className="">
           <div className="">
             <div className="flex justify-center items-center space-x-5">
-              <p className="w-24 h-9 flex justify-center items-center border-[1px] rounded-full border-[#104B53] text-[#104B53] text-sm cursor-pointer">
+              <p className="w-24 h-8 text-xs flex justify-center items-center border-[1px] rounded-full border-[#104B53] text-[#104B53]   cursor-pointer">
                 Sign In
               </p>
 
-              <p className="text-sm tracking-wide hidden">Employer / Job Poster</p>
-              <IoIosMenu size={40} onClick={()=>setIsNavOpen(true)} />
+              <p className="text-xs tracking-wide hidden md:block ">
+                <Link to={''}> Employer </Link>
+               / 
+               <Link to={'/job-poster'}> Job Poster</Link>
+               
+                </p>
+              <IoIosMenu size={40} onClick={()=>setIsNavOpen(true)} className='md:hidden' />
             </div>
           </div>
         </div>
@@ -110,7 +115,7 @@ const Header: React.FC = () => {
 
         {/* With SignIn */}
 
-        <div className="md:flex justify-center items-center space-x-7 hidden">
+        <div className=" justify-center items-center space-x-7 hidden ">
           <div className="flex justify-center items-center space-x-7">
 
 
