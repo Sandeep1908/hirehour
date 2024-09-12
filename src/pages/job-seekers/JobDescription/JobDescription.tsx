@@ -18,47 +18,24 @@ import { MdOutlineMail } from "react-icons/md";
 import { IoCallOutline } from 'react-icons/io5'
 import Footer from '../../../components/Footer'
 import { JobDescriptionDetails } from '../../../config/jobdescription'
-// import Select from 'react-select';
-
-
-
-
-
-
-
-
-
-
 
 
 const JobDescription: React.FC = () => {
-
-
-    // const options = [
-    //     { value: 'chocolate', label: 'Chocolate' },
-    //     { value: 'strawberry', label: 'Strawberry' },
-    //     { value: 'vanilla', label: 'Vanilla' },
-    //   ];
-    //   const [selectedOption, setSelectedOption] = useState(null);
-
-      
-      
 
     const [infoContentHidden, SetInfoContentHidden] = useState<boolean>(false);
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
     const [isQuickApplyStep2, setQuickApplyStep2] = useState<boolean>(false);
     const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
     const [isQuickApplyEdit, setQuickApplyEdit] = useState<boolean>(false);
-    // const [dropdown, setDropdown] = useState<boolean>(false);
-    const [dropdownLoc, setDropdownLoc] = useState<boolean>(false);
-    const [dropdownExp, setDropdownExp] = useState<boolean>(false);
-    const [dropdownDis, setDropdownDis] = useState<boolean>(false);
-    const [dropdownEmp, setDropdownEmp] = useState<boolean>(false);
-    const [dropdownSly, setDropdownSly] = useState<boolean>(false);
+    const [dropdown, setDropdown] = useState<number>(0);
+   
 
     const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
-    // const [jobDescription, setJobDescription] = useState<jobDescriptionTypes[]>([]);
     const [jobDataId, setJobDataId] = useState<number>(1);
+    const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
+
+
+
 
     useEffect(() => {
         const handleScroll = () => {
@@ -77,12 +54,28 @@ const JobDescription: React.FC = () => {
     }, []);
 
 
+
     useEffect(() => {
 
-        setJobData(JobDescriptionDetails)
-        console.log("object id ", jobDataId)
+     setJobData(JobDescriptionDetails)
+    
+     if(!jobFilterData){
+        setFilterData([jobData[0]])
+     }
+       
+   
+    if(jobData && jobDataId){
+        const filterData=jobData.filter(item=>item.id===jobDataId)
+        setFilterData(filterData)
+    }
 
-    }, []);
+
+    
+
+
+    }, [jobDataId,jobData,setJobData]);
+
+
 
     const step2 = () => {
         setQuickApply(false);
@@ -104,34 +97,86 @@ const JobDescription: React.FC = () => {
     const quickApplyDone = () => {
         setQuickApplyStep3(false);
     }
-    // console.log("object id ", jobDataId)
-
-    // const options = [
-    //     { value: '24h', label: '24 hours' },
-    //     { value: '3d', label: 'Past 3 days' },
-    //     { value: '1w', label: 'Past week' },
-    //     { value: '1m', label: 'Past month' },
-    //     { value: 'anytime', label: 'Anytime' }
-    //   ];
-    
-    //   const [selectedOption, setSelectedOption] = useState(options[0]);
-    
-    //   const handleChange = (selected: any) => {
-    //     setSelectedOption(selected);
-    //   };
 
 
-    const [dropdown2, setDropdown2] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("24 hours");
-  const [isSelected, setIsSelected] = useState(false); 
 
-  const handleOptionClick = (value:string) => {
-    setSelectedOption(value);
-    setDropdown2(false); 
-    setIsSelected(true);
-  };
+    // const [dropdown, setDropdown] = useState(0);
+    const [selectedOptionMode, setSelectedOptionMode] = useState<string>("");
+    const [selectedOption, setSelectedOption] = useState<string>("");
+    const [selectedOptionEx, setSelectedOptionEx] = useState<string>("");
+    const [selectedOptionDistance, setSelectedOptionDistance] = useState<string>("");
+    const [selectedOptionSalary, setSelectedOptionSalary] = useState<string>("");
+    const [selectedOptionEmployee, setSelectedOptionEmployee] = useState<string[]>([]); 
 
-    
+    const [isSelected, setIsSelected] = useState(0);
+
+    const handleOptionMode = (value: string) => {
+        setSelectedOptionMode(value);
+        setDropdown(0);
+      
+    };
+    const handleOptionClick = (value: string) => {
+        setSelectedOption(value);
+        setDropdown(0);
+        setIsSelected(1);
+    };
+
+    const handleOptionEx = (value: string) => {
+        setSelectedOptionEx(value);
+        setDropdown(0);
+        // setIsSelected(2);
+    };
+    const handleOptionDistance = (value: string) => {
+        setSelectedOptionDistance(value);
+        setDropdown(0);
+        setIsSelected(3);
+    };
+    const handleOptionSalary = (value: string) => {
+        setSelectedOptionSalary(value);
+        setDropdown(0);
+        setIsSelected(5);
+    };
+
+    const handleReset = () => {
+        setSelectedOptionDistance("");
+        setDropdown(0);
+        
+    };
+    const handleResetEx = () => {
+        setSelectedOptionEx("");
+        setDropdown(0);
+        
+    };
+    const handleResetSalary = () => {
+        setSelectedOptionSalary("");
+            setDropdown(0);
+        // setIsSelected(1);
+    };
+
+
+    const employmentTypes = [
+        "Full time",
+        "Contract - Corp to Corp(C2C)",
+        "Contract to Hire(C2H)",
+        "Contract - W-2",
+        "Contract - 1099 / Independent",
+        "Internships",
+        "Temporary",
+        "Part time"
+    ];
+    const handleCheckboxChange = (value:string) => {
+
+        setSelectedOptionEmployee((prevSelected) => prevSelected.includes(value)
+            ? prevSelected.filter((item) => item !== value)
+            : [...prevSelected, value]
+        );
+    };
+    const handleResetEmployee = () => {
+        setSelectedOptionEmployee([]);
+    };
+
+
+
 
     return (
         <>
@@ -148,12 +193,11 @@ const JobDescription: React.FC = () => {
                             <p className='font-normal text-[#3A3A3C]'>Allen, TX, US</p>
                         </div>
                         <div className='flex justify-center items-center gap-4 '>
-                            <div className='relative'>
+                            {/* <div className='relative'>
 
 
                                 <div onClick={() => { setDropdownLoc(!dropdownLoc) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
                                     <p className="text-[14px] font-normal text-[#114B53]">Remote</p>
-                                    {/* <img src={arrow_down} alt="" /> */}
                                     <MdOutlineKeyboardArrowDown
                                         className={`${dropdownLoc ? 'rotate-180 transition-all duration-500' : ''}`}
                                     />
@@ -184,359 +228,270 @@ const JobDescription: React.FC = () => {
                                             </div>
                                         </div>
 
-                                    </div> : ""}
+                                    </div>
+                                     : ""}
 
+                            </div> */}
+
+                            <div className='relative'>
+                            <div onClick={() => setDropdown(6)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+  ${selectedOptionMode.length > 0 ? 'bg-[#114B53] text-white'  : 'bg-white text-[#114B53]'} transition-colors duration-500`}>
+                                <p className="text-[14px] font-normal "> {selectedOptionMode ? selectedOptionMode : "Remote"} </p>
+                                <MdOutlineKeyboardArrowDown onClick={() => setDropdown(0)} className={`${dropdown === 6 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
+
+                            {dropdown === 6 && (
+                                <div className='absolute top-12 left-0 w-[302px] h-5 z-40'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg py-2' >
+                                        {["All Jobs", "Remote jobs", "Hybrid jobs", "On Site jobs"].map(option => (
+                                            // <div key={option} className='w-full px-4 py-3 flex gap-2' onClick={() => handleOptionClick(option)}>
+                                            //     <input
+                                            //         type="radio"
+                                            //         name="value1"
+                                            //         checked={selectedOption === option}
+                                            //     //   onChange={() => handleOptionClick(option)}
+                                            //     />
+                                            //     <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            // </div>
+
+                                             <div key={option}  className='w-full px-6 py-3 flex gap-2 ' onClick={() => handleOptionMode(option)}>
+
+                                             <input type="radio" name="value1" id="" checked={selectedOptionMode === option} />
+                                             <label htmlFor="" className='text-[#333333] text-base font-semibold'>{option}   </label>
+                                         </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+
                             <div className='w-[363px] py-3  flex justify-center bg-[#114B53] rounded-full'>
                                 <p className='text-white font-semibold'>Search</p>
                             </div>
                         </div>
                     </div>
                     <div className='w-full flex mt-4 gap-3'>
-                        {/* <SearchFilter /> */}
-
-
-                        {/* <div className="relative">
-                                    <Select
-                                        value={selectedOption}
-                                        onChange={handleChange}
-                                        options={options}
-                                        classNamePrefix="react-select"
-                                        styles={{
-                                        control: (provided) => ({
-                                            ...provided,
-                                            border: '1px solid #114B53',
-                                            borderRadius: '9999px',
-                                            padding: '2px 4px',
-                                            width: '140px',
-                                            color: '#114B53',
-                                        }),
-                                        singleValue: (provided) => ({
-                                            ...provided,
-                                            color: '#114B53',
-                                            fontSize: '14px',
-                                            fontWeight: 'normal',
-                                        }),
-                                        dropdownIndicator: (provided) => ({
-                                            ...provided,
-                                            color: '#114B53', 
-                                        }),
-                                        option: (provided) => ({
-                                            ...provided,
-                                            padding: '10px',
-                                            fontSize: '12px',
-                                            color: '#333333',
-                                        }),
-                                        menu: (provided) => ({
-                                            ...provided,
-                                            backgroundColor: '#FFFFFF',
-                                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                                        }),
-                                        }}
-                                    />
-                                    </div> */}
-
-
-
-<div className='relative'>
-      <div onClick={() => setDropdown2(!dropdown2)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
-  ${isSelected ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
-        <p className="text-[14px] font-normal text-[#114B53]">{selectedOption}</p>
-        <MdOutlineKeyboardArrowDown className={`${dropdown2 ? 'rotate-180 transition-all duration-500' : ''}`} />
-      </div>
-
-      {dropdown2 && (
-        <div className='absolute top-12 left-0 w-[140px]'>
-          <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-            {["24 hours", "Past 3 days", "Past week", "Past month", "Anytime"].map(option => (
-              <div key={option} className='w-full px-4 py-3 flex gap-2'>
-                <input
-                  type="radio"
-                  name="value1"
-                  checked={selectedOption === option}
-                  onChange={() => handleOptionClick(option)}
-                />
-                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-
-
-                        {/* <div className='relative'>
-
-
-                            <div onClick={() => { setDropdown(!dropdown) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-                                <p className="text-[14px] font-normal text-[#114B53]">24 hours</p>
-                                <MdOutlineKeyboardArrowDown
-                                    className={`${dropdown ? 'rotate-180 transition-all duration-500' : ''}`}
-                                />
-                            </div>
-                            {dropdown ?
-                                <div className='absolute top-12 left-0 w-[140px] h-5 '>
-
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg' >
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>24 hours</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>24 Past 3 days</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>24 Past week</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>24 Past Month</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>24 Anytime</label>
-                                        </div>
-
-                                    </div>
-
-                                </div> : ""}
-
-                        </div> */}
-
-
 
 
                         <div className='relative'>
-
-
-                            <div onClick={() => { setDropdownExp(!dropdownExp) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-                                <p className="text-[14px] font-normal text-[#114B53]">Experience Level</p>
-                                {/* <img src={arrow_down} alt="" /> */}
-                                <MdOutlineKeyboardArrowDown
-                                    className={`${dropdownExp ? 'rotate-180 transition-all duration-500' : ''}`}
-                                />
+                            <div onClick={() => setDropdown(1)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+  ${isSelected === 1 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
+                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOption ? selectedOption : "24 hours"} </p>
+                                <MdOutlineKeyboardArrowDown onClick={() => setDropdown(0)} className={`${dropdown === 1 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
-                            {dropdownExp ?
-                                <div className='absolute top-12 left-0 w-[194px] h-5 '>
 
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg' >
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Entry level</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Associate level</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Mid-Senior level</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Lead level</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Manager/ Director Level</label>
-                                        </div>
-
+                            {dropdown === 1 && (
+                                <div className='absolute top-12 left-0 w-[140px]'>
+                                    <div className='w-full  bg-[#FFFFFF] rounded-lg shadow-lg' >
+                                        {["24 hours", "Past 3 days", "Past week", "Past month", "Anytime"].map(option => (
+                                            <div key={option} className='w-full px-4 py-3 flex gap-2' onClick={() => handleOptionClick(option)}>
+                                                <input
+                                                    type="radio"
+                                                    name="value1"
+                                                    checked={selectedOption === option}
+                                                //   onChange={() => handleOptionClick(option)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
                                     </div>
+                                </div>
+                            )}
+                        </div>
 
-                                </div> : ""}
 
+                        {/* <div className='relative'>
+                            <div onClick={() => setDropdown(2)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+  ${selectedOptionEx.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
+                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionEx ? selectedOptionEx : "Experience Level"} </p>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 2 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 2 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full  bg-[#FFFFFF] rounded-lg shadow-lg' >
+                                        {["Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"].map(option => (
+                                            <div key={option} className='w-full px-4 py-3 flex gap-2' onClick={() => handleOptionEx(option)}>
+                                                <input
+                                                    type="radio"
+                                                    name="value1"
+                                                    checked={selectedOptionEx === option}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div> */}
+
+
+                        <div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(2)}
+                                className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+        ${selectedOptionEx.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionEx ? selectedOptionEx : "Experience Level"}</p>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 2 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 2 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                            "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
+                                        ].map((option) => (
+                                            <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionDistance === option}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-4 flex justify-end'>
+                                            <button onClick={handleResetEx} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
 
                         <div className='relative z-[20]'>
-
-
-                            <div onClick={() => { setDropdownEmp(!dropdownEmp) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-                                <p className="text-[14px] font-normal text-[#114B53]">Employment type</p>
-                                {/* <img src={arrow_down} alt="" /> */}
-                                <MdOutlineKeyboardArrowDown
-                                    className={`${dropdownEmp ? 'rotate-180 transition-all duration-500' : ''}`}
-                                />
-                            </div>
-                            {dropdownEmp ?
-                                <div className='absolute top-12 left-0 w-[269px] h-5 '>
-
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg' >
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Full time</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Contract - Corp to Corp(C2C)</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Contract to Hire(C2H)</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Contract - W-2</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Contract - 1099 / Independent</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Internships</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Temporary</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="checkbox" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Part time</label>
-                                        </div>
-
-                                    </div>
-
-                                </div> : ""}
-
-                        </div>
-
-
-                        <div className='relative z-[20]'>
-
-
-                            <div onClick={() => { setDropdownDis(!dropdownDis) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
+                            <div
+                                onClick={() => setDropdown(3)}
+                                className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+        ${selectedOptionDistance.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
                                 <p className="text-[14px] font-normal text-[#114B53]">Distance</p>
-                                {/* <img src={arrow_down} alt="" /> */}
-                                <MdOutlineKeyboardArrowDown
-                                    className={`${dropdownDis ? 'rotate-180 transition-all duration-500' : ''}`}
-                                />
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
-                            {dropdownDis ?
-                                <div className='absolute top-12 left-0 w-[194px] h-5 '>
 
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg' >
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Any distance</label>
+                            {dropdown === 3 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                            "Any distance",
+                                            "Less than 5 miles",
+                                            "Less than 10 miles",
+                                            "Less than 25 miles",
+                                            "Less than 50 miles",
+                                            "Less than 100 miles"
+                                        ].map((distance) => (
+                                            <div key={distance} onClick={() => handleOptionDistance(distance)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionDistance === distance}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{distance}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-4 flex justify-end'>
+                                            <button onClick={handleReset} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
                                         </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Less than 5 miles</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Less than 10 miles</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Less than 25 miles</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Less than 50 miles</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>Less than 100 miles</label>
-                                        </div>
-
                                     </div>
-
-                                </div> : ""}
-
+                                </div>
+                            )}
                         </div>
 
+
+
                         <div className='relative z-[20]'>
-
-
-                            <div onClick={() => { setDropdownSly(!dropdownSly) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-                                <p className="text-[14px] font-normal text-[#114B53]">Salary</p>
-                                {/* <img src={arrow_down} alt="" /> */}
-                                <MdOutlineKeyboardArrowDown
-                                    className={`${dropdownSly ? 'rotate-180 transition-all duration-500' : ''}`}
-                                />
+                            <div
+                                onClick={() => setDropdown(4)}
+                                className={`${selectedOptionEmployee.length > 0 && "bg-[#effefd]"}  flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full`}
+                            >
+                                <div className="text-[14px] font-normal text-[#114B53] flex gap-1">
+                                    <p>Employment type</p>
+                                    {selectedOptionEmployee.length > 0 && (
+                                        <div className='bg-[#114B53] w-[22px] h-[22px] text-[12px] rounded-full text-white flex justify-center items-center'>
+                                            {selectedOptionEmployee.length}
+                                        </div>
+                                    )}
+                                </div>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 4 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
-                            {dropdownSly ?
-                                <div className='absolute top-12 left-0 w-[194px]  '>
 
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg' >
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 40,000 +/ per year</label>
+                            {dropdown === 4 && (
+                                <div className='absolute top-12 left-0 w-[269px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {employmentTypes.map((type) => (
+                                            <div key={type} onClick={() => handleCheckboxChange(type)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="checkbox"
+                                                    checked={selectedOptionEmployee.includes(type)}
+                                                //   onChange={() => handleCheckboxChange(type)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{type}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full  flex gap-2 px-4 py-3 justify-end'>
+                                            <div className='px-3 py-1 bg-[#E9F358] rounded-full cursor-pointer' onClick={() => setDropdown(0)}>
+                                                <p className='text-base text-[#114B53] font-semibold'> Apply</p>
+                                            </div>
+                                            <button onClick={handleResetEmployee} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                <p onClick={() => setDropdown(0)}>Reset</p>
+                                            </button>
                                         </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 60,000 +/ per year</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 80,000 +/ per year</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 100,000 +/ per year</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 120,000 +/ per year</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 140,000 +/ per year</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 160,000 +/ per year</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 180,000 +/ per year</label>
-                                        </div>
-                                        <div className='w-full px-4 py-3 flex gap-2 '>
-
-                                            <input type="radio" name="value1" id="" />
-                                            <label htmlFor="" className='text-[#333333] text-[12px] font-medium'>$ 200,000 +/ per year</label>
-                                        </div>
-
                                     </div>
+                                </div>
+                            )}
+                        </div>
 
-                                </div> : ""}
 
+                        <div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(5)}
+                                className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+        ${selectedOptionSalary.length > 0  ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[14px] font-normal text-[#114B53]">Salary</p>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 5 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                            "$ 40,000 +/ per year",
+                                            "$ 60,000 +/ per year",
+                                            "$ 80,000 +/ per year",
+                                            "$ 100,000 +/ per year",
+                                            "$ 120,000 +/ per year",
+                                            "$ 140,000 +/ per year",
+                                            "$ 160,000 +/ per year",
+                                            "$ 180,000 +/ per year",
+                                            "$ 200,000 +/ per year"
+                                        ].map((salary) => (
+                                            <div key={salary} onClick={() => handleOptionSalary(salary)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionSalary === salary}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{salary}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-4 flex justify-end'>
+                                            <button onClick={handleResetSalary} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
 
                         <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
@@ -551,7 +506,7 @@ const JobDescription: React.FC = () => {
                             <CiFilter className='text-[#114B53]' />
 
                         </div>
-                      
+
 
 
 
@@ -560,13 +515,13 @@ const JobDescription: React.FC = () => {
 
                 </div>
 
-    {/* Job Cards And Job Description */}
+                {/* Job Cards And Job Description */}
 
-                <div className='w-full max-w-[1280px] m-auto  h-auto flex justify-center md:justify-between pt-7  md:px-0'>
+                <div className='w-full max-w-[1280px] m-auto   h-full flex justify-center md:justify-between pt-7  md:px-0'>
 
-           {/* Job Card Component */}
+                    {/* Job Card Component */}
 
-                    <div className=' md:max-w-[411px] md:w-full '>
+                    <div className=' md:max-w-[411px] md:w-full ' id='job-card'>
                         <div className=' w-full h-[800px] overflow-y-auto'>
                             <p className='text-[14px] '><span className='font-extrabold'>Upload Your Resume -</span> Let employers find you.</p>
                             <p className='text-[14px] mt-5 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
@@ -599,188 +554,181 @@ const JobDescription: React.FC = () => {
                         </div>
                     </div>
 
-          {/* Job Description  */}
+                    {/* Job Description  */}
 
-                    {jobData.map((details) => {
-                        if (details.id === jobDataId) {
-                            return (
-                                <div className='hidden md:block max-w-[845px] sticky top-[50px] w-full rounded-lg  border'>
-                                    <div className=' w-full  '>
-                                    <div className='w-full shadow-lg pb-8'>
-                                        <img src={Job_banner} alt="" />
-                                        <div className='w-[95%] m-auto transition-all ease-in-out duration-1000'>
-                                            <div className=' flex  justify-between '>
-                                                <div className='flex gap-2 items-center'>
-                                                    <div className='relative w-[100px] h-[100px] '>
+               <div className='max-w-[845px] w-full'  >
+               {jobFilterData.map((details,id)=>{
+                        return(
+                            <div key={id} className='hidden md:block max-w-[845px]   w-full rounded-lg  border'>
+                                <div className='w-full min-h-[100vh]'>
+                                <div className=' w-full  '>
+                                <div className='w-full shadow-lg pb-8'>
+                                    <img src={Job_banner} alt="" />
+                                    <div className='w-[95%] m-auto transition-all ease-in-out duration-1000'>
+                                        <div className=' flex  justify-between '>
+                                            <div className='flex gap-2 items-center'>
+                                                <div className='relative w-[100px] h-[100px] '>
 
-                                                        <img className='absolute top-[-20px]  w-full h-full' src={details.img} alt="" />
-                                                    </div>
-                                                    <div>
-                                                        <p className='font-bold text-[24px]'>{details.title}</p>
-                                                        <ul className='flex list-disc gap-8 text-base mt-1'>
-                                                            <li>{details.company}</li>
-                                                            <li>{details.designation}</li>
-                                                            <li>{details.location}</li>
-                                                        </ul>
-                                                    </div>
+                                                    <img className='absolute top-[-20px]  w-full h-full' src={details.img} alt="" />
                                                 </div>
-
-                                                <div className="flex justify-between items-center gap-4">
-                                                    <p className="text-[#A9A9A9] text-[12px] font-normal ">Posted 1 day ago</p>
-                                                    <div className=" px-6 py-3 bg-[#E9F358] rounded-full">
-                                                        <p className="text-[#114B53] text-base font-semibold">Quick Apply</p>
-                                                    </div>
+                                                <div>
+                                                    <p className='font-bold text-[24px]'>{details.title}</p>
+                                                    <ul className='flex list-disc gap-8 text-base mt-1'>
+                                                        <li>{details.company}</li>
+                                                        <li>{details.designation}</li>
+                                                        <li>{details.location}</li>
+                                                    </ul>
                                                 </div>
                                             </div>
 
-                                            <div className={` transition-all ease-in-out duration-700  ${infoContentHidden ? 'h-[200px]' : 'h-0'}  `}>
-                                                <div className={`flex h-auto relative transition-all delay-75  ${infoContentHidden ? 'opacity-1' : 'opacity-0 z-[-30]'}   `}>
-                                                    <div className='flex flex-col gap-4 mt-2 max-w-[350px] w-full'>
-
-                                                        <div className='flex gap-2'>
-                                                            <img src={Location2} alt="" />
-                                                            <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                <p className='text-[14px]'>{details.mode}</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className='flex gap-2'>
-                                                            <img src={Location2} alt="" />
-                                                            <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                <p className='text-[14px]'>{details.pay} / hours</p>
-                                                            </div>
-                                                        </div>
-                                                        <div className='flex gap-2'>
-                                                            <img src={Location2} alt="" />
-                                                            <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                <p className='text-[14px]'>{details.workTime}</p>
-                                                            </div>
-                                                        </div>
-
-
-                                                    </div>
-
-                                                    <div className='border  bg-[#D6DBDE] '>
-
-                                                    </div>
-
-
-                                                    <div className={`flex flex-col  gap-7 ml-4 justify-center ${infoContentHidden ? 'opacity-1' : 'opacity-0 z-[-30]'} `}>
-
-                                                        <div className=''>
-
-                                                            <p className='text-[14px] text-[#3A3A3C] font-semibold'>Employment Type</p>
-
-                                                            <div className='flex gap-2 mt-3'>
-
-                                                                <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>Crop to Crop </p>
-                                                                </div>
-                                                                <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>Contract to Hire </p>
-                                                                </div>
-                                                                <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>Contract W2 </p>
-                                                                </div>
-
-
-                                                            </div>
-
-                                                        </div>
-
-
-
-
-                                                        <div className=''>
-
-                                                            <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
-
-                                                            <div className='flex gap-2 mt-3'>
-                                                                {details.workAuthorization.map((value, id) => (
-                                                                    <div key={id} className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                        <p className='text-[14px] text-[#3A3A3C] font-medium'>{value} </p>
-                                                                    </div>
-                                                                ))}
-
-                                                                {/* <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[14px] text-[#3A3A3C] font-medium'>H1 Visa </p>
-                                                        </div>
-                                                        <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[14px] text-[#3A3A3C] font-medium'>Greencard </p>
-                                                        </div> */}
-                                                            </div>
-
-                                                        </div>
-
-
-
-                                                    </div>
+                                            <div className="flex justify-between items-center gap-4">
+                                                <p className="text-[#A9A9A9] text-[12px] font-normal ">Posted 1 day ago</p>
+                                                <div className=" px-6 py-3 bg-[#E9F358] rounded-full">
+                                                    <p className="text-[#114B53] text-base font-semibold">Quick Apply</p>
                                                 </div>
-
-                                                <div className={`mt-4 delay-75  ${infoContentHidden ? 'opacity-1' : 'opacity-0 z-[-30]'} `}>
-
-                                                    <p className='text-[14px] font-semibold'>Tech Stacks</p>
-
-                                                    <div className='flex gap-2 mt-1'>
-                                                        {details.techStacks.map((value, id) => (
-                                                            <div key={id} className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                                                <p className='text-[14px] font-semibold'>{value} </p>
-                                                            </div>
-                                                        ))}
-
-                                                        {/* <div className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                                    <p className='text-[14px] font-semibold'>Figma </p>
-                                                </div>
-                                                <div className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                                    <p className='text-[14px] font-semibold'>Adobe Creative suit</p>
-                                                </div>
-                                                <div className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                                    <p className='text-[14px] font-semibold'>Design Thinking</p>
-                                                </div> */}
-
-                                                    </div>
-
-                                                </div>
-                                            </div>
-
-
-                                            <div className='w-full flex justify-center items-center mt-8' >
-                                                <FaChevronUp className={`${!infoContentHidden ? "hidden" : ""}`} onClick={() => { SetInfoContentHidden(!infoContentHidden) }} />
-
-                                                <FaChevronDown className={`${infoContentHidden ? "hidden" : ""}`} onClick={() => { SetInfoContentHidden(!infoContentHidden) }} />
-
-                                            </div>
-
-
-
-                                        </div>
-                                    </div>
-
-                                    <div className='p-5 overflow-x-hidden overflow-y-auto h-[550px]'>
-                                        <p className='text-[20px] font-semibold'>Summary</p>
-                                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.summary}</p>
-
-                                        <p className='text-[20px] font-semibold mt-3'>Job description</p>
-                                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.jobDescription}</p>
-
-                                        <p className='text-[20px] font-semibold mt-3'>Additional benefits</p>
-                                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.additionalBenefits}</p>
-
-                                        <p className='text-[20px] font-semibold mt-3'>Notes</p>
-                                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.notes}</p>
-
-                                        <div className='w-full flex justify-between items-center mt-10'>
-                                            <p className='text-[#8F90A6] text-[14px] font-normal '>Posted 1 day ago</p>
-                                            <div className=' px-6 py-2 bg-[#114B53] rounded-full'>
-                                                <p className='text-white text-base font-semibold'>Report</p>
                                             </div>
                                         </div>
+
+                                        <div className={` transition-all ease-in-out duration-700  ${infoContentHidden ? 'h-[200px]' : 'h-0'}  `}>
+                                            <div className={`flex h-auto relative transition-all delay-75  ${infoContentHidden ? 'opacity-1' : 'opacity-0 z-[-30]'}   `}>
+                                                <div className='flex flex-col gap-4 mt-2 max-w-[350px] w-full'>
+
+                                                    <div className='flex gap-2'>
+                                                        <img src={Location2} alt="" />
+                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                            <p className='text-[14px]'>{details.mode}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex gap-2'>
+                                                        <img src={Location2} alt="" />
+                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                            <p className='text-[14px]'>{details.pay} / hours</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex gap-2'>
+                                                        <img src={Location2} alt="" />
+                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                            <p className='text-[14px]'>{details.workTime}</p>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div className='border  bg-[#D6DBDE] '>
+
+                                                </div>
+
+
+                                                <div className={`flex flex-col  gap-7 ml-4 justify-center ${infoContentHidden ? 'opacity-1' : 'opacity-0 z-[-30]'} `}>
+
+                                                    <div className=''>
+
+                                                        <p className='text-[14px] text-[#3A3A3C] font-semibold'>Employment Type</p>
+
+                                                        <div className='flex gap-2 mt-3'>
+
+                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                <p className='text-[14px] text-[#3A3A3C] font-medium'>Crop to Crop </p>
+                                                            </div>
+                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                <p className='text-[14px] text-[#3A3A3C] font-medium'>Contract to Hire </p>
+                                                            </div>
+                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                <p className='text-[14px] text-[#3A3A3C] font-medium'>Contract W2 </p>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+                                                    <div className=''>
+
+                                                        <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
+
+                                                        <div className='flex gap-2 mt-3'>
+                                                            {details.workAuthorization.map((value, id) => (
+                                                                <div key={id} className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>{value} </p>
+                                                                </div>
+                                                            ))}
+
+                                                         
+                                                        </div>
+
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+                                            <div className={`mt-4 delay-75  ${infoContentHidden ? 'opacity-1' : 'opacity-0 z-[-30]'} `}>
+
+                                                <p className='text-[14px] font-semibold'>Tech Stacks</p>
+
+                                                <div className='flex gap-2 mt-1'>
+                                                    {details.techStacks.map((value, id) => (
+                                                        <div key={id} className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
+                                                            <p className='text-[14px] font-semibold'>{value} </p>
+                                                        </div>
+                                                    ))}
+
+                                                  
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div className='w-full flex justify-center items-center mt-8' >
+                                            <FaChevronUp className={`${!infoContentHidden ? "hidden" : ""}`} onClick={() => { SetInfoContentHidden(!infoContentHidden) }} />
+
+                                            <FaChevronDown className={`${infoContentHidden ? "hidden" : ""}`} onClick={() => { SetInfoContentHidden(!infoContentHidden) }} />
+
+                                        </div>
+
+
+
                                     </div>
-                                    </div>
-                                   
                                 </div>
-                            )
-                        }
+
+                                <div className='p-5 overflow-x-hidden overflow-y-auto h-[550px] '>
+                                    <p className='text-[20px] font-semibold'>Summary</p>
+                                    <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.summary}</p>
+
+                                    <p className='text-[20px] font-semibold mt-3'>Job description</p>
+                                    <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.jobDescription}</p>
+
+                                    <p className='text-[20px] font-semibold mt-3'>Additional benefits</p>
+                                    <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.additionalBenefits}</p>
+
+                                    <p className='text-[20px] font-semibold mt-3'>Notes</p>
+                                    <p className='text-base text-[#3A3A3C] mt-3 text-justify'>{details.notes}</p>
+
+                                    <div className='w-full flex justify-between items-center mt-10'>
+                                        <p className='text-[#8F90A6] text-[14px] font-normal '>Posted 1 day ago</p>
+                                        <div className=' px-6 py-2 bg-[#114B53] rounded-full'>
+                                            <p className='text-white text-base font-semibold'>Report</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                </div>
+                          
+
+                        </div>
+                        )
+                      
                     })}
+               </div>
+
+                    
 
                 </div>
 
@@ -992,7 +940,7 @@ const JobDescription: React.FC = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                           
+
                                         </div>
                                     </div>
                                 </div>
