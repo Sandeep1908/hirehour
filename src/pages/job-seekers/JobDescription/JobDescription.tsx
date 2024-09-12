@@ -103,6 +103,8 @@ const JobDescription: React.FC = () => {
     // const [dropdown, setDropdown] = useState(0);
     const [selectedOptionMode, setSelectedOptionMode] = useState<string>("");
     const [selectedOption, setSelectedOption] = useState<string>("");
+    const [selectedOptionQuickApply, setSelectedOptionQuickApply] = useState<boolean>(false);
+    const [selectedOptionVisa, setSelectedOptionVisa] = useState<boolean>(false);
     const [selectedOptionEx, setSelectedOptionEx] = useState<string>("");
     const [selectedOptionDistance, setSelectedOptionDistance] = useState<string>("");
     const [selectedOptionSalary, setSelectedOptionSalary] = useState<string>("");
@@ -182,17 +184,17 @@ const JobDescription: React.FC = () => {
         <>
 
             <div className='w-full h-full pb-10 bg-white'>
-                <div className='hidden md:block w-full max-w-[1280px] h-[190px] m-auto rounded-xl shadow-lg p-5'  >
-                    <div className='w-full h-[80px] border-2 border-[##DFDFDF] rounded-xl flex justify-between px-4'>
-                        <div className='flex justify-center items-center gap-2'>
+                <div className=' w-full max-w-[1280px] md:h-[190px] m-auto rounded-xl shadow-lg p-5'  >
+                    <div className='w-full h-[80px] border-2 border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 md:py-0'>
+                        <div className='flex md:justify-center items-center gap-2'>
                             <img src={search_icon} alt="" />
                             <p className='font-normal text-[#3A3A3C]'>UI/UX Designer</p>
                         </div>
-                        <div className='flex justify-center items-center gap-2'>
+                        <div className='flex md:justify-center items-center gap-2'>
                             <img src={Location} alt="" />
                             <p className='font-normal text-[#3A3A3C]'>Allen, TX, US</p>
                         </div>
-                        <div className='flex justify-center items-center gap-4 '>
+                        <div className='hidden  md:flex justify-center items-center gap-4 '>
                             {/* <div className='relative'>
 
 
@@ -235,7 +237,7 @@ const JobDescription: React.FC = () => {
 
                             <div className='relative'>
                             <div onClick={() => setDropdown(6)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
-  ${selectedOptionMode.length > 0 ? 'bg-[#114B53] text-white'  : 'bg-white text-[#114B53]'} transition-colors duration-500`}>
+                                  ${selectedOptionMode.length > 0 ? 'bg-[#114B53] text-white'  : 'bg-white text-[#114B53]'} transition-colors duration-500`}>
                                 <p className="text-[14px] font-normal "> {selectedOptionMode ? selectedOptionMode : "Remote"} </p>
                                 <MdOutlineKeyboardArrowDown onClick={() => setDropdown(0)} className={`${dropdown === 6 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
@@ -266,12 +268,12 @@ const JobDescription: React.FC = () => {
                         </div>
 
 
-                            <div className='w-[363px] py-3  flex justify-center bg-[#114B53] rounded-full'>
+                            <div className='hidden  w-[363px] py-3 md:flex justify-center bg-[#114B53] rounded-full'>
                                 <p className='text-white font-semibold'>Search</p>
                             </div>
                         </div>
                     </div>
-                    <div className='w-full flex mt-4 gap-3'>
+                    <div className='hidden  w-full md:flex mt-4 gap-3'>
 
 
                         <div className='relative'>
@@ -494,11 +496,12 @@ const JobDescription: React.FC = () => {
                             )}
                         </div>
 
-                        <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
+                       
+
+                        <div onClick={()=>{setSelectedOptionQuickApply(!selectedOptionQuickApply)}} className={`${selectedOptionQuickApply && "bg-[#effefd]"} flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full cursor-pointer`}>
                             <p className="text-[14px] font-normal text-[#114B53]">Quick Apply</p>
                         </div>
-
-                        <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
+                        <div onClick={()=>{setSelectedOptionVisa(!selectedOptionVisa)}} className={`${selectedOptionVisa && "bg-[#effefd]"} flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full cursor-pointer`}>
                             <p className="text-[14px] font-normal text-[#114B53]">Visa Sponsorship</p>
                         </div>
                         <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
@@ -556,10 +559,10 @@ const JobDescription: React.FC = () => {
 
                     {/* Job Description  */}
 
-               <div className='max-w-[845px] w-full'  >
+               <div className='hidden md:block max-w-[845px] w-full'  >
                {jobFilterData.map((details,id)=>{
                         return(
-                            <div key={id} className='hidden md:block max-w-[845px]   w-full rounded-lg  border'>
+                            <div key={id} className=' max-w-[845px]   w-full rounded-lg  border'>
                                 <div className='w-full min-h-[100vh]'>
                                 <div className=' w-full  '>
                                 <div className='w-full shadow-lg pb-8'>
@@ -857,7 +860,7 @@ const JobDescription: React.FC = () => {
 
                             <div className='w-full mt-5'>
                                 <div className='w-full flex flex-col md:flex-row gap-5'>
-                                    <div className='max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
+                                    <div className='md:max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
                                         <div className='flex justify-between items-center'>
                                             <p className='text-base font-semibold'>Personal Information</p>
                                             <div onClick={editPop} className='cursor-pointer text-base font-semibold flex items-center gap-2 text-[#114B53]'><FaRegEdit />
@@ -890,7 +893,7 @@ const JobDescription: React.FC = () => {
                                         <p className='text-[14px] font-medium text-[#8F90A6] mt-3'>Visa sponsorship</p>
                                         <p className='text-[16px] font-semibold text-[#000000] mt-2'>Required</p>
                                     </div>
-                                    <div className='max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-2 py-3 md:px-3 md:py-2'>
+                                    <div className='md:max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-2 py-3 md:px-3 md:py-2'>
                                         <div className='flex justify-between items-center'>
                                             <p className='text-base font-semibold hidden md:block'>Resume</p>
                                             <div className='flex flex-row-reverse md:flex-row items-center justify-between gap-2'>
