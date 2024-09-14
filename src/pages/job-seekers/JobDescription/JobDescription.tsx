@@ -184,7 +184,7 @@ const JobDescription: React.FC = () => {
         <>
 
             <div className='w-full h-full pb-10 bg-white'>
-                <div className=' w-full max-w-[1280px] md:h-[190px] m-auto rounded-xl shadow-lg p-5'  >
+                <div className=' w-full max-w-[1280px] md:h-auto m-auto rounded-xl shadow-lg p-5'  >
                     <div className='w-full h-[80px] border-2 border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 md:py-0'>
                         <div className='flex md:justify-center items-center gap-2'>
                             <img src={search_icon} alt="" />
@@ -273,7 +273,7 @@ const JobDescription: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div className='hidden  w-full md:flex mt-4 gap-3'>
+                    <div className='hidden  w-full md:flex flex-wrap mt-4 gap-3'>
 
 
                         <div className='relative'>
@@ -303,30 +303,7 @@ const JobDescription: React.FC = () => {
                         </div>
 
 
-                        {/* <div className='relative'>
-                            <div onClick={() => setDropdown(2)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
-  ${selectedOptionEx.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
-                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionEx ? selectedOptionEx : "Experience Level"} </p>
-                                <MdOutlineKeyboardArrowDown className={`${dropdown === 2 ? 'rotate-180 transition-all duration-500' : ''}`} />
-                            </div>
-
-                            {dropdown === 2 && (
-                                <div className='absolute top-12 left-0 w-[194px]'>
-                                    <div className='w-full  bg-[#FFFFFF] rounded-lg shadow-lg' >
-                                        {["Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"].map(option => (
-                                            <div key={option} className='w-full px-4 py-3 flex gap-2' onClick={() => handleOptionEx(option)}>
-                                                <input
-                                                    type="radio"
-                                                    name="value1"
-                                                    checked={selectedOptionEx === option}
-                                                />
-                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div> */}
+                    
 
 
                         <div className='relative z-[20]'>
@@ -364,9 +341,44 @@ const JobDescription: React.FC = () => {
                                 </div>
                             )}
                         </div>
-
-
                         <div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(3)}
+                                className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+        ${selectedOptionDistance.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionDistance ? selectedOptionDistance : "Distance"}</p>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 3 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                            "Any distance", "Less than 5 miles", "Less than 10 miles", "Less than 25 miles", "Less than 50 miles","Less than 100 miles"
+                                        ].map((option) => (
+                                            <div key={option} onClick={() => handleOptionDistance(option)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionDistance === option}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-4 flex justify-end'>
+                                            <button onClick={handleReset} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+
+                        {/* <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(3)}
                                 className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
@@ -405,7 +417,7 @@ const JobDescription: React.FC = () => {
                                     </div>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
 
 
 
@@ -452,7 +464,53 @@ const JobDescription: React.FC = () => {
                         </div>
 
 
+
                         <div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(5)}
+                                className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+        ${selectedOptionSalary.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionSalary ? selectedOptionSalary : "Salary"}</p>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 5 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 5 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                           "$ 40,000 +/ per year",
+                                            "$ 60,000 +/ per year",
+                                            "$ 80,000 +/ per year",
+                                            "$ 100,000 +/ per year",
+                                            "$ 120,000 +/ per year",
+                                            "$ 140,000 +/ per year",
+                                            "$ 160,000 +/ per year",
+                                            "$ 180,000 +/ per year",
+                                            "$ 200,000 +/ per year"
+                                        ].map((option) => (
+                                            <div key={option} onClick={() => handleOptionSalary(option)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionSalary === option}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-4 flex justify-end'>
+                                            <button onClick={handleResetSalary} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+
+                        {/* <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(5)}
                                 className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
@@ -494,7 +552,7 @@ const JobDescription: React.FC = () => {
                                     </div>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
 
                        
 
