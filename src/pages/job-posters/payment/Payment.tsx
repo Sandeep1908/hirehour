@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
 import { CgFileDocument } from 'react-icons/cg'
 import { FaRegCheckCircle } from 'react-icons/fa'
-import { FaCircleCheck } from 'react-icons/fa6'
 
 const Payment:React.FC = () => {
 
