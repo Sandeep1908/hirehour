@@ -1,22 +1,13 @@
 
-import React, { useEffect, useState } from 'react'
-import search_icon from '../../../assets/search-icon.svg'
-import Location from '../../../assets/location.svg'
+import React, { useState } from 'react'
+
 import Location2 from '../../../assets/location2.svg'
 import Job_banner from '../../../assets/Rectangle.png'
 import icon from '../../../assets/Employers Logo.svg'
-import { FaChevronUp } from "react-icons/fa6";
-import { FaChevronDown } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa6";
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
-import { CiFilter } from "react-icons/ci";
+
 import { IoMdClose } from 'react-icons/io'
 import Logo from '../../../assets/logo/hirehour.png';
-import { LuUpload } from "react-icons/lu";
-import { RiDeleteBin6Line } from "react-icons/ri";
-import { FaRegEdit } from "react-icons/fa";
-import { MdOutlineMail } from "react-icons/md";
-import { IoCallOutline } from 'react-icons/io5'
+
 
 
 
@@ -29,52 +20,12 @@ import { IoCallOutline } from 'react-icons/io5'
 
 const JobPreview: React.FC = () => {
 
-    const [infoContentHidden, SetInfoContentHidden] = useState<boolean>(false);
-    const [isQuickApply, setQuickApply] = useState<boolean>(false);
-    const [isQuickApplyStep2, setQuickApplyStep2] = useState<boolean>(false);
+   
     const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
-    const [isQuickApplyEdit, setQuickApplyEdit] = useState<boolean>(false);
-    const [dropdown, setDropdown] = useState<boolean>(false);
-    const [dropdownLoc, setDropdownLoc] = useState<boolean>(false);
-    const [dropdownExp, setDropdownExp] = useState<boolean>(false);
-    const [dropdownDis, setDropdownDis] = useState<boolean>(false);
-    const [dropdownEmp, setDropdownEmp] = useState<boolean>(false);
-    const [dropdownSly, setDropdownSly] = useState<boolean>(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-          if (window.scrollY > 300) {
-            SetInfoContentHidden(false);
-          } else {
-            SetInfoContentHidden(true);
-          }
-        };
-    
-        window.addEventListener('scroll', handleScroll);
-    
-        return () => {
-          window.removeEventListener('scroll', handleScroll);
-        };
-      }, []);
-    
 
-    const step2 =()=>{
-        setQuickApply(false);
-        setQuickApplyStep2(true);
-        setQuickApplyEdit(false);
-    }
-    const step3 =()=>{
-        setQuickApplyStep2(false);
-        setQuickApplyStep3(true)
-    }
-    const editPop =()=>{
-        setQuickApplyStep2(false);
-        setQuickApplyEdit(true)
-    }
-    const backToStep =()=>{
-        setQuickApplyStep2(false);
-        setQuickApply(true)
-    }
+
+   
     const quickApplyDone =()=>{
         setQuickApplyStep3(false);
     }
