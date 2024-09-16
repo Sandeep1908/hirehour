@@ -7,7 +7,7 @@ type JobAlertProps = {
 
 const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
   return (
-    <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
+    <div className='w-full h-full flex p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
       <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
         <div className='max-w-[600px]  h-full md:h-auto w-full  bg-white rounded-lg  shadow-lg overflow-y-auto z-30'>

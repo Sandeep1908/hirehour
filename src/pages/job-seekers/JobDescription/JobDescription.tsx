@@ -103,6 +103,8 @@ const JobDescription: React.FC = () => {
     // const [dropdown, setDropdown] = useState(0);
     const [selectedOptionMode, setSelectedOptionMode] = useState<string>("");
     const [selectedOption, setSelectedOption] = useState<string>("");
+    const [selectedOptionQuickApply, setSelectedOptionQuickApply] = useState<boolean>(false);
+    const [selectedOptionVisa, setSelectedOptionVisa] = useState<boolean>(false);
     const [selectedOptionEx, setSelectedOptionEx] = useState<string>("");
     const [selectedOptionDistance, setSelectedOptionDistance] = useState<string>("");
     const [selectedOptionSalary, setSelectedOptionSalary] = useState<string>("");
@@ -182,17 +184,17 @@ const JobDescription: React.FC = () => {
         <>
 
             <div className='w-full h-full pb-10 bg-white'>
-                <div className='hidden md:block w-full max-w-[1280px] h-[190px] m-auto rounded-xl shadow-lg p-5'  >
-                    <div className='w-full h-[80px] border-2 border-[##DFDFDF] rounded-xl flex justify-between px-4'>
-                        <div className='flex justify-center items-center gap-2'>
+                <div className=' w-full max-w-[1280px] md:h-auto m-auto rounded-xl shadow-lg p-5'  >
+                    <div className='w-full h-[80px] border-2 border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 md:py-0'>
+                        <div className='flex md:justify-center items-center gap-2'>
                             <img src={search_icon} alt="" />
                             <p className='font-normal text-[#3A3A3C]'>UI/UX Designer</p>
                         </div>
-                        <div className='flex justify-center items-center gap-2'>
+                        <div className='flex md:justify-center items-center gap-2'>
                             <img src={Location} alt="" />
                             <p className='font-normal text-[#3A3A3C]'>Allen, TX, US</p>
                         </div>
-                        <div className='flex justify-center items-center gap-4 '>
+                        <div className='hidden  md:flex justify-center items-center gap-4 '>
                             {/* <div className='relative'>
 
 
@@ -235,7 +237,7 @@ const JobDescription: React.FC = () => {
 
                             <div className='relative'>
                             <div onClick={() => setDropdown(6)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
-  ${selectedOptionMode.length > 0 ? 'bg-[#114B53] text-white'  : 'bg-white text-[#114B53]'} transition-colors duration-500`}>
+                                  ${selectedOptionMode.length > 0 ? 'bg-[#114B53] text-white'  : 'bg-white text-[#114B53]'} transition-colors duration-500`}>
                                 <p className="text-[14px] font-normal "> {selectedOptionMode ? selectedOptionMode : "Remote"} </p>
                                 <MdOutlineKeyboardArrowDown onClick={() => setDropdown(0)} className={`${dropdown === 6 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
@@ -266,12 +268,12 @@ const JobDescription: React.FC = () => {
                         </div>
 
 
-                            <div className='w-[363px] py-3  flex justify-center bg-[#114B53] rounded-full'>
+                            <div className='hidden  w-[363px] py-3 md:flex justify-center bg-[#114B53] rounded-full'>
                                 <p className='text-white font-semibold'>Search</p>
                             </div>
                         </div>
                     </div>
-                    <div className='w-full flex mt-4 gap-3'>
+                    <div className='hidden  w-full md:flex flex-wrap mt-4 gap-3'>
 
 
                         <div className='relative'>
@@ -301,30 +303,7 @@ const JobDescription: React.FC = () => {
                         </div>
 
 
-                        {/* <div className='relative'>
-                            <div onClick={() => setDropdown(2)} className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
-  ${selectedOptionEx.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
-                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionEx ? selectedOptionEx : "Experience Level"} </p>
-                                <MdOutlineKeyboardArrowDown className={`${dropdown === 2 ? 'rotate-180 transition-all duration-500' : ''}`} />
-                            </div>
-
-                            {dropdown === 2 && (
-                                <div className='absolute top-12 left-0 w-[194px]'>
-                                    <div className='w-full  bg-[#FFFFFF] rounded-lg shadow-lg' >
-                                        {["Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"].map(option => (
-                                            <div key={option} className='w-full px-4 py-3 flex gap-2' onClick={() => handleOptionEx(option)}>
-                                                <input
-                                                    type="radio"
-                                                    name="value1"
-                                                    checked={selectedOptionEx === option}
-                                                />
-                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div> */}
+                    
 
 
                         <div className='relative z-[20]'>
@@ -362,9 +341,44 @@ const JobDescription: React.FC = () => {
                                 </div>
                             )}
                         </div>
-
-
                         <div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(3)}
+                                className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+        ${selectedOptionDistance.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionDistance ? selectedOptionDistance : "Distance"}</p>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 3 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                            "Any distance", "Less than 5 miles", "Less than 10 miles", "Less than 25 miles", "Less than 50 miles","Less than 100 miles"
+                                        ].map((option) => (
+                                            <div key={option} onClick={() => handleOptionDistance(option)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionDistance === option}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-4 flex justify-end'>
+                                            <button onClick={handleReset} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+
+                        {/* <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(3)}
                                 className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
@@ -403,7 +417,7 @@ const JobDescription: React.FC = () => {
                                     </div>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
 
 
 
@@ -450,7 +464,53 @@ const JobDescription: React.FC = () => {
                         </div>
 
 
+
                         <div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(5)}
+                                className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+        ${selectedOptionSalary.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[14px] font-normal text-[#114B53]"> {selectedOptionSalary ? selectedOptionSalary : "Salary"}</p>
+                                <MdOutlineKeyboardArrowDown className={`${dropdown === 5 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 5 && (
+                                <div className='absolute top-12 left-0 w-[194px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                           "$ 40,000 +/ per year",
+                                            "$ 60,000 +/ per year",
+                                            "$ 80,000 +/ per year",
+                                            "$ 100,000 +/ per year",
+                                            "$ 120,000 +/ per year",
+                                            "$ 140,000 +/ per year",
+                                            "$ 160,000 +/ per year",
+                                            "$ 180,000 +/ per year",
+                                            "$ 200,000 +/ per year"
+                                        ].map((option) => (
+                                            <div key={option} onClick={() => handleOptionSalary(option)} className='w-full px-4 py-3 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionSalary === option}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-4 flex justify-end'>
+                                            <button onClick={handleResetSalary} className='text-base text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+
+                        {/* <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(5)}
                                 className={`flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
@@ -492,13 +552,14 @@ const JobDescription: React.FC = () => {
                                     </div>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
 
-                        <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
+                       
+
+                        <div onClick={()=>{setSelectedOptionQuickApply(!selectedOptionQuickApply)}} className={`${selectedOptionQuickApply && "bg-[#effefd]"} flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full cursor-pointer`}>
                             <p className="text-[14px] font-normal text-[#114B53]">Quick Apply</p>
                         </div>
-
-                        <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
+                        <div onClick={()=>{setSelectedOptionVisa(!selectedOptionVisa)}} className={`${selectedOptionVisa && "bg-[#effefd]"} flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full cursor-pointer`}>
                             <p className="text-[14px] font-normal text-[#114B53]">Visa Sponsorship</p>
                         </div>
                         <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
@@ -556,10 +617,10 @@ const JobDescription: React.FC = () => {
 
                     {/* Job Description  */}
 
-               <div className='max-w-[845px] w-full'  >
+               <div className='hidden md:block max-w-[845px] w-full'  >
                {jobFilterData.map((details,id)=>{
                         return(
-                            <div key={id} className='hidden md:block max-w-[845px]   w-full rounded-lg  border'>
+                            <div key={id} className=' max-w-[845px]   w-full rounded-lg  border'>
                                 <div className='w-full min-h-[100vh]'>
                                 <div className=' w-full  '>
                                 <div className='w-full shadow-lg pb-8'>
@@ -857,7 +918,7 @@ const JobDescription: React.FC = () => {
 
                             <div className='w-full mt-5'>
                                 <div className='w-full flex flex-col md:flex-row gap-5'>
-                                    <div className='max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
+                                    <div className='md:max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
                                         <div className='flex justify-between items-center'>
                                             <p className='text-base font-semibold'>Personal Information</p>
                                             <div onClick={editPop} className='cursor-pointer text-base font-semibold flex items-center gap-2 text-[#114B53]'><FaRegEdit />
@@ -890,7 +951,7 @@ const JobDescription: React.FC = () => {
                                         <p className='text-[14px] font-medium text-[#8F90A6] mt-3'>Visa sponsorship</p>
                                         <p className='text-[16px] font-semibold text-[#000000] mt-2'>Required</p>
                                     </div>
-                                    <div className='max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-2 py-3 md:px-3 md:py-2'>
+                                    <div className='md:max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-2 py-3 md:px-3 md:py-2'>
                                         <div className='flex justify-between items-center'>
                                             <p className='text-base font-semibold hidden md:block'>Resume</p>
                                             <div className='flex flex-row-reverse md:flex-row items-center justify-between gap-2'>
