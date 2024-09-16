@@ -32,7 +32,7 @@ const JobPosterHome: React.FC = () => {
 
             <div className="flex justify-center items-center space-x-4 mt-10">
               <Link
-                to={'/create-job-board'}
+                to={'/job-poster/job-basis'}
                 className="w-32 h-8 text-xs flex justify-center items-center rounded-full cursor-pointer bg-[#E9F358] text-[#1D5552]"
               >
                 Post a Job

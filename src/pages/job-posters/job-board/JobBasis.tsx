@@ -321,7 +321,7 @@ const JobBasis: React.FC = () => {
               Back
             </Link>
             <Link
-              to={''}
+              to={'/job-poster/job-description'}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
               Continue
