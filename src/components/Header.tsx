@@ -18,16 +18,19 @@ import { Link } from 'react-router-dom';
 
 import rtrLogo from '../assets/header/rtr.svg'
 import msgLogo from '../assets/header/message.svg'
-
+import dashLogo from '../assets/header/X.png'
 import jobLogo from '../assets/header/jobs.svg'
 
 import { useLocation } from 'react-router-dom';
+import  useHeaderContext  from '../context/HeaderContext';
+ 
 
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isNavOpen,setIsNavOpen]=useState<boolean>(false)
   const params=useLocation().pathname;
+  const {isDashboardOpen,setIsDashBoardOpen} =useHeaderContext()
   
   const handlNavBar=()=>{
     setIsAccountOpen(false);
@@ -72,10 +75,11 @@ const Header: React.FC = () => {
   ];
   return (
     <div className="w-full h-20 bg-white relative   ">
-      <div className="w-full max-w-[1300px] m-auto flex justify-between items-center p-5">
+      <div className="w-full  flex justify-between items-center p-5">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
-          <div className="flex justify-center items-center space-x-3">
+          <div className="flex justify-center items-center space-x-3 ">
+            <img src={dashLogo} className='w-7 h-7' alt="" onClick={()=>setIsDashBoardOpen(!isDashboardOpen)}  />
             <Link to={'/'}>
            
             <img src={Logo} className="w-36 h-10 object-contain" alt="logo-hirehour" />
