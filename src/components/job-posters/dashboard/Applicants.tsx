@@ -5,8 +5,7 @@ import { CiFilter, CiSearch } from 'react-icons/ci'
 import { FaCaretDown } from 'react-icons/fa'
 import { IoIosArrowForward, IoMdMore } from 'react-icons/io'
 import { IoHomeOutline } from 'react-icons/io5'
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
-import { PiGreaterThanBold } from 'react-icons/pi'
+
 
 const Applicants:React.FC = () => {
 
