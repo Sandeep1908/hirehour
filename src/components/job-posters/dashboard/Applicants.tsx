@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import { BiMessageDetail } from 'react-icons/bi'
-import { CiFilter, CiSearch } from 'react-icons/ci'
-import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin, FaRegEdit } from 'react-icons/fa'
-import { IoIosArrowDown, IoIosArrowForward, IoMdClose, IoMdMore } from 'react-icons/io'
-import { IoCallOutline, IoHomeOutline, IoMail } from 'react-icons/io5'
-import Message from '../../../pages/job-seekers/Messages/Message'
-import { RxCross2 } from 'react-icons/rx'
+import { CiFilter } from 'react-icons/ci'
+import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin } from 'react-icons/fa'
+import { IoIosArrowDown,  IoMdClose, IoMdMore } from 'react-icons/io'
+import { IoCallOutline, IoMail } from 'react-icons/io5'
 import { MdOutlineAttachment, MdOutlineMail } from 'react-icons/md'
 import { LuSendHorizonal } from 'react-icons/lu'
 import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
+import { RxCross2 } from 'react-icons/rx'
 
 
 const Applicants: React.FC = () => {
