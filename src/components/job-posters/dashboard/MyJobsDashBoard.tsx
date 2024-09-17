@@ -71,7 +71,7 @@ const MyJobsDashBoard: React.FC = () => {
                   <ul className="flex justify-between">
                     {Array.from({ length: 4 }).map((_, i) => {
                       return (
-                        <li className="flex flex-col border-r p-3">
+                        <li key={i} className="flex flex-col border-r p-3">
                           <span className="text-sm">24</span>
                           <span className="text-[#104B53] text-xs font-semibold">Job Views</span>
                         </li>
