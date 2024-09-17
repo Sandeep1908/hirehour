@@ -9,13 +9,15 @@ import {
   createRoutesFromElements,
   Route,
 } from 'react-router-dom';
-import Home from './pages/job-seekers/home/Home.tsx';
 
+import { HeaderContextProvider } from './context/HeaderContext.tsx';
+
+
+// components 
+import Home from './pages/job-seekers/home/Home.tsx';
 import Signup from './pages/auth/Signup/Signup.tsx';
 import Signin from './pages/auth/Signin/Signin.tsx';
-
 import JobDescription from './pages/job-seekers/JobDescription/JobDescription.tsx';
-
 import AdditionalInfo from './pages/job-seekers/ProfileSetting/AdditionalInformation/AdditionalInfo.tsx';
 import UploadResume from './pages/job-seekers/ProfileSetting/UploadResume/UploadResume.tsx';
 import ReviewInfo from './pages/job-seekers/ProfileSetting/ReviewInfo/ReviewInfo.tsx';
@@ -75,26 +77,20 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
 
-
-
       {/* job posters route  */}
-      <Route path="/job-poster" element={<JobPosterHome/>} />
-      <Route path="/job-poster/job-basis" element={<JobBoard/>} />
-      <Route path="/job-poster/job-description" element={<JobDescriptionBoard/>} />
-      <Route path="/job-poster/company-profile" element={<CompanyProfile/>} />
-      <Route path="/job-poster/dashboard" element={<DashBoard/>} />
-
-
-
-
-
-
-    </Route>,
+      <Route path="/job-poster" element={<JobPosterHome />} />
+      <Route path="/job-poster/job-basis" element={<JobBoard />} />
+      <Route path="/job-poster/job-description" element={<JobDescriptionBoard />} />
+      <Route path="/job-poster/company-profile" element={<CompanyProfile />} />
+      <Route path="/job-poster/dashboard" element={<DashBoard />} />
+    </Route>
   ),
 );
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <HeaderContextProvider>
     <RouterProvider router={router} />
+    </HeaderContextProvider>
   </StrictMode>,
 );
