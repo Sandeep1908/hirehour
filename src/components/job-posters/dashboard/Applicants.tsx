@@ -4,8 +4,8 @@ import { BiMessageDetail } from 'react-icons/bi'
 import { CiFilter } from 'react-icons/ci'
 import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin } from 'react-icons/fa'
 import { IoIosArrowDown,  IoMdClose, IoMdMore } from 'react-icons/io'
-import { IoCallOutline, IoMail } from 'react-icons/io5'
-import { MdOutlineAttachment, MdOutlineMail } from 'react-icons/md'
+import { IoCallOutline, IoCheckmark, IoMail } from 'react-icons/io5'
+import { MdOutlineAttachment, MdOutlineKeyboardArrowDown, MdOutlineMail } from 'react-icons/md'
 import { LuSendHorizonal } from 'react-icons/lu'
 import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
@@ -23,6 +23,43 @@ const Applicants: React.FC = () => {
   const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
 
   const [itemId, setItemId] = useState(0)
+
+
+  const [selectedOptionVisa, setSelectedOptionVisa] = useState<string>("");
+  const [selectedOptionDate, setSelectedOptionDate] = useState<string>("");
+  const [selectedOptionAllJob, setSelectedOptionAllJob] = useState<string>("");
+
+
+  const [isSelected, setIsSelected] = useState(0);
+  const [dropdown, setDropdown] = useState<number>(0);
+
+
+  const handleOptionAllJob = (value: string) => {
+    setSelectedOptionAllJob(value);
+    setDropdown(0);
+    setIsSelected(3);
+};
+  const handleOptionVisa = (value: string) => {
+    setSelectedOptionVisa(value);
+    setDropdown(0);
+    setIsSelected(3);
+};
+  const handleOptionDate = (value: string) => {
+    setSelectedOptionDate(value);
+    setDropdown(0);
+    setIsSelected(3);
+};
+
+const handleResetDate = () => {
+  setSelectedOptionDate("");
+  setDropdown(0);
+  
+};
+const handleResetVisa = () => {
+  setSelectedOptionVisa("");
+  setDropdown(0);
+  
+};
 
   const filterItems = [
     {
@@ -98,49 +135,134 @@ const Applicants: React.FC = () => {
 
         <div className=' flex gap-2 mt-5 px-4'>
 
+          <div className='relative z-[20]'>
+                            <div onClick={() => setDropdown(1)} className={`cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+  ${isSelected === 1 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
+                                <p className="text-[12px] font-semibold text-[#114B53]"> {selectedOptionAllJob ? selectedOptionAllJob : "All Filters"} </p>
+                                <FaCaretDown onClick={() => setDropdown(1)} className={`${dropdown === 1 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
 
-          <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] bg-[#effefd] rounded-full">
-            <p className="text-[14px] font-semibold text-[#114B53]">All Filters</p>
+                            {dropdown === 1 && (
+                                <div className='absolute top-12 left-0 w-[120px]'>
+                                    <div className='w-full  bg-[#FFFFFF] rounded-lg shadow-lg' >
+                                        {["All", " Active", "Paused", "Closed", "Co - Hiring"].map(option => (
+                                            <div key={option} className='w-full px-4 py-2 flex gap-2' onClick={() => handleOptionAllJob(option)}>
+                                                <input
+                                                    type="radio"
+                                                    name="value1"
+                                                    checked={selectedOptionAllJob === option}
+                                                //   onChange={() => handleOptionClick(option)}
+                                                />
+                                                <label className='text-[#333333] text-[10px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+          {/* <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
+            <p className="text-[12px] font-semibold text-[#114B53]">Date Applied</p>
             <FaCaretDown className='text-[#114B53]' />
 
-          </div>
+          </div> */}
 
-          <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-            <p className="text-[14px] font-semibold text-[#114B53]">Date Applied</p>
-            <FaCaretDown className='text-[#114B53]' />
+<div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(2)}
+                                className={`cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+                                 ${selectedOptionDate.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[12px] font-semibold text-[#114B53]"> {selectedOptionDate ? selectedOptionDate : "Date Applied"}</p>
+                                <FaCaretDown className={`${dropdown === 2 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
 
-          </div>
+                            {dropdown === 2 && (
+                                <div className='absolute top-12 left-0 w-[150px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                            "Today", "Yesterday","Last 3 days","Last week","Last 2 week" 
+                                        ].map((option) => (
+                                            <div key={option} onClick={() => handleOptionDate(option)} className='w-full px-4 py-2 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionDate === option}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[10px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-2 flex justify-end'>
+                                            <button onClick={handleResetDate} className='text-[12px] text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
 
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
-            <p className="text-[14px] font-semibold text-[#114B53]">Location</p>
+            <p className="text-[12px] font-semibold text-[#114B53]">Location</p>
             <FaCaretDown className='text-[#114B53]' />
 
           </div>
 
 
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
-            <p className="text-[14px] font-semibold text-[#114B53]">Domain Experience</p>
+            <p className="text-[12px] font-semibold text-[#114B53]">Domain Experience</p>
             <FaCaretDown className='text-[#114B53]' />
 
           </div>
 
 
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
-            <p className="text-[14px] font-semibold text-[#114B53]">Companies worked</p>
+            <p className="text-[12px] font-semibold text-[#114B53]">Companies worked</p>
             <FaCaretDown className='text-[#114B53]' />
 
           </div>
 
 
+          <div className='relative z-[20]'>
+                            <div
+                                onClick={() => setDropdown(5)}
+                                className={`cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+                                 ${selectedOptionVisa.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                            >
+                                <p className="text-[12px] font-semibold text-[#114B53]"> {selectedOptionVisa ? selectedOptionVisa : "Visa Sponsorship"}</p>
+                                <FaCaretDown className={`${dropdown === 5 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                            </div>
+
+                            {dropdown === 5 && (
+                                <div className='absolute top-12 left-0 w-[150px]'>
+                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
+                                        {[
+                                            "Required", "Not required", 
+                                        ].map((option) => (
+                                            <div key={option} onClick={() => handleOptionVisa(option)} className='w-full px-4 py-2 flex gap-2'>
+                                                <input
+                                                    type="radio"
+                                                    name="distance"
+                                                    checked={selectedOptionVisa === option}
+                                                //   onChange={() => handleOptionDistance(distance)}
+                                                />
+                                                <label className='text-[#333333] text-[10px] font-medium'>{option}</label>
+                                            </div>
+                                        ))}
+                                        <div className='w-full px-6 py-2 flex justify-end'>
+                                            <button onClick={handleResetVisa} className='text-[12px] text-[#114B53] font-semibold cursor-pointer'>
+                                                Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+
+
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
-            <p className="text-[14px] font-semibold text-[#114B53]">Visa Sponsorship</p>
-            <FaCaretDown className='text-[#114B53]' />
-
-          </div>
-
-
-          <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
-            <p className="text-[14px] font-semibold text-[#114B53]">All Filters</p>
+            <p className="text-[12px] font-semibold text-[#114B53]">All Filters</p>
             <CiFilter className='text-[#114B53]' />
 
           </div>
@@ -287,9 +409,9 @@ const Applicants: React.FC = () => {
 
 
 
-          <div className={`absolute left-16 z-20 max-w-[400px] top-16 p-6 w-full h-auto bg-white shadow-lg rounded-lg transition-all duration-500 ${showProfile ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+          <div className={`absolute left-16 z-20 max-w-[400px] top-16 p-6 w-full h-auto bg-white shadow-lg rounded-lg transition-all duration-500 ${showProfile ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`} onMouseLeave={() => { setShowProfile(!showProfile) }}>
             <div className='w-full h-full flex gap-4'>
-              <RxCross2 onClick={() => { setShowProfile(!showProfile) }} className='absolute top-2 right-2 cursor-pointer' size={15} />
+              {/* <RxCross2 onClick={() => { setShowProfile(!showProfile) }} className='absolute top-2 right-2 cursor-pointer' size={15} /> */}
               <div className='w-[20%]'>
                 <div className='w-16 h-16 bg-[#95FAF9] rounded-full flex justify-center items-center'>
                   <p className='text-lg font-semibold text-[#3A3A3C]'>J</p>
@@ -363,10 +485,11 @@ const Applicants: React.FC = () => {
               </thead>
               
               <tbody className='mt-2'>
+              <div className='h-1'></div>
                 <tr className='border-[1px] border-[#D6DBDE] mt-2'>
                   <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
                     <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px] cursor-pointer' onClick={() => { setShowProfile(!showProfile) }}>
+                    <div className='text-[12px] cursor-pointer'  onMouseEnter={() => { setShowProfile(!showProfile) }}  >
                       <p>Johnson</p>
                       <p>Senior Full Stack Develoer <br />
                         Allen, TX - Date Applied : 05/06/2024</p>
@@ -407,7 +530,7 @@ const Applicants: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-                
+                <div className='h-1'></div>
                 <tr className='border-[1px] border-[#D6DBDE] '>
                   <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
                     <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
@@ -451,8 +574,8 @@ const Applicants: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-                <br />
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
+ <div className='h-1'></div>
+                 <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
                   <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
                     <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
                     <div className='text-[12px]'>
@@ -496,7 +619,7 @@ const Applicants: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-                <br />
+              <div className='h-1'></div>
                 <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
                   <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
                     <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
@@ -540,7 +663,7 @@ const Applicants: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-                <br />
+              <div className='h-1'></div>
                 <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
                   <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
                     <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
@@ -584,7 +707,7 @@ const Applicants: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-                <br />
+              <div className='h-1'></div>
                 <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
                   <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
                     <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
@@ -628,7 +751,7 @@ const Applicants: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-                <br />
+               <div className='h-1'></div>
                 <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
                   <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
                     <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
@@ -743,7 +866,7 @@ const Applicants: React.FC = () => {
 
 
           <div className='w-full flex gap-5   mt-6'>
-                   <div className='w-[25%] '>
+                   <div className='w-[25%] flex flex-col gap-5 '>
                    <div className=' w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
                                         
                                         <div className='flex flex-col justify-center items-center mt-3'>
@@ -804,6 +927,30 @@ const Applicants: React.FC = () => {
                                           </div>
                                         </div>
 
+                                    </div>
+
+                                    <div className='w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
+                                    <p className='text-sm font-semibold mt-2'>Qualification met 2/3</p>
+                                    <hr className='mt-2' />
+                                    <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> How many years of experience do you have in Java ? ( in years)</p>
+                                    <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : 3 (Required)</p>
+                                      <div className='mt-2 w-fit border-[1px] border-[#06A560] rounded-full px-2 py-1 flex gap-2 items-center'>
+                                      <IoCheckmark size={13} className='text-[#06A560]' />
+                                      <p className='text-[10px]'>4</p>
+                                      </div>
+                                      
+                                    <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> Can you able to relocate the job location</p>
+                                    <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : Yes (Required)</p>
+                                      <div className='mt-2 w-fit border-[1px] border-[#06A560] rounded-full px-2 py-1 flex gap-2 items-center'>
+                                      <IoCheckmark size={13} className='text-[#06A560]' />
+                                      <p className='text-[10px]'>Yes</p>
+                                      </div>
+                                    <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> Immediate Joiner ?</p>
+                                    <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : Yes (Required)</p>
+                                      <div className='mt-2 w-fit border-[1px] border-[#FF3737] rounded-full px-2 py-1 flex gap-2 items-center'>
+                                      <IoCheckmark size={13} className='text-[#FF3737]' />
+                                      <p className='text-[10px]'>No</p>
+                                      </div>
                                     </div>
                    </div>
                    <div className='w-[75%] '>
