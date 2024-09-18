@@ -6,54 +6,71 @@ import { IoIosArrowForward } from 'react-icons/io';
 import useHeaderContext from '../../../context/HeaderContext';
 import { BiHomeAlt2 } from 'react-icons/bi';
 import MyJobsDashBoard from '../../../components/job-posters/dashboard/MyJobsDashBoard';
+import Subscription from '../../../components/job-posters/dashboard/Subscription';
+import Help from '../../../components/job-posters/dashboard/Help';
+import { useLocation ,useNavigate} from 'react-router-dom';
 
-type SidebarPropType = {
-  setIsCurrentComponentIdx: (e: number) => void;
-};
+ 
 
-const Sidebar: React.FC<SidebarPropType> = ({ setIsCurrentComponentIdx }) => {
-  const [currentIdx, setCurrentIdx] = useState<number>(0);
+const Sidebar: React.FC = () => {
+  const [currentQueryString, setCurrentQueryString] = useState<string>('');
   const { isDashboardOpen } = useHeaderContext();
+  const navigate=useNavigate();
   const sideBarItems = [
     {
       label: 'Jobs',
       icon: <FaSuitcase size={17} />,
+      queryString:'myjobs'
     },
     {
       label: 'Applicants',
       icon: <MdGroups size={17} />,
+      queryString:'applicants'
     },
     {
       label: 'Resume Sourcing',
       icon: <MdGroups size={17} />,
+      queryString:'resue-sourcing'
     },
     {
       label: 'Right to Represent',
       icon: <MdGroups size={17} />,
+      queryString:'right-to-represent'
     },
     {
       label: 'Interviews',
       icon: <MdGroups size={17} />,
+      queryString:'interviews'
     },
     {
       label: 'Co-Hiring',
       icon: <MdGroups size={17} />,
+      queryString:'co-hiring'
     },
     {
       label: 'Subscription',
       icon: <MdGroups size={17} />,
+      queryString:'subscription'
     },
     {
       label: 'Help',
       icon: <MdGroups size={17} />,
+      queryString:'help'
     },
   ];
 
-  const handleIdx = (id: number) => {
-    setIsCurrentComponentIdx(id);
-    setCurrentIdx(id);
+
+  const setQueryString = (qstring:string) => {
+    const params = new URLSearchParams();
+    params.set('key', qstring);
+    navigate(`?${params.toString()}`, { replace: true });
   };
-  
+
+  const handleIdx = (queryString:string )=> {
+    setQueryString(queryString)
+    setCurrentQueryString(queryString);
+  };
+
 
   return (
     <div
@@ -74,9 +91,9 @@ const Sidebar: React.FC<SidebarPropType> = ({ setIsCurrentComponentIdx }) => {
           {sideBarItems?.map((item, i) => {
             return (
               <li
-                className={`flex justify-center items-center space-x-4 cursor-pointer transition-all duration-300  p-4 w-full ${currentIdx === i ? 'bg-[#EFFDFD] text-[#104B53] font-[600]' : ''}`}
+                className={`flex justify-center items-center space-x-4 cursor-pointer transition-all duration-300  p-4 w-full ${currentQueryString === item.queryString ? 'bg-[#EFFDFD] text-[#104B53] font-[600]' : ''}`}
                 key={i}
-                onClick={() => handleIdx(i)}
+                onClick={() => handleIdx(item.queryString)}
               >
                 {item.icon}
                 <span
@@ -94,47 +111,61 @@ const Sidebar: React.FC<SidebarPropType> = ({ setIsCurrentComponentIdx }) => {
 };
 
 const DashBoard: React.FC = () => {
-  const [currentComponentIdx, setCurrentComponentIdx] = useState<number>(0);
+   
+  const location = useLocation();
+  const queryParams= new URLSearchParams(location.search)
+  const queryString= queryParams.get('key')
+ 
   const sideBarItems = [
     {
       label: 'Jobs',
-      components: <MyJobsDashBoard />,
+      components: <MyJobsDashBoard/>,
+      queryString:'myjobs'
     },
     {
       label: 'Applicants',
       components: '',
+      queryString:'applicants'
     },
     {
       label: 'Resume Sourcing',
-      components: '',
+      components:'',
+      queryString:'resue-sourcing'
     },
     {
       label: 'Right to Represent',
       components: '',
+      queryString:'right-to-represent'
     },
     {
       label: 'Interviews',
       components: '',
+      queryString:'interviews'
     },
     {
       label: 'Co-Hiring',
       components: '',
+      queryString:'co-hiring'
     },
     {
       label: 'Subscription',
-      components: '',
+      components: <Subscription/>,
+      queryString:'subscription'
     },
     {
       label: 'Help',
-      components: '',
+      components:<Help/>,
+      queryString:'help'
     },
-  ];
+    ];
+
+     
 
   return (
     <div className="w-full h-[89vh] flex">
       {/* Sidebar on the Left */}
       <div className="h-full">
-        <Sidebar setIsCurrentComponentIdx={setCurrentComponentIdx} />
+        <Sidebar/>
       </div>
 
       {/* Main Content on the Right */}
@@ -142,22 +173,16 @@ const DashBoard: React.FC = () => {
         <div className="flex items-center space-x-2 p-3">
           <BiHomeAlt2 size={16} />
           <IoIosArrowForward size={13} />
-          <p className="text-xs">{sideBarItems[currentComponentIdx].label}</p>
+          <p className="text-xs">{sideBarItems?.find(i=>i.queryString===queryString)?.label}</p>
         </div>
 
         <div className="w-[98%] m-auto h-[92%]    bg-white rounded-lg ">
-          <div className="flex justify-between items-center p-3">
-            <h1 className="text-sm font-semibold">{sideBarItems[currentComponentIdx].label}</h1>
-            <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
-              Post a Job
-            </p>
-          </div>
-          <hr />
+          
 
           {/* Rendering all components */}
 
-          {sideBarItems?.map((item, i) => {
-            if (currentComponentIdx === i) {
+          {sideBarItems?.map((item) => {
+            if (item.queryString === queryString) {
               return item.components;
             }
           })}

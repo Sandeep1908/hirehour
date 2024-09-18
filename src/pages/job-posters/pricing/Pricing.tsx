@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const Pricing:React.FC = () => {
 
    
-    const [selector, setSelector] = useState(false);
+    const [selector, setSelector] = useState<boolean>(false);
    
 
   return (
