@@ -2,14 +2,12 @@ import React, { useState } from 'react'
 import { CiFilter, CiSearch } from 'react-icons/ci';
 import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { GiRingingBell } from 'react-icons/gi';
-import { GoArrowLeft, GoArrowRight } from 'react-icons/go';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineShoppingBag, HiOutlineStar } from 'react-icons/hi';
 import { IoIosArrowDown, IoIosMail, IoMdClose } from 'react-icons/io';
 import { IoCallOutline, IoLocationOutline, IoMail } from 'react-icons/io5';
-import { MdOutlineKeyboardArrowDown, MdOutlineMail } from 'react-icons/md';
+import {  MdOutlineMail } from 'react-icons/md';
 import resume from '../../../assets/resume.svg'
-import { RxCross2 } from 'react-icons/rx';
 
 const ResumeScouring: React.FC = () => {
 
@@ -20,11 +18,11 @@ const ResumeScouring: React.FC = () => {
 
 
     const [selectedOptionDistance, setSelectedOptionDistance] = useState<string>("");
-    const [selectedOptionSkills, setSelectedOptionSkills] = useState<string>("");
+    // const [selectedOptionSkills, setSelectedOptionSkills] = useState<string>("");
     const [selectedOptionResumeUpdate, setSelectedOptionResumeUpdate] = useState<string>("");
     const [selectedOptionVisa, setSelectedOptionVisa] = useState<string>("");
 
-    const [isSelected, setIsSelected] = useState(0);
+    // const [isSelected, setIsSelected] = useState(0);
     const [dropdown, setDropdown] = useState<number>(0);
 
 
@@ -33,17 +31,17 @@ const ResumeScouring: React.FC = () => {
     const handleOptionDistance = (value: string) => {
         setSelectedOptionDistance(value);
         setDropdown(0);
-        setIsSelected(3);
+        // setIsSelected(3);
     };
     const handleOptionResumeUpdate = (value: string) => {
         setSelectedOptionResumeUpdate(value);
         setDropdown(0);
-        setIsSelected(3);
+        // setIsSelected(3);
     };
     const handleOptionVisa = (value: string) => {
         setSelectedOptionVisa(value);
         setDropdown(0);
-        setIsSelected(3);
+        // setIsSelected(3);
     };
 
     const handleReset = () => {
