@@ -125,7 +125,6 @@ const DashBoard: React.FC = () => {
     {
       label: 'Applicants',
       components: '',
-      queryString:'applicants'
     },
     {
       label: 'Resume Sourcing',
