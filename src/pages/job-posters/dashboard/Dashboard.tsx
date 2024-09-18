@@ -6,6 +6,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 import useHeaderContext from '../../../context/HeaderContext';
 import { BiHomeAlt2 } from 'react-icons/bi';
 import MyJobsDashBoard from '../../../components/job-posters/dashboard/MyJobsDashBoard';
+import Applicants from '../../../components/job-posters/dashboard/Applicants';
 
 type SidebarPropType = {
   setIsCurrentComponentIdx: (e: number) => void;
@@ -102,7 +103,7 @@ const DashBoard: React.FC = () => {
     },
     {
       label: 'Applicants',
-      components: '',
+      components: <Applicants/>,
     },
     {
       label: 'Resume Sourcing',
