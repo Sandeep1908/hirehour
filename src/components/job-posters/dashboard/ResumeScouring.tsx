@@ -3,11 +3,12 @@ import { CiFilter, CiSearch } from 'react-icons/ci';
 import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { GiRingingBell } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
-import { HiOutlineShoppingBag, HiOutlineStar } from 'react-icons/hi';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { IoIosArrowDown, IoIosMail, IoMdClose } from 'react-icons/io';
 import { IoCallOutline, IoLocationOutline, IoMail } from 'react-icons/io5';
 import {  MdOutlineMail } from 'react-icons/md';
 import resume from '../../../assets/resume.svg'
+import CandidateCard from './CandidateCard';
 
 const ResumeScouring: React.FC = () => {
 
@@ -62,6 +63,14 @@ const ResumeScouring: React.FC = () => {
 
     return (
         <div className='w-full h-auto'>
+             <div className="flex justify-between items-center p-3">
+            <h1 className="text-sm font-semibold">Resume Sourcing
+            </h1>
+            <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
+              Post a Job
+            </p>
+          </div>
+          <hr />
             <div className="px-5 py-2 mt-2">
                 <ul className="max-w-[700px]   rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
                     {jobFilters?.map((item, i) => {
@@ -303,177 +312,11 @@ const ResumeScouring: React.FC = () => {
                 </div>
                 <div className='w-full h-[340px] overflow-x-hidden overflow-y-auto flex gap-5 mt-3'>
                     <div className='w-[28%] h-full flex flex-col overflow-x-hidden overflow-y-auto gap-5'>
-                        <div className='w-full border-[1px] border-[#114B53] p-4 rounded-lg'>
-                            <div className='flex w-full justify-between'>
-                                <div className='flex gap-3'>
-                                    <div className='w-16 h-16 bg-[#95FAF9] rounded-full flex justify-center items-center'>
-                                        <p className='text-lg font-semibold text-[#3A3A3C]'>J</p>
-                                    </div>
-                                    <div>  <p className='text-[14px] font-semibold text-[#3A3A3C]'> Johnson</p>
-                                        <div className='  mt-1'>
-
-                                            <p className='text-[12px]  text-[#6B7588]'>Senior Java Developer</p>
-                                            <p className='text-[12px]  text-[#6B7588]'>Allen, TX, USA</p>
-
-                                        </div></div>
-                                </div>
-
-                                <HiOutlineStar size={20} />
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Experience (Total 4 Years)</p>
-                                <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>Sr. Java Full Stack </p>
-                                <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>xyz company 12/2020 - Present   Domain : Health Care</p>
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C]'>Education</p>
-                                <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Masters, xyz university</p>
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C]'>Skills</p>
-                                <div className='flex gap-2 items-center'>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>Java</p>
-                                    </div>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>React Js</p>
-                                    </div>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>Angular</p>
-                                    </div>
-                                    <p className='text-[10px] text-[#6B7588] font-semibold'>+20 More</p>
-
-                                </div>
-                            </div >
-                            <div className='mt-3 flex justify-between'>
-                                <div>
-                                    <p className='text-[12px] font-semibold text-[#3A3A3C]'>Licence & Certificate</p>
-                                    <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Web Development Certificate</p>
-                                </div>
-                                <div>
-                                    <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Viwed by</p>
-                                    <p className='text-[12px] font-semibold text-[#3A3A3C]'>Mathew</p>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div className='w-full border-[1px] border-[#114B53] p-4 rounded-lg'>
-                            <div className='flex w-full justify-between'>
-                                <div className='flex gap-3'>
-                                    <div className='w-16 h-16 bg-[#95FAF9] rounded-full flex justify-center items-center'>
-                                        <p className='text-lg font-semibold text-[#3A3A3C]'>J</p>
-                                    </div>
-                                    <div>  <p className='text-[14px] font-semibold text-[#3A3A3C]'> Johnson</p>
-                                        <div className='  mt-1'>
-
-                                            <p className='text-[12px]  text-[#6B7588]'>Senior Java Developer</p>
-                                            <p className='text-[12px]  text-[#6B7588]'>Allen, TX, USA</p>
-
-                                        </div></div>
-                                </div>
-
-                                <HiOutlineStar size={20} />
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Experience (Total 4 Years)</p>
-                                <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>Sr. Java Full Stack </p>
-                                <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>xyz company 12/2020 - Present   Domain : Health Care</p>
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C]'>Education</p>
-                                <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Masters, xyz university</p>
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C]'>Skills</p>
-                                <div className='flex gap-2 items-center'>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>Java</p>
-                                    </div>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>React Js</p>
-                                    </div>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>Angular</p>
-                                    </div>
-                                    <p className='text-[10px] text-[#6B7588] font-semibold'>+20 More</p>
-
-                                </div>
-                            </div >
-                            <div className='mt-3 flex justify-between'>
-                                <div>
-                                    <p className='text-[12px] font-semibold text-[#3A3A3C]'>Licence & Certificate</p>
-                                    <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Web Development Certificate</p>
-                                </div>
-                                <div>
-                                    <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Viwed by</p>
-                                    <p className='text-[12px] font-semibold text-[#3A3A3C]'>Mathew</p>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div className='w-full border-[1px] border-[#114B53] p-4 rounded-lg'>
-                            <div className='flex w-full justify-between'>
-                                <div className='flex gap-3'>
-                                    <div className='w-16 h-16 bg-[#95FAF9] rounded-full flex justify-center items-center'>
-                                        <p className='text-lg font-semibold text-[#3A3A3C]'>J</p>
-                                    </div>
-                                    <div>  <p className='text-[14px] font-semibold text-[#3A3A3C]'> Johnson</p>
-                                        <div className='  mt-1'>
-
-                                            <p className='text-[12px]  text-[#6B7588]'>Senior Java Developer</p>
-                                            <p className='text-[12px]  text-[#6B7588]'>Allen, TX, USA</p>
-
-                                        </div></div>
-                                </div>
-
-                                <HiOutlineStar size={20} />
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Experience (Total 4 Years)</p>
-                                <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>Sr. Java Full Stack </p>
-                                <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>xyz company 12/2020 - Present   Domain : Health Care</p>
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C]'>Education</p>
-                                <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Masters, xyz university</p>
-
-                            </div>
-                            <div className='mt-3'>
-                                <p className='text-[12px] font-semibold text-[#3A3A3C]'>Skills</p>
-                                <div className='flex gap-2 items-center'>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>Java</p>
-                                    </div>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>React Js</p>
-                                    </div>
-                                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                        <p className='text-[10px] text-[#6B7588] font-semibold'>Angular</p>
-                                    </div>
-                                    <p className='text-[10px] text-[#6B7588] font-semibold'>+20 More</p>
-
-                                </div>
-                            </div >
-                            <div className='mt-3 flex justify-between'>
-                                <div>
-                                    <p className='text-[12px] font-semibold text-[#3A3A3C]'>Licence & Certificate</p>
-                                    <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Web Development Certificate</p>
-                                </div>
-                                <div>
-                                    <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Viwed by</p>
-                                    <p className='text-[12px] font-semibold text-[#3A3A3C]'>Mathew</p>
-                                </div>
-
-                            </div>
-                        </div>
+                         <CandidateCard/>
+                         <CandidateCard/>
+                         <CandidateCard/>
+                         <CandidateCard/>
+                        
                     </div>
 
                     {/* candidates info  */}
