@@ -9,6 +9,9 @@ import MyJobsDashBoard from '../../../components/job-posters/dashboard/MyJobsDas
 import Subscription from '../../../components/job-posters/dashboard/Subscription';
 import Help from '../../../components/job-posters/dashboard/Help';
 import { useLocation ,useNavigate} from 'react-router-dom';
+import Applicants from '../../../components/job-posters/dashboard/Applicants';
+import Cohiring from '../../../components/job-posters/dashboard/Cohiring';
+import RTR from '../../../components/job-posters/dashboard/RTR';
 
  
 
@@ -124,7 +127,8 @@ const DashBoard: React.FC = () => {
     },
     {
       label: 'Applicants',
-      components: '',
+      components: <Applicants/>,
+      queryString:'applicants'
     },
     {
       label: 'Resume Sourcing',
@@ -133,7 +137,7 @@ const DashBoard: React.FC = () => {
     },
     {
       label: 'Right to Represent',
-      components: '',
+      components: <RTR/>,
       queryString:'right-to-represent'
     },
     {
@@ -143,7 +147,7 @@ const DashBoard: React.FC = () => {
     },
     {
       label: 'Co-Hiring',
-      components: '',
+      components: <Cohiring/>,
       queryString:'co-hiring'
     },
     {
@@ -175,7 +179,7 @@ const DashBoard: React.FC = () => {
           <p className="text-xs">{sideBarItems?.find(i=>i.queryString===queryString)?.label}</p>
         </div>
 
-        <div className="w-[98%] m-auto h-[92%]    bg-white rounded-lg ">
+        <div className="w-[98%] m-auto h-[92%]  overflow-auto   bg-white rounded-lg ">
           
 
           {/* Rendering all components */}
