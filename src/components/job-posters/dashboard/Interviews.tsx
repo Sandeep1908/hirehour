@@ -5,16 +5,17 @@ import { CiFilter } from 'react-icons/ci'
 import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin, FaRegEdit, FaRegTrashAlt } from 'react-icons/fa'
 import { IoIosArrowDown, IoMdClose, IoMdMore } from 'react-icons/io'
 import { IoCallOutline, IoCheckmark, IoMail } from 'react-icons/io5'
-import { MdOutlineAttachment,  MdOutlineMail } from 'react-icons/md'
+import { MdOutlineAttachment, MdOutlineMail } from 'react-icons/md'
 import { LuSendHorizonal } from 'react-icons/lu'
 import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
 import { RxCross2 } from 'react-icons/rx'
+import { PiArrowsLeftRightBold } from 'react-icons/pi'
 
 
-const Applicants: React.FC = () => {
+const Interviews: React.FC = () => {
 
   const jobFilters = ['All Applicants', 'Matched Applicants'];
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
@@ -27,41 +28,17 @@ const Applicants: React.FC = () => {
   const [disLike, setDisLike] = useState<boolean>(false);
   const [moreOption, setMoreOption] = useState<boolean>(false);
 
+
   const [itemId, setItemId] = useState(0)
 
 
   const [selectedOptionVisa, setSelectedOptionVisa] = useState<string>("");
   const [selectedOptionDate, setSelectedOptionDate] = useState<string>("");
   const [selectedOptionAllJob, setSelectedOptionAllJob] = useState<string>("");
-  // const [selectedOptionLocation, setSelectedOptionLocation] = useState<string>("");
 
 
   const [isSelected, setIsSelected] = useState(0);
   const [dropdown, setDropdown] = useState<number>(0);
-
-
-//   const allLocation = [
-//     "Allen, Tx",
-//     "Allen, Tx",
-//     "Allen, Tx",
-//     "Allen, Tx",
-//     "Allen, Tx",
-//     "Allen, Tx",
-//     "Allen, Tx",
-//     "Allen, Tx"
-// ];
-// const handleCheckboxLocation = (value:string) => {
-
-//   setSelectedOptionLocation((prevSelected) => prevSelected.includes(value) 
-//        ? prevSelected.filter((item:string) => item !== value)
-//           : [...prevSelected, value]
-//         );
-
-
-// };
-// const handleResetLocation = () => {
-//   setSelectedOptionLocation([]);
-// };
 
 
   const handleOptionAllJob = (value: string) => {
@@ -129,7 +106,7 @@ const Applicants: React.FC = () => {
 
       <div className='  w-full h-auto'>
       <div className="flex justify-between items-center p-3">
-            <h1 className="text-sm font-semibold">Applicants</h1>
+            <h1 className="text-sm font-semibold">Interviews</h1>
             <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
               Post a Job
             </p>
@@ -244,59 +221,13 @@ const Applicants: React.FC = () => {
             )}
           </div>
 
-          {/* <div className='relative z-[20]'>
-                            <div
-                                onClick={() => setDropdown(3)}
-                                className={`${selectedOptionLocation.length > 0 && "bg-[#effefd]"}  flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full`}
-                            >
-                                <div className="text-[14px] font-normal items-center text-[#114B53] flex gap-1">
-                                    <p className='text-[12px] font-semibold text-[#114B53]'>Location</p>
-                                    {selectedOptionLocation.length > 0 && (
-                                        <div className='bg-[#114B53]  w-[15px] h-[15px] text-[10px] rounded-full text-white flex justify-center items-center'>
-                                            {selectedOptionLocation.length}
-                                        </div>
-                                    )}
-                                </div>
-                                <FaCaretDown  className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
-                            </div>
-
-                            {dropdown === 3 && (
-                                <div className='absolute top-12 left-0 w-[269px]'>
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-                                      <div className='px-3'>
-                                        <input className='text-xs p-1 w-full border-[1px] border-[#C7C9D9] rounded-lg' type="text"  placeholder='Type Location'/>
-                                      </div>
-                                        {allLocation.map((type) => (
-                                            <div key={type} onClick={() => handleCheckboxLocation(type)} className='w-full px-4 py-2 flex gap-2'>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedOptionLocation.includes(type)}
-                                                //   onChange={() => handleCheckboxChange(type)}
-                                                />
-                                                <label className='text-[#333333] text-[10px] font-medium'>{type}</label>
-                                            </div>
-                                        ))}
-                                        <div className='w-full  flex gap-2 px-4 py-2 justify-end'>
-                                            <div className='px-3 py-1 bg-[#E9F358] rounded-full cursor-pointer' onClick={() => setDropdown(0)}>
-                                                <p className='text-xs text-[#114B53] font-semibold'> Apply</p>
-                                            </div>
-                                            <button onClick={handleResetLocation} className='text-[12px] text-[#114B53] font-semibold cursor-pointer'>
-                                                <p onClick={() => setDropdown(0)}>Reset</p>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div> */}
-
-
-
-
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
             <p className="text-[12px] font-semibold text-[#114B53]">Location</p>
             <FaCaretDown className='text-[#114B53]' />
 
           </div>
+
+
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
             <p className="text-[12px] font-semibold text-[#114B53]">Domain Experience</p>
             <FaCaretDown className='text-[#114B53]' />
@@ -346,9 +277,6 @@ const Applicants: React.FC = () => {
               </div>
             )}
           </div>
-
-
-       
 
 
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
@@ -581,6 +509,36 @@ const Applicants: React.FC = () => {
             </div>
           </div>
 
+          <div className={`absolute w-44 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[170px] top-3 transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Sent RTR</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'> RTR</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Recruiter Screening</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Offer</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Background Check</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Hired</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2 flex gap-2 items-center' >
+                              <FaRegTrashAlt  className='text-red-500'/>
+                              <p className='text-sm font-semibold text-red-500'>Delete</p>
+                              </div>
+                        </div>
 
 
           <div className={`absolute left-16 z-20 max-w-[400px] top-[-50px] p-6 w-full h-auto bg-white shadow-lg rounded-lg transition-all duration-500 ${showProfile ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`} onMouseLeave={() => { setShowProfile(!showProfile) }}>
@@ -696,67 +654,14 @@ const Applicants: React.FC = () => {
                           <BiMessageDetail size={20} />
 
                         </div>
-                          
-                        <div className='relative' onClick={()=>{setMoreOption(!moreOption)}}>
-                        <IoMdMore size={25} />
-                        <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-0 transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'>Sent RTR</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2 flex gap-2 items-center' >
-                              <FaRegTrashAlt  className='text-red-500'/>
-                              <p className='text-sm font-semibold text-red-500'>Delete</p>
-                              </div>
-                        </div>
-                        </div>  
+
+                      <div className='relative' onClick={()=>{setMoreOption(!moreOption)}}>
+                        <PiArrowsLeftRightBold size={25} />
+                       
+                      </div>
 
                       </div>
 
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] '>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <IoMdMore size={25} />
-
-                      </div>
                     </div>
                   </td>
                 </tr>
@@ -798,8 +703,7 @@ const Applicants: React.FC = () => {
 
                         </div>
 
-                        <IoMdMore size={25} />
-
+                        <PiArrowsLeftRightBold size={25}   />
                       </div>
 
                     </div>
@@ -843,8 +747,7 @@ const Applicants: React.FC = () => {
 
                         </div>
 
-                        <IoMdMore size={25} />
-
+                        <PiArrowsLeftRightBold size={25}   />
                       </div>
                     </div>
                   </td>
@@ -887,8 +790,7 @@ const Applicants: React.FC = () => {
 
                         </div>
 
-                        <IoMdMore size={25} />
-
+                        <PiArrowsLeftRightBold size={25}   />
                       </div>
                     </div>
                   </td>
@@ -931,8 +833,7 @@ const Applicants: React.FC = () => {
 
                         </div>
 
-                        <IoMdMore size={25} />
-
+                        <PiArrowsLeftRightBold size={25}   />
                       </div>
                     </div>
                   </td>
@@ -975,11 +876,7 @@ const Applicants: React.FC = () => {
 
                         </div>
 
-                        <div>
-
-                        <IoMdMore size={25} />
-                        </div>
-
+                        <PiArrowsLeftRightBold size={25}   />
                       </div>
                     </div>
                   </td>
@@ -1381,4 +1278,4 @@ const Applicants: React.FC = () => {
   )
 }
 
-export default Applicants
+export default Interviews
