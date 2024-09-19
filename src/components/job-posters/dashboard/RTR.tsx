@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BsThreeDotsVertical } from 'react-icons/bs';
+ 
 import { IoMdClose } from 'react-icons/io';
 
 import { MdOutlineFileDownload } from 'react-icons/md';
@@ -194,7 +194,7 @@ const ReceiveRTR: React.FC = () => {
                 Decline
               </p>
               <p
-                onClick={() => setIsSignRTR(true)}
+                
                 className="w-full sm:w-[120px] cursor-pointer text-xs bg-[#07A560] text-white p-2 text-center rounded-full"
               >
                 View & Sign
