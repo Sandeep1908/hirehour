@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
 import { CgFileDocument } from 'react-icons/cg'
 import { FaRegCheckCircle } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 const Payment:React.FC = () => {
 
@@ -227,7 +228,7 @@ const Payment:React.FC = () => {
          <div className='w-full flex justify-end px-10 mt-10 gap-10  items-center'>
                             <p  className='cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
                             <div  className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
-                                <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
+                                <Link to={'/job-poster/dashboard?key=myjobs'}  className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</Link>
                             </div>
                         </div>
          </div>

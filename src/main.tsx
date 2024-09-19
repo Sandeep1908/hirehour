@@ -36,6 +36,8 @@ import JobBoard from './pages/job-posters/job-board/JobBasis.tsx';
 import JobDescriptionBoard from './pages/job-posters/job-board/JobDescription/JobDescriptionBoard.tsx';
 import CompanyProfile from './pages/job-posters/job-board/CompanyProfile/CompanyProfile.tsx';
 import DashBoard from './pages/job-posters/dashboard/Dashboard.tsx';
+import Payment from './pages/job-posters/payment/Payment.tsx';
+import Pricing from './pages/job-posters/pricing/Pricing.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -83,6 +85,10 @@ const router = createBrowserRouter(
       <Route path="/job-poster/job-description" element={<JobDescriptionBoard />} />
       <Route path="/job-poster/company-profile" element={<CompanyProfile />} />
       <Route path="/job-poster/dashboard" element={<DashBoard />} />
+      <Route path="/job-poster/payment" element={<Payment />} />
+      <Route path="/job-poster/pricing" element={<Pricing />} />
+
+
     </Route>
   ),
 );

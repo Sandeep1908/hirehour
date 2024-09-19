@@ -12,6 +12,8 @@ import { useLocation ,useNavigate} from 'react-router-dom';
 import Applicants from '../../../components/job-posters/dashboard/Applicants';
 import Cohiring from '../../../components/job-posters/dashboard/Cohiring';
 import RTR from '../../../components/job-posters/dashboard/RTR';
+import ResumeScouring from '../../../components/job-posters/dashboard/ResumeScouring';
+import Interviews from '../../../components/job-posters/dashboard/Interviews';
 
  
 
@@ -132,7 +134,7 @@ const DashBoard: React.FC = () => {
     },
     {
       label: 'Resume Sourcing',
-      components:'',
+      components:<ResumeScouring/>,
       queryString:'resue-sourcing'
     },
     {
@@ -142,7 +144,7 @@ const DashBoard: React.FC = () => {
     },
     {
       label: 'Interviews',
-      components: '',
+      components: <Interviews/>,
       queryString:'interviews'
     },
     {
