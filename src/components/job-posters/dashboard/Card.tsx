@@ -98,7 +98,7 @@ export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
     <div
       ref={ref}
       data-handler-id={handlerId}
-      className={` ${index ===0 && "rounded-tl-lg"} p-3 border-[1px] border-[#D6DBDE] flex-1 shrink-0`}
+      className={` opacity-[${opacity}] ${index ===0 && "rounded-tl-lg"} p-3 border-[1px]  border-[#D6DBDE] flex-1 shrink-0`}
     >
       <div className="flex justify-between gap-10">
         <div className="flex items-center">
