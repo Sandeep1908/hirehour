@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { FaSuitcase } from 'react-icons/fa6';
-import { MdGroups } from 'react-icons/md';
 import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 import useHeaderContext from '../../../context/HeaderContext';
@@ -15,6 +13,18 @@ import RTR from '../../../components/job-posters/dashboard/RTR';
 import ResumeScouring from '../../../components/job-posters/dashboard/ResumeScouring';
 import Interviews from '../../../components/job-posters/dashboard/Interviews';
 
+
+// dashboard icons 
+
+import myjobsIcon from '../../../assets/dashboard/icons/myjob.png'
+import applicantIcon from '../../../assets/dashboard/icons/applicants.png'
+import resumesourcingIcon from '../../../assets/dashboard/icons/resumesourcing.png'
+import righttorepresentIcon from '../../../assets/dashboard/icons/righttorepresent.png'
+import interviewIcon from '../../../assets/dashboard/icons/interview.png'
+import cohiringIcon from '../../../assets/dashboard/icons/co-hiring.png'
+import subscriptionIcon from '../../../assets/dashboard/icons/subscription.png'
+import helpIcon from '../../../assets/dashboard/icons/help.png'
+
  
 
 const Sidebar: React.FC = () => {
@@ -24,42 +34,42 @@ const Sidebar: React.FC = () => {
   const sideBarItems = [
     {
       label: 'Jobs',
-      icon: <FaSuitcase size={17} />,
+      icon: myjobsIcon,
       queryString:'myjobs'
     },
     {
       label: 'Applicants',
-      icon: <MdGroups size={17} />,
+      icon: applicantIcon,
       queryString:'applicants'
     },
     {
       label: 'Resume Sourcing',
-      icon: <MdGroups size={17} />,
+      icon: resumesourcingIcon,
       queryString:'resue-sourcing'
     },
     {
       label: 'Right to Represent',
-      icon: <MdGroups size={17} />,
+      icon: righttorepresentIcon,
       queryString:'right-to-represent'
     },
     {
       label: 'Interviews',
-      icon: <MdGroups size={17} />,
+      icon: interviewIcon,
       queryString:'interviews'
     },
     {
       label: 'Co-Hiring',
-      icon: <MdGroups size={17} />,
+      icon: cohiringIcon,
       queryString:'co-hiring'
     },
     {
       label: 'Subscription',
-      icon: <MdGroups size={17} />,
+      icon: subscriptionIcon,
       queryString:'subscription'
     },
     {
       label: 'Help',
-      icon: <MdGroups size={17} />,
+      icon: helpIcon,
       queryString:'help'
     },
   ];
@@ -100,7 +110,7 @@ const Sidebar: React.FC = () => {
                 key={i}
                 onClick={() => handleIdx(item.queryString)}
               >
-                {item.icon}
+                <img src={item.icon} alt={`dashboardIcon-${i} `}  className='w-4 h-4'/>
                 <span
                   className={`text-xs font-[500] transition-all delay-1000 w-full ${isDashboardOpen ? 'block' : 'hidden'}`}
                 >
@@ -167,7 +177,7 @@ const DashBoard: React.FC = () => {
      
 
   return (
-    <div className="w-full h-[89vh] flex">
+    <div className="w-full h-[89vh] relative flex">
       {/* Sidebar on the Left */}
       <div className="h-full">
         <Sidebar/>
@@ -188,7 +198,11 @@ const DashBoard: React.FC = () => {
 
           {sideBarItems?.map((item) => {
             if (item.queryString === queryString) {
-              return item.components;
+              return (
+                <div className="w-full">
+                 { item.components}
+                </div>
+              )
             }
           })}
         </div>

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
+import { GiSettingsKnobs } from "react-icons/gi";
+
 
 const ActiveJobs: React.FC = () => {
   return (
@@ -229,7 +231,7 @@ const MyJobsDashBoard: React.FC = () => {
       </div>
       <hr />
 
-      {/* filters  */}
+      {/* tabs  */}
       <div className="p-7">
         <ul className="max-w-[500px]   rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
           {jobFilters?.map((item, i) => {
@@ -249,6 +251,33 @@ const MyJobsDashBoard: React.FC = () => {
           })}
         </ul>
       </div>
+
+       {/* filters  */}
+       <div className="  px-7 pb-3  flex  space-x-4   ">
+          <div className='w-full flex items-center justify-start space-x-2 border border-[#6B7588] max-w-60 rounded-full'>
+              <GiSettingsKnobs size={13} className='ml-3'/>
+              <input type="text" className=' text-xs p-1 flex justify-center items-center outline-none placeholder:text-[10px] placeholder:text-[#C7C9D9]  '  placeholder='Filter and search jobs'/>
+          </div>
+
+
+
+          <div className='w-full px-1 max-w-fit flex items-center justify-start space-x-2 border border-[#6B7588]  rounded-full'>
+              <p className='text-xs font-semibold text-[#6B7588]'>Posted :</p>
+              <select name="" id="" className='text-xs text-[#6B7588] outline-none'>
+                <option value="">Any</option>
+              </select>
+          </div>
+
+
+          <div className='w-full px-1 max-w-fit flex items-center justify-start space-x-2 border border-[#6B7588]  rounded-full'>
+              <p className='text-xs font-semibold text-[#6B7588]'>Date Posted :</p>
+              <select name="" id="" className='text-xs text-[#6B7588] outline-none'>
+                <option value="">Most</option>
+              </select>
+          </div>
+      </div>
+
+
 
       {/* all jobs  */}
       <div className="w-full   p-5 space-y-3 overflow-auto h-[60vh]">
