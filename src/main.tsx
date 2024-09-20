@@ -38,6 +38,8 @@ import CompanyProfile from './pages/job-posters/job-board/CompanyProfile/Company
 import DashBoard from './pages/job-posters/dashboard/Dashboard.tsx';
 import Payment from './pages/job-posters/payment/Payment.tsx';
 import Pricing from './pages/job-posters/pricing/Pricing.tsx';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -96,7 +98,9 @@ const router = createBrowserRouter(
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HeaderContextProvider>
+    <DndProvider backend={HTML5Backend}>
     <RouterProvider router={router} />
+    </DndProvider>
     </HeaderContextProvider>
   </StrictMode>,
 );
