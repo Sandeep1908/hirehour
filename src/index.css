@@ -22,3 +22,7 @@ html{
  #message-box::-webkit-scrollbar{
   display: none;
  }
+
+ #filter::-webkit-scrollbar{
+  display: none;
+ }
