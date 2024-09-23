@@ -40,6 +40,8 @@ import Payment from './pages/job-posters/payment/Payment.tsx';
 import Pricing from './pages/job-posters/pricing/Pricing.tsx';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import ProfileSetting from './pages/job-posters/userprofile/Profile.tsx';
+import CompanyProfileSettings from './pages/job-posters/userprofile/CompanyProfielSettings.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -89,7 +91,12 @@ const router = createBrowserRouter(
       <Route path="/job-poster/dashboard" element={<DashBoard />} />
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />
+      <Route path="/job-poster/profile-setting" element={<ProfileSetting />} />
+      <Route path="/job-poster/company-profile-info" element={<CompanyProfileSettings />} />
 
+
+      
+      
 
     </Route>
   ),
