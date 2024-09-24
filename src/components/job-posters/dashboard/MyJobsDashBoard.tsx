@@ -45,10 +45,10 @@ const ActiveJobs: React.FC = () => {
 
             <div className="w-full flex justify-between items-center p-3">
               <div className="w-full max-w-xl ">
-                <ul className="flex justify-between">
+                <ul className="flex space-x-10 pl-5">
                   {Array.from({ length: 4 }).map((_, i) => {
                     return (
-                      <li key={i} className="flex flex-col border-r p-3">
+                      <li key={i} className="flex flex-col border-r p-2">
                         <span className="text-sm">24</span>
                         <span className="text-[#104B53] text-xs font-semibold">Job Views</span>
                       </li>
@@ -223,7 +223,7 @@ const MyJobsDashBoard: React.FC = () => {
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
   return (
     <div>
-      <div className="flex justify-between items-center p-3">
+      <div className="flex justify-between items-center p-2">
         <h1 className="text-sm font-semibold">My Jobs</h1>
         <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
           Post a Job
@@ -232,7 +232,7 @@ const MyJobsDashBoard: React.FC = () => {
       <hr />
 
       {/* tabs  */}
-      <div className="p-7">
+      <div className="p-2">
         <ul className="max-w-[500px]   rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
           {jobFilters?.map((item, i) => {
             return (
@@ -253,7 +253,7 @@ const MyJobsDashBoard: React.FC = () => {
       </div>
 
        {/* filters  */}
-       <div className="  px-7 pb-3  flex  space-x-4   ">
+       <div className="  px-2  pb-1 flex  space-x-4   ">
           <div className='w-full flex items-center justify-start space-x-2 border border-[#6B7588] max-w-60 rounded-full'>
               <GiSettingsKnobs size={13} className='ml-3'/>
               <input type="text" className=' text-xs p-1 flex justify-center items-center outline-none placeholder:text-[10px] placeholder:text-[#C7C9D9]  '  placeholder='Filter and search jobs'/>
@@ -280,7 +280,7 @@ const MyJobsDashBoard: React.FC = () => {
 
 
       {/* all jobs  */}
-      <div className="w-full   p-5 space-y-3 overflow-auto h-[60vh]">
+      <div className="w-full   p-3 space-y-3 overflow-auto h-[75vh]">
         {jobFilters?.map((item, i) => {
           if (jobFilterIdx === i) {
             return <div key={i}>{item.component}</div>;
