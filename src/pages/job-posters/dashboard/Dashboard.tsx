@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 import useHeaderContext from '../../../context/HeaderContext';
-import { BiHomeAlt2 } from 'react-icons/bi';
+ 
 import MyJobsDashBoard from '../../../components/job-posters/dashboard/MyJobsDashBoard';
 import Subscription from '../../../components/job-posters/dashboard/Subscription';
 import Help from '../../../components/job-posters/dashboard/Help';
@@ -185,13 +185,9 @@ const DashBoard: React.FC = () => {
 
       {/* Main Content on the Right */}
       <div className="flex-1 h-full    ">
-        <div className="flex items-center space-x-2 p-3">
-          <BiHomeAlt2 size={16} />
-          <IoIosArrowForward size={13} />
-          <p className="text-xs">{sideBarItems?.find(i=>i.queryString===queryString)?.label}</p>
-        </div>
+     
 
-        <div className="w-[98%] m-auto h-[92%]  overflow-auto   bg-white rounded-lg ">
+        <div className="w-[98%] m-auto h-[98%] mt-2 overflow-y-auto   bg-white rounded-lg ">
           
 
           {/* Rendering all components */}

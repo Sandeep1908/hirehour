@@ -17,21 +17,21 @@ const JobBasis: React.FC = () => {
   ];
   return (
     <div className="w-full   pb-20 bg-[#F6F6F8]">
-      <div className="max-w-[1080px] h-48 pt-2 rounded-lg m-auto">
+      <div className="max-w-[1080px]  pt-2 rounded-lg m-auto">
         <div className=" bg-white">
-          <div className="flex  flex-col   space-y-4 md:flex-row  md:justify-between md:items-center p-4">
+        <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
-              <p className="font-semibold text-[#104B53] text-sm">Cancel </p>
-              <p className=" w-32 h-8 text-xs bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p className="font-semibold text-[#104B53] text-xs">Cancel </p>
+              <p className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
                 Save & Exit
               </p>
             </div>
           </div>
           <hr />
 
-          <div className="w-full p-4">
+          <div className="w-full p-3">
             <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-sm">
               <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
@@ -72,7 +72,7 @@ const JobBasis: React.FC = () => {
 
       {/* Informations  */}
 
-      <div className="max-w-[1080px] h-full rounded-lg   bg-white m-auto  pb-4">
+      <div className="max-w-[1080px] h-full rounded-lg  mt-2  bg-white m-auto  pb-4">
         <div className="w-full max-w-[1064px] m-auto pt-3 flex flex-col space-y-5">
           {/* Form  */}
 

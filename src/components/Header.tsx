@@ -74,8 +74,8 @@ const Header: React.FC = () => {
     },
   ];
   return (
-    <div className="w-full h-20 bg-white relative   ">
-      <div className="w-full  flex justify-between items-center p-5">
+    <div className="w-full h-14 bg-white relative   ">
+      <div className="w-full  flex justify-between items-center p-2 px-4">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
           <div className="flex justify-center items-center space-x-3 ">
@@ -119,7 +119,7 @@ const Header: React.FC = () => {
 
         {/* With SignIn */}
 
-        <div className=" justify-center items-center space-x-7 hidden ">
+        <div className="flex justify-center items-center space-x-7 hidden  ">
           <div className="flex justify-center items-center space-x-7">
 
 
