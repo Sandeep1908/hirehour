@@ -3,6 +3,9 @@ import { useRef, useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 import Logo from '../../../assets/logo/logo.png';
 import { useReactToPrint } from "react-to-print";
+import { FaDownload } from "react-icons/fa";
+import { RxCross1 } from "react-icons/rx";
+
 
 const Plan: React.FC = () => {
   const [selector, setSelector] = useState<boolean>(false);
@@ -31,7 +34,7 @@ const Plan: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[1280px] m-auto pt-5">
+      <div className="max-w-[1280px] mt-2 m-auto">
         <div className="flex gap-10 items-center justify-center  ">
           <div
             onClick={() => {
@@ -88,7 +91,7 @@ const Plan: React.FC = () => {
             onClick={() => {
               setSelector(!selector);
             }}
-            className={` border ${selector && 'border-[1px] border-black'} max-w-[260px]   w-full rounded-lg p-3 bg-white flex justify-between flex-col`}
+            className={` border ${selector && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
           >
             <div className="flex-col ">
               <p className="text-sm font-semibold ">Resume Sourcing</p>
@@ -111,7 +114,7 @@ const Plan: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-xl border rounded-lg p-4   m-auto mt-5 flex justify-between items-center">
+      <div className="max-w-xl border rounded-lg p-3   m-auto mt-2 flex justify-between items-center">
         <h1>Bulk Hiring ?</h1>
         <p className="text-[#104B53] border border-[#104B53] w-28 text-xs flex justify-center items-center rounded-full h-8">
           Contact Us
@@ -123,6 +126,7 @@ const Plan: React.FC = () => {
 
 const Invoice: React.FC = () => {
   const componentRef = useRef<HTMLDivElement>(null); // Reference to the component for printing
+  const [isOpen,setIsOpen]=useState(false);
 
   // Function to handle printing
   const handlePrint = useReactToPrint({
@@ -147,7 +151,7 @@ const Invoice: React.FC = () => {
             return (
               <tr className=" border" key={i}>
                 <td className="text-xs p-3">{i + 1}</td>
-                <td className="text-xs p-2">SN2608921</td>
+                <td className="text-xs p-2 cursor-pointer" onClick={()=>setIsOpen(true)}>SN2608921</td>
                 <td className="text-xs p-2">06/20/2024</td>
                 <td className="text-xs p-2">Resume sourcing</td>
                 <td className="text-xs p-2">Debit card</td>
@@ -159,18 +163,16 @@ const Invoice: React.FC = () => {
 
 
       {/* Invoice preview  */}
-      <div className="w-full h-full absolute   inset-0 ">  
-    
+      <div className={`w-full h-full absolute   inset-0 transition-all duration-500 ${isOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}  `}>  
+          
     
         <div ref={componentRef} className="max-w-[500px] relative m-auto h-[95%] overflow-auto bg-white   shadow-lg">
 
-          <div className='w-full  px-4 flex justify-end items-center'>
-          <button
-        className="bg-[#022931] w-20 h-6 rounded-full text-white text-xs "
-        onClick={handlePrint}
-      >
-        download
-      </button>
+          <div className='w-full  px-4 py-2 flex justify-between items-center'>
+          <FaDownload  onClick={handlePrint} className='cursor-pointer'/>
+          <RxCross1 onClick={()=>setIsOpen(false)} className='cursor-pointer' />
+
+
           </div>
       
           <div className="px-5">
@@ -345,7 +347,7 @@ const Subscription: React.FC = () => {
   return (
     <div>
       {/* filters  */}
-      <div className="p-7">
+      <div className="p-3">
         <ul className="max-w-[400px]   rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
           {jobFilters?.map((item, i) => {
             return (
@@ -367,7 +369,7 @@ const Subscription: React.FC = () => {
       </div>
 
       {/* all jobs  */}
-      <div className="w-full   p-5 space-y-3 overflow-auto h-[66vh]">
+      <div className="w-full   px-2 space-y-3 overflow-auto h-[75vh]">
         {jobFilters?.map((item, i) => {
           if (jobFilterIdx === i) {
             return <div key={i}>{item.component}</div>;

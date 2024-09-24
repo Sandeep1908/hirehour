@@ -13,7 +13,7 @@ const SentRTR: React.FC = () => {
   return (
     <div className="w-full">
       <div className="flex flex-col space-y-4">
-        <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
+        <div className="w-full   h-full m-auto border border-[#E1E1E2] rounded-lg">
           <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
             <div className="flex items-center space-x-4">
               <span className="text-xs text-[#6B7588]">Job Title: </span>
@@ -115,7 +115,7 @@ const ReceiveRTR: React.FC = () => {
   return (
     <div className="w-full">
       <div className="flex flex-col space-y-4">
-        <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
+        <div className="w-full    h-full m-auto border border-[#E1E1E2] rounded-lg">
           <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
             <div className="flex items-center space-x-4">
               <span className="text-xs text-[#6B7588]">Job Title: </span>
@@ -128,7 +128,7 @@ const ReceiveRTR: React.FC = () => {
             </div>
           </div>
 
-          <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
+          <div className="w-full flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-start px-2 p-1">
             <div className="flex flex-col space-y-1">
               <h1 className="text-xs">From</h1>
               <p className="text-xs">
@@ -169,7 +169,7 @@ const ReceiveRTR: React.FC = () => {
 
           <hr />
 
-          <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
+          <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center px-2 p-2">
             <div className="flex justify-center items-center space-x-5">
               <div className="flex flex-col space-y-3">
                 <p className="text-xs">
@@ -191,12 +191,12 @@ const ReceiveRTR: React.FC = () => {
             </div>
 
             <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-              <p className="w-full sm:w-[80px] text-xs bg-[#FF3837] text-white p-2 text-center rounded-full">
+              <p className="w-full sm:w-[80px] text-xs bg-[#FF3837] text-white p-1 text-center rounded-full">
                 Decline
               </p>
               <p
                 
-                className="w-full sm:w-[120px] cursor-pointer text-xs bg-[#07A560] text-white p-2 text-center rounded-full"
+                className="w-full sm:w-[120px] cursor-pointer text-xs bg-[#07A560] text-white p-1 text-center rounded-full"
               >
                 View & Sign
               </p>
@@ -567,95 +567,95 @@ const AcceptedRTR:React.FC=()=>{
     <div className="w-full">
 
 <div className='flex flex-col space-y-4'>
-    <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-  <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-    <div className="flex items-center space-x-4">
-      <span className="text-sm text-[#6B7588]">Job Title: </span>
-      <p className="text-sm font-semibold">Full Stack Java Developer</p>
-      <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
-    </div>
-
-    <div>
-      <p className='text-sm'>Rate : $60 / HR</p>
-    </div>
+  <div className="w-full    h-full m-auto border border-[#E1E1E2] rounded-lg">
+<div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+  <div className="flex items-center space-x-4">
+    <span className="text-xs text-[#6B7588]">Job Title: </span>
+    <p className="text-xs font-semibold">Full Stack Java Developer</p>
+    <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
   </div>
 
-  <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-    <div className="flex flex-col space-y-1">
-      <h1 className="text-sm">From</h1>
-      <p className='text-sm'>
-        <strong >Send by</strong>: Erika Less
-      </p>
-      <p className='text-sm'>
-        <strong>Company</strong>:Insight Global
-      </p>
-    </div>
-
-    <div className="flex flex-col space-y-1">
-      <h1 className="text-sm">To</h1>
-      <p className='text-sm'>
-        <strong>Employer name</strong>: Mathew
-      </p>
-      <p className='text-sm'>
-        <strong>Employer Company</strong>: AA Tech
-      </p>
-      <p className='text-sm'>
-        <strong>Applicant Name</strong>: Johnson
-      </p>
-    </div>
-
-    <div className="flex flex-col space-y-3  ">
-      <div className="flex justify- space-x-3 items-center">
-        <MdOutlineFileDownload size={20} color="#104B53" />
-        <p className="text-[#104B53] text-sm font-[600]">Export</p>
-        <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-          View
-        </p>
-      </div>
-
-      <p className='text-sm'>
-        <strong>Valid Till</strong>: 30 days (08/26/2024)
-      </p>
-    </div>
-  </div>
-
-  <hr />
-
-  <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-    <div className="flex justify-center items-center space-x-5">
-      <div className="flex flex-col space-y-3">
-        <p className='text-sm'>
-          <strong>Client</strong>: AT & T
-        </p>
-        <p className='text-sm'>
-          <strong>Prime Vendor </strong>: Insight Global
-        </p>
-      </div>
-
-      <div className="flex flex-col space-y-3">
-        <p className='text-sm'>
-          <strong>Implementation</strong>: TCS
-        </p>
-        <p className='text-sm'>
-          <strong>Vendor </strong>: AA Tech
-        </p>
-      </div>
-    </div>
-
-    <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-       
-      <p   className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#B4FEDD] text-[#07A560] p-2 text-center rounded-full">
-        Signed
-      </p>
-    </div>
+  <div>
+    <p className='text-xs'>Rate : $60 / HR</p>
   </div>
 </div>
 
+<div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start px-2 p-1">
+  <div className="flex flex-col space-y-1">
+    <h1 className="text-xs">From</h1>
+    <p className='text-xs'>
+      <strong >Send by</strong>: Erika Less
+    </p>
+    <p className='text-xs'>
+      <strong>Company</strong>:Insight Global
+    </p>
+  </div>
 
- 
+  <div className="flex flex-col space-y-1">
+    <h1 className="text-xs">To</h1>
+    <p className='text-xs'>
+      <strong>Employer name</strong>: Mathew
+    </p>
+    <p className='text-xs'>
+      <strong>Employer Company</strong>: AA Tech
+    </p>
+    <p className='text-xs'>
+      <strong>Applicant Name</strong>: Johnson
+    </p>
+  </div>
 
-
+  <div className="flex flex-col space-y-3  ">
+    <div className="flex justify- space-x-3 items-center">
+      <MdOutlineFileDownload size={20} color="#104B53" />
+      <p className="text-[#104B53] text-xs font-[600]">Export</p>
+      <p className="border text-xs text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+        View
+      </p>
     </div>
+
+    <p className='text-xs'>
+      <strong>Valid Till</strong>: 30 days (08/26/2024)
+    </p>
+  </div>
+</div>
+
+<hr />
+
+<div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center px-2 p-2">
+  <div className="flex justify-center items-center space-x-5">
+    <div className="flex flex-col space-y-3">
+      <p className='text-xs'>
+        <strong>Client</strong>: AT & T
+      </p>
+      <p className='text-xs'>
+        <strong>Prime Vendor </strong>: Insight Global
+      </p>
+    </div>
+
+    <div className="flex flex-col space-y-3">
+      <p className='text-xs'>
+        <strong>Implementation</strong>: TCS
+      </p>
+      <p className='text-xs'>
+        <strong>Vendor </strong>: AA Tech
+      </p>
+    </div>
+  </div>
+
+  <div className="flex w-full md:w-auto items-center justify-center space-x-5">
+     
+    <p   className="w-full sm:w-[100px] cursor-pointer text-xs bg-[#B4FEDD] text-[#07A560] p-1 text-center rounded-full">
+      Signed
+    </p>
+  </div>
+</div>
+</div>
+
+
+
+
+
+  </div>
     </div>
   )
 }
@@ -663,97 +663,98 @@ const AcceptedRTR:React.FC=()=>{
 const ExpireRTR:React.FC=()=>{
   return(
     <div className="w-full">
-      <div className='flex flex-col space-y-4'>
-    <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-  <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-    <div className="flex items-center space-x-4">
-      <span className="text-sm text-[#6B7588]">Job Title: </span>
-      <p className="text-sm font-semibold">Full Stack Java Developer</p>
-      <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
-    </div>
 
-    <div>
-      <p className='text-sm'>Rate : $60 / HR</p>
+    <div className='flex flex-col space-y-4'>
+      <div className="w-full    h-full m-auto border border-[#E1E1E2] rounded-lg">
+    <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+      <div className="flex items-center space-x-4">
+        <span className="text-xs text-[#6B7588]">Job Title: </span>
+        <p className="text-xs font-semibold">Full Stack Java Developer</p>
+        <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+      </div>
+    
+      <div>
+        <p className='text-xs'>Rate : $60 / HR</p>
+      </div>
     </div>
-  </div>
-
-  <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-    <div className="flex flex-col space-y-1">
-      <h1 className="text-sm">From</h1>
-      <p className='text-sm'>
-        <strong >Send by</strong>: Erika Less
-      </p>
-      <p className='text-sm'>
-        <strong>Company</strong>:Insight Global
-      </p>
-    </div>
-
-    <div className="flex flex-col space-y-1">
-      <h1 className="text-sm">To</h1>
-      <p className='text-sm'>
-        <strong>Employer name</strong>: Mathew
-      </p>
-      <p className='text-sm'>
-        <strong>Employer Company</strong>: AA Tech
-      </p>
-      <p className='text-sm'>
-        <strong>Applicant Name</strong>: Johnson
-      </p>
-    </div>
-
-    <div className="flex flex-col space-y-3  ">
-      <div className="flex justify- space-x-3 items-center">
-        <MdOutlineFileDownload size={20} color="#104B53" />
-        <p className="text-[#104B53] text-sm font-[600]">Export</p>
-        <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-          View
+    
+    <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start px-2 p-1">
+      <div className="flex flex-col space-y-1">
+        <h1 className="text-xs">From</h1>
+        <p className='text-xs'>
+          <strong >Send by</strong>: Erika Less
+        </p>
+        <p className='text-xs'>
+          <strong>Company</strong>:Insight Global
         </p>
       </div>
-
-      <p className='text-sm'>
-        <strong>Valid Till</strong>: 30 days (08/26/2024)
-      </p>
-    </div>
-  </div>
-
-  <hr />
-
-  <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-    <div className="flex justify-center items-center space-x-5">
-      <div className="flex flex-col space-y-3">
-        <p className='text-sm'>
-          <strong>Client</strong>: AT & T
+    
+      <div className="flex flex-col space-y-1">
+        <h1 className="text-xs">To</h1>
+        <p className='text-xs'>
+          <strong>Employer name</strong>: Mathew
         </p>
-        <p className='text-sm'>
-          <strong>Prime Vendor </strong>: Insight Global
+        <p className='text-xs'>
+          <strong>Employer Company</strong>: AA Tech
+        </p>
+        <p className='text-xs'>
+          <strong>Applicant Name</strong>: Johnson
         </p>
       </div>
-
-      <div className="flex flex-col space-y-3">
-        <p className='text-sm'>
-          <strong>Implementation</strong>: TCS
-        </p>
-        <p className='text-sm'>
-          <strong>Vendor </strong>: AA Tech
+    
+      <div className="flex flex-col space-y-3  ">
+        <div className="flex justify- space-x-3 items-center">
+          <MdOutlineFileDownload size={20} color="#104B53" />
+          <p className="text-[#104B53] text-xs font-[600]">Export</p>
+          <p className="border text-xs text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+            View
+          </p>
+        </div>
+    
+        <p className='text-xs'>
+          <strong>Valid Till</strong>: 30 days (08/26/2024)
         </p>
       </div>
     </div>
-
-    <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-       
-      <p   className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#FFF1C6] text-[#FFB51F] p-2 text-center rounded-full">
-        Expired
-      </p>
+    
+    <hr />
+    
+    <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center px-2 p-2">
+      <div className="flex justify-center items-center space-x-5">
+        <div className="flex flex-col space-y-3">
+          <p className='text-xs'>
+            <strong>Client</strong>: AT & T
+          </p>
+          <p className='text-xs'>
+            <strong>Prime Vendor </strong>: Insight Global
+          </p>
+        </div>
+    
+        <div className="flex flex-col space-y-3">
+          <p className='text-xs'>
+            <strong>Implementation</strong>: TCS
+          </p>
+          <p className='text-xs'>
+            <strong>Vendor </strong>: AA Tech
+          </p>
+        </div>
+      </div>
+    
+      <div className="flex w-full md:w-auto items-center justify-center space-x-5">
+         
+        <p   className="w-full sm:w-[100px] cursor-pointer text-xs bg-[#FEF1C6] text-[#FFB51F] p-1 text-center rounded-full">
+          Expire
+        </p>
+      </div>
     </div>
-  </div>
-</div>
-
-
- 
-
-
     </div>
-    </div>
+    
+    
+    
+    
+    
+      </div>
+        </div>
   )
 }
 
@@ -781,7 +782,7 @@ const RTR: React.FC = () => {
   
   return (
     <div>
-      <div className="flex justify-between items-center p-3">
+      <div className="flex justify-between items-center p-2">
         <h1 className="text-sm font-semibold">Right To Represent</h1>
         <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
           Post a Job
@@ -790,7 +791,7 @@ const RTR: React.FC = () => {
       <hr />
 
       {/* tabs  */}
-      <div className="p-3 flex justify-between items-center">
+      <div className="p-1 flex justify-between items-center">
         <ul className="max-w-[300px]  w-full  rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
           {rtrFilters?.map((item, i) => {
             return (
@@ -817,8 +818,29 @@ const RTR: React.FC = () => {
         <SendRTRModal setIsRTROpen={setIsRTROpen} isRTROpen={isRTROpen} />
       </div>
 
+
+      {/* received rtr tabs  */}
+      {jobFilterIdx === 1 && (
+        <div className="  w-full overflow-auto flex justify-between px-2 items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] ">
+          <ul className="w-screen md:w-auto overflow-auto flex items-center space-x-7 p-2  ">
+            {tags?.map((item, id) => {
+              return (
+                <p
+                onClick={()=>setReceivedRTRIdx(id)}
+                  className={` text-xs  font-[600] cursor-pointer  ${receivedRTRIdx === id ? 'text-[#104B53]' : ''}`}
+                  key={id}
+                >
+                  {item.label}
+                </p>
+              );
+            })}
+          </ul>
+        </div>
+
+      )}
+
   {/* filters  */}
-  <div className=" p-3   pb-3  flex  space-x-4   ">
+  <div className=" p-3    flex  space-x-4   ">
           
 
 
@@ -869,31 +891,12 @@ const RTR: React.FC = () => {
 
       
 
-      {/* received rtr tabs  */}
-      {jobFilterIdx === 1 && (
-        <div className="  w-full overflow-auto flex justify-between items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] mt-3">
-          <ul className="w-screen md:w-auto overflow-auto flex items-center space-x-7 p-2 pl-7 ">
-            {tags?.map((item, id) => {
-              return (
-                <p
-                onClick={()=>setReceivedRTRIdx(id)}
-                  className={` text-xs  font-[600] cursor-pointer  ${receivedRTRIdx === id ? 'text-[#104B53]' : ''}`}
-                  key={id}
-                >
-                  {item.label}
-                </p>
-              );
-            })}
-          </ul>
-        </div>
-
-      )}
 
       {
         jobFilterIdx === 1 ?
 
  
-          <div className="w-full   p-5 space-y-3 overflow-auto h-[60vh]">
+          <div className="w-full   px-3 space-y-3 overflow-auto h-[60vh]">
           {tags?.map((item, i) => {
             if(receivedRTRIdx===i)
               return <div key={i}>{item.components}</div>;
@@ -903,7 +906,7 @@ const RTR: React.FC = () => {
           </div>
           :
           
-          <div className="w-full   p-5 space-y-3 overflow-auto h-[60vh]">
+          <div className="w-full   px-3 space-y-3 overflow-auto h-[60vh]">
           {rtrFilters?.map((item, i) => {
             if (jobFilterIdx === i) {
               return <div key={i}>{item.component}</div>;
