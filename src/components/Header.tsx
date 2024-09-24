@@ -119,7 +119,7 @@ const Header: React.FC = () => {
 
         {/* With SignIn */}
 
-        <div className=" justify-center items-center space-x-7 hidden ">
+        <div className="flex justify-center items-center space-x-7 hidden  ">
           <div className="flex justify-center items-center space-x-7">
 
 
