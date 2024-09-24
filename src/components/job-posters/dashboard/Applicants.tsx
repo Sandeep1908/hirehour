@@ -13,6 +13,8 @@ import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
 import { RxCross2 } from 'react-icons/rx'
 import { Container } from './Container'
+import ShortListed from './ShortListed'
+
 
 
 
@@ -921,6 +923,8 @@ const Applicants: React.FC = () => {
 
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
   const [addCandidate, setAddCandidate] = useState<boolean>(false);
+  // const [showShortList, setShowShortList] = useState<boolean>(false);
+
 
 
   const [selectedOptionVisa, setSelectedOptionVisa] = useState<string>("");
@@ -1027,7 +1031,7 @@ const Applicants: React.FC = () => {
           </p>
         </div>
         <hr />
-        <div className="p-2 mt-2 flex justify-between">
+        <div className="p-2 mt-1  flex justify-between">
           <ul className="max-w-[350px]  w-full rounded-full px-1 flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
             {jobFilters?.map((item, i) => {
               return (
@@ -1068,7 +1072,7 @@ const Applicants: React.FC = () => {
         </div>
 
 
-        <div className=' flex gap-2 mt-5 px-4'>
+        <div className=' flex gap-2 mt-3 px-4'>
 
           <div className='relative z-[20]'>
             <div onClick={() => setDropdown(1)} className={`cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
@@ -1254,24 +1258,11 @@ const Applicants: React.FC = () => {
 
 
         </div>
-
-
-        <div id="filter" className='mt-5 px-4 max-w-[1200px] w-full flex gap-0 overflow-x-auto  '>
-          <div className='flex'>
-
-            <Container />
-          </div>
-
-          <div className='p-3 border-[1px] border-[#D6DBDE] rounded-tr-lg min-w-24 '>
-            <div className='flex justify-between gap-10'>
-              <p className='text-sm text-[#114B53] font-semibold'> <IoMdAdd size={15} className='font-bold' /></p>
-
-
-            </div>
-            <p className='text-xs text-[#114B53] font-semibold mt-5'>Add More </p>
-          </div>
-
-        </div>
+         {
+            <div className={` transition-all duration-500 ${itemId===3 ?"opacity-1 scale-[1.01] z-[40] h-[75px]" : "opacity-0 z-[-10] h-0"}`}> <ShortListed/></div>
+         }
+        
+        
         </div>
 
         {/* all Applicants  */}
