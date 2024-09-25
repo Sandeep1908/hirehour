@@ -1,7 +1,10 @@
-import React from 'react'
-import { HiOutlineStar } from 'react-icons/hi'
+import React, { useState } from 'react'
+import { HiOutlineStar, HiStar } from 'react-icons/hi'
 
 const CandidateCard:React.FC = () => {
+
+    const [star,setStar] = useState<boolean>(false)
+
   return (
     <div className='w-full border-[1px] border-[#114B53] p-4 rounded-lg'>
     <div className='flex w-full justify-between'>
@@ -18,7 +21,10 @@ const CandidateCard:React.FC = () => {
                 </div></div>
         </div>
 
-        <HiOutlineStar size={20} />
+      {star ?  < HiStar onClick={()=>{setStar(!star)}} size={20} />:<HiOutlineStar onClick={()=>{setStar(!star)}} size={20} />}
+      
+      
+        
 
     </div>
     <div className='mt-3'>
