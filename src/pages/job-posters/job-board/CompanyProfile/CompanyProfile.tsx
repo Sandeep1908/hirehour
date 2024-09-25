@@ -24,7 +24,7 @@ const CompanyProfile: React.FC = () => {
             <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-sm">
               <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-7 text-xs h-7 bg-[#104B53] text-white rounded-full">
+                  <span className="me-2 p-2 w-7 md:w-7 text-xs h-7 bg-[#104B53] text-white rounded-full">
                     <TiTick />
                   </span>
                   <p className="hidden text-[10px] w-[100px] md:block">Job Basis</p>
@@ -62,8 +62,8 @@ const CompanyProfile: React.FC = () => {
    {/* Cover Images  */}
 
       <div className="max-w-[1080px] mt-2 h-full rounded-lg   bg-white m-auto  pb-4">
-        <div className="w-full max-w-[800px] m-auto pt-3 flex flex-col space-y-5">
-          <div className="w-full h-40 border bg-white relative">
+        <div className="w-full max-w-[800px] m-auto  p-3 flex flex-col space-y-5">
+          <div className="w-full h-40 border  bg-white relative">
             <div className="w-full h-24 bg-[#F2F2F5]">
               <div className='flex justify-center items-center h-full'>
                 <label className={`flex justify-center items-center space-x-3`}>
@@ -85,7 +85,7 @@ const CompanyProfile: React.FC = () => {
           </div>
 
 
-          <div className="w-full grid grid-cols-2 gap-3">
+          <div className="w-full grid md:md:grid-cols-2 gap-3">
                 {/* Company Name  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -121,7 +121,7 @@ const CompanyProfile: React.FC = () => {
               </div>
 
 
-          <div className="w-full grid grid-cols-2 gap-3">
+          <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Company Size  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -157,7 +157,7 @@ const CompanyProfile: React.FC = () => {
               </div>
 
 
-              <div className="w-full grid grid-cols-2 gap-3">
+              <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Company Website  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -201,7 +201,7 @@ const CompanyProfile: React.FC = () => {
               Back
             </Link>
             <Link
-              to={'/job-poster/pricing'}
+              to={'/job-poster/review'}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
               Continue

@@ -42,6 +42,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import ProfileSetting from './pages/job-posters/userprofile/Profile.tsx';
 import CompanyProfileSettings from './pages/job-posters/userprofile/CompanyProfielSettings.tsx';
+import Review from './pages/job-posters/job-board/Review/Review.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -54,40 +55,33 @@ const router = createBrowserRouter(
       <Route path="/upload-resume" element={<UploadResume />} />
       <Route path="/additional-information" element={<AdditionalInfo />} />
       <Route path="/review-form" element={<ReviewInfo />} />
-
       {/* Myjobs  */}
       <Route path="/myjobs" element={<MyJobs />} />
-
       {/* Right To Represent  */}
       <Route path="/right-to-represent" element={<RightToRepresent />} />
       <Route path="/rtr-accepted" element={<Accepted />} />
       <Route path="/rtr-decline" element={<Decline />} />
-
       <Route path="/rtr-expired" element={<Expired />} />
-
       {/* Messages  */}
       <Route path="/messages" element={<Message />} />
-
       {/* Account Setting  */}
       <Route path="/account" element={<AccountSetting />} />
       <Route path="/profile-visibility" element={<ProfileVisibility />} />
 
       {/* Pofile Page  */}
-
       <Route path="/profile" element={<Profile />} />
-
       {/* Job preference  */}
-
       <Route path="/job-preference" element={<JobPreference />} />
-
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
 
-      {/* job posters route  */}
+      {/* job posters routes  */}
       <Route path="/job-poster" element={<JobPosterHome />} />
       <Route path="/job-poster/job-basis" element={<JobBoard />} />
       <Route path="/job-poster/job-description" element={<JobDescriptionBoard />} />
       <Route path="/job-poster/company-profile" element={<CompanyProfile />} />
+      <Route path="/job-poster/review" element={<Review />} />
+
       <Route path="/job-poster/dashboard" element={<DashBoard />} />
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />

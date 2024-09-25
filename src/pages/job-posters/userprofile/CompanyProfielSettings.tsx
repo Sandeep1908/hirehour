@@ -64,8 +64,8 @@ const CompanyProfileSettings: React.FC = () => {
   ]
 
   return (
-    <div className="w-full  h-screen   bg-[#F2F2F5] p-2  relative">
-      <div className=" w-full max-w-[1280px]  bg-white  m-auto  rounded-lg p-5">
+    <div className="w-full   h-full  bg-[#F2F2F5] p-2  relative">
+      <div className=" w-full max-w-[1280px]    bg-white  m-auto  rounded-lg p-5">
         <div className="w-full overflow-auto md:flex md:justify-between ">
           <ul className="w-screen  md:w-auto flex justify-start items-center space-x-6   ">
             {titles?.map((item, id) => {

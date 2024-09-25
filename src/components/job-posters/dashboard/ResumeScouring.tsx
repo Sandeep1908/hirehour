@@ -66,6 +66,7 @@ const SearchCandidate: React.FC = () => {
     return (
         <div className='w-full h-[520px] overflow-x-hidden overflow-y-auto'>
             <div className='w-full px-4'>
+
                 <div className='w-full  border-[1px] border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 '>
                     <div className='flex md:justify-center items-center gap-2'>
                         <CiSearch />
@@ -800,6 +801,7 @@ const ResumeScouring: React.FC = () => {
             <hr />
             <div className="px-4 py-3 flex justify-between">
                 <ul className="max-w-[680px] w-full  rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
+
                     {jobFilters?.map((item, i) => {
                         return (
                             <li

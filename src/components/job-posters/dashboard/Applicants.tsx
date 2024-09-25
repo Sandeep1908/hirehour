@@ -18,6 +18,7 @@ import { PiArrowsLeftRightBold } from 'react-icons/pi'
 
 
 
+
 const AllApplications: React.FC = () => {
 
   const [like, setLike] = useState<boolean>(false);
@@ -2197,6 +2198,7 @@ const Applicants: React.FC = () => {
 
        
        
+
 
 
       </div>

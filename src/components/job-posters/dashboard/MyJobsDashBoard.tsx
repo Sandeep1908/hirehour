@@ -5,10 +5,10 @@ import { GiSettingsKnobs } from "react-icons/gi";
 
 const ActiveJobs: React.FC = () => {
   return (
-    <div className="space-y-3">
-      {Array.from({ length: 5 }).map((_, i) => {
+    <div className="space-y-3 ">
+      {Array.from({ length: 10 }).map((_, i) => {
         return (
-          <div className="h-auto border flex flex-col rounded-lg" key={i}>
+          <div className="w-full   border flex flex-col rounded-lg" key={i}>
             <div className="w-full flex justify-between items-center bg-[#F2F2F5]   p-2 ">
               <div className="  flex items-start space-x-2 ">
                 <input type="checkbox" />
@@ -21,7 +21,8 @@ const ActiveJobs: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex  space-x-4 justify-center items-center ">
+              <BsThreeDotsVertical  className='md:hidden'/>
+              <div className="  space-x-4 justify-center items-center hidden md:flex ">
                 <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
                   <span className="text-xs">2</span>
                   <h1 className="text-[10px] text-[#104B53] font-[600]">
@@ -43,9 +44,9 @@ const ActiveJobs: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-full flex justify-between items-center p-3">
+            <div className="w-full flex flex-col md:flex-row justify-between items-center p-3">
               <div className="w-full max-w-xl ">
-                <ul className="flex space-x-10 pl-5">
+                <ul className="flex justify-between pl-5">
                   {Array.from({ length: 4 }).map((_, i) => {
                     return (
                       <li key={i} className="flex flex-col border-r p-2">
@@ -57,10 +58,36 @@ const ActiveJobs: React.FC = () => {
                 </ul>
               </div>
 
+              <div className='w-full md:w-auto flex justify-between items-center'>
+
+              <div className="flex flex-col space-x-4 justify-center items-center md:hidden ">
+                <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
+                  <span className="text-xs">2</span>
+                  <h1 className="text-[10px] text-[#104B53] font-[600]">
+                    Hire credit spend on job
+                  </h1>
+                </div>
+
+                <div className="">
+                  <select
+                    name=""
+                    id=""
+                    className="bg-[#E3F5EF] text-[10px] w-16 text-center h-6 rounded-full border border-[#33A070] text-[#33A070] outline-none"
+                  >
+                    <option value="">Active</option>
+                  </select>
+                </div>
+
+                
+              </div>
+                
               <div className="flex flex-col space-y-2">
                 <p className="text-[10px] text-[#3A3A3C]">Posted by : Methew</p>
                 <p className="text-[10px] text-[#3A3A3C]">Posted date : 06/16/24</p>
               </div>
+              </div>
+
+             
             </div>
           </div>
         );
@@ -72,75 +99,102 @@ const ActiveJobs: React.FC = () => {
 const PausedJobs: React.FC = () => {
   return (
     <div className="space-y-3">
-      {Array.from({ length: 2 }).map((_, i) => {
-        return (
-          <div className="h-auto border flex flex-col rounded-lg" key={i}>
-            <div className="w-full flex justify-between items-center bg-[#F2F2F5]   p-2 ">
-              <div className="  flex items-start space-x-2 ">
-                <input type="checkbox" />
-                <div className="flex flex-col justify-start items-start bg-white p-2 rounded-lg space-y-1 ">
-                  <h1 className="text-sm text-[#104B53] font-[500]">Java Full Stack</h1>
-                  <ul className="flex text-[8px] space-x-2">
-                    <li>Dribble</li>
-                    <li>Allen, Texas, United States</li>
-                  </ul>
-                </div>
-              </div>
-
-              <div className="flex  space-x-4 justify-center items-center ">
-                <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
-                  <span className="text-xs">2</span>
-                  <h1 className="text-[10px] text-[#104B53] font-[600]">
-                    Hire credit spend on job
-                  </h1>
-                </div>
-
-                <div className="">
-                  <select
-                    name=""
-                    id=""
-                    className="bg-[#FFF1C6] text-[10px] w-16 text-center h-6 rounded-full border border-[#FFB51F] text-[#FFB51F] outline-none"
-                  >
-                    <option value="">Paused</option>
-                  </select>
-                </div>
-
-                <BsThreeDotsVertical />
-              </div>
-            </div>
-
-            <div className="w-full flex justify-between items-center p-3">
-              <div className="w-full max-w-xl ">
-                <ul className="flex justify-between">
-                  {Array.from({ length: 4 }).map((_, i) => {
-                    return (
-                      <li key={i} className="flex flex-col border-r p-3">
-                        <span className="text-sm">24</span>
-                        <span className="text-[#104B53] text-xs font-semibold">Job Views</span>
-                      </li>
-                    );
-                  })}
+    {Array.from({ length: 10 }).map((_, i) => {
+      return (
+        <div className="w-full h-auto border flex flex-col rounded-lg" key={i}>
+          <div className="w-full flex justify-between items-center bg-[#F2F2F5]   p-2 ">
+            <div className="  flex items-start space-x-2 ">
+              <input type="checkbox" />
+              <div className="flex flex-col justify-start items-start bg-white p-2 rounded-lg space-y-1 ">
+                <h1 className="text-sm text-[#104B53] font-[500]">Java Full Stack</h1>
+                <ul className="flex text-[8px] space-x-2">
+                  <li>Dribble</li>
+                  <li>Allen, Texas, United States</li>
                 </ul>
               </div>
+            </div>
 
-              <div className="flex flex-col space-y-2">
-                <p className="text-[10px] text-[#3A3A3C]">Posted by : Methew</p>
-                <p className="text-[10px] text-[#3A3A3C]">Posted date : 06/16/24</p>
+            <BsThreeDotsVertical  className='md:hidden'/>
+            <div className="  space-x-4 justify-center items-center hidden md:flex ">
+              <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
+                <span className="text-xs">2</span>
+                <h1 className="text-[10px] text-[#104B53] font-[600]">
+                  Hire credit spend on job
+                </h1>
               </div>
+
+              <div className="">
+                <select
+                  name=""
+                  id=""
+                  className="bg-[#E3F5EF] text-[10px] w-16 text-center h-6 rounded-full border border-[#33A070] text-[#33A070] outline-none"
+                >
+                  <option value="">Active</option>
+                </select>
+              </div>
+
+              <BsThreeDotsVertical />
             </div>
           </div>
-        );
-      })}
-    </div>
+
+          <div className="w-full flex flex-col md:flex-row justify-between items-center p-3">
+            <div className="w-full max-w-xl ">
+              <ul className="flex justify-between pl-5">
+                {Array.from({ length: 4 }).map((_, i) => {
+                  return (
+                    <li key={i} className="flex flex-col border-r p-2">
+                      <span className="text-sm">24</span>
+                      <span className="text-[#104B53] text-xs font-semibold">Job Views</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div className='w-full md:w-auto flex justify-between items-center'>
+
+            <div className="flex flex-col space-x-4 justify-center items-center md:hidden ">
+              <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
+                <span className="text-xs">2</span>
+                <h1 className="text-[10px] text-[#104B53] font-[600]">
+                  Hire credit spend on job
+                </h1>
+              </div>
+
+              <div className="">
+                <select
+                  name=""
+                  id=""
+                  className="bg-[#FEF1C6] text-[10px] w-16 text-center h-6 rounded-full border border-[#FFBD35] text-[#FFBD35] outline-none"
+                >
+                  <option value="">Active</option>
+                </select>
+              </div>
+
+              
+            </div>
+              
+            <div className="flex flex-col space-y-2">
+              <p className="text-[10px] text-[#3A3A3C]">Posted by : Methew</p>
+              <p className="text-[10px] text-[#3A3A3C]">Posted date : 06/16/24</p>
+            </div>
+            </div>
+
+           
+          </div>
+        </div>
+      );
+    })}
+  </div>
   );
 };
 
 const ClosedJobs: React.FC = () => {
   return (
     <div className="space-y-3">
-      {Array.from({ length: 2 }).map((_, i) => {
+      {Array.from({ length: 10 }).map((_, i) => {
         return (
-          <div className="h-auto border flex flex-col rounded-lg" key={i}>
+          <div className="w-full h-auto border flex flex-col rounded-lg" key={i}>
             <div className="w-full flex justify-between items-center bg-[#F2F2F5]   p-2 ">
               <div className="  flex items-start space-x-2 ">
                 <input type="checkbox" />
@@ -153,7 +207,8 @@ const ClosedJobs: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex  space-x-4 justify-center items-center ">
+              <BsThreeDotsVertical  className='md:hidden'/>
+              <div className="  space-x-4 justify-center items-center hidden md:flex ">
                 <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
                   <span className="text-xs">2</span>
                   <h1 className="text-[10px] text-[#104B53] font-[600]">
@@ -165,9 +220,9 @@ const ClosedJobs: React.FC = () => {
                   <select
                     name=""
                     id=""
-                    className="bg-[#FFC5C5] text-[10px] w-16 text-center h-6 rounded-full border border-[#FF7575] text-[#FF7575] outline-none"
+                    className="bg-[#E3F5EF] text-[10px] w-16 text-center h-6 rounded-full border border-[#33A070] text-[#33A070] outline-none"
                   >
-                    <option value="">Paused</option>
+                    <option value="">Active</option>
                   </select>
                 </div>
 
@@ -175,12 +230,12 @@ const ClosedJobs: React.FC = () => {
               </div>
             </div>
 
-            <div className="w-full flex justify-between items-center p-3">
+            <div className="w-full flex flex-col md:flex-row justify-between items-center p-3">
               <div className="w-full max-w-xl ">
-                <ul className="flex justify-between">
+                <ul className="flex justify-between pl-5">
                   {Array.from({ length: 4 }).map((_, i) => {
                     return (
-                      <li key={i} className="flex flex-col border-r p-3">
+                      <li key={i} className="flex flex-col border-r p-2">
                         <span className="text-sm">24</span>
                         <span className="text-[#104B53] text-xs font-semibold">Job Views</span>
                       </li>
@@ -189,10 +244,36 @@ const ClosedJobs: React.FC = () => {
                 </ul>
               </div>
 
+              <div className='w-full md:w-auto flex justify-between items-center'>
+
+              <div className="flex flex-col space-x-4 justify-center items-center md:hidden ">
+                <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
+                  <span className="text-xs">2</span>
+                  <h1 className="text-[10px] text-[#104B53] font-[600]">
+                    Hire credit spend on job
+                  </h1>
+                </div>
+
+                <div className="">
+                  <select
+                    name=""
+                    id=""
+                    className="bg-[#FFC5C5] text-[10px] w-16 text-center h-6 rounded-full border border-[#FF3837] text-[#FF3837] outline-none"
+                  >
+                    <option value="">Decline</option>
+                  </select>
+                </div>
+
+                
+              </div>
+                
               <div className="flex flex-col space-y-2">
                 <p className="text-[10px] text-[#3A3A3C]">Posted by : Methew</p>
                 <p className="text-[10px] text-[#3A3A3C]">Posted date : 06/16/24</p>
               </div>
+              </div>
+
+             
             </div>
           </div>
         );
@@ -232,15 +313,15 @@ const MyJobsDashBoard: React.FC = () => {
       <hr />
 
       {/* tabs  */}
-      <div className="p-2">
-        <ul className="max-w-[500px]   rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
+      <div className="p-2 md:max-w-[600px]  w-screen overflow-auto scroll-hidden">
+        <ul className="  rounded-full flex w-full   text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
           {jobFilters?.map((item, i) => {
             return (
               <li
                 className={`text-[10px] rounded-full   w-full p-1   cursor-pointer  flex justify-center items-center space-x-4 transition-all duration-300 ${jobFilterIdx === i ? 'bg-[#104B53] text-white' : ''}`}
                 onClick={() => setJobFilterIdx(i)}
               >
-                <span>{item.label}</span>{' '}
+                <span className='w-20 md:w-auto'>{item.label}</span>{' '}
                 <span
                   className={`bg-[#104B53]  w-6   text-center rounded-lg ${jobFilterIdx === i ? 'bg-white text-[#104B53] ' : 'text-white'} `}
                 >
@@ -253,25 +334,25 @@ const MyJobsDashBoard: React.FC = () => {
       </div>
 
        {/* filters  */}
-       <div className="  px-2  pb-1 flex  space-x-4   ">
-          <div className='w-full flex items-center justify-start space-x-2 border border-[#6B7588] max-w-60 rounded-full'>
-              <GiSettingsKnobs size={13} className='ml-3'/>
-              <input type="text" className=' text-xs p-1 flex justify-center items-center outline-none placeholder:text-[10px] placeholder:text-[#C7C9D9]  '  placeholder='Filter and search jobs'/>
+       <div className="  px-2  pb-1 flex md:max-w-[700px] w-screen overflow-auto md:overflow-hidden  space-x-5 scroll-hidden  ">
+          <div className=' max-w-56 md:w-full flex items-center justify-start space-x-2 border border-[#6B7588] md:max-w-60 h-8 rounded-full'>
+              <GiSettingsKnobs size={13} className='ml-3  '/>
+              <input type="text" className='w-52 text-xs p-1 flex justify-center items-center outline-none placeholder:text-[10px] placeholder:text-[#C7C9D9]  '  placeholder='Filter and search jobs'/>
           </div>
 
 
 
-          <div className='w-full px-1 max-w-fit flex items-center justify-start space-x-2 border border-[#6B7588]  rounded-full'>
-              <p className='text-xs font-semibold text-[#6B7588]'>Posted :</p>
-              <select name="" id="" className='text-xs text-[#6B7588] outline-none'>
+          <div className='w-40 px-1 md:max-w-fit flex items-center h-8 justify-start space-x-2 border border-[#6B7588]  rounded-full'>
+              <p className='text-xs font-semibold w-full text-[#6B7588]'>Posted :</p>
+              <select name="" id="" className='text-xs w-40 text-[#6B7588] outline-none'>
                 <option value="">Any</option>
               </select>
           </div>
 
 
-          <div className='w-full px-1 max-w-fit flex items-center justify-start space-x-2 border border-[#6B7588]  rounded-full'>
-              <p className='text-xs font-semibold text-[#6B7588]'>Date Posted :</p>
-              <select name="" id="" className='text-xs text-[#6B7588] outline-none'>
+          <div className='w-40 px-1 md:max-w-fit flex items-center h-8 justify-start space-x-2 border border-[#6B7588]  rounded-full'>
+              <p className='text-xs w-full font-semibold text-[#6B7588]'>Date Posted :</p>
+              <select name="" id="" className='text-xs w-40 md:w-auto text-[#6B7588] outline-none'>
                 <option value="">Most</option>
               </select>
           </div>
@@ -280,10 +361,10 @@ const MyJobsDashBoard: React.FC = () => {
 
 
       {/* all jobs  */}
-      <div className="w-full   p-3 space-y-3 overflow-auto h-[75vh]">
+      <div className="w-full   p-3 space-y-3    overflow-y-auto h-[90vh] md:h-[75vh]">
         {jobFilters?.map((item, i) => {
           if (jobFilterIdx === i) {
-            return <div key={i}>{item.component}</div>;
+            return <div className='w-full h-full' key={i}>{item.component}</div>;
           }
         })}
       </div>

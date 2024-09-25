@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 import useHeaderContext from '../../../context/HeaderContext';
@@ -29,7 +29,7 @@ import helpIcon from '../../../assets/dashboard/icons/help.png'
 
 const Sidebar: React.FC = () => {
   const [currentQueryString, setCurrentQueryString] = useState<string>('');
-  const { isDashboardOpen } = useHeaderContext();
+  const { isDashboardOpen, isDashboardMobileNav,setIsDashboardMobileNav } = useHeaderContext();
   const navigate=useNavigate();
   const sideBarItems = [
     {
@@ -74,6 +74,17 @@ const Sidebar: React.FC = () => {
     },
   ];
 
+  useEffect(() => {
+    if (isDashboardOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [isDashboardOpen]);
 
   const setQueryString = (qstring:string) => {
     const params = new URLSearchParams();
@@ -84,12 +95,13 @@ const Sidebar: React.FC = () => {
   const handleIdx = (queryString:string )=> {
     setQueryString(queryString)
     setCurrentQueryString(queryString);
+    setIsDashboardMobileNav(false)
   };
 
 
   return (
     <div
-      className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? 'w-48' : 'w-14'}`}
+      className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30   md:w-48 md:h-full md:static ' : 'left-[-100%]  md:w-14  '} ${isDashboardMobileNav?'absolute h-screen left-[0%] z-30':'left-[-200%] w-0  '} `}
     >
       <div className="w-full h-full ">
         <div className="flex justify-center items-center space-x-2 w-full p-4 ">
@@ -112,7 +124,7 @@ const Sidebar: React.FC = () => {
               >
                 <img src={item.icon} alt={`dashboardIcon-${i} `}  className='w-4 h-4'/>
                 <span
-                  className={`text-xs font-[500] transition-all delay-1000 w-full ${isDashboardOpen ? 'block' : 'hidden'}`}
+                  className={`text-xs font-[500] transition-all md:delay-1000 w-full ${isDashboardOpen ? 'block' : 'hidden'}`}
                 >
                   {item.label}
                 </span>
@@ -187,7 +199,7 @@ const DashBoard: React.FC = () => {
       <div className="flex-1 h-full    ">
      
 
-        <div className="w-[98%] m-auto h-[98%] mt-2 overflow-y-auto   bg-white rounded-lg ">
+        <div className="w-[98%] m-auto h-full  md:h-[98%] mt-2  overflow-y-auto   bg-white rounded-lg ">
           
 
           {/* Rendering all components */}
