@@ -22,7 +22,6 @@ import { JobDescriptionDetails } from '../../../config/jobdescription'
 
 const JobDescription: React.FC = () => {
 
-    const [infoContentHidden, SetInfoContentHidden] = useState<boolean>(false);
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
     const [isQuickApplyStep2, setQuickApplyStep2] = useState<boolean>(false);
     const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
@@ -34,24 +33,6 @@ const JobDescription: React.FC = () => {
     const [jobDataId, setJobDataId] = useState<number>(1);
     const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
 
-
-
-
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 300) {
-                SetInfoContentHidden(false);
-            } else {
-                SetInfoContentHidden(true);
-            }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
 
 
 

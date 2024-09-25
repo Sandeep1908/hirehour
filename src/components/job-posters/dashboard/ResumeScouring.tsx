@@ -64,8 +64,8 @@ const SearchCandidate: React.FC = () => {
 
 
     return (
-        <div className='w-full h-[490px] overflow-x-hidden overflow-y-auto'>
-            <div className='w-full px-4 mt-3'>
+        <div className='w-full h-[520px] overflow-x-hidden overflow-y-auto'>
+            <div className='w-full px-4'>
                 <div className='w-full  border-[1px] border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 '>
                     <div className='flex md:justify-center items-center gap-2'>
                         <CiSearch />
@@ -280,10 +280,8 @@ const SearchCandidate: React.FC = () => {
             </div>
 
             <div className='w-full px-5 '>
-                <div className='flex justify-end items-center '>
-                    <div className='relative mr-1 text-[#114B53]'> <IoIosMail /> <GiRingingBell size={13} className='absolute top-2 left-[6px]' /></div>  <p className='text-[#6B7588] text-[12px] font-semibold'><span className='text-[#114B53] font-bold'>Set up an Alert</span>  to receive emails of new candidate like this</p>
-                </div>
-                <div className='w-full h-[500px] overflow-x-hidden overflow-y-auto flex gap-5 mt-3'>
+               
+                <div className='w-full h-[520px] overflow-x-hidden overflow-y-auto flex gap-5 mt-1'>
                     <div className='w-[28%] h-full flex flex-col overflow-x-hidden overflow-y-auto gap-5'>
                         <CandidateCard />
                         <CandidateCard />
@@ -801,7 +799,7 @@ const ResumeScouring: React.FC = () => {
             </div>
             <hr />
             <div className="px-4 py-3 flex justify-between">
-                <ul className="max-w-[700px] w-full  rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
+                <ul className="max-w-[680px] w-full  rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
                     {jobFilters?.map((item, i) => {
                         return (
                             <li
@@ -818,6 +816,11 @@ const ResumeScouring: React.FC = () => {
                         );
                     })}
                 </ul>
+                <div>
+                <div className='flex justify-end items-center mt-1'>
+                    <div className='relative mr-1 text-[#114B53]'> <IoIosMail /> <GiRingingBell size={13} className='absolute top-2 left-[6px]' /></div>  <p className='text-[#6B7588] text-[12px] font-semibold'><span className='text-[#114B53] font-bold'>Set up an Alert</span>  to receive emails of new candidate like this</p>
+                </div>
+                </div>
                 <div onClick={() => { setAddJobAlert(!addJobAlert) }} className='w-fit text-[10px] rounded-full    px-3 py-1  cursor-pointer  flex justify-center items-center space-x-4 border-[1px] border-[#104B53]'>
             <p className='text-xs text-[#104B53]'>Add Job Alert</p>
           </div>
@@ -826,7 +829,7 @@ const ResumeScouring: React.FC = () => {
 
 
             {/* all Filter details  */}
-            <div className="w-full  space-y-3  h-[66vh]">
+            <div className="w-full  space-y-3  h-full">
                 {jobFilters?.map((item, i) => {
                     if (jobFilterIdx === i) {
                         return <div key={i}>{item.component}</div>;
