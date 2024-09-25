@@ -37,7 +37,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
   ];
   return (
     <div
-      className={`w-40  overflow-auto p-3 bg-white absolute    top-16 left-0  rounded-lg transition-all duration-500 shadow-2xl ${isAccountOpen ? 'opacity-1 z-[20] translate-y-[-10px]' : 'opacity-0   z-[-30]'}`}
+      className={`   overflow-auto p-3 bg-white absolute    top-16 left-[-40px]  rounded-lg transition-all duration-500 shadow-2xl ${isAccountOpen ? 'opacity-1 z-[20] translate-y-[-10px]' : 'opacity-0   z-[-30]'}`}
     >
       <div className="flex flex-col justify-between items-center">
         <div className="flex justify-start items-center space-x-3 relative before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px] ">
