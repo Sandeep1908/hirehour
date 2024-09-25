@@ -11,8 +11,8 @@ const Plan: React.FC = () => {
   const [selector, setSelector] = useState<boolean>(false);
   return (
     <div className="w-full h-full">
-      <div className="flex justify-between items-center">
-        <div className="w-full max-w-[80%] border flex justify-between items-center p-4 rounded-lg ">
+      <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between items-center">
+        <div className="w-full md:max-w-[80%] border flex justify-between items-center p-4 rounded-lg ">
           <div className="flex flex-col">
             <p className="text-sm font-semibold">Current Plan</p>
             <div className="flex justify-center items-center space-x-3">
@@ -28,14 +28,14 @@ const Plan: React.FC = () => {
           </p>
         </div>
 
-        <div className="w-full max-w-[15%] border p-4 rounded-lg flex flex-col justify-start ">
+        <div className="w-full md:max-w-[15%] border p-4 rounded-lg flex flex-col justify-start ">
           <p className="text-sm font-semibold">Credits</p>
           <p className="text-end">0</p>
         </div>
       </div>
 
       <div className="max-w-[1280px] mt-2 m-auto">
-        <div className="flex gap-10 items-center justify-center  ">
+        <div className="flex flex-wrap gap-10 items-center justify-center  ">
           <div
             onClick={() => {
               setSelector(!selector);
@@ -369,7 +369,7 @@ const Subscription: React.FC = () => {
       </div>
 
       {/* all jobs  */}
-      <div className="w-full   px-2 space-y-3 overflow-auto h-[75vh]">
+      <div className="w-full h-full   px-2 space-y-3 overflow-auto md:h-[75vh]">
         {jobFilters?.map((item, i) => {
           if (jobFilterIdx === i) {
             return <div key={i}>{item.component}</div>;
