@@ -101,7 +101,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <div
-      className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30 md:w-48 md:h-full md:static ' : 'left-[-100%] w-0 md:w-14  '} ${isDashboardMobileNav?'absolute h-screen left-[0%] z-30  ':'left-[-100%] w-0 '} `}
+      className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30   md:w-48 md:h-full md:static ' : 'left-[-100%]  md:w-14  '} ${isDashboardMobileNav?'absolute h-screen left-[0%] z-30':'left-[-200%] w-0  '} `}
     >
       <div className="w-full h-full ">
         <div className="flex justify-center items-center space-x-2 w-full p-4 ">

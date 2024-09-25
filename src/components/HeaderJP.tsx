@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Logo from '../assets/logo/hirehour.svg';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -19,23 +19,23 @@ import useHeaderContext from '../context/HeaderContext';
 const HeaderJP: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
-  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+  //   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const params = useLocation().pathname;
-  const { isDashboardOpen, setIsDashBoardOpen, setIsDashboardMobileNav ,isDashboardMobileNav} = useHeaderContext();
-  const pathname=useLocation().pathname.includes('/dashboard')
-   
+  const { isDashboardOpen, setIsDashBoardOpen, setIsDashboardMobileNav, isDashboardMobileNav } =
+    useHeaderContext();
+  const pathname = useLocation().pathname.includes('/dashboard');
 
-  useEffect(() => {
-    if (isNavOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
+  //   useEffect(() => {
+  //     if (isNavOpen) {
+  //       document.body.style.overflow = 'hidden';
+  //     } else {
+  //       document.body.style.overflow = 'auto';
+  //     }
 
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isNavOpen]);
+  //     return () => {
+  //       document.body.style.overflow = 'auto';
+  //     };
+  //   }, [isNavOpen]);
 
   return (
     <div className="w-full h-14 bg-white relative   ">
@@ -43,16 +43,23 @@ const HeaderJP: React.FC = () => {
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
           <div className="flex justify-center items-center space-x-3 ">
-            {pathname &&    <img
-              src={isDashboardOpen?dashLogoClose:dashLogoOpen}
-              className="w-7 h-7 cursor-pointer hidden md:block"
-              alt=""
-              onClick={() => setIsDashBoardOpen(!isDashboardOpen)}
-            />}
+            {pathname && (
+              <img
+                src={isDashboardOpen ? dashLogoClose : dashLogoOpen}
+                className="w-7 h-7 cursor-pointer hidden md:block"
+                alt=""
+                onClick={() => setIsDashBoardOpen(!isDashboardOpen)}
+              />
+            )}
 
-            <IoIosMenu size={40} onClick={() => setIsDashboardMobileNav(!isDashboardMobileNav)} className="md:hidden" />
+            {pathname && (
+              <IoIosMenu
+                size={40}
+                onClick={() => setIsDashboardMobileNav(!isDashboardMobileNav)}
+                className="md:hidden"
+              />
+            )}
 
-          
             <Link to={'/'}>
               <img src={Logo} className="w-36 h-10 object-contain" alt="logo-hirehour" />
             </Link>
@@ -60,27 +67,10 @@ const HeaderJP: React.FC = () => {
         </div>
         {/* Logo End  */}
 
-        {/* Right Header without signup */}
-
-        <div className="">
-          <div className="">
-            <div className="flex justify-center items-center space-x-5">
-              <p className="w-24 h-8 text-xs flex justify-center items-center border-[1px] rounded-full border-[#104B53] text-[#104B53]   cursor-pointer">
-                Sign In
-              </p>
-
-              <p className="text-xs tracking-wide hidden md:block ">
-                <Link to={''}> Employer </Link>/<Link to={'/job-poster'}> Job Poster</Link>
-              </p>
-            </div>
-          </div>
-        </div>
-        {/* Right Header without signup End */}
-
         {/* With SignIn */}
 
-        <div className="hidden md:flex justify-center items-center space-x-7   ">
-          <div className="flex justify-center items-center space-x-7">
+        <div className="  flex justify-center items-center space-x-7   ">
+          <div className="hidden md:flex justify-center items-center space-x-7">
             <Link to={'/messages'}>
               <div className=" flex flex-col  space-y-1 justify-center items-center cursor-pointer">
                 <img src={msgLogo} alt="rtr-header" className="w-5" />
