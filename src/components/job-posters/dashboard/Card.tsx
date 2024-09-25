@@ -104,7 +104,7 @@ export const Card: FC<CardProps> = ({ id, text, index, moveCard }) => {
         <div className="flex items-center">
         <GoGrabber className="cursor-move" size={20} />
 
-        <p className="text-sm text-[#114B53] font-semibold">{id}</p>
+        {/* <p className="text-sm text-[#114B53] font-semibold">{id}</p> */}
         </div>
         <FaRegEdit />
       </div>
