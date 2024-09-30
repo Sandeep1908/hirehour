@@ -26,7 +26,7 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
                     <img className='w-[46px] h-[46px]' src={data.img} alt="" />
                     <div className='h-auto'>
                         <p className='text-base font-semibold'>{data.title}</p>
-                        <ul className='flex  gap-4 md:gap-6 text-[12px] mt-1'>
+                        <ul className='flex  gap-4  text-[12px] mt-1'>
                            
                             <li>{data.company}</li>
                             <li>{data.designation}</li>
@@ -35,10 +35,10 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
                     </div>
                 </div>
                 <div className='flex gap-1 items-start ' >
-                <FaRegBookmark size={20}/>
+                <FaRegBookmark size={16}/>
                 <div className='relative '>
 
-                <LuMoreVertical size={25} onClick={()=>setIsShareModal(!isShareModal)} className='cursor-pointer '/>
+                <LuMoreVertical size={20} onClick={()=>setIsShareModal(!isShareModal)} className='cursor-pointer '/>
                 <div className={`  bg-[#FFFFFF]  shadow-md absolute top-9 right-0 rounded-lg flex flex-col  transition-all duration-300 ${isShareModal ? 'opacity-1 translate-y-[-10px] z-[40] ' : 'opacity-0 z-[-300]'}`}>
 
                     <div className="flex  items-center px-5 py-2 gap-2 cursor-pointer" onClick={()=>{setShowReport(true)}}>
@@ -69,13 +69,13 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
 
                 
                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                    <p className='text-[14px]'>{data.mode}</p>
+                    <p className='text-[12px]'>{data.mode}</p>
                 </div>
                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                    <p className='text-[14px]'>{data.pay} / hours</p>
+                    <p className='text-[12px]'>{data.pay} / hours</p>
                 </div>
                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                    <p className='text-[14px]'>{data.workTime}</p>
+                    <p className='text-[12px]'>{data.workTime}</p>
                 </div>
 
             </div>
@@ -108,8 +108,8 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
 
             <div className='flex justify-between items-center'>
                 <p className='text-[#A9A9A9] text-[10px] font-normal '>Posted 1 day ago</p>
-                 <div onClick={()=>{setIsOpen(true)}} className={`cursor-pointer w-[140px] h-[42px] flex justify-center items-center ${showIcon ? "bg-[#114B53]": "bg-[#E9F358]"}  rounded-full`} onMouseEnter={()=>{setShowIcon(!showIcon)}} onMouseLeave={()=>{setShowIcon(!showIcon)}}>
-                  {showIcon?   <BsFillLightningFill className='text-white' />:    <p className='text-[#114B53] text-base font-semibold'>Quick Apply</p> }
+                 <div onClick={()=>{setIsOpen(true)}} className={`cursor-pointer w-[120px] h-[32px] flex justify-center items-center ${showIcon ? "bg-[#114B53]": "bg-[#E9F358]"}  rounded-full`} onMouseEnter={()=>{setShowIcon(!showIcon)}} onMouseLeave={()=>{setShowIcon(!showIcon)}}>
+                  {showIcon?   <BsFillLightningFill className='text-white' />:    <p className='text-[#114B53] text-sm font-semibold'>Quick Apply</p> }
                  
 
                  </div>

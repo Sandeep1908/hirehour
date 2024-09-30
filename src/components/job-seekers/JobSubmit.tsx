@@ -13,7 +13,7 @@ const JobSubmit:React.FC = () => {
 
     <div className='z-[30] max-w-[600px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px]'>
         <div className='p-4  flex justify-between items-center'>
-            <p className='text-xl font-bold'>Apply to xyz Company</p>
+            <p className='text-lg font-bold'>Apply to xyz Company</p>
             <IoMdClose size={30}  className="cursor-pointer" />
         </div>
         <hr />

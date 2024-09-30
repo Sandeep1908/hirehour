@@ -4,7 +4,7 @@ import { IoMdAdd } from 'react-icons/io'
 
 const ShortListed:React.FC = () => {
   return (
-    <div id="filter" className='mt-3 px-4 max-w-[1200px] w-full flex gap-0 overflow-x-auto  relative z-[30] '>
+    <div id="filter" className='mt-3 px-4 max-w-[1200px] w-full flex gap-0 overflow-x-auto  '>
     <div className='flex'>
 
       <Container />

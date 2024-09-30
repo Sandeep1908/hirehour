@@ -196,7 +196,7 @@ const DashBoard: React.FC = () => {
       </div>
 
       {/* Main Content on the Right */}
-      <div className="flex-1 h-full    ">
+      <div className="w-full md:flex-1 h-full    ">
      
 
         <div className="w-[98%] m-auto h-full  md:h-[98%] mt-2  overflow-y-auto   bg-white rounded-lg ">
