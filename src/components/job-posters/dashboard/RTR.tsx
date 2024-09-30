@@ -5,7 +5,7 @@ import { IoMdClose } from 'react-icons/io';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import Logo from '../../../assets/logo/hirehour.png';
 
-
+ 
 type SendRTRModalProps = {
   isRTROpen: boolean;
   setIsRTROpen: (e: boolean) => void;
