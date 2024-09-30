@@ -9,12 +9,12 @@ const Pricing:React.FC = () => {
    
 
   return (
-    <div className='p-10 w-full h-[94vh]' >
-       <div className='max-w-[1280px] m-auto'>
-         <div className='w-full  px-5 py-4 bg-white rounded-lg'>
+    <div className='relative w-full h-auto md:h-[94vh]' >
+       <div className='max-w-[1280px] md:mt-5 m-auto pb-20'>
+         <div className='w-full  px-5  py-4 md:bg-white rounded-lg'>
                <p className='text-base font-semibold '>Please Select the plan to Post your Job Live</p>
          </div>
-         <div className="flex gap-10 items-center justify-center  mt-10">
+         <div className="flex flex-col  md:flex-row gap-10 items-center justify-center mt-4 md:mt-10">
           <div
             onClick={() => {
               setSelector(!selector);
@@ -91,8 +91,8 @@ const Pricing:React.FC = () => {
             </div>
           </div>
         </div>
-                   <div className='w-full flex justify-end px-10 mt-10 gap-10  items-center'>
-                            <p  className='cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
+                   <div className='fixed bottom-0 bg-white md:bg-transparent md:relative py-3  w-full  m-auto flex justify-center md:justify-end md:px-10 mt-10 gap-10  items-center'>
+                            <p  className='hidden md:block cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
                             <Link to={'/job-poster/payment'} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
                                 <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
                             </Link>

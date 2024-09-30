@@ -580,6 +580,8 @@ const AllApplications: React.FC = () => {
 
               </tbody>
             </table>
+
+
           </div>
         </div>
 
@@ -1135,7 +1137,7 @@ const ShortListedComponent: React.FC = () => {
           <div className='w-full  mt-2'>
 
 
-            <table className="w-full  table-auto">
+            <table className="hidded w-full  table-auto">
               <thead className=''>
                 <tr className='bg-[#F2F2F5] rounded-tl-lg rounded-tr-lg '>
                   <th className=' px-4  py-2 w-[35%]'> <div className='flex items-center gap-4'> <input className='border-[#D6DBDE] w-[18px] h-[18px]' type="checkbox" name="" id="" /> <p className='text-[12px]'>Candidate Name</p> </div></th>
@@ -1920,15 +1922,16 @@ const Applicants: React.FC = () => {
 
 
       <div className='  w-full h-auto'>
-        <div className="flex justify-between items-center p-3">
+        <div className="flex flex-col md:flex-row justify-between md:items-center p-3">
           <h1 className="text-sm font-semibold">Applicants</h1>
+          <hr className='mb-2' />
           <div className='flex gap-4'>
-            <div className='border-[1px] border-[#6B7588] rounded-lg   px-4 flex items-center gap-2'>
+            <div className='border-[1px] w-full md:w-auto border-[#6B7588] rounded-lg   px-4 flex items-center gap-2'>
             <CiSearch className='text-[#C7C9D9]' />
-            <input type="text" className='text-xs'  placeholder='Search Candidate'/>
+            <input type="text" className='h-6 w-full md:h-auto text-xs'  placeholder='Search Candidate'/>
 
             </div>
-            <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
+            <p className="hidden  w-24 h-8 md:flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
             Post a Job
           </p>
           </div>
@@ -1953,20 +1956,20 @@ const Applicants: React.FC = () => {
               );
             })}
           </ul>
-          <div onClick={() => { setAddCandidate(!addCandidate) }} className='w-fit text-[10px] rounded-full    px-3 py-1  cursor-pointer  flex justify-center items-center space-x-4 bg-[#104B53]'>
+          <div onClick={() => { setAddCandidate(!addCandidate) }} className='hidden w-fit text-[10px] rounded-full    px-3 py-1  cursor-pointer  md:flex justify-center items-center space-x-4 bg-[#104B53]'>
             <p className='text-xs text-white'>Add Candidate</p>
           </div>
         </div>
 
 
         <div>
-        <div className='flex px-4'>
+        <div className='flex px-4 overflow-auto'>
           {filterItems.map((items, id) => {
             return (
               <div key={id} onClick={() => { setItemId(id) }} className={`flex items-center gap-2 py-2 px-4 border-b-[1px] ${itemId === id ? "border-b-[#114B53]" : "border-b-white"}`}>
-                <p className='text-[12px] text-[#114B53]'>{items.label} </p>
-                <div className={`${itemId === id ? "bg-[#CAFDFC]" : "bg-[#F2F2F5]"}  rounded-full px-3  `}>
-                  <p className='text-[12px] '>{items.Number}</p>
+                <p className='text-[12px] text-[#114B53] w-max'>{items.label} </p>
+                <div className={`${itemId === id ? "bg-[#CAFDFC]" : "bg-[#F2F2F5]"} w-fit rounded-full px-3  `}>
+                  <p className='text-[12px]  '>{items.Number}</p>
                 </div>
               </div>
             )
@@ -1976,12 +1979,12 @@ const Applicants: React.FC = () => {
         </div>
 
 
-        <div className=' flex gap-2 mt-3 px-4'>
+        <div className='hidden   md:flex gap-2 mt-3 px-4  overflow-auto'>
 
-          <div className='relative z-[20]'>
-            <div onClick={() => setDropdown(1)} className={`cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
+          <div className='relative z-[60] '>
+            <div onClick={() => setDropdown(1)} className={`w-fi cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
                 ${isSelected === 1 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
-              <p className="text-[12px] font-semibold text-[#114B53]"> {selectedOptionAllJob ? selectedOptionAllJob : "All Filters"} </p>
+              <p className="w-fit text-[12px] font-semibold text-[#114B53]"> {selectedOptionAllJob ? selectedOptionAllJob : "All Filters"} </p>
               <FaCaretDown onClick={() => setDropdown(1)} className={`${dropdown === 1 ? 'rotate-180 transition-all duration-500' : ''}`} />
             </div>
 

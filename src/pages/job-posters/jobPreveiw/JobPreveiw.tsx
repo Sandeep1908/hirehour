@@ -32,7 +32,7 @@ const JobPreview: React.FC = () => {
 
 
     return (
-        <div className='w-full h-full pb-10 bg-white'>
+        <div className='w-full h-full pb-10 p-2 md:p-0 bg-white'>
            
             <div className='w-full max-w-[1280px] m-auto h-auto flex justify-center md:justify-between pt-7  md:px-10'>
                
@@ -41,14 +41,14 @@ const JobPreview: React.FC = () => {
                         <img className='object-cover w-full'   src={Job_banner} alt="" />
                         <div className='w-[95%] m-auto transition-all ease-in-out duration-1000'>
                             <div className=' flex  justify-between '>
-                                <div className='flex gap-2 items-center'>
-                                    <div className='relative w-[100px] h-[100px] '>
+                                <div className='flex flex-col md:flex-row md:gap-2 md:items-center'>
+                                    <div className='relative md:w-[80px] md:h-[80px] w-[60px] h-[60px] '>
 
                                         <img className='absolute top-[-20px]  w-full h-full' src={icon} alt="" />
                                     </div>
-                                    <div>
-                                        <p className='font-bold text-[24px]'>UI/UX Designer</p>
-                                        <ul className='flex list-disc gap-8 text-base mt-1'>
+                                    <div className='mt-[-10px] md:mt-0'>
+                                        <p className='font-bold text-lg'>UI/UX Designer</p>
+                                        <ul className='flex md:list-disc md:gap-8 text-sm md:mt-1'>
                                             <li>Figma</li>
                                             <li>Software</li>
                                             <li>Allen, Texas, US</li>
@@ -56,40 +56,40 @@ const JobPreview: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex justify-between items-center gap-4">
+                                <div className=" hidden md:flex justify-between items-center gap-4">
                                     <p className="text-[#A9A9A9] text-[12px] font-normal ">Posted 1 day ago</p>
                                     <div className=" px-6 py-3 bg-[#E9F358] rounded-full">
-                                        <p className="text-[#114B53] text-base font-semibold">Quick Apply</p>
+                                        <p className="text-[#114B53] text-sm font-semibold">Quick Apply</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div className={`h-auto transition-all ease-in-out duration-1000  `}>
-                                <div className='flex h-auto '>
+                                <div className='flex flex-col md:flex-row h-auto '>
                                     <div className='flex flex-col gap-4 mt-2 max-w-[450px] w-full'>
 
                                         <div className='flex gap-2'>
                                             <img src={Location2} alt="" />
                                             <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                <p className='text-[14px]'>Hybrid</p>
+                                                <p className='text-[12px]'>Hybrid</p>
                                             </div>
                                         </div>
                                         <div className='flex gap-2'>
                                             <img src={Location2} alt="" />
                                             <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                <p className='text-[14px]'>$58-$68 / hours</p>
+                                                <p className='text-[12px]'>$58-$68 / hours</p>
                                             </div>
                                         </div>
                                         <div className='flex gap-2'>
                                             <img src={Location2} alt="" />
                                             <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                <p className='text-[14px]'>Mid Senior level</p>
+                                                <p className='text-[12px]'>Mid Senior level</p>
                                             </div>
                                         </div>
                                         <div className='flex gap-2'>
                                             <img src={Location2} alt="" />
                                             <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                <p className='text-[14px]'>Visa Sponsorship
+                                                <p className='text-[12px]'>Visa Sponsorship
 
 </p>
                                             </div>
@@ -98,27 +98,27 @@ const JobPreview: React.FC = () => {
 
                                     </div>
 
-                                    <div className='border  bg-[#D6DBDE] '>
+                                    <div className='hidden md:block border  bg-[#D6DBDE] '>
 
                                     </div>
 
 
-                                    <div className='flex flex-col  gap-7 ml-4 justify-center'>
+                                    <div className='flex flex-col  gap-7 md:ml-4 mt-4 md:mt-0 justify-center'>
 
                                         <div className=''>
 
                                             <p className='text-[14px] text-[#3A3A3C] font-semibold'>Employment Type</p>
 
-                                            <div className='flex gap-2 mt-3'>
+                                            <div className='flex flex-wrap gap-2 mt-3'>
 
                                                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>Crop to Crop </p>
+                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>Crop to Crop </p>
                                                 </div>
                                                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>Contract to Hire </p>
+                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>Contract to Hire </p>
                                                 </div>
                                                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>Contract W2 </p>
+                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>Contract W2 </p>
                                                 </div>
 
 
@@ -129,17 +129,17 @@ const JobPreview: React.FC = () => {
 
 
 
-                                        <div className='mt-10'>
+                                        <div className=' md:mt-10'>
 
                                             <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
 
                                             <div className='flex gap-2 mt-3'>
 
                                                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>H1 Visa </p>
+                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>H1 Visa </p>
                                                 </div>
                                                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                    <p className='text-[14px] text-[#3A3A3C] font-medium'>Greencard </p>
+                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>Greencard </p>
                                                 </div>
                                             </div>
 
@@ -150,20 +150,20 @@ const JobPreview: React.FC = () => {
                                     </div>
                                 </div>
 
-                                <div className='mt-8'>
+                                <div className='mt-4  md:mt-8'>
 
                                     <p className='text-[14px] font-semibold'>Tech Stacks</p>
 
-                                    <div className='flex gap-2 mt-1'>
+                                    <div className='flex flex-wrap gap-2 mt-1'>
 
                                         <div className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                            <p className='text-[14px] font-semibold'>Figma </p>
+                                            <p className='text-[12px] font-semibold'>Figma </p>
                                         </div>
                                         <div className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                            <p className='text-[14px] font-semibold'>Adobe Creative suit</p>
+                                            <p className='text-[12px] font-semibold'>Adobe Creative suit</p>
                                         </div>
                                         <div className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                            <p className='text-[14px] font-semibold'>Design Thinking</p>
+                                            <p className='text-[12px] font-semibold'>Design Thinking</p>
                                         </div>
 
                                     </div>
@@ -180,22 +180,22 @@ const JobPreview: React.FC = () => {
                     </div>
 
                     <div className='p-5 overflow-x-hidden overflow-y-auto h-[550px]'>
-                        <p className='text-[20px] font-semibold'>Summary</p>
-                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p className='text-base font-semibold'>Summary</p>
+                        <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-                        <p className='text-[20px] font-semibold mt-3'>Job description</p>
-                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p className='text-base font-semibold mt-3'>Job description</p>
+                        <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-                        <p className='text-[20px] font-semibold mt-3'>Additional benefits</p>
-                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p className='text-base font-semibold mt-3'>Additional benefits</p>
+                        <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-                        <p className='text-[20px] font-semibold mt-3'>Notes</p>
-                        <p className='text-base text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                        <p className='text-base font-semibold mt-3'>Notes</p>
+                        <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
                         <div className='w-full flex justify-between items-center mt-10'>
                             <p className='text-[#8F90A6] text-[14px] font-normal '>Posted 1 day ago</p>
                             <div className=' px-6 py-2 bg-[#114B53] rounded-full'>
-                                <p className='text-white text-base font-semibold'>Report</p>
+                                <p className='text-white text-sm font-semibold'>Report</p>
                             </div>
                         </div>
                     </div>

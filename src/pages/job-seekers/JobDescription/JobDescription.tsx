@@ -586,7 +586,7 @@ const JobDescription: React.FC = () => {
 
                 {/* Job Cards And Job Description */}
 
-                <div className='w-full max-w-[1280px] m-auto   h-full flex justify-center md:justify-between pt-7  md:px-0'>
+                <div className='w-full max-w-[1280px] m-auto  overflow-auto   h-full flex justify-center md:justify-between pt-7  md:px-0'>
 
                     {/* Job Card Component */}
 
