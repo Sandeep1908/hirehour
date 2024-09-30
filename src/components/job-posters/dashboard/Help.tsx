@@ -63,7 +63,7 @@ const Help: React.FC = () => {
   ];
 
   return (
-    <div>
+    <div className='w-full h-full'>
       <div className="flex justify-between items-center p-3">
         <h1 className="text-sm font-semibold">Help</h1>
         <div className=" border rounded-lg ">
@@ -77,7 +77,7 @@ const Help: React.FC = () => {
       <hr />
 
       {/* all jobs  */}
-      <div className="w-full   p-5   overflow-auto h-[60vh] grid sm:grid-cols-3 md:grid-cols-4 place-items-center gap-3">
+      <div className="w-full   p-5   overflow-auto md:h-[60vh] grid grid-cols-2 md:grid-cols-4 place-items-center gap-3">
         {helpCards?.map((item, i) => {
           return (
             <div className="flex flex-col p-3 space-y-3 border rounded-lg max-w-44 h-44 " key={i}>

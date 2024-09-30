@@ -1,8 +1,7 @@
 import React from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { RiListSettingsLine } from 'react-icons/ri';
-import { RiUserSettingsLine } from 'react-icons/ri';
-import { VscNotebook } from 'react-icons/vsc';
+ 
 import { GoSignOut } from 'react-icons/go';
 import { Link } from 'react-router-dom';
 
@@ -15,25 +14,15 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
   const accountOptions = [
     {
       icon: <CgProfile />,
-      name: 'Profile',
-       link:'/profile'
+      name: 'User Profile',
+       link:'/job-poster/profile-setting'
     },
     {
       icon: <RiListSettingsLine />,
-      name: 'Job Preference',
-       link:'/job-preference'
+      name: 'Company Profile',
+       link:'/job-poster/company-profile-info'
     },
-
-    {
-      icon: <RiUserSettingsLine />,
-      name: 'Account Setting',
-      link:'/account'
-    },
-    {
-      icon: <VscNotebook />,
-      name: 'Our Blog',
-       link:''
-    },
+ 
   ];
   return (
     <div
@@ -42,12 +31,12 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
       <div className="flex flex-col justify-between items-center">
         <div className="flex justify-start items-center space-x-3 relative before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px] ">
           <p className="text-xs text-[#104B53] w-8 h-8 flex justify-center items-center bg-[#CBFFFC] rounded-full ">
-            J
+            M
           </p>
 
           <div className="flex flex-col">
-            <h1 className="text-sm">Johnson</h1>
-            <p className="text-[8px]">johnson@example.com </p>
+            <h1 className="text-sm">Mathew</h1>
+            <p className="text-[8px]">mathew@example.com </p>
           </div>
         </div>
 

@@ -19,7 +19,7 @@ const JobDescriptionBoard: React.FC = () => {
     },
   ];
   return (
-    <div className="w-full   pb-20 bg-[#F6F6F8]">
+    <div className="w-full   md:pb-20 bg-[#F6F6F8]">
       <div className="max-w-[1080px]  pt-2 rounded-lg m-auto">
         <div className=" bg-white">
           <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
@@ -38,7 +38,7 @@ const JobDescriptionBoard: React.FC = () => {
             <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-sm">
               <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-7 text-xs h-7 bg-[#104B53] text-white rounded-full">
+                  <span className="me-2 p-2 w-7 md:w-7 text-xs h-7 bg-[#104B53] text-white rounded-full">
                     <TiTick />
                   </span>
                   <p className="hidden text-[10px] w-[100px] md:block">Job Basis</p>
@@ -90,7 +90,7 @@ const JobDescriptionBoard: React.FC = () => {
                   <span className="text-red-500">*</span>
                 </div>
 
-                <div className="w-full grid grid-cols-4 gap-3">
+                <div className="w-full grid  sm:grid-cols-4 gap-3">
                   {/* Show pay by  */}
                   <div className="flex flex-col space-y-2">
                     <div className="flex text-xs ">
@@ -205,7 +205,7 @@ const JobDescriptionBoard: React.FC = () => {
 
                 <div className="w-full min-h-32 border rounded-lg flex flex-col space-y-4 p-2">
                   <p className="text-xs ">Suggested Benefits to add</p>
-                  <div className="w-full grid grid-cols-6 gap-5">
+                  <div className="w-full grid grid-cols-2 sm:grid-cols-4  md:grid-cols-6 gap-5 place-items-center">
                     {Array.from({ length: 9 }).map((_, id) => {
                       return (
                         <div

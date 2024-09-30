@@ -18,7 +18,7 @@ const ProfileSetting:React.FC=()=>{
     
     return(
         <div className="w-full  h-full bg-[#F2F2F5] p-2  relative" >
-            <div className=" w-full max-w-[1280px] h-90vh bg-white  m-auto mt-10 rounded-lg p-5">
+            <div className=" w-full max-w-[1280px] h-[90vh] bg-white  m-auto  rounded-lg p-5">
                   
                         <div className="w-full overflow-auto md:flex md:justify-between ">
                                 <ul className="w-screen  md:w-auto flex justify-start items-center space-x-6   ">
@@ -42,7 +42,7 @@ const ProfileSetting:React.FC=()=>{
 
 {/* Setting Box  */}
 
-                        <div className="w-full   max-w-[1200px] mt-10  h-full m-auto border border-[#E1E1E2] rounded-lg">
+                        <div className="w-full   max-w-[1200px] mt-10    m-auto border border-[#E1E1E2] rounded-lg">
 
                                         <div className="w-full h-full flex flex-col space-y-6 p-5">
 

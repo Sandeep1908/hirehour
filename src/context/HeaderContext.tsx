@@ -3,7 +3,9 @@ import { createContext, ReactNode, useContext, useState } from 'react';
  
 type HeaderContextTypes = {
   isDashboardOpen: boolean;
-  setIsDashBoardOpen: (e: boolean) => void;
+  isDashboardMobileNav:boolean,
+  setIsDashBoardOpen: (e: boolean) => void,
+  setIsDashboardMobileNav:(e:boolean)=>void
 };
 
  
@@ -17,11 +19,12 @@ const headerContext = createContext<HeaderContextTypes | undefined>(undefined);
 export const HeaderContextProvider: React.FC<HeaderContextProviderProps> = ({ children }) => {
  
   const [isDashboardOpen, setIsDashBoardOpen] = useState<boolean>(true);
+  const [isDashboardMobileNav,setIsDashboardMobileNav]=useState<boolean>(false)
   
 
   return (
    
-    <headerContext.Provider value={{ isDashboardOpen, setIsDashBoardOpen }}>
+    <headerContext.Provider value={{ isDashboardOpen, setIsDashBoardOpen,isDashboardMobileNav, setIsDashboardMobileNav }}>
       {children}
     </headerContext.Provider>
   );

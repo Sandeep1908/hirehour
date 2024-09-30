@@ -16,7 +16,7 @@ const JobBasis: React.FC = () => {
     },
   ];
   return (
-    <div className="w-full   pb-20 bg-[#F6F6F8]">
+    <div className="w-full  h-full  md:pb-20  ">
       <div className="max-w-[1080px]  pt-2 rounded-lg m-auto">
         <div className=" bg-white">
         <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
@@ -35,7 +35,7 @@ const JobBasis: React.FC = () => {
             <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-sm">
               <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-7 text-xs h-7 bg-[#104B53] text-white rounded-full">
+                  <span className="me-2 p-2 w-7 md:w-7 text-xs h-7 bg-[#104B53] text-white rounded-full">
                     1
                   </span>
                   <p className="hidden text-[10px] w-[100px] md:block">Job Basis</p>
@@ -72,7 +72,7 @@ const JobBasis: React.FC = () => {
 
       {/* Informations  */}
 
-      <div className="max-w-[1080px] h-full rounded-lg  mt-2  bg-white m-auto  pb-4">
+      <div className="max-w-[1080px]    rounded-lg  mt-2  bg-white m-auto  pb-4">
         <div className="w-full max-w-[1064px] m-auto pt-3 flex flex-col space-y-5">
           {/* Form  */}
 
@@ -87,7 +87,7 @@ const JobBasis: React.FC = () => {
                   <span className="text-red-500">*</span>
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid md:grid-cols-2 gap-3">
                   <div className="flex justify-start items-center space-x-4 ">
                     <div className="flex justify-center items-center space-x-3">
                       <input
@@ -138,7 +138,7 @@ const JobBasis: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full grid grid-cols-2 gap-3">
+              <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Job title  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -173,7 +173,7 @@ const JobBasis: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full grid grid-cols-2 gap-3">
+              <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Working Location  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -204,7 +204,7 @@ const JobBasis: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full grid grid-cols-2 gap-3">
+              <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Employment type  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -239,7 +239,7 @@ const JobBasis: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full grid grid-cols-2 gap-3">
+              <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Work Authorization   */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -274,7 +274,7 @@ const JobBasis: React.FC = () => {
                 </div>
               </div>
 
-              <div className="w-full grid grid-cols-2 gap-3">
+              <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Experience level*   */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -313,7 +313,7 @@ const JobBasis: React.FC = () => {
 
           {/* buttons  */}
 
-          <div className="flex w-full  justify-between md:justify-end items-center  space-x-4">
+          <div className="flex w-full p-2  justify-between md:justify-end items-center  space-x-4">
             <Link
               to={''}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer border border-[#104B53] text-[#104B53]"
