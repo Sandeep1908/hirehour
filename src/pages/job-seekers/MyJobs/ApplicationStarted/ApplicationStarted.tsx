@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { MdDeleteOutline } from "react-icons/md";
 
 
-const MyJobs: React.FC = () => {
+const ApplicationStarted: React.FC = () => {
     const [activeCard, setActiveCard] = useState<number | null>(null);
   const titles = [
     {
@@ -108,7 +108,7 @@ const MyJobs: React.FC = () => {
           <ul className="w-full flex">
             {tags?.map((item, id) => {
               return (
-                <Link to={item.link} className={` text-xs  font-[500]  p-5 ${id===0?'text-[#104B53]':''}`} key={id} >
+                <Link to={item.link} className={` text-xs  font-[500]  p-5 ${id===2?'text-[#104B53]':''}`} key={id} >
                   {item.lable} {item.count}
                 </Link>
               );
@@ -121,7 +121,7 @@ const MyJobs: React.FC = () => {
 
         <div className="w-full max-w-[1200px] p-5 h-[100vh] m-auto border border-[#E1E1E2] rounded-lg">
           <div className="flex flex-col space-y-3">
-            <h1 className="text-sm font-semibold">Applied</h1>
+            <h1 className="text-sm font-semibold">Application Started</h1>
             <div className="flex items-center space-x-5">
               <p className="text-xs">8 Job</p>
               <p className="border border-[#E1E1E2]  text-xs p-2 rounded-full">
@@ -131,7 +131,7 @@ const MyJobs: React.FC = () => {
           </div>
 
           <div className="w-full mt-10 flex justify-around flex-wrap items-center gap-5">
-            {Array.from({ length: 9 }).map((_, id) => {
+            {Array.from({ length: 4 }).map((_, id) => {
               return (
                 <div
                   key={id}
@@ -217,4 +217,4 @@ const MyJobs: React.FC = () => {
   );
 };
 
-export default MyJobs;
+export default ApplicationStarted;

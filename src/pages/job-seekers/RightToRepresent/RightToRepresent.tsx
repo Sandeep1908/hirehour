@@ -4,12 +4,14 @@ import { MdOutlineFileDownload } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Logo from '../../../assets/logo/hirehour.png';
+import ViewRTR from '../../../components/common/ViewRTR';
  
  
 const RightToRepresent: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
   const [isSignRTR, setIsSignRTR] = useState<boolean>(false);
   const [isPreviewRTR, isSetPreviewRTR] = useState<boolean>(false);
+  const [isViewRTROpen,setIsViewRTROpen] =useState<boolean>(false)
  
   useEffect(() => {
     if (isRTROpen || isSignRTR || isPreviewRTR) {
@@ -224,7 +226,7 @@ const RightToRepresent: React.FC = () => {
                   <div className="flex justify- space-x-3 items-center">
                     <MdOutlineFileDownload size={20} color="#104B53" />
                     <p className="text-[#104B53] text-sm font-[600]">Export</p>
-                    <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+                    <p onClick={()=>setIsViewRTROpen(true)} className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
                       View
                     </p>
                   </div>
@@ -1072,6 +1074,11 @@ const RightToRepresent: React.FC = () => {
           </div>
         </div>
       </div>
+
+
+
+      <ViewRTR  isViewRTROpen={isViewRTROpen} setIsViewRTROpen={setIsViewRTROpen}/>
+    
     </div>
   );
 };
