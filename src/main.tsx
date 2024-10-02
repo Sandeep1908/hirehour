@@ -43,6 +43,15 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import ProfileSetting from './pages/job-posters/userprofile/Profile.tsx';
 import CompanyProfileSettings from './pages/job-posters/userprofile/CompanyProfielSettings.tsx';
 import Review from './pages/job-posters/job-board/Review/Review.tsx';
+import JobPreferenceTemplate from './pages/emails/JobPreferenceTemplate.tsx';
+import SavedJobs from './pages/job-seekers/MyJobs/Saved/SavedJobs.tsx';
+import ApplicationStarted from './pages/job-seekers/MyJobs/ApplicationStarted/ApplicationStarted.tsx';
+import Interviewing from './pages/job-seekers/MyJobs/Interviewing/Interviewing.tsx';
+import OfferReceived from './pages/job-seekers/MyJobs/OfferReceived/OfferReceived.tsx';
+import JobPostedTemplates from './pages/emails/JobPostedTemplates.tsx';
+import MessageTemplate from './pages/emails/MessageTemplates.tsx';
+import MessageOneTemplate from './pages/emails/MessageOneTemplate.tsx';
+ 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -57,6 +66,17 @@ const router = createBrowserRouter(
       <Route path="/review-form" element={<ReviewInfo />} />
       {/* Myjobs  */}
       <Route path="/myjobs" element={<MyJobs />} />
+      <Route path="/myjobs-saved" element={<SavedJobs />} />
+      <Route path="/myjobs-application-started" element={<ApplicationStarted />} />
+ 
+      <Route path="/myjobs-interviewing" element={<Interviewing />} />
+      <Route path="/myjobs-offer-received" element={<OfferReceived />} />
+
+
+
+
+
+
       {/* Right To Represent  */}
       <Route path="/right-to-represent" element={<RightToRepresent />} />
       <Route path="/rtr-accepted" element={<Accepted />} />
@@ -75,6 +95,15 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
 
+
+
+
+
+
+
+
+
+
       {/* job posters routes  */}
       <Route path="/job-poster" element={<JobPosterHome />} />
       <Route path="/job-poster/job-basis" element={<JobBoard />} />
@@ -89,6 +118,17 @@ const router = createBrowserRouter(
       <Route path="/job-poster/company-profile-info" element={<CompanyProfileSettings />} />
 
 
+
+    {/* Email Templates  */}
+
+      <Route path="/email/job-preference" element={<JobPreferenceTemplate />} />
+      <Route path="/email/job-posted" element={<JobPostedTemplates />} />
+      <Route path="/email/messages" element={<MessageTemplate />} />
+      <Route path="/email/messages-one" element={<MessageOneTemplate />} />
+
+
+
+      
       
       
 
