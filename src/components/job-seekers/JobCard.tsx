@@ -118,7 +118,7 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
             </div>
 
 
-            {showReport &&<ReportJob setShowReport={setShowReport} showReportDetail={showReportDetail} setShowReportDetail={setShowReportDetail}  /> }
+            {showReport &&<ReportJob setShowReport={setShowReport}  setShowReportDetail={setShowReportDetail}  /> }
             {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail} /> }
 
             

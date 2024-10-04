@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect,  useState } from 'react'
 import search_icon from '../../../assets/search-icon.svg'
 import Location from '../../../assets/location.svg'
 import Location2 from '../../../assets/location2.svg'
 import JobCard from '../../../components/job-seekers/JobCard'
 import Job_banner from '../../../assets/Rectangle.png'
-import { FaChevronUp } from "react-icons/fa6";
-import { FaChevronDown } from "react-icons/fa";
+// import { FaChevronUp } from "react-icons/fa6";
+// import { FaChevronDown } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { CiFilter } from "react-icons/ci";
@@ -166,32 +166,31 @@ const JobDescription: React.FC = () => {
     };
 
 
-    const [isOpen, setIsOpen] = useState(true); // Initially open
-    const [height, setHeight] = useState('0px');
-    const contentRef = useRef(null);
+    // const [isOpen, setIsOpen] = useState(true); 
+    // const [height, setHeight] = useState('0px');
+    // const contentRef = useRef(null);
   
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setIsOpen(false);
-      }else{
-        setIsOpen(true);
-      }
-    };
+    // const handleScroll = () => {
+    //   if (window.scrollY > 300) {
+    //     setIsOpen(false);
+    //   }else{
+    //     setIsOpen(true);
+    //   }
+    // };
   
-    useEffect(() => {
-      // Set initial height to open the description
-      setHeight(isOpen ? '225px' : '0px');
-    }, [isOpen]);
+    // useEffect(() => {
+    //   // Set initial height to open the description
+    //   setHeight(isOpen ? '225px' : '0px');
+    // }, [isOpen]);
   
-    useEffect(() => {
-      // Add scroll event listener
-      window.addEventListener('scroll', handleScroll);
+    // useEffect(() => {
+    //   // Add scroll event listener
+    //   window.addEventListener('scroll', handleScroll);
   
-      // Clean up event listener when component unmounts
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []);
+    //   return () => {
+    //     window.removeEventListener('scroll', handleScroll);
+    //   };
+    // }, []);
   
 
 

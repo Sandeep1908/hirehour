@@ -4,10 +4,10 @@ import { IoMdClose } from 'react-icons/io'
 type ReportJobProps={
   setShowReport : (arg:boolean) => void
   setShowReportDetail : (arg:boolean) => void
-  showReportDetail:boolean
+  
 }
 
-const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportDetail,showReportDetail}) => {
+const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportDetail}) => {
 
 
    const continueDetail=()=>{
