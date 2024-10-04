@@ -3,7 +3,8 @@ import { BsFillLightningFill } from "react-icons/bs";
 import { LuMoreVertical } from 'react-icons/lu';
 import { FaFlag, FaRegBookmark } from 'react-icons/fa6';
 import { MdShare } from 'react-icons/md';
-import ReportJob from './ReportJob';
+import ReportJob from './report-job/ReportJob';
+import ReportDetal from './report-job/ReportDetail';
 
 type JobCardProps={
     jobDataId:number,
@@ -16,10 +17,11 @@ type JobCardProps={
 const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
     const [showIcon, setShowIcon] = useState<boolean>(false);
     const [showReport, setShowReport] = useState<boolean>(false);
+    const [showReportDetail, setShowReportDetail] = useState<boolean>(false);
     const [isShareModal,setIsShareModal]=useState<boolean>(false)
 
     return (
-        <div onClick={()=>{setId(data.id)}} className={`${jobDataId === data.id ?"border-black":""} w-full h-auto p-3   md:px-3 py-5 border-2   rounded-xl flex flex-col gap-3 md:gap-5 `}>
+        <a href='#mainJobDescription' onClick={()=>{setId(data.id)}} className={`${jobDataId === data.id ?"border-black":""} w-full h-auto p-3   md:px-3 py-5 border-2   rounded-xl flex flex-col gap-3 md:gap-5 `}>
             <div className='w-full flex justify-between'>
                 
                 <div className='flex gap-2'>
@@ -116,12 +118,13 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
             </div>
 
 
-            {showReport ?<ReportJob setShowReport={setShowReport} />:" " }
+            {showReport &&<ReportJob setShowReport={setShowReport} showReportDetail={showReportDetail} setShowReportDetail={setShowReportDetail}  /> }
+            {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail} /> }
 
             
-        </div>
+        </a>
       
- 
+           
     
 
   );

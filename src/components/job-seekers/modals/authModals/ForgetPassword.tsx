@@ -1,8 +1,13 @@
 import React from 'react'
 
-const ForgetPassword:React.FC = () => {
+type VerifyProps={
+  setVerification: (e:boolean)=>void,
+  verification:Boolean
+}
+
+const ForgetPassword:React.FC<VerifyProps> = ({setVerification,verification}) => {
   return (
-    <div className='w-full h-[100vh]'>
+    <div className='absolute top-0 w-full h-[100vh]'>
         <div className='w-full h-full absolute bg-black opacity-80 z-10'>
 
         </div>
@@ -14,9 +19,9 @@ const ForgetPassword:React.FC = () => {
                     
                     <label htmlFor="" className='text-[#8F90A6] font-medium'> Email</label>
                     <input type="text" className='w-full h-[54px] border-2 rounded-lg border-[#EBEBF0]' />
-                    <button className='w-full h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                    <div onClick={()=>{setVerification(!verification)}} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
                       Continue
-                    </button>
+                    </div>
                 </form>
            </div>
        </div>
