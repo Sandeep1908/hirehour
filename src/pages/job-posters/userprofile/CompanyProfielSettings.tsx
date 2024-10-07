@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
  
 import { FaEdit } from 'react-icons/fa';
@@ -13,11 +13,12 @@ import companysizeIco from '../../../assets/companyprofile/companysize.png'
 
 import foundedIco from '../../../assets/companyprofile/founded.png'
 import companyDescriptionIcon from '../../../assets/companyprofile/companydescription.png'
+import { IoMdClose } from 'react-icons/io';
 
-
+import { MdDeleteOutline } from 'react-icons/md';
 
 const CompanyProfileSettings: React.FC = () => {
-  
+  const [isEditModalOpen,setIsEditModalOpen]=useState<boolean>(false)
   const titles = [
     {
       label: 'User Profile',
@@ -30,6 +31,11 @@ const CompanyProfileSettings: React.FC = () => {
   ];
 
   const data=[
+    {
+      lable:'Company Name',
+      icon:locationIco,
+      description:'XYZ'
+  },
     {
         lable:'Location',
         icon:locationIco,
@@ -81,8 +87,8 @@ const CompanyProfileSettings: React.FC = () => {
             })}
           </ul>
 
-          <div className="flex  text-xs text-[#104B53] justify-center items-center space-x-1">
-            <FaEdit color="#104B53" size={15} />
+          <div className="flex cursor-pointer  text-xs text-[#104B53] justify-center items-center space-x-1  " onClick={()=>setIsEditModalOpen(true)}>
+            <FaEdit color="#104B53" size={15}  />
             Edit
           </div>
         </div>
@@ -136,6 +142,116 @@ const CompanyProfileSettings: React.FC = () => {
 
       </div>
 
+
+      {/* Edit company profile  */}
+
+      <div className={`w-full h-full absolute    inset-0 transition-all duration-300 ${isEditModalOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-100]'}`}>
+              <div className='max-w-2xl bg-white shadow-lg h-[99%] px-4 m-auto'>
+              <div className='flex justify-between items-center p-3'>
+                <p className='text-sm font-[500]'>Company Profile</p>
+                <IoMdClose size={20} className='cursor-pointer' onClick={()=>setIsEditModalOpen(false)}/>
+              </div>
+              <hr />
+
+              <div className='flex justify-between items-center p-2'>
+                <p className='text-xs font-[500]'>Company cover</p>
+                <div className="flex justify-end items-center space-x-4">
+                <div className="flex items-center  ">
+                  <FaEdit size={14} color="#104B53" />
+                  <p className="text-[#104B53] text-xs" >Edit</p>
+                </div>
+
+                <div className="flex items-center ">
+                  <MdDeleteOutline color="#104B53" size={14} />
+                  <p className="text-[#104B53] text-xs">Delete</p>
+                </div>
+              </div>
+              </div>
+              <div className="w-full  h-40   bg-white relative">
+           
+            <div className="w-full h-24 bg-[#F2F2F5] rounded-tl-lg">
+              <img src={bgCompany} alt="" className="  w-full h-full object-cover" />
+            </div>
+
+            <div className='w-full   mt-2   '>
+            <div className="w-full flex flex-col space-y-2 justify-center items-start      ">
+            <p className=' text-xs font-[500] text-center'>Company cover</p>
+
+            <div className='flex justify-center items-end space-x-3'>
+            <img src={bgIcon} alt="" className="  object-contain  w-20 h-20" />
+
+            <div className="flex justify-end items-center space-x-4">
+                <div className="flex items-center  ">
+                  <FaEdit size={14} color="#104B53" />
+                  <p className="text-[#104B53] text-xs" >Edit</p>
+                </div>
+
+                <div className="flex items-center ">
+                  <MdDeleteOutline color="#104B53" size={14} />
+                  <p className="text-[#104B53] text-xs">Delete</p>
+                </div>
+              </div>
+            </div>
+             
+             
+            </div>
+     
+            </div>
+
+
+             
+            <div className="w-full grid grid-cols-2 gap-3 mt-6">
+
+            {data?.map((item,i)=>{
+
+              if(item.lable !=='Company Description'){
+                return(
+                  <div key={i} className="flex flex-col space-y-2">
+                <div className="flex text-xs ">
+                  <label htmlFor="">{item.lable}</label>
+                </div>
+
+                <input
+                  type="text"
+                  placeholder=""
+                  value={item.description}
+                  className="p-2 border border-[#EBEBF0] rounded-md text-[10px]  placeholder:text-[10px]"
+                />
+              </div>
+                )
+              }
+              else{
+                    return(
+                      <div key={i} className="flex flex-col col-span-2 space-y-2">
+                      <div className="flex text-xs ">
+                        <label htmlFor="">{item.lable}</label>
+                      </div>
+      
+                      <textarea
+                      
+                       
+                        value={item.description}
+                        className="p-2 border border-[#EBEBF0] min-h-28 rounded-md text-[10px]  placeholder:text-[10px]"
+                      />
+                    </div>
+                    )
+              }
+                
+              })}
+
+
+         
+
+               
+            </div>
+ 
+            <div className='flex justify-end items-center w-full mt-3'>
+                <p className='text-xs w-20 h-7 rounded-full flex justify-center items-center bg-[#E9F358] text-[#104B53]'>Update</p>
+              </div>
+
+          </div>
+              </div>
+      </div>
       
     </div>
   );
