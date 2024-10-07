@@ -8,71 +8,28 @@ import { MdOutlineAttachment } from "react-icons/md";
 import { LuSendHorizonal } from "react-icons/lu";
 
 
-const Message : React.FC =()=>{
+const MessageJP : React.FC =()=>{
 
     const [isShareModal,setIsShareModal]=useState<boolean>(false)
-    console.log(isShareModal);
-    const titles = [
-        {
-            label:'My Jobs',
-            link:'/myjobs'
-        },
-        {
-            label:'Right To Represent',
-            link:'/right-to-represent'
-        },{
-            label:'Messages',
-            link:'/messages'
-        }
-      ];
+   
     
     return(
         <div className="w-full  min-h-[calc(100vh-70px)]  bg-[#F2F2F5]   " >
             <div className=" w-full max-w-[1280px]  sm:flex justify-start items-start h-full   m-auto sm:mt-3  rounded-lg ">
                         
 
-
-            <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg  w-full sticky top-2   mr-2 max-w-[200px] ">
-          <ul className="w-full  flex flex-col justify-start items-end h-[150px]        relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
-            {titles?.map((item, id) => {
-              return (
-                <Link
-                  to={item.link}
-                  className={`w-full text-xs  text-center  border-b  p-4     transition-all duration-300    font-[500]  ${id == 2 ? ' border-[#104B53]   text-[#104B53] ' : ' '}  `}
-                  key={id}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-          </ul>
-        </div>
+ 
 
 
                                    
-
-        <div className="w-full overflow-auto sm:hidden bg-white p-4">
-            <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
-              {titles?.map((item, id) => {
-                return (
-                  <Link
-                    to={item.link}
-                    className={`text-sm p-2 w-full font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
-                    key={id}
-                  >
-                    {item.label}
-                  </Link>
-                );
-              })}
-            </ul>
-          </div>
+ 
 
 {/* Message box  */}
 
                         <div className="w-full flex max-w-[1200px] bg-white  p-2   h-[90vh] m-auto border border-[#E1E1E2] rounded-lg">
                             {/* left Side bar  */}
 
-                            <div className="w-full  p-5 flex flex-col space-y-6  md:max-w-[307px] h-full border border-[#D6DBDE] rounded-lg ">
+                            <div className="w-full  p-5 flex flex-col space-y-6  md:max-w-[307px] h-[99%] border border-[#D6DBDE] rounded-lg ">
                                     <div className="flex justify-between items-center p-4">
                                         <h1 className="text-lg font-semibold text-[#104B53]">Messages</h1>
                                         <FaEdit color="#104B53" size={20}/>
@@ -87,7 +44,26 @@ const Message : React.FC =()=>{
                                     </div>
 
 
+                                    <div className="w-full p-1 ">
+
+                                 
+                                       <ul className="flex justify-center items-center space-x-3 w-full ">
+                                        <li className="text-xs bg-[#104B53] p-2 text-center text-white w-full rounded-md">Posted jobs</li>
+                                        <li className="text-xs p-2 w-full text-center  ">Resume Sourcing</li>
+
+                                       </ul>
+
+
+</div>
+
+
+
+
+
                                     <div className="w-full flex flex-col space-y-4 h-[99%] overflow-auto">
+                                                
+
+                                               
                                                 <div className="flex justify-center space-x-2 items-start bg-[#EFFDFD] p-3  border-l-4 border-[#104B53] ">
                                                         <p className="w-full max-w-[50px] h-[48px] rounded-full bg-[#F8C4C4]"></p>
                                                         <div className="w-full flex justify-between items-start">
@@ -103,6 +79,8 @@ const Message : React.FC =()=>{
                                                            
                                                         </div>
                                                 </div>
+
+                                                
 
 
 
@@ -315,4 +293,4 @@ const Message : React.FC =()=>{
 
 
 
-export default Message;
+export default MessageJP;

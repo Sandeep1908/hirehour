@@ -4,6 +4,7 @@ import { IoMdClose } from 'react-icons/io';
 
 import { MdOutlineFileDownload } from 'react-icons/md';
 import Logo from '../../../assets/logo/hirehour.png';
+import { Link } from 'react-router-dom';
 
  
 type SendRTRModalProps = {
@@ -1091,9 +1092,9 @@ const RTR: React.FC = () => {
     <div>
       <div className="flex justify-between items-center p-2">
         <h1 className="text-sm font-semibold">Right To Represent</h1>
-        <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
+        <Link to='/job-poster/job-basis' className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
           Post a Job
-        </p>
+        </Link>
       </div>
       <hr />
 

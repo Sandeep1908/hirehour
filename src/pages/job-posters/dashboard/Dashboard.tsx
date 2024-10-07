@@ -6,7 +6,7 @@ import useHeaderContext from '../../../context/HeaderContext';
 import MyJobsDashBoard from '../../../components/job-posters/dashboard/MyJobsDashBoard';
 import Subscription from '../../../components/job-posters/dashboard/Subscription';
 import Help from '../../../components/job-posters/dashboard/Help';
-import { useLocation ,useNavigate} from 'react-router-dom';
+import { Link, useLocation ,useNavigate} from 'react-router-dom';
 import Applicants from '../../../components/job-posters/dashboard/Applicants';
 import Cohiring from '../../../components/job-posters/dashboard/Cohiring';
 import RTR from '../../../components/job-posters/dashboard/RTR';
@@ -104,7 +104,7 @@ const Sidebar: React.FC = () => {
       className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30   md:w-48 md:h-full md:static ' : 'left-[-100%]  md:w-14  '} ${isDashboardMobileNav?'absolute h-screen left-[0%] z-30':'left-[-200%] w-0  '} `}
     >
       <div className="w-full h-full ">
-        <div className="flex justify-center items-center space-x-2 w-full p-4 ">
+        <Link to='/job-poster/job-basis' className="flex justify-center items-center space-x-2 w-full p-4 ">
           <FiPlus size={14} className="font-[700]" />
           <p
             className={`text-xs w-full font-[500] text-[#3A3A3C] ${isDashboardOpen ? 'block' : 'hidden'} `}
@@ -112,7 +112,7 @@ const Sidebar: React.FC = () => {
             Create new job
           </p>
           <IoIosArrowForward size={10} className={`${isDashboardOpen ? 'block' : 'hidden'}`} />
-        </div>
+        </Link>
 
         <ul className="w-full flex flex-col justify-center items-center mt-4">
           {sideBarItems?.map((item, i) => {
