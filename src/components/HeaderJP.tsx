@@ -71,7 +71,7 @@ const HeaderJP: React.FC = () => {
 
         <div className="  flex justify-center items-center space-x-7   ">
           <div className="hidden md:flex justify-center items-center space-x-7">
-            <Link to={'/messages'}>
+            <Link to={'/job-poster/messages'}>
               <div className=" flex flex-col  space-y-1 justify-center items-center cursor-pointer">
                 <img src={msgLogo} alt="rtr-header" className="w-5" />
                 <p
