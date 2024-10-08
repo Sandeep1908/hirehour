@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSettingsKnobs } from "react-icons/gi";
+import { Link } from 'react-router-dom';
 
 
 const ActiveJobs: React.FC = () => {
@@ -306,9 +307,9 @@ const MyJobsDashBoard: React.FC = () => {
     <div>
       <div className="flex justify-between items-center p-2">
         <h1 className="text-sm font-semibold">My Jobs</h1>
-        <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
+        <Link to={'/job-poster/job-basis'} className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
           Post a Job
-        </p>
+        </Link>
       </div>
       <hr />
 

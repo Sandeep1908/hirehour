@@ -1,10 +1,41 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {IoMdClose} from 'react-icons/io'
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Timer from "../../../components/job-seekers/modals/authModals/Timer";
 
 const AccountSetting:React.FC=()=>{
-    const [isChangeEmail,setIsChangeEmail]=useState<boolean>(false)
-    const titles = [
+    const [isInputModalOpen,setIsInputModalOpen]=useState<boolean>(false)
+    const[isNewPasswordOpen,setIsNewPasswordOpen]=useState<boolean>(false)
+
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+    const [isSuccessOpen, setIsSuccessOpen] = useState<boolean>(false);
+
+
+    
+
+      const [otp, setOtp] = useState(new Array(6).fill(""));
+
+      const handleChange = (element: HTMLInputElement, index: number): void => {
+        if (isNaN(Number(element.value))) return;  // Only allow numbers
+    
+        setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
+    
+        // Focus next input
+        if (element.nextSibling && element.value) {
+          (element.nextSibling as HTMLInputElement).focus();
+        }
+      };
+    
+      const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const enteredOtp = otp.join("");
+        console.log("Entered OTP: ", enteredOtp);
+      };
+
+
+      const titles = [
         {
             label:'Profile Settings',
             link:'/account'
@@ -73,7 +104,7 @@ const AccountSetting:React.FC=()=>{
                                                         </div>
                                                         
 
-                                                        <p className="p-2 w-full md:w-auto text-[#104B53] text-xs text-center rounded-full border border-[#104B53]" onClick={()=>setIsChangeEmail(true)}>Change password</p>
+                                                        <p className="p-2 w-full md:w-auto text-[#104B53] text-xs text-center rounded-full border border-[#104B53]" onClick={()=>setIsInputModalOpen(true)}>Change password</p>
                                                     </div>
 
 
@@ -121,26 +152,133 @@ const AccountSetting:React.FC=()=>{
             </div>
 
 
-<div className={`w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500  ${isChangeEmail ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}`}>
+{/* // Taking OTP */}
+<div className={`w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500  ${isInputModalOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}`}>
 <div className='w-full h-screen absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
        <div className='w-full h-full flex justify-center items-center'>
       
-           <div className='relative z-20 w-[617px]   bg-white rounded-lg p-10 flex flex-col gap-3'>
-            <div className="flex justify-end cursor-pointer"> <IoMdClose size={40} color="#585858" onClick={()=>setIsChangeEmail(false)} /></div>
-                <p className='font-bold text-2xl text-[#114B53]'>Change Password</p>
-                <p className='text-base font-normal text-[#C7C9D9] '>Enter your email for the verification process, we will send 4 digits code to your email.</p>
-                <form action="" className='h-full flex flex-col justify-between'>
+           <div className='relative z-20 w-[400px]    bg-white rounded-lg p-3 flex flex-col gap-3'>
+            <div className="flex justify-end cursor-pointer"> <IoMdClose size={30} color="#585858" onClick={()=>setIsInputModalOpen(false)} /></div>
+                <p className='font-bold text-lg text-[#114B53]'>Enter OTP</p>
+                <p className='text-xs font-normal text-[#C7C9D9] '>Enter your 6 digits code that you received on your email.</p>
+                <form onSubmit={handleSubmit} className="w-full flex space-x-2 justify-evenly items-center">
+                    {otp.map((data, index) => (
+                        <input
+                        key={index}
+                        type="text"
+                        maxLength={1}
+                        value={data}
+                        onChange={(e) => handleChange(e.target, index)}
+                        onFocus={(e) => e.target.select()}
+                        className="w-full max-w-10 h-10   border"
+                        />
+                    ))}
+      
+    </form>
+
+                    <Timer/>
+
+                    <p className="w-full h-12 bg-[#104B53] text-white flex justify-center items-center text-xs rounded-lg" onClick={()=>setIsNewPasswordOpen(true)}>Continue</p>
+
+                    <p className="text-[10px] text-center text-[#C8C9D9]">If you didn’t receive a code! <span className="text-red-500">Resend</span></p>
+           </div>
+     
+       </div>
+    </div>
+
+
+
+
+
+
+{/* Taking new password  */}
+
+
+    <div className={`w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500  ${isNewPasswordOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}`}>
+        <div className='w-full h-full absolute bg-black opacity-40 z-10' onClick={()=>setIsNewPasswordOpen(false)}>
+
+        </div>
+       <div className='w-full h-full flex space-y-2 justify-center items-center'>
+           <div className='relative z-20 w-[450px]    bg-white rounded-lg p-4 flex flex-col gap-3'>
+                <p className='font-bold text-lg text-[#114B53]'>New Password</p>
+                <p className='text-xs font-normal text-[#C7C9D9]   '>Set the new password for your account </p>
+                <div  className='h-full flex flex-col justify-between'>
                     
-                    <label htmlFor="" className='text-[#8F90A6] font-medium'> Email</label>
-                    <input type="text" className='w-full h-[54px] border-2 rounded-lg border-[#EBEBF0]' />
-                    <button  className='w-full h-[58px] mt-5 font-semibold text-base text-white rounded-lg bg-[#114B53]'>
-                      Continue
+                <div className=' w-full'>
+                         <label htmlFor="firstName" className='text-xs text-[#8F90A6]'>
+                         Enter new password <span className='text-[#E71717]'>*</span>
+                         </label>
+                         <div className='relative w-full   mt-2'>
+
+                         <input type={showPassword?'text':'password'} className='border  p-2 border-[#E1E1E2] w-full h-full rounded-lg' />
+                         <button
+                               type="button"
+                               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                               onClick={()=>{setShowPassword(!showPassword)}}
+                           >
+                               {showPassword ? <FaEyeSlash /> : <FaEye />}
+                           </button>
+                         </div>
+                     </div>
+                <div className=' w-full'>
+                         <label htmlFor="firstName" className='text-base text-[#8F90A6]'>
+                         Confirm password <span className='text-[#E71717]'>*</span>
+                         </label>
+                         <div className='relative w-full   mt-2'>
+
+                         <input type={showConfirmPassword?'text':'password'} className='p-2 border  border-[#E1E1E2] w-full h-full rounded-lg' />
+                         <button
+                               type="button"
+                               className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                               onClick={()=>{setShowConfirmPassword(!showConfirmPassword)}}
+                           >
+                               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                           </button>
+                         </div>
+                     </div>
+                     <button onClick={()=>setIsSuccessOpen(true)} className='w-full h-12 mt-5 font-semibold text-xs text-white rounded-lg bg-[#114B53]'>
+                     Update password
                     </button>
-                </form>
+                </div>
            </div>
        </div>
     </div>
+
+
+
+{/* Submit  */}
+
+
+    <div className={`w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500  ${isSuccessOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}`}>
+        <div className='w-full h-full absolute bg-black opacity-40 z-10' >
+
+        </div>
+       <div className='w-full h-full flex space-y-2 justify-center items-center'>
+           <div className='relative z-20 w-[450px] h-[330px] justify-center    bg-white rounded-lg p-4 flex flex-col gap-3'>
+                
+      
+                <div className="w-full  justify-center items-center flex flex-col">
+                            <img src="/success/upload.png" alt="" className="w-32" />
+                            <p className="text-lg">Successfully</p>
+                </div>
+
+                <div>
+
+                <p className="text-[10px] text-center text-[#C8C9D9]">Your password has been reset successfully</p>
+                <form action="">
+                <button type="submit" className="w-full h-10 mt-4 bg-[#104B53] text-white flex justify-center items-center text-xs rounded-lg"  >Done</button>
+                </form>
+               
+                </div>
+
+            
+                 
+           </div>
+       </div>
+    </div>
+
+
         </div>
     )
 }

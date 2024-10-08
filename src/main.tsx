@@ -51,6 +51,8 @@ import OfferReceived from './pages/job-seekers/MyJobs/OfferReceived/OfferReceive
 import JobPostedTemplates from './pages/emails/JobPostedTemplates.tsx';
 import MessageTemplate from './pages/emails/MessageTemplates.tsx';
 import MessageOneTemplate from './pages/emails/MessageOneTemplate.tsx';
+import MessageJP from './pages/job-posters/Messages/MessageJP.tsx';
+import DashBoardRTR from './pages/job-posters/dashboard/DashboardRTR.tsx';
  
 
 const router = createBrowserRouter(
@@ -110,8 +112,13 @@ const router = createBrowserRouter(
       <Route path="/job-poster/job-description" element={<JobDescriptionBoard />} />
       <Route path="/job-poster/company-profile" element={<CompanyProfile />} />
       <Route path="/job-poster/review" element={<Review />} />
+      <Route path="/job-poster/messages" element={<MessageJP />} />
+
+
 
       <Route path="/job-poster/dashboard" element={<DashBoard />} />
+      <Route path="/job-poster/dashboard-rtr" element={<DashBoardRTR />} />
+
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />
       <Route path="/job-poster/profile-setting" element={<ProfileSetting />} />

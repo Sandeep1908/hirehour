@@ -1,29 +1,20 @@
 import React, { useState,useEffect } from 'react';
-import { FiPlus } from 'react-icons/fi';
-import { IoIosArrowForward } from 'react-icons/io';
+ 
 import useHeaderContext from '../../../context/HeaderContext';
  
-import MyJobsDashBoard from '../../../components/job-posters/dashboard/MyJobsDashBoard';
-import Subscription from '../../../components/job-posters/dashboard/Subscription';
-import Help from '../../../components/job-posters/dashboard/Help';
-import { Link, useLocation ,useNavigate} from 'react-router-dom';
-import Applicants from '../../../components/job-posters/dashboard/Applicants';
-import Cohiring from '../../../components/job-posters/dashboard/Cohiring';
-import RTR from '../../../components/job-posters/dashboard/RTR';
-import ResumeScouring from '../../../components/job-posters/dashboard/ResumeScouring';
-import Interviews from '../../../components/job-posters/dashboard/Interviews';
+ 
+import {  useLocation ,useNavigate} from 'react-router-dom';
 
-
+ 
 // dashboard icons 
 
-import myjobsIcon from '../../../assets/dashboard/icons/myjob.png'
-import applicantIcon from '../../../assets/dashboard/icons/applicants.png'
-import resumesourcingIcon from '../../../assets/dashboard/icons/resumesourcing.png'
+ 
 import righttorepresentIcon from '../../../assets/dashboard/icons/righttorepresent.png'
-import interviewIcon from '../../../assets/dashboard/icons/interview.png'
-import cohiringIcon from '../../../assets/dashboard/icons/co-hiring.png'
-import subscriptionIcon from '../../../assets/dashboard/icons/subscription.png'
+ 
 import helpIcon from '../../../assets/dashboard/icons/help.png'
+import CreateNewJob from '../../../components/job-posters/dashboardRTR/CreateNewJob';
+import RTR from '../../../components/job-posters/dashboardRTR/RTR';
+import Help from '../../../components/job-posters/dashboardRTR/Help';
 
  
 
@@ -32,41 +23,18 @@ const Sidebar: React.FC = () => {
   const { isDashboardOpen, isDashboardMobileNav,setIsDashboardMobileNav } = useHeaderContext();
   const navigate=useNavigate();
   const sideBarItems = [
+     
     {
-      label: 'Jobs',
-      icon: myjobsIcon,
-      queryString:'myjobs'
-    },
-    {
-      label: 'Applicants',
-      icon: applicantIcon,
-      queryString:'applicants'
-    },
-    {
-      label: 'Resume Sourcing',
-      icon: resumesourcingIcon,
-      queryString:'resue-sourcing'
+      label: ' Create New Job',
+      icon: '',
+      queryString:'create-new-job'
     },
     {
       label: 'Right to Represent',
       icon: righttorepresentIcon,
       queryString:'right-to-represent'
     },
-    {
-      label: 'Interviews',
-      icon: interviewIcon,
-      queryString:'interviews'
-    },
-    {
-      label: 'Co-Hiring',
-      icon: cohiringIcon,
-      queryString:'co-hiring'
-    },
-    {
-      label: 'Subscription',
-      icon: subscriptionIcon,
-      queryString:'subscription'
-    },
+ 
     {
       label: 'Help',
       icon: helpIcon,
@@ -104,17 +72,8 @@ const Sidebar: React.FC = () => {
       className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30   md:w-48 md:h-full md:static ' : 'left-[-100%]  md:w-14  '} ${isDashboardMobileNav?'absolute h-screen left-[0%] z-30':'left-[-200%] w-0  '} `}
     >
       <div className="w-full h-full ">
-        <Link to='/job-poster/job-basis' className="flex justify-center items-center space-x-2 w-full p-4 ">
-          <FiPlus size={14} className="font-[700]" />
-          <p
-            className={`text-xs w-full font-[500] text-[#3A3A3C] ${isDashboardOpen ? 'block' : 'hidden'} `}
-          >
-            Create new job
-          </p>
-          <IoIosArrowForward size={10} className={`${isDashboardOpen ? 'block' : 'hidden'}`} />
-        </Link>
 
-        <ul className="w-full flex flex-col justify-center items-center mt-4">
+        <ul className="w-full flex flex-col justify-center items-center mt-2">
           {sideBarItems?.map((item, i) => {
             return (
               <li
@@ -137,48 +96,27 @@ const Sidebar: React.FC = () => {
   );
 };
 
-const DashBoard: React.FC = () => {
+const DashBoardRTR: React.FC = () => {
    
   const location = useLocation();
   const queryParams= new URLSearchParams(location.search)
   const queryString= queryParams.get('key')
  
   const sideBarItems = [
+   
+
     {
-      label: 'Jobs',
-      components: <MyJobsDashBoard/>,
-      queryString:'myjobs'
+      label: ' Create New Job',
+      components: <CreateNewJob/>,
+      queryString:'create-new-job'
     },
-    {
-      label: 'Applicants',
-      components: <Applicants/>,
-      queryString:'applicants'
-    },
-    {
-      label: 'Resume Sourcing',
-      components:<ResumeScouring/>,
-      queryString:'resue-sourcing'
-    },
+
     {
       label: 'Right to Represent',
-      components: <RTR/>,
+      components:<RTR/>,
       queryString:'right-to-represent'
     },
-    {
-      label: 'Interviews',
-      components: <Interviews/>,
-      queryString:'interviews'
-    },
-    {
-      label: 'Co-Hiring',
-      components: <Cohiring/>,
-      queryString:'co-hiring'
-    },
-    {
-      label: 'Subscription',
-      components: <Subscription/>,
-      queryString:'subscription'
-    },
+  
     {
       label: 'Help',
       components:<Help/>,
@@ -219,4 +157,4 @@ const DashBoard: React.FC = () => {
   );
 };
 
-export default DashBoard;
+export default DashBoardRTR;

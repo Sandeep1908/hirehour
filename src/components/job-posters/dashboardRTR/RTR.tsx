@@ -4,8 +4,7 @@ import { IoMdClose } from 'react-icons/io';
 
 import { MdOutlineFileDownload } from 'react-icons/md';
 import Logo from '../../../assets/logo/hirehour.png';
-import { Link } from 'react-router-dom';
-
+ 
  
 type SendRTRModalProps = {
   isRTROpen: boolean;
@@ -17,107 +16,7 @@ type SignRTRPops={
   setIsSignRTR:(e:boolean)=>void
 }
 
-const SentRTR: React.FC = () => {
-  return (
-    <div className="w-full">
-      <div className="flex flex-col space-y-4">
-        <div className="w-full   h-full m-auto border border-[#E1E1E2] rounded-lg">
-          <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-            <div className="flex items-center space-x-4">
-              <span className="text-xs text-[#6B7588]">Job Title: </span>
-              <p className="text-xs font-semibold">Full Stack Java Developer</p>
-              <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
-            </div>
-
-            <div>
-              <p className="text-xs">Rate : $60 / HR</p>
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-xs">From</h1>
-              <p className="text-xs">
-                <strong>Send by</strong>: Erika Less
-              </p>
-              <p className="text-xs">
-                <strong>Company</strong>:Insight Global
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-1">
-              <h1 className="text-xs">To</h1>
-              <p className="text-xs">
-                <strong>Employer name</strong>: Mathew
-              </p>
-              <p className="text-xs">
-                <strong>Employer Company</strong>: AA Tech
-              </p>
-              <p className="text-xs">
-                <strong>Applicant Name</strong>: Johnson
-              </p>
-            </div>
-
-            <div className="flex flex-col space-y-3 justify-between h-full  ">
-              <div className="flex w-full md:w-auto items-center justify-center space-x-7">
-                <div className="flex flex-col space-y-2 justify-center items-center">
-                  <p className="text-xs">Employer Statue</p>
-                  <p className=" w-24 h-7 text-xs bg-[#B4FEDD] text-[#07A560]  flex justify-center items-center rounded-full">
-                    Signed
-                  </p>
-                </div>
-
-                <div className="flex flex-col space-y-2 justify-center items-center">
-                  <p className="text-xs">Applicant Status</p>
-                  <p className=" w-24 h-7  cursor-pointer text-xs bg-[#FFF1C6] text-[#FFB522] p-2 flex justify-center items-center rounded-full">
-                    Pending
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-xs">
-                <strong>Valid Till</strong>: 30 days (08/26/2024)
-              </p>
-            </div>
-          </div>
-
-          <hr />
-
-          <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-            <div className="flex justify-center items-center space-x-5">
-              <div className="flex flex-col space-y-3">
-                <p className="text-xs">
-                  <strong>Client</strong>: AT & T
-                </p>
-                <p className="text-xs">
-                  <strong>Prime Vendor </strong>: Insight Global
-                </p>
-              </div>
-
-              <div className="flex flex-col space-y-3">
-                <p className="text-xs">
-                  <strong>Implementation</strong>: TCS
-                </p>
-                <p className="text-xs">
-                  <strong>Vendor </strong>: AA Tech
-                </p>
-              </div>
-            </div>
-
-            <div className="flex justify- space-x-3 items-center">
-              <MdOutlineFileDownload size={20} color="#104B53" />
-              <p className="text-[#104B53] text-xs font-[600]">Export</p>
-              <p className="border text-xs text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-                View
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
+ 
 const ReceiveRTR: React.FC = () => {
   const [isSignRTR,setIsSignRTR]=useState<boolean>(false)
    
@@ -219,7 +118,7 @@ const ReceiveRTR: React.FC = () => {
   );
 };
 
-const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) => {
+const AddRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) => {
   return (
     <div
       className={`w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500 ${isRTROpen ? 'opacity-1 scale-[1.01] z-[10]' : 'opacity-0 z-[-100]'}   `}
@@ -232,7 +131,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
       >
         <div className="flex justify-between items-center p-5 sticky top-0 bg-white">
           <div className="flex flex-col space-y-3">
-            <h1 className="text-sm font-[500]">Send RTR</h1>
+            <h1 className="text-sm font-[500]">Add RTR</h1>
           </div>
 
           <IoMdClose
@@ -1063,9 +962,9 @@ const SignRTR:React.FC<SignRTRPops>=({isSignRTR,setIsSignRTR})=>{
 }
 
 const RTR: React.FC = () => {
-  const [isRTROpen, setIsRTROpen] = useState(false);
-  const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
+   
   const [receivedRTRIdx,setReceivedRTRIdx]=useState<number>(0)
+  const [isAddRTROpen,setIsAddRTROpen]=useState(false)
 
   const tags = [
     { label: 'News (2)', count:2,components: <ReceiveRTR/> },
@@ -1075,61 +974,20 @@ const RTR: React.FC = () => {
     
     { label: 'Expire (1)',count:1, components: <ExpireRTR/> },
   ];
-  const rtrFilters = [
-    {
-      label: 'Sent',
-      count: 3,
-      component: <SentRTR />,
-    },
-    {
-      label: 'Received',
-      count: 2,
-      component: <ReceiveRTR />,
-    },
-  ];
-  
+ 
   return (
     <div>
       <div className="flex justify-between items-center p-2">
         <h1 className="text-sm font-semibold">Right To Represent</h1>
-        <Link to='/job-poster/job-basis' className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
-          Post a Job
-        </Link>
+        <p onClick={()=>setIsAddRTROpen(true)}  className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
+          + Add RTR
+        </p>
+
+        <AddRTRModal isRTROpen={isAddRTROpen} setIsRTROpen={setIsAddRTROpen}/>
       </div>
       <hr />
 
-      {/* tabs  */}
-      <div className="p-1 flex justify-between items-center">
-        <ul className="max-w-[300px]  w-full  rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
-          {rtrFilters?.map((item, i) => {
-            return (
-              <li
-                className={`text-[10px] rounded-full   w-full p-1   cursor-pointer  flex justify-center items-center space-x-4 transition-all duration-300 ${jobFilterIdx === i ? 'bg-[#104B53] text-white' : ''}`}
-                onClick={() => setJobFilterIdx(i)}
-              >
-                <span>{item.label}</span>{' '}
-                <span
-                  className={`bg-[#104B53]  w-6   text-center rounded-lg ${jobFilterIdx === i ? 'bg-white text-[#104B53] ' : 'text-white'} `}
-                >
-                  {item.count}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-        <p
-          className="w-28 h-8 rounded-full   bg-[#104B53] text-white flex justify-center items-center text-xs cursor-pointer"
-          onClick={() => setIsRTROpen(true)}
-        >
-          Send RTR
-        </p>
-        <SendRTRModal setIsRTROpen={setIsRTROpen} isRTROpen={isRTROpen} />
-      </div>
-
-
-      {/* received rtr tabs  */}
-      {jobFilterIdx === 1 && (
-        <div className="  w-full overflow-auto flex justify-between px-2 items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] ">
+      <div className="  w-full overflow-auto flex justify-between px-5 py-3 items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] ">
           <ul className="w-screen md:w-auto overflow-auto flex items-center space-x-7 p-2  ">
             {tags?.map((item, id) => {
               return (
@@ -1145,7 +1003,8 @@ const RTR: React.FC = () => {
           </ul>
         </div>
 
-      )}
+
+       
 
   {/* filters  */}
   <div className=" p-3    flex  space-x-4   ">
@@ -1200,28 +1059,21 @@ const RTR: React.FC = () => {
       
 
 
-      {
-        jobFilterIdx === 1 ?
-
- 
-          <div className="w-full   px-3 space-y-3 overflow-auto h-[60vh]">
-          {tags?.map((item, i) => {
-            if(receivedRTRIdx===i)
-              return <div key={i}>{item.components}</div>;
-         
-          })}
-
+      <div className="w-full   px-3 space-y-3 overflow-auto h-[60vh]">
+           
+                {
+                    tags?.map((item,i)=>{
+                        if(receivedRTRIdx === i){
+                            return(
+                                <div key={i}>
+                                    {item.components}
+                                    </div>
+                            )
+                        }
+                       
+                    })
+                }
           </div>
-          :
-          
-          <div className="w-full   px-3 space-y-3 overflow-auto h-[60vh]">
-          {rtrFilters?.map((item, i) => {
-            if (jobFilterIdx === i) {
-              return <div key={i}>{item.component}</div>;
-            }
-          })}
-          </div>
-      }
 
 
      
