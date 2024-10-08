@@ -1,10 +1,15 @@
 import React from 'react'
 import Timer from './Timer';
 
-const Verification: React.FC = () => {
+type NewPasswordProps={
+    setNewPassword: (e:boolean)=>void,
+    newPassword:Boolean
+  }
+
+const Verification: React.FC<NewPasswordProps> = ({setNewPassword, newPassword}) => {
 
     return (
-        <div className='w-full h-[100vh]'>
+        <div className='absolute top-0 w-full h-[100vh]'>
         <div className='w-full h-full absolute bg-black opacity-80 z-10'>
 
         </div>
@@ -23,9 +28,9 @@ const Verification: React.FC = () => {
 
                     </div>
                     <Timer/>
-                    <button className='w-full h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                    <div onClick={()=>{setNewPassword(!newPassword)}} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
                       Continue
-                    </button>
+                    </div>
                     
 
                 </form>

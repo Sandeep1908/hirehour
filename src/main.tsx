@@ -17,6 +17,8 @@ import { HeaderContextProvider } from './context/HeaderContext.tsx';
 import Home from './pages/job-seekers/home/Home.tsx';
 import Signup from './pages/auth/Signup/Signup.tsx';
 import Signin from './pages/auth/Signin/Signin.tsx';
+import SignupPoster from './pages/job-posters/Signup/Signup.tsx';
+import SigninPoster from './pages/job-posters/Signin/Signin.tsx';
 import JobDescription from './pages/job-seekers/JobDescription/JobDescription.tsx';
 import AdditionalInfo from './pages/job-seekers/ProfileSetting/AdditionalInformation/AdditionalInfo.tsx';
 import UploadResume from './pages/job-seekers/ProfileSetting/UploadResume/UploadResume.tsx';
@@ -53,6 +55,7 @@ import MessageTemplate from './pages/emails/MessageTemplates.tsx';
 import MessageOneTemplate from './pages/emails/MessageOneTemplate.tsx';
 import MessageJP from './pages/job-posters/Messages/MessageJP.tsx';
 import DashBoardRTR from './pages/job-posters/dashboard/DashboardRTR.tsx';
+import JobPreview from './pages/job-posters/jobPreveiw/JobPreveiw.tsx';
  
 
 const router = createBrowserRouter(
@@ -112,19 +115,24 @@ const router = createBrowserRouter(
       <Route path="/job-poster/job-description" element={<JobDescriptionBoard />} />
       <Route path="/job-poster/company-profile" element={<CompanyProfile />} />
       <Route path="/job-poster/review" element={<Review />} />
+      <Route path="/job-poster/job-review" element={<JobPreview />} />
       <Route path="/job-poster/messages" element={<MessageJP />} />
+      <Route path="/job-poster/job-preview" element={<JobPreview />} />
 
 
 
       <Route path="/job-poster/dashboard" element={<DashBoard />} />
       <Route path="/job-poster/dashboard-rtr" element={<DashBoardRTR />} />
-
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />
       <Route path="/job-poster/profile-setting" element={<ProfileSetting />} />
       <Route path="/job-poster/company-profile-info" element={<CompanyProfileSettings />} />
 
 
+
+
+      <Route path="/job-poster/signup" element={<SignupPoster />} />
+      <Route path="/job-poster/signin" element={<SigninPoster />} />
 
     {/* Email Templates  */}
 

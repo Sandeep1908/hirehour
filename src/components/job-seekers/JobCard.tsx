@@ -3,7 +3,7 @@ import { BsFillLightningFill } from "react-icons/bs";
 import { LuMoreVertical } from 'react-icons/lu';
 import { FaFlag, FaRegBookmark } from 'react-icons/fa6';
 import { MdShare } from 'react-icons/md';
-import ReportJob from './ReportJob';
+import ReportJob from './report-job/ReportJob';
 
 type JobCardProps={
     jobDataId:number,
