@@ -988,7 +988,7 @@ const JobDescription: React.FC = () => {
 
                             <div className='mt-5'>
                                 <label htmlFor="" className='text-[14px] font-medium'>How many years of experience do you have in Java ? ( in years) <span className='text-red-600'> *</span></label>
-                                <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' />
+                                <input type="number" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' />
                             </div>
                             <div className='mt-5'>
                                 <label htmlFor="" className='text-[14px] font-medium'>Can you able to Relocate the Job Location ? <span className='text-red-600'> *</span></label>

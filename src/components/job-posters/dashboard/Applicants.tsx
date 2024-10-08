@@ -1189,16 +1189,36 @@ const ShortListedComponent: React.FC = () => {
 
                         <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
                           <PiArrowsLeftRightBold size={25} />
-                          <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-0 transition-all duration-500 bg-white ${moreOption ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                            <div className='px-3 py-2'>
-                              <p className='text-sm font-semibold'>Sent RTR</p>
-                            </div>
-                            <hr />
-                            <div className='px-3 py-2 flex gap-2 items-center' >
-                              <FaRegTrashAlt className='text-red-500' />
+                          <div className={`absolute w-44 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[30px] top-[-20px] transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Sent RTR</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'> RTR</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Recruiter Screening</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Offer</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Background Check</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Hired</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2 flex gap-2 items-center' >
+                              <FaRegTrashAlt  className='text-red-500'/>
                               <p className='text-sm font-semibold text-red-500'>Delete</p>
-                            </div>
-                          </div>
+                              </div>
+                        </div>
                         </div>
 
                       </div>
