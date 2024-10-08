@@ -4,8 +4,7 @@ import { IoMdClose } from 'react-icons/io';
 
 import { MdOutlineFileDownload } from 'react-icons/md';
 import Logo from '../../../assets/logo/hirehour.png';
-import { Link } from 'react-router-dom';
-
+ 
  
 type SendRTRModalProps = {
   isRTROpen: boolean;

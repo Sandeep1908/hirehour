@@ -28,7 +28,7 @@ const AccountSetting:React.FC=()=>{
         }
       };
     
-      const handleSubmit = (e) => {
+      const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const enteredOtp = otp.join("");
         console.log("Entered OTP: ", enteredOtp);
