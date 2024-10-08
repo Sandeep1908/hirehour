@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect,  useState } from 'react'
 import search_icon from '../../../assets/search-icon.svg'
 import Location from '../../../assets/location.svg'
 import Location2 from '../../../assets/location2.svg'
 import JobCard from '../../../components/job-seekers/JobCard'
 import Job_banner from '../../../assets/Rectangle.png'
-import { FaChevronUp } from "react-icons/fa6";
-import { FaChevronDown } from "react-icons/fa";
+// import { FaChevronUp } from "react-icons/fa6";
+// import { FaChevronDown } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { CiFilter } from "react-icons/ci";
@@ -135,6 +135,13 @@ const JobDescription: React.FC = () => {
             setDropdown(0);
         // setIsSelected(1);
     };
+    const handleDropDown = () => {
+        
+            setDropdown(0);
+            // alert("Please select")
+      
+    };
+
 
 
     const employmentTypes = [
@@ -159,32 +166,31 @@ const JobDescription: React.FC = () => {
     };
 
 
-    const [isOpen, setIsOpen] = useState(true); // Initially open
-    const [height, setHeight] = useState('0px');
-    const contentRef = useRef(null);
+    // const [isOpen, setIsOpen] = useState(true); 
+    // const [height, setHeight] = useState('0px');
+    // const contentRef = useRef(null);
   
-    const handleScroll = () => {
-      if (window.scrollY > 300) {
-        setIsOpen(false);
-      }else{
-        setIsOpen(true);
-      }
-    };
+    // const handleScroll = () => {
+    //   if (window.scrollY > 300) {
+    //     setIsOpen(false);
+    //   }else{
+    //     setIsOpen(true);
+    //   }
+    // };
   
-    useEffect(() => {
-      // Set initial height to open the description
-      setHeight(isOpen ? '225px' : '0px');
-    }, [isOpen]);
+    // useEffect(() => {
+    //   // Set initial height to open the description
+    //   setHeight(isOpen ? '225px' : '0px');
+    // }, [isOpen]);
   
-    useEffect(() => {
-      // Add scroll event listener
-      window.addEventListener('scroll', handleScroll);
+    // useEffect(() => {
+    //   // Add scroll event listener
+    //   window.addEventListener('scroll', handleScroll);
   
-      // Clean up event listener when component unmounts
-      return () => {
-        window.removeEventListener('scroll', handleScroll);
-      };
-    }, []);
+    //   return () => {
+    //     window.removeEventListener('scroll', handleScroll);
+    //   };
+    // }, []);
   
 
 
@@ -284,11 +290,11 @@ const JobDescription: React.FC = () => {
                     <div className='hidden  w-full md:flex flex-wrap mt-4 gap-3'>
 
 
-                        <div className='relative'>
-                            <div onClick={() => setDropdown(1)} className={`flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full 
-  ${isSelected === 1 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
-                                <p className="text-[12px] font-normal text-[#114B53]"> {selectedOption ? selectedOption : "24 hours"} </p>
-                                <MdOutlineKeyboardArrowDown onClick={() => setDropdown(0)} className={`${dropdown === 1 ? 'rotate-180 transition-all duration-500' : ''}`} />
+                        <div className='relative z-[20]'>
+                            <div onClick={() => setDropdown(1)} className={`flex justify-center items-center gap-2 px-4 py-1 border  rounded-full 
+  ${isSelected === 1 ? 'bg-[#effefd] text-[#114B53] border-[#114B53]' : 'bg-white text-[#6B7588] border-[#6B7588]'} transition-colors duration-500`}>
+                                <p  className="text-[12px] font-semibold "> {selectedOption ? selectedOption : "24 hours"} </p>
+                                <MdOutlineKeyboardArrowDown onClick={handleDropDown} className={`${dropdown === 1 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
 
                             {dropdown === 1 && (
@@ -317,10 +323,10 @@ const JobDescription: React.FC = () => {
                         <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(2)}
-                                className={`flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full 
-        ${selectedOptionEx.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                                className={`flex justify-center items-center gap-2 px-4 py-1 border rounded-full 
+        ${selectedOptionEx.length > 0 ? 'bg-[#effefd] text-[#114B53] border-[#114B53]' : 'bg-white  text-[#6B7588] border-[#6B7588]'} transition-colors duration-500`}
                             >
-                                <p className="text-[12px] font-normal text-[#114B53]"> {selectedOptionEx ? selectedOptionEx : "Experience Level"}</p>
+                                <p className="text-[12px] font-semibold"> {selectedOptionEx ? selectedOptionEx : "Experience Level"}</p>
                                 <MdOutlineKeyboardArrowDown className={`${dropdown === 2 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
 
@@ -352,10 +358,10 @@ const JobDescription: React.FC = () => {
                         <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(3)}
-                                className={`flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full 
-        ${selectedOptionDistance.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                                className={`flex justify-center items-center gap-2 px-4 py-1 border  rounded-full 
+        ${selectedOptionDistance.length > 0 ? 'bg-[#effefd] text-[#114B53] border-[#114B53]' : 'bg-white text-[#6B7588] border-[#6B7588]'} transition-colors duration-500`}
                             >
-                                <p className="text-[12px] font-normal text-[#114B53]"> {selectedOptionDistance ? selectedOptionDistance : "Distance"}</p>
+                                <p className="text-[12px] font-semibold"> {selectedOptionDistance ? selectedOptionDistance : "Distance"}</p>
                                 <MdOutlineKeyboardArrowDown className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
 
@@ -432,9 +438,9 @@ const JobDescription: React.FC = () => {
                         <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(4)}
-                                className={`${selectedOptionEmployee.length > 0 && "bg-[#effefd]"}  flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full`}
+                                className={`${selectedOptionEmployee.length > 0 ?"bg-[#effefd] text-[#114B53] border-[#114B53]" :"bg-white text-[#6B7588] border-[#6B7588]"}  flex justify-center items-center gap-2 px-4 py-1 border  rounded-full`}
                             >
-                                <div className="text-[12px] font-normal text-[#114B53] flex gap-2">
+                                <div className="text-[12px] font-semibold flex gap-2">
                                     <p>Employment type</p>
                                     {selectedOptionEmployee.length > 0 && (
                                         <div className='bg-[#114B53] w-[18px] h-[18px] text-[10px] rounded-full text-white flex justify-center items-center'>
@@ -476,10 +482,10 @@ const JobDescription: React.FC = () => {
                         <div className='relative z-[20]'>
                             <div
                                 onClick={() => setDropdown(5)}
-                                className={`flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full 
-        ${selectedOptionSalary.length > 0 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}
+                                className={`flex justify-center items-center gap-2 px-4 py-1 border  rounded-full 
+        ${selectedOptionSalary.length > 0 ? 'bg-[#effefd] text-[#114B53] border-[#114B53]' : 'bg-white text-[#6B7588] border-[#6B7588]'} transition-colors duration-500`}
                             >
-                                <p className="text-[12px] font-normal text-[#114B53]"> {selectedOptionSalary ? selectedOptionSalary : "Salary"}</p>
+                                <p className="text-[12px] font-semibold "> {selectedOptionSalary ? selectedOptionSalary : "Salary"}</p>
                                 <MdOutlineKeyboardArrowDown className={`${dropdown === 5 ? 'rotate-180 transition-all duration-500' : ''}`} />
                             </div>
 
@@ -564,15 +570,15 @@ const JobDescription: React.FC = () => {
 
                        
 
-                        <div onClick={()=>{setSelectedOptionQuickApply(!selectedOptionQuickApply)}} className={`${selectedOptionQuickApply && "bg-[#effefd]"} flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full cursor-pointer`}>
-                            <p className="text-[12px] font-normal text-[#114B53]">Quick Apply</p>
+                        <div onClick={()=>{setSelectedOptionQuickApply(!selectedOptionQuickApply)}} className={`${selectedOptionQuickApply ?"bg-[#effefd] text-[#114B53] border-[#114B53]":"text-[#6B7588] border-[#6B7588] bg-white"} flex justify-center items-center gap-2 px-4 py-1 border  rounded-full cursor-pointer`}>
+                            <p className="text-[12px] font-semibold">Quick Apply</p>
                         </div>
-                        <div onClick={()=>{setSelectedOptionVisa(!selectedOptionVisa)}} className={`${selectedOptionVisa && "bg-[#effefd]"} flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full cursor-pointer`}>
-                            <p className="text-[12px] font-normal text-[#114B53]">Visa Sponsorship</p>
+                        <div onClick={()=>{setSelectedOptionVisa(!selectedOptionVisa)}} className={`${selectedOptionVisa ? "bg-[#effefd] text-[#114B53] border-[#114B53]":"text-[#6B7588] border-[#6B7588] bg-white"} flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full cursor-pointer`}>
+                            <p className="text-[12px] font-semibold ">Visa Sponsorship</p>
                         </div>
-                        <div className="flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full">
-                            <p className="text-[12px] font-normal text-[#114B53]">All Filters</p>
-                            <CiFilter className='text-[#114B53]' />
+                        <div className="flex justify-center items-center gap-2 px-4 py-1 border text-[#6B7588] border-[#6B7588] bg-white rounded-full">
+                            <p className="text-[12px] font-semibold">All Filters</p>
+                            <CiFilter className='text-[#6B7588]' />
 
                         </div>
 
@@ -586,7 +592,9 @@ const JobDescription: React.FC = () => {
 
                 {/* Job Cards And Job Description */}
 
-                <div className='w-full max-w-[1280px] m-auto  overflow-auto   h-full flex justify-center md:justify-between pt-7  md:px-0'>
+
+                <div className='w-fullh-full sticky top-[10px]'>
+                <div id='mainJobDescription' className='w-full max-w-[1280px] m-auto   h-full flex justify-center md:justify-between pt-7  md:px-0'>
 
                     {/* Job Card Component */}
 
@@ -623,7 +631,7 @@ const JobDescription: React.FC = () => {
                         </div>
                     </div>
 
-                    {/* Job Description  */}
+                    {/*Description  */}
 
                <div className='hidden md:block max-w-[845px] w-full'  >
                {jobFilterData.map((details,id)=>{
@@ -631,7 +639,7 @@ const JobDescription: React.FC = () => {
                             <div key={id} className=' max-w-[845px]   w-full rounded-lg  border'>
                                 <div className='w-full min-h-[100vh]'>
                                 <div className=' w-full  '>
-                                <div className='w-full shadow-lg pb-8'>
+                                <div className='w-full shadow-lg '>
                                     <img src={Job_banner} alt="" />
                                     <div className='w-[95%] m-auto transition-all ease-in-out duration-1000'>
                                         <div className=' flex  justify-between '>
@@ -659,9 +667,9 @@ const JobDescription: React.FC = () => {
                                         </div>
 
 
-                                        <div className="job-description my-4">
+                                        {/* <div className="job-description my-4">
 
-                                    <div
+                                     <div
                                         ref={contentRef}
                                         style={{ height: height }}
                                         className="overflow-hidden transition-height duration-700 ease-in-out"
@@ -763,8 +771,8 @@ const JobDescription: React.FC = () => {
                                             </div>
                                         </div>
                                         </div>
-                                    </div>
-                                    </div>
+                                    </div> 
+                                    </div> */}
 
                                      
 
@@ -775,12 +783,12 @@ const JobDescription: React.FC = () => {
 
 
 
-                                        <div className='w-full flex justify-center items-center mt-8' >
+                                        {/* <div className='w-full flex justify-center items-center mt-8' >
                                             <FaChevronUp className={`${!isOpen ? "hidden" : ""}`} onClick={() => { setIsOpen(!isOpen) }} />
 
                                             <FaChevronDown className={`${isOpen ? "hidden" : ""}`} onClick={() => { setIsOpen(!isOpen) }} />
 
-                                        </div>
+                                        </div> */}
 
 
 
@@ -788,10 +796,112 @@ const JobDescription: React.FC = () => {
                                 </div>
 
                              
-
+                                      
 
                                 <div className='p-5 overflow-x-hidden overflow-y-auto h-[550px] '>
-                                    <p className='text-base font-semibold'>Summary</p>
+                                <div
+                                        
+                                        className="overflow-hidden transition-height duration-700 ease-in-out "
+                                    >
+                                        <div className="description">
+                                        <div className={`w-full  transition-all ease-in-out duration-700    `} >
+                                            <div className={`flex h-auto relative transition-all delay-75   `}>
+                                                <div className='flex flex-col gap-4 mt-2 max-w-[350px] w-full'>
+
+                                                    <div className='flex gap-2'>
+                                                        <img src={Location2} alt="" />
+                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                            <p className='text-[12px]'>{details.mode}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex gap-2'>
+                                                        <img src={Location2} alt="" />
+                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                            <p className='text-[12px]'>{details.pay} / hours</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='flex gap-2'>
+                                                        <img src={Location2} alt="" />
+                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                            <p className='text-[12px]'>{details.workTime}</p>
+                                                        </div>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <div className='border  bg-[#D6DBDE] '>
+
+                                                </div>
+
+
+                                                <div className={`flex flex-col  gap-7 ml-4 justify-center  `}>
+
+                                                    <div className=''>
+
+                                                        <p className='text-[14px] text-[#3A3A3C] font-semibold'>Employment Type</p>
+
+                                                        <div className='flex gap-2 mt-3'>
+
+                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                <p className='text-[12px] text-[#3A3A3C] font-medium'>Crop to Crop </p>
+                                                            </div>
+                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                <p className='text-[12px] text-[#3A3A3C] font-medium'>Contract to Hire </p>
+                                                            </div>
+                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                <p className='text-[12px] text-[#3A3A3C] font-medium'>Contract W2 </p>
+                                                            </div>
+
+
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+                                                    <div className=''>
+
+                                                        <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
+
+                                                        <div className='flex gap-2 mt-3'>
+                                                            {details.workAuthorization.map((value, id) => (
+                                                                <div key={id} className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>{value} </p>
+                                                                </div>
+                                                            ))}
+
+                                                         
+                                                        </div>
+
+                                                    </div>
+
+
+
+                                                </div>
+                                            </div>
+
+                                            <div className={`mt-4 delay-75 `}>
+
+                                                <p className='text-[14px] font-semibold'>Tech Stacks</p>
+
+                                                <div className='flex gap-2 mt-1'>
+                                                    {details.techStacks.map((value, id) => (
+                                                        <div key={id} className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
+                                                            <p className='text-[12px] font-semibold'>{value} </p>
+                                                        </div>
+                                                    ))}
+
+                                                  
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </div> 
+                                    <p className='text-base font-semibold mt-5'>Summary</p>
                                     <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>{details.summary}</p>
 
                                     <p className='text-base font-semibold mt-3'>Job description</p>
@@ -822,6 +932,7 @@ const JobDescription: React.FC = () => {
 
                     
 
+                </div>
                 </div>
 
 
@@ -877,15 +988,25 @@ const JobDescription: React.FC = () => {
 
                             <div className='mt-5'>
                                 <label htmlFor="" className='text-[14px] font-medium'>How many years of experience do you have in Java ? ( in years) <span className='text-red-600'> *</span></label>
-                                <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' />
+                                <input type="number" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' />
                             </div>
                             <div className='mt-5'>
                                 <label htmlFor="" className='text-[14px] font-medium'>Can you able to Relocate the Job Location ? <span className='text-red-600'> *</span></label>
-                                <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' />
+                                {/* <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' /> */}
+                                <select name="" id="" className='w-full h-[40px] mt-2 border-[1px] rounded-lg'>
+                                    <option value="">Select an option</option>
+                                    <option value="">Yes</option>
+                                    <option value="">No</option>
+                                </select>
                             </div>
                             <div className='mt-5'>
                                 <label htmlFor="" className='text-[14px] font-medium'>Immediate Joiner ? <span className='text-red-600'> *</span></label>
-                                <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' />
+                                {/* <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' /> */}
+                                <select name="" id="" className='w-full h-[40px] mt-2 border-[1px] rounded-lg'>
+                                    <option value="">Select an option</option>
+                                    <option value="">Yes</option>
+                                    <option value="">No</option>
+                                </select>
                             </div>
 
                         </div>
@@ -1169,7 +1290,12 @@ const JobDescription: React.FC = () => {
                             <div className='w-full flex gap-4 mt-3'>
                                 <div className='w-full '>
                                     <p className='text-[14px] font-medium'>Visa Sponsership <span className='text-red-600'>*</span></p>
-                                    <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                                    {/* <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' /> */}
+                                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2'>
+                                    <option value="">Select an option</option>
+                                    <option value="">Yes</option>
+                                    <option value="">No</option>
+                                </select>
                                 </div>
 
                             </div>

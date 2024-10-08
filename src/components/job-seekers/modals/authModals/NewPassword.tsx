@@ -9,7 +9,7 @@ const NewPassword:React.FC = () => {
     
    
   return (
-    <div className='w-full h-[100vh]'>
+    <div className='absolute top-0 w-full h-[100vh]'>
         <div className='w-full h-full absolute bg-black opacity-80 z-10'>
 
         </div>
