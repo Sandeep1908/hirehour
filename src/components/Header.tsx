@@ -101,9 +101,9 @@ const Header: React.FC = () => {
         <div className="">
           <div className="">
             <div className="flex justify-center items-center space-x-5">
-              <p className="w-24 h-8 text-xs flex justify-center items-center border-[1px] rounded-full border-[#104B53] text-[#104B53]   cursor-pointer">
+              <Link to={'/signin'} className="w-24 h-8 text-xs flex justify-center items-center border-[1px] rounded-full border-[#104B53] text-[#104B53]   cursor-pointer">
                 Sign In
-              </p>
+              </Link>
 
               <p className="text-xs tracking-wide hidden md:block ">
                 <Link to={''}> Employer </Link>
