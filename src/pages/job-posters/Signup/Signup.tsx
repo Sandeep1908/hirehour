@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
+
 import { Link } from 'react-router-dom';
+
 
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -11,11 +13,14 @@ const Signup: React.FC = () => {
     setShowPassword(!showPassword);
   };
   return (
+
     <div className='bg-[#114B53]  w-full h-full py-10  px-5  lg:px-10'>
+
      <div className='w-full h-full flex gap-20'>
         <div className=' hidden md:flex w-[50%]'>
         <p className='text-white text-[32px] font-semibold'>Hire Hours</p>
         </div>
+
         <div className='w-full h-fit md:w-[50%] flex justify-center  md:justify-end '>
            <div className='w-[335px] md:w-[519px] h-auto  bg-white px-5 md:px-8 py-3 rounded-xl'>
                <p className='text-black text-[20px] md:text-lg font-bold'>Create account</p>
@@ -38,10 +43,12 @@ const Signup: React.FC = () => {
                          <div className='w-full h-[40px] mt-1'>
 
                          <input type="text" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' />
+
                          </div>
                      </div>
                   </div>
                 
+
                   <div className='mt-3 md:mt-2'>
                       <div className='w-full h-[40px] mt-1'>
                             <select name="cars" id="cars"  className='border-[1px] text-sm px-2  border-[#E1E1E2] w-full h-full rounded-lg'>
@@ -82,6 +89,7 @@ const Signup: React.FC = () => {
                          <div className='relative w-full h-[40px] mt-1'>
 
                          <input type="text" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' />
+
                          <button
                                type="button"
                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
@@ -92,12 +100,14 @@ const Signup: React.FC = () => {
                          </div>
                      </div>
                      <div className='grow'>
+
                          <label htmlFor="firstName" className='text-sm'>
                          Confirm password <span className='text-[#E71717]'>*</span>
                          </label>
                          <div className='relative w-full h-[40px] mt-1'>
 
                          <input type="text" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' />
+
                          <button
                                type="button"
                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
@@ -121,10 +131,12 @@ const Signup: React.FC = () => {
                   </div>
                 {/* </div> */}
                 
+
               {/* </div> */}
 
                   <div className="flex mt-4 mb-4 items-center justify-center ">
                    <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
+
                    <p className="text-gray-500 text-[14px] md:text-base font-normal mx-[10px]">or continue with</p>
                    <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
                </div>
@@ -140,11 +152,13 @@ const Signup: React.FC = () => {
        <button
         
          className="w-[200px] h-[40px] flex text-base items-center rounded-3xl justify-center gap-1 md:gap-2 text-black p-2 box-radius border border-black "
+
        
        >
           <img src={apple_logo} alt="apple" /><p>Apple</p>
        </button>
      </div>
+
 
      <p className='text-[14px] md:text-sm font-normal mt-8 md:mt-4 text-center md:text-left'>
      By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
@@ -156,6 +170,7 @@ const Signup: React.FC = () => {
      Already on Hirehours ? Log in
      </Link>
      </div>
+
                 
               </form>
            </div>
@@ -163,9 +178,10 @@ const Signup: React.FC = () => {
         </div>
       </div>
 
-
     </div>
   );
 };
 
+
 export default Signup;
+

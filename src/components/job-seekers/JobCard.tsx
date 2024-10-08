@@ -21,7 +21,7 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
     const [isShareModal,setIsShareModal]=useState<boolean>(false)
 
     return (
-        <div onClick={()=>{setId(data.id)}} className={`${jobDataId === data.id ?"border-black":""} w-full h-auto p-3   md:px-3 py-5 border-2   rounded-xl flex flex-col gap-3 md:gap-5 `}>
+        <a href='#mainJobDescription' onClick={()=>{setId(data.id)}} className={`${jobDataId === data.id ?"border-black":""} w-full h-auto p-3   md:px-3 py-5 border-2   rounded-xl flex flex-col gap-3 md:gap-5 `}>
             <div className='w-full flex justify-between'>
                 
                 <div className='flex gap-2'>
@@ -122,9 +122,9 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
             {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail} /> }
 
             
-        </div>
+        </a>
       
- 
+           
     
 
   );
