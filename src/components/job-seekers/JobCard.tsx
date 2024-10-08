@@ -4,6 +4,7 @@ import { LuMoreVertical } from 'react-icons/lu';
 import { FaFlag, FaRegBookmark } from 'react-icons/fa6';
 import { MdShare } from 'react-icons/md';
 import ReportJob from './report-job/ReportJob';
+import ReportDetal from './report-job/ReportDetail';
 
 type JobCardProps={
     jobDataId:number,
@@ -16,6 +17,7 @@ type JobCardProps={
 const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
     const [showIcon, setShowIcon] = useState<boolean>(false);
     const [showReport, setShowReport] = useState<boolean>(false);
+    const [showReportDetail, setShowReportDetail] = useState<boolean>(false);
     const [isShareModal,setIsShareModal]=useState<boolean>(false)
 
     return (
@@ -116,7 +118,8 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
             </div>
 
 
-            {showReport ?<ReportJob setShowReport={setShowReport} />:" " }
+            {showReport &&<ReportJob setShowReport={setShowReport}  setShowReportDetail={setShowReportDetail}  /> }
+            {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail} /> }
 
             
         </div>
