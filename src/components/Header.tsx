@@ -106,7 +106,7 @@ const Header: React.FC = () => {
               </Link>
 
               <p className="text-xs tracking-wide hidden md:block ">
-                <Link to={''}> Employer </Link>
+                <Link to={'/job-poster/signup'}> Employer </Link>
                / 
                <Link to={'/job-poster'}> Job Poster</Link>
                

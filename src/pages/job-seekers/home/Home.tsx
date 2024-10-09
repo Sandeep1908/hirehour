@@ -126,7 +126,7 @@ const Home: React.FC = () => {
       </div>
       {/* Resouces section */}
 
-      <div className="w-full max-w-[1200px] mt-10 m-auto bg-white p-4 rounded-lg">
+      <div className="w-full max-w-[1150px] mt-10 m-auto bg-white p-4 rounded-lg">
         <div className="w-full">
           <div className="flex justify-center items-center">
             <h1 className="text-xl font-bold">Resource</h1>
