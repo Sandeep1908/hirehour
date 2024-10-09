@@ -16,7 +16,7 @@ const CreateNewJob: React.FC = () => {
 
                 <p className='text-xs text-center'>You're currently viewing a limited version of TopEquator. To gain full access to all job postings, employer tools, and exclusive features, please verify your account.Take a moment to verify now and start enjoying the complete benefits of our platform.</p>
 
-                <p className='text-[10px] font-[500] w-32 flex justify-center items-center rounded-full  h-7 bg-[#E9F358] text-[#104B53]'>Verify your account </p>
+                <p className='text-[10px] font-[500] w-32 flex justify-center items-center rounded-full  h-7 bg-[#E9F358] text-[#104B53]'>Post a Job </p>
             </div>
       </div>
     </div>
