@@ -8,14 +8,14 @@ const UploadResume: React.FC = () => {
   const [isContinue, setIsContinue] = useState<boolean>(false);
   return (
     <div className="w-full h-full pb-20 bg-[#F6F6F8]">
-      <div className="max-w-[1400px] h-48  m-auto">
+      <div className="max-w-[1200px] h-48  m-auto">
         <div className="">
           <div className="flex  flex-col  space-y-4 md:flex-row  md:justify-between md:items-center p-4">
-            <h1 className="text-lg font-semibold">Setting up your profile</h1>
+            <h1 className="text-sm font-semibold">Setting up your profile</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
               <p className="font-semibold text-sm text-[#104B53]">Cancel </p>
-              <p className=" w-32 h-8 text-xs bg-[#104B53] md:bg-transparent  text-white   rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p className=" w-32 h-8 text-[10px] bg-[#104B53] md:bg-transparent  text-white   rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
                 Save & Exit
               </p>
             </div>
@@ -26,21 +26,21 @@ const UploadResume: React.FC = () => {
             <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
               <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-14 h-10 bg-[#104B53] text-white rounded-full">
+                  <span className="me-2 p-2 text-[10px] w-10   flex justify-center items-center h-8 bg-[#104B53] text-white rounded-full">
                     1
                   </span>
-                  <p className="hidden md:block">Upload Resume</p>
+                  <p className="hidden text-xs md:block">Upload Resume</p>
                 </span>
               </li>
               <li className="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-14 h-10 bg-[#C7C9D9] rounded-full">2</span>
-                  <p className="hidden md:block"> Additional Information</p>
+                  <span className="me-2 p-2 w-10 h-8 text-[10px] flex justify-center items-center bg-[#C7C9D9] rounded-full">2</span>
+                  <p className="hidden md:block text-xs"> Additional Information</p>
                 </span>
               </li>
               <li className="flex items-center">
-                <span className="me-2 p-2 w-10 h-10 bg-[#C7C9D9] rounded-full">3</span>
-                <p className="hidden md:block"> Review</p>
+                <span className="me-2 p-2 w-8 h-8 text-[10px] flex justify-center items-center bg-[#C7C9D9] rounded-full">3</span>
+                <p className="hidden md:block  text-xs"> Review</p>
               </li>
             </ol>
           </div>
@@ -49,9 +49,9 @@ const UploadResume: React.FC = () => {
 
       {/* Upload Resume  */}
 
-      <div className="max-w-[1280px] h-full md:h-[476px] bg-white m-auto p-4 mt-2">
+      <div className="max-w-[1200px] h-full md:h-[476px] bg-white m-auto p-4 mt-2">
         <div className="flex flex-col space-y-2">
-          <h1 className="text-lg">Upload Your Resume</h1>
+          <h1 className="text-sm">Upload Your Resume</h1>
           <p className="text-xs text-[#6B7588]">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
           </p>
