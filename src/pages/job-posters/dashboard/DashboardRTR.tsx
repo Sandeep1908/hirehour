@@ -145,7 +145,7 @@ const DashBoardRTR: React.FC = () => {
           {sideBarItems?.map((item) => {
             if (item.queryString === queryString) {
               return (
-                <div className="w-full">
+                <div className="w-full h-full">
                  { item.components}
                 </div>
               )

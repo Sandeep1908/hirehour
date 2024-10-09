@@ -16,10 +16,12 @@ const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportDetail}
    }
 
     return (
-        <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
+
+        <div className='w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[1000] '>
             <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-            <div className='max-w-[846px] w-full bg-white rounded-lg overflow-auto z-[30]'>
+            <div className='max-w-[846px] w-full bg-white rounded-lg overflow-auto z-[1000]'>
+
                 <div className=' px-5 py-4 flex justify-between items-center'>
                     <div className='text-lg font-bold'><p>Apply to xyz Company</p> <p className='text-[#6B7588] text-sm font-normal mt-1'>Select a reason for report a job</p></div>
                     <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setShowReport(false)}} />
@@ -63,4 +65,6 @@ const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportDetail}
     )
 }
 
+
 export default ReportJob
+

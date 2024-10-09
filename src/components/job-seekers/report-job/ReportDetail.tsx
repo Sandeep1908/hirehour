@@ -37,4 +37,6 @@ const ReportDetal: React.FC<ReportJobProps> = ({setShowReportDetail}) => {
     )
 }
 
+
 export default ReportDetal
+
