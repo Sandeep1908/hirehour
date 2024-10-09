@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import {useState } from 'react';
 import accountsetting from '../../../assets/dashboard/help/accoutsetting.png';
 import billing from '../../../assets/dashboard/help/billing.png';
 
@@ -29,7 +29,7 @@ const Help: React.FC = () => {
       label: 'Account Setting',
       icon: accountsetting,
       content: 'Everything you need to know to getting started with Hire hours',
-      component:<AccountSetting/>
+      
     },
 
     {

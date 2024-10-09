@@ -4,9 +4,7 @@ import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
 
 import { Link } from 'react-router-dom';
-import ForgetPassword from '../../../components/job-seekers/modals/authModals/ForgetPassword';
-import NewPassword from '../../../components/job-seekers/modals/authModals/NewPassword';
-import Verification from '../../../components/job-seekers/modals/authModals/Verification';
+ 
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -139,9 +137,9 @@ const Signin: React.FC = () => {
       </div>
 
 
-      {forgetPassword && <ForgetPassword setVerification={setVerification} verification={verification} />}
+      {/* {forgetPassword && <ForgetPassword setVerification={setVerification} verification={verification} />}
       {verification && <Verification  setNewPassword={setNewPassword} newPassword={newPassword}  />}
-      {newPassword && <NewPassword  />}
+      {newPassword && <NewPassword  />} */}
 
 
     </div>
