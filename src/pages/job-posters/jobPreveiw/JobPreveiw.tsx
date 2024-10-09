@@ -64,7 +64,19 @@ const JobPreview: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className={`h-auto transition-all ease-in-out duration-1000  `}>
+                          
+
+
+            
+
+
+
+                        </div>
+                    </div>
+                  
+
+                    <div className='p-5 overflow-x-hidden overflow-y-auto h-[550px]'>
+                    <div className={`h-auto transition-all ease-in-out duration-1000 mb-5 `}>
                                 <div className='flex flex-col md:flex-row h-auto '>
                                     <div className='flex flex-col gap-4 mt-2 max-w-[450px] w-full'>
 
@@ -170,16 +182,6 @@ const JobPreview: React.FC = () => {
 
                                 </div>
                             </div>
-
-
-            
-
-
-
-                        </div>
-                    </div>
-
-                    <div className='p-5 overflow-x-hidden overflow-y-auto h-[550px]'>
                         <p className='text-base font-semibold'>Summary</p>
                         <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 

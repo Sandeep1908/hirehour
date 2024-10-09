@@ -290,7 +290,9 @@ const JobDescription: React.FC = () => {
                     <div className='hidden  w-full md:flex flex-wrap mt-4 gap-3'>
 
 
-                        <div className='relative z-[20]'>
+
+                        <div className='relative z-[10]'>
+
                             <div onClick={() => setDropdown(1)} className={`flex justify-center items-center gap-2 px-4 py-1 border  rounded-full 
   ${isSelected === 1 ? 'bg-[#effefd] text-[#114B53] border-[#114B53]' : 'bg-white text-[#6B7588] border-[#6B7588]'} transition-colors duration-500`}>
                                 <p  className="text-[12px] font-semibold "> {selectedOption ? selectedOption : "24 hours"} </p>

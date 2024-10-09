@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { TiTick } from 'react-icons/ti';
 
 import { FaEdit } from 'react-icons/fa';
+import { IoMdClose } from 'react-icons/io';
+import Logo from '../../../../assets/logo/hirehour.png';
+
 
 const Review: React.FC = () => {
+
+  const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
+
+
+
+   
+  const quickApplyDone =()=>{
+      setQuickApplyStep3(false);
+  }
   return (
     <div className="w-full   pb-10 bg-[#F6F6F8]">
       <div className="max-w-[1080px]   pt-2 rounded-lg m-auto">
@@ -216,18 +228,80 @@ const Review: React.FC = () => {
           </div>
 
           <div className="w-full  h-full p-2 mt-5 flex justify-end items-center space-x-2 ">
-            <p className="w-28 flex justify-center items-center rounded-full text-xs h-7 text-[#124C53] border border-[#124C53]">
+            <Link to={"/job-poster/job-review"} className="w-28 flex justify-center items-center rounded-full text-xs h-7 text-[#124C53] border border-[#124C53]">
               Job Preview
-            </p>
+            </Link>
 
-            <Link
-              to={'/job-poster/pricing'}
+            <div
+              onClick={()=>{setQuickApplyStep3(!isQuickApplyStep3)}}
               className="w-24 flex justify-center items-center rounded-full text-xs h-7 text-[#124C53] border bg-[#E9F358]"
             >
               Submit
-            </Link>
+            </div>
           </div>
         </div>
+      </div>
+
+
+
+      
+{/* Popup  */}
+    <div
+        className={`w-full h-full flex overflow-scroll justify-center items-center fixed inset-0 transition-all duration-500 ${isQuickApplyStep3 ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+      >
+                  <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+
+                       
+                        <div className='z-[30] max-w-[600px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px]'>
+            <div className=' p-4 flex justify-between items-center'>
+                 <p className='text-base font-bold'>Apply to xyz Company</p>
+                 <IoMdClose size={30} onClick={()=>{setQuickApplyStep3(false)}}  className="cursor-pointer" />
+            </div>
+            <hr />
+            <div className='w-full p-10'>
+
+
+            <div className="w-full flex justify-between items-center">
+                                <div className='w-[167px] flex justify-center items-center gap-2'>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                        <p className='text-base text-white font-semibold'>1</p>
+                                    </div>
+                                    <p className='hidden md:block text-[10px] font-medium text-[#114B53]'>Screening Questions</p>
+                                </div>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]'>
+
+                                </div>
+                                <div className='w-[167px] flex justify-center items-center gap-2'>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                        <p className='text-base text-white font-semibold'>2</p>
+                                    </div>
+                                    <p className='hidden md:block text-[10px] font-medium text-[#114B53]'>Review Application</p>
+                                </div>
+                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]'>
+
+                                </div>
+                                <div className='w-[167px] flex justify-center items-center gap-2'>
+                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
+                                        <p className='text-base text-white font-semibold'>3</p>
+                                    </div>
+                                    <p className='hidden md:block text-[10px] font-medium text-[#114B53]'>Applied Successfully</p>
+                                </div>
+                            </div>
+          
+            </div>
+                <div className='flex flex-col justify-center items-center'>
+                    <img src={Logo} alt="" />
+                    <p className='text-sm font-semibold text-[#3A3A3C] mt-5'>Your application was submitted successfully to XYZ Company</p>
+                    <p className='text-xs font-normal text-[#6B7588] mt-2'>You can track you application any time from my jobs</p>
+                </div>
+            
+            <div className='w-full flex justify-center p-10'>
+            <Link
+              to={'/job-poster/pricing'} onClick={quickApplyDone}  className='cursor-pointer bg-[#E9F358] w-[100px] h-[40px] flex justify-center items-center rounded-full '>
+                    <p className='text-sm font-semibold text-[#114B53]'>Done</p>
+                </Link>
+            </div>
+                     </div>
       </div>
     </div>
   );
