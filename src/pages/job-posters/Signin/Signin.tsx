@@ -11,9 +11,7 @@ import Verification from '../../../components/job-seekers/modals/authModals/Veri
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [forgetPassword, setForgetPassword] = useState<boolean>(false);
-  const [verification, setVerification] = useState<boolean>(false);
-  const [newPassword, setNewPassword] = useState<boolean>(false);
-
+ 
 
 
   const togglePasswordVisibility = () => {
@@ -106,7 +104,7 @@ const Signin: React.FC = () => {
        <button
          
          className="w-[200px] h-[40px] text-base flex items-center rounded-3xl gap-1 justify-center md:gap-2 text-black p-2 box-radius border border-black"
-\
+ 
         
        >
           <img src={google_logo} alt="Google logo" /> <p>Google</p>
