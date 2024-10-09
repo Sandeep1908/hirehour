@@ -53,6 +53,10 @@ import MessageTemplate from './pages/emails/MessageTemplates.tsx';
 import MessageOneTemplate from './pages/emails/MessageOneTemplate.tsx';
 import MessageJP from './pages/job-posters/Messages/MessageJP.tsx';
 import DashBoardRTR from './pages/job-posters/dashboard/DashboardRTR.tsx';
+
+ import JobPosterSignUp from './pages/job-posters/Signup/Signup.tsx'
+ import JobPosterSignIn from './pages/job-posters/Signin/Signin.tsx'
+
  
 
 const router = createBrowserRouter(
@@ -123,6 +127,10 @@ const router = createBrowserRouter(
       <Route path="/job-poster/pricing" element={<Pricing />} />
       <Route path="/job-poster/profile-setting" element={<ProfileSetting />} />
       <Route path="/job-poster/company-profile-info" element={<CompanyProfileSettings />} />
+      <Route path="/job-poster/signup" element={<JobPosterSignUp />} />
+      <Route path="/job-poster/signin" element={<JobPosterSignIn />} />
+
+
 
 
 
