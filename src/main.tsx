@@ -56,6 +56,7 @@ import MessageOneTemplate from './pages/emails/MessageOneTemplate.tsx';
 import MessageJP from './pages/job-posters/Messages/MessageJP.tsx';
 import DashBoardRTR from './pages/job-posters/dashboard/DashboardRTR.tsx';
 import JobPreview from './pages/job-posters/jobPreveiw/JobPreveiw.tsx';
+import AdminDashboard from './pages/admin/dashboard/Dashboard.tsx';
  
 
 const router = createBrowserRouter(
@@ -147,6 +148,10 @@ const router = createBrowserRouter(
 
 
 
+    {/* Admin Pannel  */}
+
+
+      <Route path="/admin/dashboard" element={< AdminDashboard/>} />
       
       
       
