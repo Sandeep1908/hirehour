@@ -15,7 +15,7 @@ import helpIcon from '../../../assets/dashboard/icons/help.png'
 import CreateNewJob from '../../../components/job-posters/dashboardRTR/CreateNewJob';
 import RTR from '../../../components/job-posters/dashboardRTR/RTR';
 import Help from '../../../components/job-posters/dashboardRTR/Help';
-import ResumeSourcing from '../../../components/job-posters/dashboardRTR/ResumeSourcing';
+ 
 
  
 
@@ -35,11 +35,7 @@ const Sidebar: React.FC = () => {
       icon: righttorepresentIcon,
       queryString:'right-to-represent'
     },
-    {
-      label: 'Resume Sourcing',
-      icon: righttorepresentIcon,
-      queryString:'resume-sourcing'
-    },
+  
  
     {
       label: 'Help',
@@ -122,11 +118,7 @@ const DashBoardRTR: React.FC = () => {
       components:<RTR/>,
       queryString:'right-to-represent'
     },
-    {
-      label: 'Resume Sourcing',
-      components:<ResumeSourcing/>,
-      queryString:'resume-sourcing'
-    },
+  
   
     {
       label: 'Help',
