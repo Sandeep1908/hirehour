@@ -35,42 +35,50 @@ const Sidebar: React.FC = () => {
     {
       label: 'Jobs',
       icon: myjobsIcon,
-      queryString:'myjobs'
+      queryString:'myjobs',
+      count:''
     },
     {
       label: 'Applicants',
       icon: applicantIcon,
-      queryString:'applicants'
+      queryString:'applicants',
+      count:''
     },
     {
       label: 'Resume Sourcing',
       icon: resumesourcingIcon,
-      queryString:'resue-sourcing'
+      queryString:'resue-sourcing',
+      count:''
     },
     {
       label: 'Right to Represent',
       icon: righttorepresentIcon,
-      queryString:'right-to-represent'
+      queryString:'right-to-represent',
+      count:''
     },
     {
       label: 'Interviews',
       icon: interviewIcon,
-      queryString:'interviews'
+      queryString:'interviews',
+      count:''
     },
     {
       label: 'Co-Hiring',
       icon: cohiringIcon,
-      queryString:'co-hiring'
+      queryString:'co-hiring',
+      count:''
     },
     {
       label: 'Subscription',
       icon: subscriptionIcon,
-      queryString:'subscription'
+      queryString:'subscription',
+      count:'1'
     },
     {
       label: 'Help',
       icon: helpIcon,
-      queryString:'help'
+      queryString:'help',
+      count:''
     },
   ];
 
@@ -128,6 +136,7 @@ const Sidebar: React.FC = () => {
                 >
                   {item.label}
                 </span>
+                <p className='text-[10px] font-semibold w-10 flex justify-center items-center rounded-full  bg-[#104B53] text-white'>{item.count}</p>
               </li>
             );
           })}
