@@ -57,7 +57,7 @@ const Sidebar: React.FC = () => {
       count:''
     },
     {
-      label: 'Interviews',
+      label: 'Shortlisted',
       icon: interviewIcon,
       queryString:'interviews',
       count:''

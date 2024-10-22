@@ -1,29 +1,27 @@
 import React, { useState } from 'react'
 import { CiFilter, CiSearch } from 'react-icons/ci';
-import { FaBehanceSquare, FaCaretDown, FaEdit, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { GiRingingBell } from 'react-icons/gi';
+import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
-import { IoIosArrowDown, IoIosMail, IoMdClose } from 'react-icons/io';
+import { IoIosArrowDown, IoMdClose } from 'react-icons/io';
 import { IoCallOutline, IoLocationOutline, IoMail } from 'react-icons/io5';
-import { MdDeleteOutline, MdOutlineMail } from 'react-icons/md';
+import { MdOutlineFileDownload, MdOutlineMail } from 'react-icons/md';
 import resume from '../../../assets/resume.svg'
 import CandidateCard from './CandidateCard';
-// import { Link } from 'react-router-dom';
+import Logo from '../../../assets/logo/hirehour.png';
 
 
 
-type SendRTRModalProps = {
-    isRTROpen: boolean;
-    setIsRTROpen: (e: boolean) => void;
-  };
+
 
 const SearchCandidate: React.FC = () => {
-
+ 
     const [isRTROpen, setIsRTROpen] = useState(false);
+    const [isSignRTR,setIsSignRTR]=useState<boolean>(false)
 
 
     const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
+    const [showJobPre, setShowJobPre] = useState<boolean>(false);
 
 
     const [selectedOptionDistance, setSelectedOptionDistance] = useState<string>("");
@@ -72,7 +70,66 @@ const SearchCandidate: React.FC = () => {
 
     return (
         <div className='w-full h-[520px] overflow-x-hidden overflow-y-auto'>
-           
+            <div className='w-full px-4'>
+                <div className='w-full  border-[1px] border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 '>
+                    <div className='flex md:justify-center items-center gap-2'>
+                        <CiSearch />
+                        <p className='font-normal text-[#3A3A3C] text-sm'>UI/UX Designer</p>
+                    </div>
+                    <div className='flex md:justify-center items-center gap-2'>
+                        <IoLocationOutline />
+                        <p className='font-normal text-[#3A3A3C] text-sm'>Allen, TX, US</p>
+                    </div>
+                    <div className='hidden  md:flex justify-center items-center gap-4 '>
+                        {/* <div className='relative'>
+
+
+                                <div onClick={() => { setDropdownLoc(!dropdownLoc) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
+                                    <p className="text-[14px] font-normal text-[#114B53]">Remote</p>
+                                    <MdOutlineKeyboardArrowDown
+                                        className={`${dropdownLoc ? 'rotate-180 transition-all duration-500' : ''}`}
+                                    />
+                                </div>
+                                {dropdownLoc ?
+                                    <div className='absolute top-12 left-0 w-[302px] h-5 '>
+
+                                        <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg py-2' >
+                                            <div className='w-full px-6 py-3 flex gap-2 '>
+
+                                                <input type="radio" name="value1" id="" />
+                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>All Jobs   </label>
+                                            </div>
+                                            <div className='w-full px-6 py-3 flex gap-2 '>
+
+                                                <input type="radio" name="value1" id="" />
+                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>Remote jobs</label>
+                                            </div>
+                                            <div className='w-full px-6 py-3 flex gap-2 '>
+
+                                                <input type="radio" name="value1" id="" />
+                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>Hybrid jobs</label>
+                                            </div>
+                                            <div className='w-full px-6 py-3 flex gap-2 '>
+
+                                                <input type="radio" name="value1" id="" />
+                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>onsite jobs</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                     : ""}
+
+                            </div> */}
+
+
+
+
+                        <div className='hidden w-[150px] py-2 md:flex justify-center bg-[#114B53] rounded-full'>
+                            <p className='text-white font-semibold text-sm'>Search</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
             <div className=' flex gap-2  px-5 py-2 mt-1'>
@@ -260,8 +317,15 @@ const SearchCandidate: React.FC = () => {
 
                                         </div>
                                     </div>
+                                    <div className='flex gap-4'>
+
+                                   
+                                    <div className='cursor-pointer bg-[#114B53] border-[1px] h-8 border-[#114B53] rounded-full px-3 flex items-center' onClick={() => { setShowJobPre(!showJobPre) }} >
+                                        <p className='text-white text-[14px] font-semibold'>Job Preference</p>
+                                    </div>
                                     <div className='cursor-pointer border-[1px] h-8 border-[#114B53] rounded-full px-3 flex items-center' onClick={() => { setShowFullProfile(!showFullProfile) }} >
                                         <p className='text-[#114B53] text-[14px] font-semibold'>View Full Profile</p>
+                                    </div>
                                     </div>
 
                                 </div>
@@ -479,7 +543,7 @@ const SearchCandidate: React.FC = () => {
                         </div>
                         <div className='w-[75%] '>
                             <div className='flex  gap-3 items-center justify-end'>
-                                <div onClick={() => setIsRTROpen(true)} className='bg-[#114B53] py-2 px-4 rounded-full'>
+                                <div className='bg-[#114B53] py-2 px-4 rounded-full' onClick={() => setIsRTROpen(true)}>
                                     <p className='text-[12px] font-semibold text-white'>Send RTR</p>
                                 </div>
                                 <div className='border-[1px] border-[#114B53] py-2 px-4 rounded-full flex gap-2 items-center'>
@@ -633,103 +697,49 @@ const SearchCandidate: React.FC = () => {
                                 </div>
                             </div>
                         </div>
-                      
-
                     </div>
 
 
                 </div>
             </div>
+            {/* Show Job Preference */}
+
+            <div
+                className={`w-full h-full flex p-3 md:p-3 overflow-scroll justify-center items-center fixed inset-0 transition-all duration-100 ${showJobPre ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+            >
+                <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+
+                <div className='z-[30]  max-w-[500px] w-full  bg-white rounded-lg overflow-auto relative top-[0px] px-5 py-10'>
+                <IoMdClose size={25} onClick={() => { setShowJobPre(!showJobPre) }} className="absolute top-2 right-5 cursor-pointer" />
+
+                 <div className='border border-black rounded-lg p-4'>
+                      <p className='text-base font-bold'>Java Full stack Developer  </p>
+                      <div className='flex gap-2 flex-wrap mt-3'>
+                          <p className='text-xs px-3 py-1 bg-[#F2F2F5] rounded-full' >Fulltime, Contract</p>
+                          <p className='text-xs px-3 py-1 bg-[#F2F2F5] rounded-full' >Onsite, Remote</p>
+                          <p className='text-xs px-3 py-1 bg-[#F2F2F5] rounded-full' >Associate Level</p>
+                          <p className='text-xs px-3 py-1 bg-[#F2F2F5] rounded-full' >$80.00 - $100.00 per year</p>
+                          <p className='text-xs px-3 py-1 bg-[#F2F2F5] rounded-full' >H1 Visa</p>
+                          <p className='text-xs px-3 py-1 bg-[#F2F2F5] rounded-full' >Allen,TX/Dellas, TX</p>
+                      </div>
+                      <p className='text-base text-[#06A560] font-medium mt-3'>Active  </p>
+                 </div>
+ 
 
 
 
 
-{
-    isRTROpen && <SendRTRModal setIsRTROpen={setIsRTROpen} isRTROpen={isRTROpen} />
-}
+                </div>
+            </div>
+            {/* Sent RTR */}
 
-        </div>
-    )
-}
+            <div
+                className={`w-full h-full flex p-3 md:p-3 overflow-scroll justify-center items-center fixed inset-0 transition-all duration-100 ${isRTROpen ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+            >
+                <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
 
-
-
-const Favourite: React.FC = () => { return (<div className='p-5'> <p className='text-sm'>Favourite</p></div>) }
-const MyViewedResume: React.FC = () => { return (<div className='p-5'> <p className='text-sm'>My Viewed Resume</p></div>) }
-const CandidateAlert: React.FC = () => {
-    return (<div className='p-5'>
-  <div className='mt-5'>
-              <div className='w-full border-[1px] border-black rounded-lg flex p-5'  >
-                   <div className='w-full'>
-                    <div className='flex justify-between flex-col-reverse'>
-                     <p className='text-sm font-semibold min-w-fit pt-2 md:pt-0' >Java Full stack Developer </p>
-                     <div className="md:hidden  w-full flex  items-start space-x-4">
-                        <div className="flex items-center  " >
-                        <FaEdit color="#104B53" size={14} />
-                        <p className="text-[#104B53] text-xs">Edit</p>
-                        </div>
-
-                        <div className="flex items-center ">
-                        <MdDeleteOutline color="#104B53" size={14} />
-                        <p className="text-[#104B53] text-xs">Delete</p>
-                        </div>
-                    </div>
-                    </div>
-                     <div className='flex justify-between'>
-
-                     <div className='flex flex-wrap gap-2 md:gap-4 mt-2'>
-                        <div className='px-2 py-1 bg-[#F2F2F5] rounded-full'>
-                             <p className='text-xs text-[#3A3A3C] font-normal'>Fulltime, Contract</p>
-                        </div>
-                        <div className='px-2 py-1 bg-[#F2F2F5] rounded-full'>
-                             <p className='text-xs text-[#3A3A3C] font-normal'>Onsite, Remote</p>
-                        </div>
-                        <div className='px-2 py-1 bg-[#F2F2F5] rounded-full'>
-                             <p className='text-xs text-[#3A3A3C] font-normal'>Associate Level</p>
-                        </div>
-                        <div className='px-2 py-1 bg-[#F2F2F5] rounded-full'>
-                             <p className='text-xs text-[#3A3A3C] font-normal'>$80.00 - $100.00 per year</p>
-                        </div>
-                        <div className='px-2 py-1 bg-[#F2F2F5] rounded-full'>
-                             <p className='text-xs text-[#3A3A3C] font-normal'>H1 Visa</p>
-                        </div>
-                        <div className='px-2 py-1 bg-[#F2F2F5] rounded-full'>
-                             <p className='text-xs text-[#3A3A3C] font-normal'>Allen,TX/Dellas, TX</p>
-                        </div>
-                     </div>
-
-                     <div className="hidden  w-full md:flex justify-end items-start space-x-4">
-                        <div className="flex items-center  " >
-                        <FaEdit color="#104B53" size={14} />
-                        <p className="text-[#104B53] text-xs">Edit</p>
-                        </div>
-
-                        <div className="flex items-center ">
-                        <MdDeleteOutline color="#104B53" size={14} />
-                        <p className="text-[#104B53] text-xs">Delete</p>
-                        </div>
-                    </div>
-                     </div>
-                    
-                     <p className='text-sm text-[#06A560] font-medium mt-4' >Active</p>
-                   </div>
-                 
-              </div>
-        </div>
-    </div>)
-}
-
-
-
-const SendRTRModal: React.FC<SendRTRModalProps> = ({  setIsRTROpen }) => {
-    return (
-      <div
-        className={`w-full h-full flex p-3   justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[10]}   `}
-      >
-        <div className="w-full h-screen hidden md:block absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black "></div>
-  
-        <div
-          className="   z-[40] w-full h-[98%] max-w-[500px]  relative shadow-xl
+                <div
+          className="   z-[30] w-full h-[98%] max-w-[500px]  relative shadow-xl
                             overflow-auto  bg-white rounded-lg"
         >
           <div className="flex justify-between items-center p-5 sticky top-0 bg-white">
@@ -1073,7 +1083,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({  setIsRTROpen }) => {
           <div className="p-4">
             <div className="w-full flex justify-center md:justify-end md:mt-4">
               <p
-                onClick={() => setIsRTROpen(false)}
+                onClick={() => setIsSignRTR(true)}
                 className="flex justify-center items-center w-full md:w-36 h-8 text-xs  rounded-full cursor-pointer bg-[#E9F358] "
               >
                 Preview
@@ -1081,12 +1091,173 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({  setIsRTROpen }) => {
             </div>
           </div>
         </div>
-      </div>
-    );
-  };
+            </div>
+
+
+   {/* Preview RTR */}
+
+   <div
+                className={`w-full h-full flex p-3 md:p-3 overflow-scroll justify-center items-center fixed inset-0 transition-all duration-100 ${isSignRTR ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+            >
+                <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+
+                <div
+          className="   z-[10] w-full max-w-[670px] overflow-auto   shadow-xl
+              h-[95%]  md:h-[99%]  bg-[#F2F2F5] rounded-lg"
+        >
+          <div className="flex justify-between items-start p-2  bg-[#F2F2F5]">
+            <div className="w-full flex justify-center items-center">
+              <img src={Logo} className="w-10 h-10" alt="img-logo" />
+            </div>
+            <IoMdClose size={30} color="#585858" onClick={() => setIsSignRTR(false)} />
+          </div>
+
+          <div className="w-full max-w-[975px]  h-auto m-auto border border-[#E1E1E2] rounded-lg">
+            <div className="w-full bg-white flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-5   rounded-t-lg">
+              <div className="flex items-center space-x-4">
+                <span className="text-xs text-[#6B7588]">Job Title: </span>
+                <p className="text-xs font-semibold">Full Stack Java Developer</p>
+                <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+              </div>
+
+              <div>
+                <p className="text-xs">Rate : $60 / HR</p>
+              </div>
+            </div>
+
+            <div className="w-full bg-white mt-3 flex flex-col space-y-10 md:space-y-0 md:flex-row md:justify-between md:items-start p-5">
+              <div className="flex flex-col space-y-2">
+                <h1 className="text-xs">From</h1>
+                <p className="text-xs">
+                  <strong>Send by</strong>: Erika Less
+                </p>
+                <p className="text-xs">
+                  <strong>Sender email</strong>: Erika@insightGlobal.com
+                </p>
+                <p className="text-xs">
+                  <strong>Company</strong>:Insight Global
+                </p>
+              </div>
+
+              <div className="flex flex-col items-start space-y-2">
+                <h1 className="text-xs">To</h1>
+                <p className="text-xs">
+                  <strong>Employer Name</strong>: Mathew
+                </p>
+                <p className="text-xs">
+                  <strong>Employer Email</strong>: Mathew@xyz.com
+                </p>
+                <p className="text-xs">
+                  <strong>Employer Company</strong>: AA Tech
+                </p>
+                <p className="text-xs">
+                  <strong>Applicant Name</strong>: Johnson
+                </p>
+                <p className="text-xs">
+                  <strong>Applicant Email</strong>: Johnson@zys.com
+                </p>
+              </div>
+
+              <div className="flex flex-col space-y-3 ">
+                <div className="flex  items-center">
+                  <MdOutlineFileDownload size={20} color="#104B53" />
+                  <p className="text-[#104B53] text-xs font-[600]">Export</p>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <div className="w-full flex flex-col space-y-3 bg-white md:flex-row  items-start md:justify-between md:items-end p-5">
+              <div className="flex flex-col space-y-1">
+                <p className="text-xs">
+                  <strong>Client</strong>: AT & T
+                </p>
+                <p className="text-xs">
+                  <strong>Prime Vendor </strong>: Insight Global
+                </p>
+
+                <p className="text-xs">
+                  <strong>Implementation</strong>: TCS
+                </p>
+                <p className="text-xs">
+                  <strong>Vendor </strong>: AA Tech
+                </p>
+              </div>
+
+              <p className="text-xs">
+                <strong>Valid Till</strong>:30 days (08/26/2024)
+              </p>
+            </div>
+
+            {/* Acceptance  */}
+
+            <div className="w-full flex flex-col space-y-2 p-5 bg-white mt-2">
+              <p className="text-xs">
+                I, give the exclusive permission to (Candidates name) (Job Title) (Recruitment
+                agency) resume and qualification to position located in (Location) to represent
+                (Client) for the
+              </p>
+
+              <p className="text-xs">
+                I confirm that neither I have submitted my resume or application for this specific
+                position to any other recruitment agency within the period of the last 30 days, nor
+                I submitted Right to Represent form with any other recruitment agency for this job
+                requisition.
+              </p>
+
+              <p className="text-xs">
+                As a candidate, my handwritten signature, date and requisition number acknowledges
+                my authorization for the above-listed vendor to represent me for this posted
+                requisition from the date on the form till 30 days.
+              </p>
+
+              <p className="text-xs">
+                {' '}
+                <strong>Note:</strong> If RTR is submitted to more than one staffing vendor for the
+                same job requisition, then you will be pulled out of the consideration. You might be
+                no longer eligible for this requisition.
+              </p>
+
+              <div className="flex justify-start items-center space-x-3">
+                <input type="checkbox" className="w-[20px] h-[20px]" />{' '}
+                <p className="text-[#7D8697] text-xs">
+                  By accepting this and proceeding further you agreed to the terms & condition
+                </p>
+              </div>
+            </div>
+
+            {/* Signature  */}
+
+            <div className="w-full  p-4 bg-white mt-2 flex justify-end items-end">
+              
+
+             
+
+              <div >
+                <p onClick={()=>{setIsSignRTR(false)}} className=" w-[100px] text-[10px] p-2 rounded-full text-center text-[#114B53] bg-[#E9F358]">
+                  Send
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+            </div>
+
+       {/* {
+            isRTROpen && <SendRTRModal setIsRTROpen={setIsRTROpen} isRTROpen={isRTROpen} />
+        } */}
+        </div>
+    )
+}
+
+
+
+const Favourite: React.FC = () => { return (<div className='p-5'> <p className='text-sm'>Favourite</p></div>) }
+
+
 
 const ResumeScouring: React.FC = () => {
-
 
 
     const jobFilters = [
@@ -1099,14 +1270,7 @@ const ResumeScouring: React.FC = () => {
             label: 'Favourite',
             component: <Favourite />,
         },
-        {
-            label: 'My Viewed Resume',
-            component: <MyViewedResume />,
-        },
-        {
-            label: 'Candidate Alert',
-            component: <CandidateAlert />,
-        },
+       
     ];
     const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
     const [addJobAlert, setAddJobAlert] = useState<boolean>(false);
@@ -1117,13 +1281,13 @@ const ResumeScouring: React.FC = () => {
             <div className="flex justify-between items-center p-3">
                 <h1 className="text-sm font-semibold">Resume Sourcing
                 </h1>
-                <p className="w-24 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
-                    Post a Job
+                <p className="w-28 h-8 flex justify-center items-center bg-[#E9F358] text-[#104B53] rounded-full text-xs">
+                + Add Resumes
                 </p>
             </div>
             <hr />
             <div className="px-4 py-3 flex justify-between">
-                <ul className="max-w-[680px] w-full  rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
+                <ul className="max-w-[380px] w-full  rounded-full flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
                     {jobFilters?.map((item, i) => {
                         return (
                             <li
@@ -1140,154 +1304,90 @@ const ResumeScouring: React.FC = () => {
                         );
                     })}
                 </ul>
-                <div>
-                <div className='flex justify-end items-center mt-1'>
-                    <div className='relative mr-1 text-[#114B53]'> <IoIosMail /> <GiRingingBell size={13} className='absolute top-2 left-[6px]' /></div>  <p className='text-[#6B7588] text-[12px] font-semibold'><span className='text-[#114B53] font-bold'>Set up an Alert</span>  to receive emails of new candidate like this</p>
-                </div>
-                </div>
-                <div onClick={() => { setAddJobAlert(!addJobAlert) }} className='w-fit text-[10px] rounded-full    px-3 py-1  cursor-pointer  flex justify-center items-center space-x-4 border-[1px] border-[#104B53]'>
-            <p className='text-xs text-[#104B53]'>Add Job Alert</p>
-          </div>
-            </div>
-            <div className='w-full px-4'>
-                <div className='w-full  border-[1px] border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 '>
-                    <div className='flex md:justify-center items-center gap-2'>
-                        <CiSearch />
-                        <p className='font-normal text-[#3A3A3C] text-sm'>UI/UX Designer</p>
-                    </div>
-                    <div className='flex md:justify-center items-center gap-2'>
-                        <IoLocationOutline />
-                        <p className='font-normal text-[#3A3A3C] text-sm'>Allen, TX, US</p>
-                    </div>
-                    <div className='hidden  md:flex justify-center items-center gap-4 '>
-                        {/* <div className='relative'>
-
-
-                                <div onClick={() => { setDropdownLoc(!dropdownLoc) }} className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-                                    <p className="text-[14px] font-normal text-[#114B53]">Remote</p>
-                                    <MdOutlineKeyboardArrowDown
-                                        className={`${dropdownLoc ? 'rotate-180 transition-all duration-500' : ''}`}
-                                    />
-                                </div>
-                                {dropdownLoc ?
-                                    <div className='absolute top-12 left-0 w-[302px] h-5 '>
-
-                                        <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg py-2' >
-                                            <div className='w-full px-6 py-3 flex gap-2 '>
-
-                                                <input type="radio" name="value1" id="" />
-                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>All Jobs   </label>
-                                            </div>
-                                            <div className='w-full px-6 py-3 flex gap-2 '>
-
-                                                <input type="radio" name="value1" id="" />
-                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>Remote jobs</label>
-                                            </div>
-                                            <div className='w-full px-6 py-3 flex gap-2 '>
-
-                                                <input type="radio" name="value1" id="" />
-                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>Hybrid jobs</label>
-                                            </div>
-                                            <div className='w-full px-6 py-3 flex gap-2 '>
-
-                                                <input type="radio" name="value1" id="" />
-                                                <label htmlFor="" className='text-[#333333] text-base font-semibold'>onsite jobs</label>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                     : ""}
-
-                            </div> */}
-
-
-
-
-                        <div className='hidden w-[150px] py-2 md:flex justify-center bg-[#114B53] rounded-full'>
-                            <p className='text-white font-semibold text-sm'>Search</p>
-                        </div>
-                    </div>
-                </div>
+               
+                
             </div>
 
 
 
             {/* all Filter details  */}
-            {/* <div className="w-full  space-y-3  h-full">
+            <div className="w-full  space-y-3  h-full">
                 {jobFilters?.map((item, i) => {
                     if (jobFilterIdx === i) {
                         return <div key={i}>{item.component}</div>;
                     }
                 })}
-            </div> */}
-
-           <div className='w-full h-full'>
-
-
-
-           <div className='max-w-[1280px] md:mt-2 m-auto '>
-         <div className='w-full flex justify-center md:bg-white rounded-lg mt-5'>
-               <p className='text-base font-semibold '>Please upgrade plan to access Resume Sourcing</p>
-         </div>
-         <div className="flex flex-col  md:flex-row gap-10 items-center justify-center mt-10 ">
-          <div
-           
-            className={` border  max-w-[260px] h-[350px]  w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
-          >
-            <div className="flex-col">
-              <p className="text-lg font-semibold ">Resume Sourcing</p>
-              <p className="text-xl font-semibold ">
-              $99 /  <span className="text-xs">Month</span>
-              </p>
-              <p className="text-xs font-normal text-[#6B7588] mt-1">
-              You can find perfect applicant for you <br />
-              job match by sourcing the resume 
-              </p>
-              
-            </div>
-<div>
-<p className="text-lg font-semibold text-black  ">Credits : 100</p>
-<div
-              className={`hover:bg-[#114B53] w-full h-8 border-[1px] text-[#114B53] hover:text-white border-[#114B53] rounded-full flex justify-center items-center mt-10`}
-            >
-              <p className=" text-xs">Upgrade Plan</p>
             </div>
 
-</div>
-           
-          </div>
-
-          <div
-           
-            className={` border max-w-[260px] h-[350px]   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
-          >
-            <div className="flex-col ">
-              <p className="text-xl font-semibold mt-5 ">
-              Bulk Hiring
-              </p>
-              <p className="text-xs font-normal text-[#6B7588] mt-1">
-              Contact our team to bulk hiring
-              </p>
-
-             
-            </div>
-
-            <div
-              className={` hover:bg-[#114B53]  w-full h-8 border-[1px] text-[#114B53] hover:text-white border-[#114B53] rounded-full flex justify-center items-center mt-10`}
-            >
-              <p className=" text-xs"> Contact us</p>
-            </div>
-          </div>
-        </div>
-                  
-
-       </div>
-           </div>
 
 
               {/* Add Candidate */}
 
-      
+        <div
+        className={`w-full h-full flex p-3 md:p-3 overflow-scroll justify-center items-center fixed inset-0 transition-all duration-100 ${addJobAlert ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+      >
+        <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+
+        <div className='z-[30] max-w-[555px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px] '>
+
+          <div className=' px-5 pt-5 flex justify-between items-center'>
+            <p className='text-base font-bold'>Add Candidate Alert</p>
+          </div>
+          
+         <div className='p-5'>
+         <div className='w-full flex gap-4 '>
+                
+                <div className='w-full '>
+                   <p className='text-sm font-medium'>Job Title</p>
+                   <select name="" id="" className='text-xs w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value=""> Java Full Stack</option>
+                      <option value=""> Java Full Stack</option>
+                   </select>
+                </div>
+             </div>
+         <div className='w-full flex gap-4 mt-3'>
+                
+                <div className='w-full '>
+                   <p className='text-sm font-medium'>Experience</p>
+                   <select name="" id="" className='text-xs w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value=""> Associate Level</option>
+                      <option value=""> Senior Level</option>
+                   </select>
+                </div>
+             </div>
+         <div className='w-full flex gap-4 mt-3'>
+                
+                <div className='w-full '>
+                   <p className='text-sm font-medium'>Location</p>
+                   <select name="" id="" className='text-xs w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value=""> Allen, TX, US</option>
+                      <option value=""> Allen, TX, US</option>
+                   </select>
+                </div>
+             </div>
+         <div className='w-full flex gap-4 mt-3'>
+                
+                <div className='w-full '>
+                   <p className='text-sm font-medium'>Skills</p>
+                   <select name="" id="" className='text-xs w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value=""> Java</option>
+                      <option value=""> React</option>
+                   </select>
+                </div>
+             </div>
+         </div>
+    
+          <div onClick={() => { setAddJobAlert(!addJobAlert) }}  className='w-full flex justify-end  gap-5 items-center px-5 py-3'>
+          <p className='text-sm font-semibold text-[#114B53]'>  Cancel</p>
+
+
+            <div onClick={() => { setAddJobAlert(!addJobAlert) }}  className='bg-[#E9F358] w-[110px] h-[30px] flex justify-center items-center rounded-full cursor-pointer '>
+              <p className='text-sm font-semibold text-[#114B53]'>Submit</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
         </div>
 
 
@@ -1296,8 +1396,5 @@ const ResumeScouring: React.FC = () => {
 
     )
 }
-
-
-
 
 export default ResumeScouring
