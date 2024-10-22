@@ -1,18 +1,14 @@
 import React, { useState } from 'react'
-import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
-import { BiMessageDetail } from 'react-icons/bi'
-import { CiFilter, CiSearch } from 'react-icons/ci'
-import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin,  FaRegTrashAlt } from 'react-icons/fa'
+
+import { FaBehanceSquare,  FaGithub, FaLinkedin } from 'react-icons/fa'
 import {  IoIosArrowDown, IoMdClose, IoMdMore } from 'react-icons/io'
 import { IoCallOutline, IoCheckmark, IoMail } from 'react-icons/io5'
-import { MdOutlineAttachment, MdOutlineMail } from 'react-icons/md'
-import { LuSendHorizonal } from 'react-icons/lu'
+import {  MdOutlineMail } from 'react-icons/md'
 import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
-import { RxCross2 } from 'react-icons/rx'
-import { PiArrowsLeftRightBold } from 'react-icons/pi'
+
 import ShortListed from './ShortListed'
 
 
@@ -24,14 +20,11 @@ type accessProps={
 
 const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
 
-  const [like, setLike] = useState<boolean>(false);
-  const [midLike, setMidLike] = useState<boolean>(false);
-  const [disLike, setDisLike] = useState<boolean>(false);
+
   const [moreOption, setMoreOption] = useState<boolean>(false);
 
 
-  const [message, setMessage] = useState<boolean>(false);
-  const [showProfile, setShowProfile] = useState<boolean>(false);
+  
   const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
   return (
     <div className=''>
@@ -1039,7 +1032,8 @@ const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
 const PendingComponent: React.FC = () => {
 
     const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
-    const [moreOption, setMoreOption] = useState<boolean>(false);
+
+    // const [moreOption, setMoreOption] = useState<boolean>(false);
 
   return (
     <div className=''>

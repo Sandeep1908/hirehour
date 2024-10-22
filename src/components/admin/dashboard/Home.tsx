@@ -15,11 +15,12 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 import { IoCallOutline } from 'react-icons/io5'
-import Footer from '../../../components/Footer'
+
+// import Footer from '../../../components/Footer'
 import { JobDescriptionDetails } from '../../../config/jobdescription'
 import JobCard from './JobCard'
 
-const Home = () => {
+const Home:React.FC = () => {
 
 
     const [isQuickApply, setQuickApply] = useState<boolean>(false);

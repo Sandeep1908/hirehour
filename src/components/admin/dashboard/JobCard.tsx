@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { BsFillLightningFill } from "react-icons/bs";
-import { LuMoreVertical } from 'react-icons/lu';
-import { FaFlag, FaRegBookmark } from 'react-icons/fa6';
+
+import { FaFlag } from 'react-icons/fa6';
 import { MdOutlineFlag, MdShare } from 'react-icons/md';
 import ReportJob from './report-job/ReportJob';
 import ReportDetal from './report-job/ReportDetail';

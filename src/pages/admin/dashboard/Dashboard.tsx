@@ -1,88 +1,94 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiPlus } from 'react-icons/fi';
 import { IoIosArrowForward } from 'react-icons/io';
 import useHeaderContext from '../../../context/HeaderContext';
- 
- 
-import { Link, useLocation ,useNavigate} from 'react-router-dom';
- 
 
-// dashboard icons 
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import myjobsIcon from '../../../assets/dashboard/icons/myjob.png'
-import applicantIcon from '../../../assets/dashboard/icons/applicants.png'
-import resumesourcingIcon from '../../../assets/dashboard/icons/resumesourcing.png'
-import righttorepresentIcon from '../../../assets/dashboard/icons/righttorepresent.png'
-import interviewIcon from '../../../assets/dashboard/icons/interview.png'
-import cohiringIcon from '../../../assets/dashboard/icons/co-hiring.png'
+// dashboard icons
+
+import myjobsIcon from '../../../assets/dashboard/icons/myjob.png';
+import applicantIcon from '../../../assets/dashboard/icons/applicants.png';
+import resumesourcingIcon from '../../../assets/dashboard/icons/resumesourcing.png';
+import righttorepresentIcon from '../../../assets/dashboard/icons/righttorepresent.png';
+import interviewIcon from '../../../assets/dashboard/icons/interview.png';
+import cohiringIcon from '../../../assets/dashboard/icons/co-hiring.png';
 // import subscriptionIcon from '../../../assets/dashboard/icons/subscription.png'
+<<<<<<< HEAD
 import helpIcon from '../../../assets/dashboard/icons/help.png'
 import MyJobsAdmin from '../../../components/admin/dashboard/MyJobsAdmin';
 import ResumeScouring from '../../../components/admin/dashboard/ResumeScouring';
 import Verification from '../../../components/admin/dashboard/Verification';
 import Access from '../../../components/admin/dashboard/Access';
 import Home from '../../../components/admin/dashboard/Home';
+=======
+import helpIcon from '../../../assets/dashboard/icons/help.png';
+>>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
 
- 
+//Components
+import MyJobsAdmin from '../../../components/admin/dashboard/MyJobsAdmin';
+import Sales from '../../../components/admin/dashboard/Sales';
+import Reports from '../../../components/admin/dashboard/Reports';
+import Help from '../../../components/admin/dashboard/Help';
+import Analytics from '../../../components/admin/dashboard/Analytics';
 
 const Sidebar: React.FC = () => {
   const [currentQueryString, setCurrentQueryString] = useState<string>('');
-  const { isDashboardOpen, isDashboardMobileNav,setIsDashboardMobileNav } = useHeaderContext();
-  const navigate=useNavigate();
+  const { isDashboardOpen, isDashboardMobileNav, setIsDashboardMobileNav } = useHeaderContext();
+  const navigate = useNavigate();
   const sideBarItems = [
     {
       label: 'Home',
       icon: myjobsIcon,
-      queryString:'home'
+      queryString: 'home',
     },
     {
       label: 'Jobs',
       icon: myjobsIcon,
-      queryString:'myjobs'
+      queryString: 'myjobs',
     },
     {
       label: 'Resume Database',
       icon: applicantIcon,
-      queryString:'resume-database'
+      queryString: 'resume-database',
     },
 
     {
       label: 'Verification',
       icon: applicantIcon,
-      queryString:'verification'
+      queryString: 'verification',
     },
 
     {
       label: 'Access',
       icon: applicantIcon,
-      queryString:'access'
+      queryString: 'access',
     },
     {
       label: 'Analytics',
       icon: resumesourcingIcon,
-      queryString:'analytics'
+      queryString: 'analytics',
     },
     {
       label: 'Sales',
       icon: righttorepresentIcon,
-      queryString:'sales'
+      queryString: 'sales',
     },
     {
       label: 'Reports',
       icon: interviewIcon,
-      queryString:'reports'
+      queryString: 'reports',
     },
     {
       label: 'Broadcast',
       icon: cohiringIcon,
-      queryString:'broadcast'
+      queryString: 'broadcast',
     },
     {
       label: 'Help Center',
       icon: helpIcon,
-      queryString:'help-center'
+      queryString: 'help-center',
     },
-   
   ];
 
   useEffect(() => {
@@ -97,25 +103,27 @@ const Sidebar: React.FC = () => {
     };
   }, [isDashboardOpen]);
 
-  const setQueryString = (qstring:string) => {
+  const setQueryString = (qstring: string) => {
     const params = new URLSearchParams();
     params.set('key', qstring);
     navigate(`?${params.toString()}`, { replace: true });
   };
 
-  const handleIdx = (queryString:string )=> {
-    setQueryString(queryString)
+  const handleIdx = (queryString: string) => {
+    setQueryString(queryString);
     setCurrentQueryString(queryString);
-    setIsDashboardMobileNav(false)
+    setIsDashboardMobileNav(false);
   };
-
 
   return (
     <div
-      className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30   md:w-48 md:h-full md:static ' : 'left-[-100%]  md:w-14  '} ${isDashboardMobileNav?'absolute h-screen left-[0%] z-30':'left-[-200%] w-0  '} `}
+      className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30   md:w-48 md:h-full md:static ' : 'left-[-100%]  md:w-14  '} ${isDashboardMobileNav ? 'absolute h-screen left-[0%] z-30' : 'left-[-200%] w-0  '} `}
     >
       <div className="w-full h-full ">
-        <Link to='/job-poster/job-basis' className="flex justify-center items-center space-x-2 w-full p-4 ">
+        <Link
+          to="/job-poster/job-basis"
+          className="flex justify-center items-center space-x-2 w-full p-4 "
+        >
           <FiPlus size={14} className="font-[700]" />
           <p
             className={`text-xs w-full font-[500] text-[#3A3A3C] ${isDashboardOpen ? 'block' : 'hidden'} `}
@@ -133,7 +141,7 @@ const Sidebar: React.FC = () => {
                 key={i}
                 onClick={() => handleIdx(item.queryString)}
               >
-                <img src={item.icon} alt={`dashboardIcon-${i} `}  className='w-4 h-4'/>
+                <img src={item.icon} alt={`dashboardIcon-${i} `} className="w-4 h-4" />
                 <span
                   className={`text-xs font-[500] transition-all md:delay-1000 w-full ${isDashboardOpen ? 'block' : 'hidden'}`}
                 >
@@ -149,93 +157,101 @@ const Sidebar: React.FC = () => {
 };
 
 const AdminDashboard: React.FC = () => {
-   
   const location = useLocation();
-  const queryParams= new URLSearchParams(location.search)
-  const queryString= queryParams.get('key')
- 
+  const queryParams = new URLSearchParams(location.search);
+  const queryString = queryParams.get('key');
+
   const sideBarItems = [
     {
       label: 'Home',
+<<<<<<< HEAD
       component:<Home/>,
       queryString:'home'
+=======
+      component: '',
+      queryString: 'home',
+>>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
     {
       label: 'Jobs',
-      component: <MyJobsAdmin/>,
-      queryString:'myjobs'
+      component: <MyJobsAdmin />,
+      queryString: 'myjobs',
     },
     {
       label: 'Resume Database',
+<<<<<<< HEAD
       component:<ResumeScouring/>,
       queryString:'resume-database'
+=======
+      component: '',
+      queryString: 'resume-database',
+>>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
 
     {
       label: 'Verification',
+<<<<<<< HEAD
       // component:"",
       component:<Verification/>,
       queryString:'verification'
+=======
+      component: '',
+      queryString: 'verification',
+>>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
 
     {
       label: 'Access',
+<<<<<<< HEAD
       component:<Access/>,
       queryString:'access'
+=======
+      component: '',
+      queryString: 'access',
+>>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
     {
       label: 'Analytics',
-      component:'',
-      queryString:'analytics'
+      component: <Analytics/>,
+      queryString: 'analytics',
     },
     {
       label: 'Sales',
-      component:'',
-      queryString:'sales'
+      component: <Sales />,
+      queryString: 'sales',
     },
     {
       label: 'Reports',
-      component:'',
-      queryString:'reports'
+      component: <Reports />,
+      queryString: 'reports',
     },
     {
       label: 'Broadcast',
-      component:'',
-      queryString:'broadcast'
+      component: '',
+      queryString: 'broadcast',
     },
     {
       label: 'Help Center',
-      component:'',
-      queryString:'help-center'
+      component: <Help />,
+      queryString: 'help-center',
     },
-   
   ];
-
-     
 
   return (
     <div className="w-full h-[89vh] relative flex">
       {/* Sidebar on the Left */}
       <div className="h-full">
-        <Sidebar/>
+        <Sidebar />
       </div>
 
       {/* Main Content on the Right */}
       <div className="w-full md:flex-1 h-full    ">
-     
-
         <div className="w-[98%] m-auto h-full  md:h-[98%] mt-2  overflow-y-auto   bg-white rounded-lg ">
-          
-
           {/* Rendering all components */}
 
           {sideBarItems?.map((item) => {
             if (item.queryString === queryString) {
-              return (
-                <div className="w-full">
-                 { item.component}
-                </div>
-              )
+              return <div className="w-full">{item.component}</div>;
             }
           })}
         </div>
