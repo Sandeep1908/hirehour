@@ -18,6 +18,10 @@ import cohiringIcon from '../../../assets/dashboard/icons/co-hiring.png'
 // import subscriptionIcon from '../../../assets/dashboard/icons/subscription.png'
 import helpIcon from '../../../assets/dashboard/icons/help.png'
 import MyJobsAdmin from '../../../components/admin/dashboard/MyJobsAdmin';
+import ResumeScouring from '../../../components/admin/dashboard/ResumeScouring';
+import Verification from '../../../components/admin/dashboard/Verification';
+import Access from '../../../components/admin/dashboard/Access';
+import Home from '../../../components/admin/dashboard/Home';
 
  
 
@@ -153,7 +157,7 @@ const AdminDashboard: React.FC = () => {
   const sideBarItems = [
     {
       label: 'Home',
-      component:'',
+      component:<Home/>,
       queryString:'home'
     },
     {
@@ -163,19 +167,20 @@ const AdminDashboard: React.FC = () => {
     },
     {
       label: 'Resume Database',
-      component:'',
+      component:<ResumeScouring/>,
       queryString:'resume-database'
     },
 
     {
       label: 'Verification',
-      component:'',
+      // component:"",
+      component:<Verification/>,
       queryString:'verification'
     },
 
     {
       label: 'Access',
-      component:'',
+      component:<Access/>,
       queryString:'access'
     },
     {
