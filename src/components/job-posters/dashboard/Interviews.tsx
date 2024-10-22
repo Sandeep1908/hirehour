@@ -11,6 +11,8 @@ import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
+import job from '../../../assets/dashboard/Applicants/shortlist.png'
+
 import { RxCross2 } from 'react-icons/rx'
 import ShortListed from './ShortListed'
 import { PiArrowsLeftRightBold } from 'react-icons/pi'
@@ -1989,7 +1991,7 @@ const Interviews: React.FC = () => {
               <div key={id} onClick={() => { setItemId(id) }} className={`flex items-center gap-2 py-2 px-4 border-b-[1px] ${itemId === id ? "border-b-[#114B53]" : "border-b-white"}`}>
                 <p className='text-[12px] text-[#114B53] w-max'>{items.label} </p>
                 <div className={`${itemId === id ? "bg-[#CAFDFC]" : "bg-[#F2F2F5]"} w-fit rounded-full px-3  `}>
-                  <p className='text-[12px]  '>{items.Number}</p>
+                  {/* <p className='text-[12px]  '>{items.Number}</p> */}
                 </div>
               </div>
             )
@@ -2204,7 +2206,17 @@ const Interviews: React.FC = () => {
        }
     <div className='h-[46vh] overflow-auto'>
 
-    <ShortListedComponent/>
+    {/* <ShortListedComponent/> */}
+
+    <div className='w-full h-full flex flex-col  items-center   '>
+    
+
+    <img className='w-80' src={job} alt="" />
+   <p className='text-base font-bold text-center mt-5'>No Applicants available </p>
+   <p className='text-sm text-center mt-3'>Keep shortlisting the applicants. It will show in the shortlisted page  </p>
+
+    </div>
+
     </div>
 </div> 
 

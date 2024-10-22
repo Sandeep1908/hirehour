@@ -11,6 +11,7 @@ import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
+import job from '../../../assets/dashboard/Applicants/job.png'
 import { RxCross2 } from 'react-icons/rx'
 import ShortListed from './ShortListed'
 import { PiArrowsLeftRightBold } from 'react-icons/pi'
@@ -1962,7 +1963,7 @@ const Applicants: React.FC = () => {
           <ul className="max-w-[350px]  w-full rounded-full px-1 flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
             {jobFilters?.map((item, i) => {
               return (
-                <li
+                <li key={i}
                   className={`text-[10px] rounded-full   w-full p-1   cursor-pointer  flex justify-center items-center space-x-4 transition-all duration-300 ${jobFilterIdx === i ? 'bg-[#104B53] text-white' : ''}`}
                   onClick={() => setJobFilterIdx(i)}
                 >
@@ -1989,7 +1990,7 @@ const Applicants: React.FC = () => {
               <div key={id} onClick={() => { setItemId(id) }} className={`flex items-center gap-2 py-2 px-4 border-b-[1px] ${itemId === id ? "border-b-[#114B53]" : "border-b-white"}`}>
                 <p className='text-[12px] text-[#114B53] w-max'>{items.label} </p>
                 <div className={`${itemId === id ? "bg-[#CAFDFC]" : "bg-[#F2F2F5]"} w-fit rounded-full px-3  `}>
-                  <p className='text-[12px]  '>{items.Number}</p>
+                  {/* <p className='text-[12px]  '>{items.Number}</p> */}
                 </div>
               </div>
             )
@@ -1999,7 +2000,7 @@ const Applicants: React.FC = () => {
         </div>
 
 
-        <div className='hidden   md:flex gap-2 mt-3 px-4  overflow-auto'>
+        <div className='hidden  gap-2 mt-3 px-4  overflow-auto'>
 
           <div className='relative z-[60] '>
             <div onClick={() => setDropdown(1)} className={`w-fi cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
@@ -2195,7 +2196,7 @@ const Applicants: React.FC = () => {
         {/* all Applicants  */}
 
 
-        {itemId===3?
+        {/* {itemId===3?
         
        
        <div className={`w-full  space-y-3  h-[60vh] overflow-hidden  `}>
@@ -2216,7 +2217,18 @@ const Applicants: React.FC = () => {
 })}
 </div>
 
-        }
+        } */}
+
+
+
+        <div className='w-full h-full flex flex-col  items-center   '>
+    
+
+        <img className='w-96 mt-5' src={job} alt="" />
+       <p className='text-base font-bold text-center mt-5'>No Applicants available </p>
+       <p className='text-sm text-center mt-3'>ones someone apply for the job. all the applicants whoever apply has shown in all applicants </p>
+
+        </div>
 
        
        

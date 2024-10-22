@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
       queryString:'right-to-represent'
     },
     {
-      label: 'Interviews',
+      label: 'Shortlisted',
       icon: interviewIcon,
       queryString:'interviews'
     },

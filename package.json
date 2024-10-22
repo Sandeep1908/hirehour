@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@tinymce/tinymce-react": "^5.1.1",
+    "axios": "^1.7.7",
     "immutability-helper": "^3.1.1",
     "prettier": "^3.3.3",
     "react": "^18.3.1",
