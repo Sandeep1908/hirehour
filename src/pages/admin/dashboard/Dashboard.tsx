@@ -14,16 +14,8 @@ import righttorepresentIcon from '../../../assets/dashboard/icons/righttoreprese
 import interviewIcon from '../../../assets/dashboard/icons/interview.png';
 import cohiringIcon from '../../../assets/dashboard/icons/co-hiring.png';
 // import subscriptionIcon from '../../../assets/dashboard/icons/subscription.png'
-<<<<<<< HEAD
-import helpIcon from '../../../assets/dashboard/icons/help.png'
-import MyJobsAdmin from '../../../components/admin/dashboard/MyJobsAdmin';
-import ResumeScouring from '../../../components/admin/dashboard/ResumeScouring';
-import Verification from '../../../components/admin/dashboard/Verification';
-import Access from '../../../components/admin/dashboard/Access';
-import Home from '../../../components/admin/dashboard/Home';
-=======
+
 import helpIcon from '../../../assets/dashboard/icons/help.png';
->>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
 
 //Components
 import MyJobsAdmin from '../../../components/admin/dashboard/MyJobsAdmin';
@@ -31,6 +23,11 @@ import Sales from '../../../components/admin/dashboard/Sales';
 import Reports from '../../../components/admin/dashboard/Reports';
 import Help from '../../../components/admin/dashboard/Help';
 import Analytics from '../../../components/admin/dashboard/Analytics';
+import Home from '../../../components/admin/dashboard/Home';
+import Verification from '../../../components/admin/dashboard/Verification';
+ import Access from '../../../components/admin/dashboard/Access';
+ import ResumeScouring from '../../../components/admin/dashboard/ResumeScouring';
+
 
 const Sidebar: React.FC = () => {
   const [currentQueryString, setCurrentQueryString] = useState<string>('');
@@ -164,13 +161,10 @@ const AdminDashboard: React.FC = () => {
   const sideBarItems = [
     {
       label: 'Home',
-<<<<<<< HEAD
-      component:<Home/>,
-      queryString:'home'
-=======
+
       component: '',
+      component: <Home/>,
       queryString: 'home',
->>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
     {
       label: 'Jobs',
@@ -179,36 +173,24 @@ const AdminDashboard: React.FC = () => {
     },
     {
       label: 'Resume Database',
-<<<<<<< HEAD
-      component:<ResumeScouring/>,
-      queryString:'resume-database'
-=======
+
       component: '',
+      component:<ResumeScouring/>,
       queryString: 'resume-database',
->>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
 
     {
       label: 'Verification',
-<<<<<<< HEAD
-      // component:"",
-      component:<Verification/>,
-      queryString:'verification'
-=======
       component: '',
+      component: <Verification/>,
       queryString: 'verification',
->>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
 
     {
       label: 'Access',
-<<<<<<< HEAD
-      component:<Access/>,
-      queryString:'access'
-=======
       component: '',
+      component: <Access/>,
       queryString: 'access',
->>>>>>> ee769e4a79d2a1a7a9805e0a7fa03de33bc4fa31
     },
     {
       label: 'Analytics',
