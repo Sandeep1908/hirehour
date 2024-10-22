@@ -14,6 +14,7 @@ import righttorepresentIcon from '../../../assets/dashboard/icons/righttoreprese
 import interviewIcon from '../../../assets/dashboard/icons/interview.png';
 import cohiringIcon from '../../../assets/dashboard/icons/co-hiring.png';
 // import subscriptionIcon from '../../../assets/dashboard/icons/subscription.png'
+
 import helpIcon from '../../../assets/dashboard/icons/help.png';
 
 //Components
@@ -160,6 +161,8 @@ const AdminDashboard: React.FC = () => {
   const sideBarItems = [
     {
       label: 'Home',
+
+      component: '',
       component: <Home/>,
       queryString: 'home',
     },
@@ -170,18 +173,22 @@ const AdminDashboard: React.FC = () => {
     },
     {
       label: 'Resume Database',
+
+      component: '',
       component:<ResumeScouring/>,
       queryString: 'resume-database',
     },
 
     {
       label: 'Verification',
+      component: '',
       component: <Verification/>,
       queryString: 'verification',
     },
 
     {
       label: 'Access',
+      component: '',
       component: <Access/>,
       queryString: 'access',
     },

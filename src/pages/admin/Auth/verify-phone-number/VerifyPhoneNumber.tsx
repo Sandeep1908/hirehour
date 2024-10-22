@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const VerifyPhoneNumber:React.FC = () => {
   return (
     <div className=' bg-[#114B53]   w-full h-[92vh] pt-10 lg:pt-10'>

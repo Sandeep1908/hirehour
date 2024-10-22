@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const InvitedToJoin:React.FC = () => {
   return (
     <div className="w-full h-[100vh] ">

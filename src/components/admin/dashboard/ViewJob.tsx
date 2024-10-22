@@ -3,6 +3,7 @@ import { RxCross2 } from 'react-icons/rx'
 import Location2 from '../../../assets/location2.svg'
 import Job_banner from '../../../assets/Rectangle.png'
 import icon from '../../../assets/Employers Logo.svg'
+
 import ReportJob from './report-job/ReportJob'
 import ReportDetal from './report-job/ReportDetail'
 import ReportSubmit from './report-job/ReportSubmit'

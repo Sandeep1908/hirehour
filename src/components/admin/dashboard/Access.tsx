@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+
 import { FaBehanceSquare,  FaGithub, FaLinkedin } from 'react-icons/fa'
 import {  IoIosArrowDown, IoMdClose, IoMdMore } from 'react-icons/io'
 import { IoCallOutline, IoCheckmark, IoMail } from 'react-icons/io5'
@@ -7,6 +8,7 @@ import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
+
 import ShortListed from './ShortListed'
 
 
@@ -17,6 +19,7 @@ type accessProps={
 }
 
 const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
+
 
   const [moreOption, setMoreOption] = useState<boolean>(false);
 
@@ -1029,6 +1032,7 @@ const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
 const PendingComponent: React.FC = () => {
 
     const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
+
     // const [moreOption, setMoreOption] = useState<boolean>(false);
 
   return (

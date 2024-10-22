@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ForgetPassword from '../../../components/job-seekers/modals/authModals/ForgetPassword';
 import NewPassword from '../../../components/job-seekers/modals/authModals/NewPassword';
 import Verification from '../../../components/job-seekers/modals/authModals/Verification';
-import { loginUser } from '../../Axios/apisService';
+import { useMutation } from '@tanstack/react-query';
+import axiosInstance from '../../../axios/axiosInstance';
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -19,18 +20,49 @@ const Signin: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const data = await loginUser(email, password);
-      console.log('Login Success:', data.token);
-      // Store the token in localStorage or context
-      localStorage.setItem('token', data.token);
-    } catch (err) {
-          alert('Login failed. Please check your credentials.');
-    }
-  };
 
+  
+interface UserCredentials {
+  email: string;
+  password: string;
+}
+
+interface AuthResponse {
+  message: {
+    accessToken: string;
+  };
+}
+
+  const navigate = useNavigate();
+  const mutation = useMutation({
+   
+    mutationFn: async (userCredentials: UserCredentials) => {
+      const response = await axiosInstance.post("/api/candidate/login", userCredentials);
+      console.log("response.data",response.data)
+      localStorage.setItem('token', response.data.token);
+      return response.data;
+    },
+    onSuccess: ({ message }: AuthResponse) => {
+      // localStorage.setItem("authToken", message.accessToken);
+      alert("Signed in successfully");
+      navigate("/job-poster");
+    },
+    onError: (error: any) => {
+      // console.error("Error response:", error.response?.data || error.message);
+      localStorage.removeItem("authToken");
+      alert("Invalid credentials or server error");
+      navigate("/signin");
+    },
+  });
+  
+  
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    mutation.mutate({ email, password });
+  };
+  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -57,7 +89,7 @@ const Signin: React.FC = () => {
                          </label>
                          <div className='w-full h-[40px] mt-1'>
 
-                         <input type="email" className='border-2 border-[#E1E1E2] w-full h-full rounded-lg' value={email} onChange={(e) => setEmail(e.target.value)}  />
+                         <input type="email" className='border-2 px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={email} onChange={(e) => setEmail(e.target.value)}  />
                          </div>
                      </div>
 
@@ -69,7 +101,7 @@ const Signin: React.FC = () => {
                          </label>
                          <div className='relative w-full h-[40px] mt-1'>
 
-                         <input type="text" className='border-2 border-[#E1E1E2] w-full h-full rounded-lg' value={password} onChange={(e) => setPassword(e.target.value)} />
+                         <input type="password" className=' px-2 border-2 border-[#E1E1E2] w-full h-full rounded-lg' value={password} onChange={(e) => setPassword(e.target.value)} />
                          <button
                                type="button"
                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"

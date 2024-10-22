@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { CiFilter, CiSearch } from 'react-icons/ci';
+
 import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
