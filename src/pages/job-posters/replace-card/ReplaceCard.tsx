@@ -4,7 +4,7 @@ import { CgFileDocument } from 'react-icons/cg'
 import { FaRegCheckCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
-const Payment:React.FC = () => {
+const ReplaceCard:React.FC = () => {
 
    const [paymentType, setPaymentType ] = useState("");
 
@@ -20,20 +20,21 @@ const Payment:React.FC = () => {
                <p className='text-base font-semibold'>Addresses</p>
 
                </div>
-               <div className='w-full px-5 mt-3 flex flex-col md:flex-row gap-5 md:gap-0 justify-around'>
+               <div className='w-full px-5 mt-3 flex flex-col md:flex-row gap-5 md:gap-0 \'>
 
                   <div className='max-w-[700px] w-full h-fit border-[1px] border-[#EBEBF0] rounded-lg'>
-                          {/* <div onClick={()=>{setPaymentType("Paypal")}} className={`p-3 ${paymentType==="Paypal" ? "bg-[#EBEBF0]":"bg-white"}  `}>
+                          <div onClick={()=>{setPaymentType("Paypal")}} className={`p-3 ${paymentType==="Paypal" ? "bg-[#EBEBF0]":"bg-white"}  `}>
                          <div className='flex   gap-3'>
                                 <FaRegCheckCircle size={20} className={`${paymentType === "Paypal" ?"text-green-500":"text-[#EBEBF0]"}  mt-1`} />
                                 <div>
-                                    <p className='font-semibold text-sm'>Paypal</p>
-                                    <p className='font-normal text-xs'>Lorem Ipsum comes from sections 1.10.32 and 1.10.33 Extremes of Good <br /> and Evil) by Cicero, written in 45 BC.</p>
+                                    <p className='font-semibold text-sm'>Added card</p>
+                                    <p className='font-normal text-xs'>Mathew </p>
+                                    <p className='font-normal text-xs'>xxxx-xxxx-xxxx-8790  </p>
 
                                 </div>
                          </div>
 
-                         <div className={`${paymentType ==="Paypal" ?"flex ":" hidden"} flex-col md:flex-row justify-between mt-3`}>
+                         {/* <div className={`${paymentType ==="Paypal" ?"flex ":" hidden"} flex-col md:flex-row justify-between mt-3`}>
                               <div>
                                    <p className='text-sm font-normal'>Paypal ID</p>
                                    <p className='text-[12px] font-normal text-[#6B7588]'>Enter the Paypal ID</p>
@@ -50,9 +51,9 @@ const Payment:React.FC = () => {
 
                                  <FaRegCheckCircle size={20} className='text-green-500 mt-3' />
                               </div>
-                         </div>
+                         </div> */}
 
-                          </div> */}
+                          </div>
                           <div onClick={()=>{setPaymentType("card")}} className={`p-3 ${paymentType==="card" ? "bg-[#EBEBF0]":"bg-white"}  `}>
                          <div className='flex gap-3'>
                                 <FaRegCheckCircle size={20} className={`${paymentType === "card" ?"text-green-500":"text-[#EBEBF0]"}  mt-1`} />
@@ -181,7 +182,7 @@ const Payment:React.FC = () => {
 
                           </div> */}
                   </div>
-                  <div className='max-w-[400px] w-full   '>
+                  {/* <div className='max-w-[400px] w-full   '>
                           
                        <div className='w-full p-5  border-[1px] border-[#EBEBF0] rounded-lg'>
           
@@ -217,18 +218,18 @@ const Payment:React.FC = () => {
                 <p className=' text-sm'>Confirm Payment</p>
               </div>
                         
-                  </div>
+                  </div> */}
 
                </div>
-               <div className='mt-3 px-5 pb-5'>
+               {/* <div className='mt-3 px-5 pb-5'>
             <p className='text-base text-[#114B53] font-semibold'>
             + Add More Payment method
             </p>
-         </div>
+         </div> */}
          <div className='fixed bottom-0 bg-white md:relative py-2 md:py-0 justify-center w-full flex md:justify-end md:px-10 mt-3 md:gap-10  items-center'>
-                            <p  className='hidden md:block cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
-                            <div  className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
-                                <Link to={'/job-poster/dashboard?key=myjobs'}  className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</Link>
+                            {/* <p  className='hidden md:block cursor-pointer text-[#114B53] font-semibold text-base'> Back</p> */}
+                            <div  className='bg-[#114B53] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
+                                <Link to={'/job-poster/dashboard?key=myjobs'}  className='text-base font-semibold text-white cursor-pointer'>save</Link>
                             </div>
                         </div>
          </div>
@@ -241,4 +242,4 @@ const Payment:React.FC = () => {
   )
 }
 
-export default Payment
+export default ReplaceCard
