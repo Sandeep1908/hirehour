@@ -12,8 +12,25 @@ import {
 
 import { HeaderContextProvider } from './context/HeaderContext.tsx';
 
+//Chart js
+import 'chart.js/auto';
 
-// components 
+ 
+ import { Tooltip,Legend,BarElement,CategoryScale,LinearScale,Chart as ChartJS,ArcElement } from 'chart.js/auto';
+
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  ChartDataLabels,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+);
+
+// components
 import Home from './pages/job-seekers/home/Home.tsx';
 import Signup from './pages/auth/Signup/Signup.tsx';
 import Signin from './pages/auth/Signin/Signin.tsx';
@@ -57,7 +74,6 @@ import MessageJP from './pages/job-posters/Messages/MessageJP.tsx';
 import DashBoardRTR from './pages/job-posters/dashboard/DashboardRTR.tsx';
 import JobPreview from './pages/job-posters/jobPreveiw/JobPreveiw.tsx';
 import AdminDashboard from './pages/admin/dashboard/Dashboard.tsx';
- 
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -74,14 +90,9 @@ const router = createBrowserRouter(
       <Route path="/myjobs" element={<MyJobs />} />
       <Route path="/myjobs-saved" element={<SavedJobs />} />
       <Route path="/myjobs-application-started" element={<ApplicationStarted />} />
- 
+
       <Route path="/myjobs-interviewing" element={<Interviewing />} />
       <Route path="/myjobs-offer-received" element={<OfferReceived />} />
-
-
-
-
-
 
       {/* Right To Represent  */}
       <Route path="/right-to-represent" element={<RightToRepresent />} />
@@ -101,15 +112,6 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
 
-
-
-
-
-
-
-
-
-
       {/* job posters routes  */}
       <Route path="/job-poster" element={<JobPosterHome />} />
       <Route path="/job-poster/job-basis" element={<JobBoard />} />
@@ -120,8 +122,6 @@ const router = createBrowserRouter(
       <Route path="/job-poster/messages" element={<MessageJP />} />
       <Route path="/job-poster/job-preview" element={<JobPreview />} />
 
-
-
       <Route path="/job-poster/dashboard" element={<DashBoard />} />
       <Route path="/job-poster/dashboard-rtr" element={<DashBoardRTR />} />
       <Route path="/job-poster/payment" element={<Payment />} />
@@ -131,41 +131,29 @@ const router = createBrowserRouter(
       <Route path="/job-poster/signup" element={<SignupPoster />} />
       <Route path="/job-poster/signin" element={<SigninPoster />} />
 
-
-
-
-
-
       <Route path="/job-poster/signup" element={<SignupPoster />} />
       <Route path="/job-poster/signin" element={<SigninPoster />} />
 
-    {/* Email Templates  */}
+      {/* Email Templates  */}
 
       <Route path="/email/job-preference" element={<JobPreferenceTemplate />} />
       <Route path="/email/job-posted" element={<JobPostedTemplates />} />
       <Route path="/email/messages" element={<MessageTemplate />} />
       <Route path="/email/messages-one" element={<MessageOneTemplate />} />
 
+      {/* Admin Pannel  */}
 
-
-    {/* Admin Pannel  */}
-
-
-      <Route path="/admin/dashboard" element={< AdminDashboard/>} />
-      
-      
-      
-
-    </Route>
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />
+    </Route>,
   ),
 );
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <HeaderContextProvider>
-    <DndProvider backend={HTML5Backend}>
-    <RouterProvider router={router} />
-    </DndProvider>
+      <DndProvider backend={HTML5Backend}>
+        <RouterProvider router={router} />
+      </DndProvider>
     </HeaderContextProvider>
   </StrictMode>,
 );
