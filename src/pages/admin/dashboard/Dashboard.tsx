@@ -22,6 +22,11 @@ import Sales from '../../../components/admin/dashboard/Sales';
 import Reports from '../../../components/admin/dashboard/Reports';
 import Help from '../../../components/admin/dashboard/Help';
 import Analytics from '../../../components/admin/dashboard/Analytics';
+import Home from '../../../components/admin/dashboard/Home';
+import Verification from '../../../components/admin/dashboard/Verification';
+ import Access from '../../../components/admin/dashboard/Access';
+ import ResumeScouring from '../../../components/admin/dashboard/ResumeScouring';
+
 
 const Sidebar: React.FC = () => {
   const [currentQueryString, setCurrentQueryString] = useState<string>('');
@@ -155,7 +160,7 @@ const AdminDashboard: React.FC = () => {
   const sideBarItems = [
     {
       label: 'Home',
-      component: '',
+      component: <Home/>,
       queryString: 'home',
     },
     {
@@ -165,19 +170,19 @@ const AdminDashboard: React.FC = () => {
     },
     {
       label: 'Resume Database',
-      component: '',
+      component:<ResumeScouring/>,
       queryString: 'resume-database',
     },
 
     {
       label: 'Verification',
-      component: '',
+      component: <Verification/>,
       queryString: 'verification',
     },
 
     {
       label: 'Access',
-      component: '',
+      component: <Access/>,
       queryString: 'access',
     },
     {
