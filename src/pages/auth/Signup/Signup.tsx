@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
-import { Link } from 'react-router-dom';
-import { signupUser } from '../../Axios/apisService';
+import { Link, useNavigate } from 'react-router-dom';
+import { useMutation } from '@tanstack/react-query';
+import axiosInstance from '../../../axios/axiosInstance';
 
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -17,19 +18,45 @@ const Signup: React.FC = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-//   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const data = await signupUser(firstName, lastName, phoneNumber, email, password);
-      // setMessage(data.message);
-      console.log("data",data)
-    } catch (err) {
-      console.error('Signup error:', err);
-      alert("Signup error")
-    }
-  };
+
+
+interface NewUser {
+   firstName : string,
+   lastName: string,
+   phoneNumber: string,
+   email: string;
+   password: string;
+ }
+ 
+ interface SignupResponse {
+   message: string;
+   [key: string]: any; 
+ }
+ 
+ const navigate = useNavigate();
+ 
+ const mutation = useMutation({
+   mutationFn: async (newUser: NewUser) => {
+     const response = await axiosInstance.post("/api/candidate/signup", newUser);
+     return response.data;
+   },
+   onSuccess: (message: SignupResponse) => {
+     alert("Signup successful!");
+     navigate("/signin");
+   },
+   onError: (error: unknown) => {
+   //   console.error("Signup failed", error);
+     alert("Signup failed, please try again.");
+   },
+ });
+ 
+ // Form submit handler
+ const handleSubmit = (e: React.FormEvent) => {
+   e.preventDefault();
+
+   mutation.mutate({firstName,lastName,phoneNumber, email, password });
+ };
 
 
   
@@ -51,8 +78,8 @@ const Signup: React.FC = () => {
                          </label>
                          <div className='w-full h-[40px] mt-1'>
 
-                         <input type="text" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={firstName}
-          onChange={(e) => setFirstName(e.target.value)} />
+                         <input type="text" className=' border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={firstName}
+          onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" />
                          </div>
                      </ div>
                      <div className='grow'>
@@ -90,7 +117,8 @@ const Signup: React.FC = () => {
 
                      </div> */}
 
-                  <div className='mt-3 md:mt-2'>
+                 <div className='flex flex-col md:flex-row gap-3 md:gap-5  '>
+                 <div className='mt-3 md:mt-2 grow'>
                          <label htmlFor="firstName" className='text-sm'>
                             Phone <span className='text-[#E71717]'>*</span>
                          </label>
@@ -102,17 +130,18 @@ const Signup: React.FC = () => {
  />
                          </div>
                      </div>
-                  <div className='mt-3 md:mt-2'>
+                  <div className='mt-3 md:mt-2 grow'>
                          <label htmlFor="firstName" className='text-sm'>
                             Email <span className='text-[#E71717]'>*</span>
                          </label>
                          <div className='w-full h-[40px] mt-1'>
 
                          <input type="email" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)} placeholder=" Email" 
 />
                          </div>
                      </div>
+                 </div>
 
                      <div className='flex flex-col md:flex-row gap-3 md:gap-5 mt-4 md:mt-2'>
                      <div className='grow'>
@@ -121,8 +150,8 @@ const Signup: React.FC = () => {
                          </label>
                          <div className='relative w-full h-[40px] mt-1'>
 
-                         <input type="text" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={password}
-          onChange={(e) => setPassword(e.target.value)}
+                         <input type="password" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={password}
+          onChange={(e) => setPassword(e.target.value)} placeholder="Password" 
  />
                          <button
                                type="button"
@@ -139,11 +168,11 @@ const Signup: React.FC = () => {
                          </label>
                          <div className='relative w-full h-[40px] mt-1'>
 
-                         <input type="text" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' />
+                         <input type="password" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' placeholder='Confirm password'/>
                          <button
                                type="button"
                                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
-                               onClick={togglePasswordVisibility}
+                               onClick={togglePasswordVisibility}  
                            >
                                {showPassword ? <FaEyeSlash /> : <FaEye />}
                            </button>
