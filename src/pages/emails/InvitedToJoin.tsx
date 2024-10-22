@@ -1,6 +1,6 @@
 import React from 'react'
 
-const InvitedToJoin = () => {
+const InvitedToJoin:React.FC = () => {
   return (
     <div className="w-full h-[100vh] ">
     <div className="max-w-72  m-auto mt-5 bg-white">

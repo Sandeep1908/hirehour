@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import { CiFilter, CiSearch } from 'react-icons/ci';
-import { FaBehanceSquare, FaCaretDown, FaEdit, FaGithub, FaLinkedin } from 'react-icons/fa';
-import { GiRingingBell } from 'react-icons/gi';
+import { FaBehanceSquare, FaCaretDown, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
-import { IoIosArrowDown, IoIosMail, IoMdClose } from 'react-icons/io';
+import { IoIosArrowDown, IoMdClose } from 'react-icons/io';
 import { IoCallOutline, IoLocationOutline, IoMail } from 'react-icons/io5';
-import { MdDeleteOutline, MdOutlineFileDownload, MdOutlineMail } from 'react-icons/md';
+import { MdOutlineFileDownload, MdOutlineMail } from 'react-icons/md';
 import resume from '../../../assets/resume.svg'
 import CandidateCard from './CandidateCard';
 import Logo from '../../../assets/logo/hirehour.png';

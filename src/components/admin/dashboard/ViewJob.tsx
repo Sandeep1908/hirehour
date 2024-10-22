@@ -3,13 +3,11 @@ import { RxCross2 } from 'react-icons/rx'
 import Location2 from '../../../assets/location2.svg'
 import Job_banner from '../../../assets/Rectangle.png'
 import icon from '../../../assets/Employers Logo.svg'
-import { GrFlag } from 'react-icons/gr'
 import ReportJob from './report-job/ReportJob'
 import ReportDetal from './report-job/ReportDetail'
 import ReportSubmit from './report-job/ReportSubmit'
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
-import { PiArrowsLeftRightBold } from 'react-icons/pi'
-import { FaRegTrashAlt } from 'react-icons/fa'
+
 import { IoMdMore } from 'react-icons/io'
 
 

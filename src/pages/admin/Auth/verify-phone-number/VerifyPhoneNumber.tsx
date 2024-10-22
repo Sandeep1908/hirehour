@@ -1,6 +1,6 @@
 import React from 'react'
 
-const VerifyPhoneNumber = () => {
+const VerifyPhoneNumber:React.FC = () => {
   return (
     <div className=' bg-[#114B53]   w-full h-[92vh] pt-10 lg:pt-10'>
     <div className='w-full h-full px-5 lg:px-10 flex gap-20'>

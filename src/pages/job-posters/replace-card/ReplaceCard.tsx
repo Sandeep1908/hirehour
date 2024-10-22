@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { BsArrowLeft } from 'react-icons/bs'
-import { CgFileDocument } from 'react-icons/cg'
+// import { CgFileDocument } from 'react-icons/cg'
 import { FaRegCheckCircle } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
