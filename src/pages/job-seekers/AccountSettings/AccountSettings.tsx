@@ -45,13 +45,13 @@ const AccountSetting:React.FC=()=>{
             link:'/profile-visibility'
         },{
             label:'Privacy Settings',
-            link:''
+            link:'/privacy-setting'
         }
       ];
     
     return(
-        <div className="w-full  h-full bg-[#F2F2F5] p-2  relative" >
-            <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-10 rounded-lg p-5">
+        <div className="w-full  h-[calc(100vh-60px)] bg-[#F2F2F5] p-2  relative" >
+            <div className=" w-full max-w-[1280px] h-[80vh] bg-white  m-auto mt-10 rounded-lg p-5">
                     <h1 className="text-3xl p-3 font-bold">Account Settings</h1>
                     <hr />
                         <div className="w-full overflow-auto">
@@ -71,9 +71,9 @@ const AccountSetting:React.FC=()=>{
 
 {/* Setting Box  */}
 
-                        <div className="w-full   max-w-[1200px] mt-10  h-full m-auto border border-[#E1E1E2] rounded-lg">
+                        <div className="w-full   max-w-[1200px] mt-10  h-fit m-auto border border-[#E1E1E2] rounded-lg">
 
-                                        <div className="w-full h-full flex flex-col space-y-10 p-10">
+                                        <div className="w-full h-full flex flex-col space-y-10 p-5">
 
                                                     <div className="flex flex-col space-y-3 relative   before:absolute before:bottom-[-10px] before:w-full before:h-[1px] before:bg-[#ECECEC]">
                                                             <p className="text-xs text-[#717171]">Full name</p>
@@ -111,37 +111,12 @@ const AccountSetting:React.FC=()=>{
 
 
 
-                                                    <div className=" flex flex-col space-y-3 md:space-y-3 md:flex-row md:justify-between items-center  relative   before:absolute before:bottom-[-10px] before:w-full before:h-[1px] before:bg-[#ECECEC]">
-                                                        <div className="flex flex-col w-full md:w-auto space-y-3">
-                                                        <p className="text-xs text-[#717171]">Phone</p>
-                                                        <p className="text-sm font-semibold">+91 949403539405</p>
-                                                        </div>
-                                                        
-
-                                                        <div className="flex flex-col space-y-3 w-full md:w-auto">   
-                                                        <p className="p-2 w-full md:w-auto text-[#104B53] text-xs text-center rounded-full border border-[#104B53]">Verify Phone number</p>
-
-                                                        <p className="p-2 w-full md:w-auto text-[#104B53] text-xs text-center rounded-full border border-[#104B53]">Change phone number</p>
-
-                                                        </div>
-                                                   
-                                                    </div>
-
-
-                                                    <div className=" flex flex-col space-y-3 md:space-y-3 md:flex-row md:justify-between items-center  relative   before:absolute before:bottom-[-10px] before:w-full before:h-[1px] before:bg-[#ECECEC]">
-                                                        <div className="flex flex-col space-y-3">
-                                                        <p className="text-xs text-[#717171]">xyzcompany@gmail.com</p>
-                                   
-                                                        </div>
-                                                        
-
-                                                        <p className="p-2 w-full md:w-auto text-[#104B53] text-xs text-center rounded-full border bg-[#E9F358] ">Sign out</p>
-                                                    </div>
-
+                                                  
 
 
                                                     <div className=" flex justify-between items-center  relative   before:absolute before:bottom-[-10px] before:w-full before:h-[1px] before:bg-[#ECECEC]">
-                                                        <p className="text-red-500 p-5 text-center w-full">Close your account</p>
+                                                        <p className="text-red-500 p-3 text-center text-xs ">Close your account</p>
+                                                        <p className="text-xs w-20 h-6 bg-[#E9F358] text-[#104B53] flex justify-center items-center rounded-full">Sign out</p>
                                                     </div>
 
 
