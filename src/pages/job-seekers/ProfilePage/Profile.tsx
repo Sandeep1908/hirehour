@@ -278,7 +278,7 @@ const Profile: React.FC = () => {
               </div>
 
               <div className="w-full h-full flex space-x-3 justify-center items-center p-3 ">
-                <div className="flex  h-[60px] justify-between items-center w-full border border-[#D1D1D1] rounded-lg ">
+                <div className="flex  h-[60px] justify-between items-center w-full border border-black overflow-hidden rounded-lg ">
                   <div className=" w-[100px] h-full flex justify-center items-center bg-[#E3EDFF]">
                     <p className="text-sm font-semibold text-[#1F4AF1] ">PDF</p>
                   </div>
