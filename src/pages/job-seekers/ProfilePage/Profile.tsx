@@ -34,6 +34,7 @@ const Profile: React.FC = () => {
   const [certificationPopup, setCertificationPopup] = useState<boolean>(false);
   const [achievementPopup, setAchievementPopup] = useState<boolean>(false);
   const [isPublic, setIsPublic] = useState<boolean>(true);
+  const [isUploadResumeOpen,setIsUploadResumeOpen]=useState(false)
 
   return (
     <div className="w-full h-full relative ">
@@ -268,11 +269,12 @@ const Profile: React.FC = () => {
                   <p className="text-xs text-[#A4A5B8]">Pdf, Doc, DocX (2MB)</p>
 
                   <label
-                    className={` flex justify-center items-center w-36 h-10 space-x-2    rounded-full cursor-pointer border-2 border-[#104B53]   `}
+                    onClick={()=>setIsUploadResumeOpen(true)}
+                    className={` flex justify-center items-center w-36 h-8 space-x-2    rounded-full cursor-pointer border-2 border-[#104B53]   `}
                   >
                     <BsUpload size={13} color="#104B53" />
                     <span className={`text-xs font-semibold text-[#104B53]   `}>Upload Resume</span>
-                    <input type="file" className="hidden" />
+                    
                   </label>
                 </div>
               </div>
@@ -568,6 +570,36 @@ const Profile: React.FC = () => {
       {educationPopup && <Education setEducationPopup={setEducationPopup} />}
       {certificationPopup && <Certification setCerticationPopup={setCertificationPopup} />}
       {achievementPopup && <Achievement setAchievementPopup={setAchievementPopup} />}
+
+
+      <div
+        className={`w-full h-full flex justify-center items-center fixed inset-0 transition-all duration-500 ${
+          isUploadResumeOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'
+        }`}
+      >
+        <div className="z-[10] w-full max-w-[500px] shadow-xl bg-white rounded-lg space-y-6 p-6">
+          <div className="flex justify-between items-center">
+            <h1 className="text-lg  text-center  w-full ">Overwrite Profile ?</h1>
+            <button
+              onClick={() => setIsUploadResumeOpen(false)}
+              className="text-lg font-bold text-gray-400"
+            >
+              ×
+            </button>
+          </div>
+
+          <div className='flex flex-col items-center justify-center'>
+            <p className='text-sm text-center text-[#6B7588]'>Once the hiring partner accept the invite it will show in the 
+            co-hiring page  </p>
+
+            <div className='flex justify-between items-center w-full p-3 gap-5'>
+                 <p  className='text-xs w-full h-7 border border-[#104B53] rounded-full flex justify-center items-center text-[#104B53] font-[500]'>Just Upload</p>
+                 <p  className='w-full h-7 bg-[#E9F358] text-xs text-[#104B53] rounded-full flex justify-center items-center'>Upload and Overwrite</p>
+            </div>
+          </div>
+           
+        </div>
+      </div>
     </div>
   );
 };

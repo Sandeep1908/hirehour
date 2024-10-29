@@ -1170,7 +1170,7 @@ const RTR: React.FC = () => {
           <div className='w-full px-2 max-w-fit flex items-center justify-start space-x-2 border border-[#6B7588]  rounded-full'>
               
               <select name="" id="" className='text-xs text-[#6B7588] outline-none'>
-                <option value="">Company</option>
+                <option value="">Employer Company</option>
               </select>
           </div>
 

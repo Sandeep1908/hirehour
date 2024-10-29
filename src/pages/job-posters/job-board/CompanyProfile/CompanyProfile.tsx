@@ -102,14 +102,15 @@ const CompanyProfile: React.FC = () => {
                   />
                 </div>
 
-                {/* Company Location  */}
+                {/* Company Address  */}
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
-                    Company Location
+                    Company Address
                     </label>
                     <span className="text-red-500">*</span>
+                     
                   </div>
 
                   <input
@@ -121,6 +122,46 @@ const CompanyProfile: React.FC = () => {
               </div>
 
 
+              <div className="w-full grid md:grid-cols-2 gap-3">
+                {/* Location  */}
+                <div className="flex flex-col space-y-2">
+                  <div className="flex ">
+                    <label htmlFor="" className="text-xs">
+                    Location
+                    </label>
+                    <span className="text-red-500">*</span>
+                    
+                  </div>
+
+                  <input
+                    type="text"
+                    placeholder="Location"
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  />
+                </div>
+
+
+
+                {/* Headquater  */}
+                <div className="flex flex-col space-y-2">
+                  <div className="flex ">
+                    <label htmlFor="" className="text-xs">
+                    Headquater Location
+                    </label>
+                    <span className="text-red-500">*</span>
+                    
+                  </div>
+
+                  <input
+                    type="text"
+                    placeholder="Location"
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  />
+                </div>
+
+                 
+              </div>
+
           <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Company Size  */}
                 <div className="flex flex-col space-y-2">
@@ -129,11 +170,12 @@ const CompanyProfile: React.FC = () => {
                     Company Size
                     </label>
                     <span className="text-red-500">*</span>
+                    
                   </div>
 
                   <input
                     type="text"
-                    placeholder="Select Size in Numbers"
+                    placeholder="Company size"
                     className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
@@ -145,17 +187,19 @@ const CompanyProfile: React.FC = () => {
                     <label htmlFor="" className="text-xs font-[300]">
                       Receive notification through emails
                     </label>
-                    <span className="text-red-500">*</span>
+                
                   </div>
                   <div className='flex justify-between p-2 w-full'>
                     <p className='text-sm'>mathewxyz.com</p>
-                    <input type="checkbox" placeholder="Job Type" className="w-7 h-5" />
+                   
                   </div>
 
                 
                 </div>
               </div>
 
+
+      
 
               <div className="w-full grid md:grid-cols-2 gap-3">
                 {/* Company Website  */}
@@ -165,6 +209,7 @@ const CompanyProfile: React.FC = () => {
                     Company Website URL
                     </label>
                     <span className="text-red-500">*</span>
+                   
                   </div>
 
                   <input
@@ -182,6 +227,7 @@ const CompanyProfile: React.FC = () => {
                     Phone Number
                     </label>
                     <span className="text-red-500">*</span>
+                    
                   </div>
 
                   <input
@@ -191,6 +237,31 @@ const CompanyProfile: React.FC = () => {
                   />
                 </div>
               </div>
+
+
+
+              <div className="w-full  ">
+                 
+
+                {/* Company Description  */}
+
+                <div className="flex flex-col space-y-2">
+                  <div className="flex ">
+                    <label htmlFor="" className="text-xs">
+                    Company Description
+                    </label>
+                    
+                  </div>
+
+                  <textarea
+                    
+                   
+                    className="p-2 border w-full border-[#EBEBF0] min-h-44 rounded-md placeholder:text-xs"
+                  />
+                </div>
+              </div>
+
+              
                 {/* buttons  */}
 
           <div className="flex w-full  justify-between md:justify-end items-center  space-x-4">

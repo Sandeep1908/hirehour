@@ -3,20 +3,20 @@ import { Link } from "react-router-dom";
 import {IoMdClose} from 'react-icons/io'
 import { FaEdit } from "react-icons/fa";
 
-const ProfileSetting:React.FC=()=>{
+const RTRProfile:React.FC=()=>{
     const [isChangeEmail,setIsChangeEmail]=useState<boolean>(false)
     const titles = [
         {
             label:'User Profile',
-            link:'/job-poster/profile-setting'
+            link:'/dashboard-rtr/profile-setting'
         },
         {
             label:'Company Profile',
-            link:'/job-poster/company-profile-info'
+            link:'/dashboard-rtr/company-profile-info'
         },
         {
             label:'Privacy Setting',
-            link:'/job-poster/privacy-setting'
+            link:'/dashboard-rtr/privacy-setting'
         }
       ];
     
@@ -140,4 +140,4 @@ const ProfileSetting:React.FC=()=>{
 }
 
 
-export default ProfileSetting;
+export default RTRProfile;

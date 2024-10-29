@@ -69,7 +69,7 @@ const Message : React.FC =()=>{
 
 {/* Message box  */}
 
-                        <div className="w-full flex max-w-[1200px] bg-white  p-2   h-[90vh] m-auto border border-[#E1E1E2] rounded-lg">
+                        <div className="w-full flex max-w-[1200px] bg-white     h-[90vh] m-auto border border-[#E1E1E2] rounded-lg">
                             {/* left Side bar  */}
 
                             <div className="w-full  p-5 flex flex-col space-y-6  md:max-w-[307px] h-full border border-[#D6DBDE] rounded-lg ">
