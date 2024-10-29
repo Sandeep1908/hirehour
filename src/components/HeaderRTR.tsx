@@ -5,7 +5,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { IoIosMenu } from 'react-icons/io';
 
 import NotificationModal from './job-seekers/modals/NotificationModal';
-import AccountModal from './job-posters/modals/AccountModal';
+import AccountModal from './job-posters/dashboardRTR/modals/AccountModal';
 
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ import dashLogoOpen from '../assets/header/dashclose.png';
 import { useLocation } from 'react-router-dom';
 import useHeaderContext from '../context/HeaderContext';
 
-const HeaderJP: React.FC = () => {
+const HeaderRTR: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   //   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
@@ -24,19 +24,7 @@ const HeaderJP: React.FC = () => {
   const { isDashboardOpen, setIsDashBoardOpen, setIsDashboardMobileNav, isDashboardMobileNav } =
     useHeaderContext();
   const pathname = useLocation().pathname.includes('/dashboard');
-
-  //   useEffect(() => {
-  //     if (isNavOpen) {
-  //       document.body.style.overflow = 'hidden';
-  //     } else {
-  //       document.body.style.overflow = 'auto';
-  //     }
-
-  //     return () => {
-  //       document.body.style.overflow = 'auto';
-  //     };
-  //   }, [isNavOpen]);
-
+ 
   return (
     <div className="w-full h-14 bg-white relative   ">
       <div className="w-full  flex justify-between items-center p-2 px-4">
@@ -71,7 +59,7 @@ const HeaderJP: React.FC = () => {
 
         <div className="  flex justify-center items-center space-x-7   ">
           <div className="hidden md:flex justify-center items-center space-x-7">
-            <Link to={'/job-poster/messages'}>
+            <Link to={''}>
               <div className=" relative flex flex-col  space-y-1 justify-center items-center cursor-pointer">
               <p className="w-3 h-3 bg-[#FF3837] rounded-full absolute  top-[-1px]  right-3 text-[7px] text-white flex justify-center items-center" >2</p>
                 <img src={msgLogo} alt="rtr-header" className="w-5" />
@@ -125,4 +113,4 @@ const HeaderJP: React.FC = () => {
   );
 };
 
-export default HeaderJP;
+export default HeaderRTR;
