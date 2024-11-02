@@ -149,7 +149,12 @@ const JobDescriptionBoard: React.FC = () => {
 
               {/* Job Description  */}
               <div className="w-full flex flex-col space-y-1 ">
-                <h1 className="text-sm font-[500]">Job Description</h1>
+              <div className="flex ">
+                  <label htmlFor="" className="text-xs">
+                  Job description
+                  </label>
+                  <span className="text-red-500">*</span>
+                </div>
                 <p className="text-[10px] text-[#6B7588]">
                   You can add description by the help of AI
                 </p>
@@ -161,7 +166,7 @@ const JobDescriptionBoard: React.FC = () => {
                     </p>
                   </div>
 
-                  <textarea className="w-full  text-[10px] p-2 min-h-44 text-[#3A3A3C] tracking-wide">
+                  <textarea className="w-full  text-[10px] p-2 min-h-60 text-[#3A3A3C] tracking-wide">
                     Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
                     in a piece of classical Latin literature from 45 BC, making it over 2000 years
                     old. Richard McClintock, a Latin professor at Hampden-Sydney College in
@@ -181,7 +186,7 @@ const JobDescriptionBoard: React.FC = () => {
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
-                      Tech Stack
+                      Work Stack
                     </label>
                     <span className="text-red-500">*</span>
                   </div>
@@ -197,7 +202,7 @@ const JobDescriptionBoard: React.FC = () => {
                     <label htmlFor="" className="text-xs">
                       Benefits
                     </label>
-                    <span className="text-red-500">*</span>
+                    
                   </div>
 
                   <Select options={techStackOptions} isMulti className="text-xs text-[#9CA3AF]" />
@@ -237,7 +242,7 @@ const JobDescriptionBoard: React.FC = () => {
                         <label htmlFor="" className="text-xs">
                           1. Question
                         </label>
-                        <span className="text-red-500">*</span>
+                        
                       </div>
 
                       <input
@@ -260,7 +265,7 @@ const JobDescriptionBoard: React.FC = () => {
                     <label htmlFor="" className="text-xs">
                       Question Type
                     </label>
-                    <span className="text-red-500">*</span>
+                    
                   </div>
 
                   <select className='p-2 border border-[#EBEBF0] rounded-md outline-none text-[] text-xs'>

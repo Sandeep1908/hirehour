@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
  
-import useHeaderContext from '../../../context/HeaderContext';
+import useHeaderContext from '../../../../context/HeaderContext';
  
  
 import {  useLocation ,useNavigate} from 'react-router-dom';
@@ -9,12 +9,12 @@ import {  useLocation ,useNavigate} from 'react-router-dom';
 // dashboard icons 
 
  
-import righttorepresentIcon from '../../../assets/dashboard/icons/righttorepresent.png'
+import righttorepresentIcon from '../../../../assets/dashboard/icons/righttorepresent.png'
  
-import helpIcon from '../../../assets/dashboard/icons/help.png'
-import CreateNewJob from '../../../components/job-posters/dashboardRTR/CreateNewJob';
-import RTR from '../../../components/job-posters/dashboardRTR/RTR';
-import Help from '../../../components/job-posters/dashboardRTR/Help';
+import helpIcon from '../../../../assets/dashboard/icons/help.png'
+import CreateNewJob from '../../../../components/job-posters/dashboardRTR/CreateNewJob';
+import RTR from '../../../../components/job-posters/dashboardRTR/RTR';
+import Help from '../../../../components/job-posters/dashboardRTR/Help';
  
 
  

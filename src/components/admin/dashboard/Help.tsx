@@ -1,22 +1,14 @@
 import { useState } from 'react';
-import accountsetting from '../../../assets/dashboard/help/accoutsetting.png';
-import billing from '../../../assets/dashboard/help/billing.png';
-
-import blog from '../../../assets/dashboard/help/blog.png';
-
-import email from '../../../assets/dashboard/help/email.png';
-
-import faq from '../../../assets/dashboard/help/faq.png';
-
-import security from '../../../assets/dashboard/help/security.png';
-
-import support from '../../../assets/dashboard/help/support.png';
+ 
 import AccountSetting from './help/AccountSetting';
 import { IoMdClose } from 'react-icons/io';
+import { MdOutlineDeleteOutline } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+
 
 type HelpCard = {
   label: string;
-  icon: string; // Assuming 'icon' is a string (could be an imported image or icon name)
+  
   content: string;
 };
 
@@ -92,43 +84,43 @@ const Help: React.FC = () => {
   const helpCards: HelpCard[] = [
     {
       label: 'Account Setting',
-      icon: accountsetting,
+      
       content: 'Everything you need to know to getting started with Hire hours',
     },
 
     {
       label: 'Security',
-      icon: security,
+ 
       content: 'FAQ shows how specific features work',
     },
 
     {
       label: 'Billing Help',
-      icon: billing,
+   
       content: 'Everything you need to know to getting started with Hire hours',
     },
 
     {
       label: 'Email',
-      icon: email,
+    
       content: 'Send you all the updates instantly to your email',
     },
 
     {
       label: '24/7 Support',
-      icon: support,
+      
       content: 'Get support instantly form qualified team',
     },
 
     {
       label: 'FAQS',
-      icon: faq,
+      
       content: 'FAQ shows how specific features work',
     },
 
     {
       label: 'Blog',
-      icon: blog,
+  
       content: 'Stay up with latest updates on community ',
     },
   ];
@@ -170,12 +162,21 @@ const Help: React.FC = () => {
                   onClick={() => {
                     setItemId(i);
                   }}
-                  className="flex flex-col p-3 space-y-3 border rounded-lg max-w-44 h-36 "
+                  className="flex flex-col   p-3 space-y-3 border rounded-lg max-w-44 h-36 "
                   key={i}
                 >
-                  <img src={item.icon} alt="" className="w-8 h-8" />
+                  
                   <h1 className="text-sm font-[500] text-[#104B53]">{item.label}</h1>
                   <p className="text-[10px] text-[#6B7588]">{item.content} </p>
+
+                  <div className='w-full h-full flex justify-between items-center'>
+                    <div className='flex space-x-1 items-center'><MdOutlineDeleteOutline color='#104B53' />
+                      <span className='text-xs text-[#104B53]'>Delete</span>
+                    </div>
+                    <div className='flex space-x-1 items-center'><FaEdit size={14} color='#104B53' />
+                    <span className='text-xs text-[#104B53]'>Edit</span>
+                    </div>
+                  </div>
                 </div>
               );
             })}

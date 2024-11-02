@@ -4,6 +4,7 @@ import { MdOutlineFileDownload } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Logo from '../../../../assets/logo/hirehour.png';
+import { BsInfoCircleFill } from 'react-icons/bs';
 
 const Accepted: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
@@ -49,7 +50,7 @@ const Accepted: React.FC = () => {
   };
   return (
     <div className="w-full  min-h-screen bg-[#F2F2F5]  relative  ">
-       <div className=" w-full max-w-[1280px]  flex     m-auto mt-3 rounded-lg p-2 ">
+       <div className=" w-full max-w-[1280px]  flex     m-auto mt-3 rounded-lg   ">
 
    
 
@@ -69,6 +70,8 @@ const Accepted: React.FC = () => {
             })}
           </ul>
         </div>
+
+        
 
 <div className='w-full  p-3 bg-white  '>
 
@@ -107,23 +110,71 @@ const Accepted: React.FC = () => {
   </p>
 </div>
    
-<div className=' p-4 flex justify-start space-x-3   items-center'>
-  <p className='text-sm'>Recevied</p>
-      <select name="" id="" className='w-[100px] text-sm  border outline-none '>
-        <option  className="p-1" value="">Anytime</option>
+<div className=" p-4 flex justify-start space-x-4 w-full overflow-auto    items-center">
+            <div className="w-full sm:w-auto  flex justify-center items-center border border-[#A2A9B4] p-1 rounded-full">
+              <p className="text-[10px]  text-[#6B7588] font-[500]">Recevied Date:</p>
 
+              <select
+                name=""
+                id=""
+                className=" text-[10px] text-end  text-[#6B7588]  outline-none "
+              >
+                <option className="p-1" value="">
+                  Anytime
+                </option>
 
-        <option value="">24 Hours</option>
-        <option value="">Past 3 days</option>
+                <option value="">24 Hours</option>
+                <option value="">Past 3 days</option>
 
-        <option value="">Past week</option>
+                <option value="">Past week</option>
 
-        <option value="">Past Month</option>
+                <option value="">Past Month</option>
+              </select>
+            </div>
 
+            <div className="w-full md:w-auto flex justify-center items-center border border-[#A2A9B4] p-1 rounded-full">
+              <p className="text-[10px] text-[#6B7588] font-[500]">Sent By:</p>
 
+              <select
+                name=""
+                id=""
+                className=" text-[10px] text-end  text-[#6B7588]  outline-none "
+              >
+                <option className="p-1" value="">
+                  Month
+                </option>
 
-      </select>
-</div>
+                <option value="">24 Hours</option>
+                <option value="">Past 3 days</option>
+
+                <option value="">Past week</option>
+
+                <option value="">Past Month</option>
+              </select>
+            </div>
+
+            <div className="w-full md:w-auto flex justify-center items-center border border-[#A2A9B4] p-1 rounded-full">
+              <p className="text-[10px] text-[#6B7588] font-[500]">Sent By:</p>
+
+              <select
+                name=""
+                id=""
+                className=" text-[10px] text-end  text-[#6B7588]  outline-none "
+              >
+                <option className="p-1" value="">
+                  Year
+                </option>
+
+                <option value="">24 Hours</option>
+                <option value="">Past 3 days</option>
+
+                <option value="">Past week</option>
+
+                <option value="">Past Month</option>
+              </select>
+            </div>
+          </div>
+
 
 <div className="w-full pb-5 pt-3 md:hidden">
   <p
@@ -142,7 +193,12 @@ const Accepted: React.FC = () => {
     <div className="flex items-center space-x-4">
       <span className="text-sm text-[#6B7588]">Job Title: </span>
       <p className="text-sm font-semibold">Full Stack Java Developer</p>
-      <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+      <div className='flex items-center space-x-2'>
+                  <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+                  <p className='w-8 h-4 bg-[#E9F358] text-[#104B53] rounded-full text-[10px] font-semibold flex justify-center items-center'>RTR</p>
+                  <BsInfoCircleFill   fill='#104B53'   />
+
+                  </div>
     </div>
 
     <div>

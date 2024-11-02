@@ -71,9 +71,16 @@ import JobPostedTemplates from './pages/emails/JobPostedTemplates.tsx';
 import MessageTemplate from './pages/emails/MessageTemplates.tsx';
 import MessageOneTemplate from './pages/emails/MessageOneTemplate.tsx';
 import MessageJP from './pages/job-posters/Messages/MessageJP.tsx';
-import DashBoardRTR from './pages/job-posters/dashboard/DashboardRTR.tsx';
+import DashBoardRTR from './pages/job-posters/dashboard/dashboardRTR/DashboardRTR.tsx';
 import JobPreview from './pages/job-posters/jobPreveiw/JobPreveiw.tsx';
 import AdminDashboard from './pages/admin/dashboard/Dashboard.tsx';
+import PrivacySetting from './pages/job-seekers/AccountSettings/PrivacySetting/PrivacySetting.tsx';
+import ReceivedNewRTR from './pages/emails/ReceivedNewRTR.tsx';
+import PrivacySettingJP from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
+import IntrestedRecruiter from './pages/emails/IntrestedRecruiter.tsx';
+import RTRProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRProfile.tsx';
+import RTRCompanyProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRCompanyProfile.tsx';
+import RTRPrivacySetting from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -104,6 +111,9 @@ const router = createBrowserRouter(
       {/* Account Setting  */}
       <Route path="/account" element={<AccountSetting />} />
       <Route path="/profile-visibility" element={<ProfileVisibility />} />
+      <Route path="/privacy-setting" element={<PrivacySetting />} />
+
+
 
       {/* Pofile Page  */}
       <Route path="/profile" element={<Profile />} />
@@ -112,7 +122,7 @@ const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
 
-      {/* job posters routes  */}
+      {/*  *****************************job posters routes *************************************  */}
       <Route path="/job-poster" element={<JobPosterHome />} />
       <Route path="/job-poster/job-basis" element={<JobBoard />} />
       <Route path="/job-poster/job-description" element={<JobDescriptionBoard />} />
@@ -123,16 +133,26 @@ const router = createBrowserRouter(
       <Route path="/job-poster/job-preview" element={<JobPreview />} />
 
       <Route path="/job-poster/dashboard" element={<DashBoard />} />
-      <Route path="/job-poster/dashboard-rtr" element={<DashBoardRTR />} />
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />
       <Route path="/job-poster/profile-setting" element={<ProfileSetting />} />
       <Route path="/job-poster/company-profile-info" element={<CompanyProfileSettings />} />
+      <Route path="/job-poster/privacy-setting" element={<PrivacySettingJP />} />
+
+   
       <Route path="/job-poster/signup" element={<SignupPoster />} />
       <Route path="/job-poster/signin" element={<SigninPoster />} />
 
       <Route path="/job-poster/signup" element={<SignupPoster />} />
       <Route path="/job-poster/signin" element={<SigninPoster />} />
+
+
+     {/* ****************************** Dashboard rtr ***************************** */}
+      <Route path="/dashboard-rtr" element={<DashBoardRTR />} />
+      <Route path="/dashboard-rtr/profile-setting" element={<RTRProfile />} />
+      <Route path="/dashboard-rtr/company-profile-info" element={<RTRCompanyProfile />} />
+      <Route path="/dashboard-rtr/privacy-setting" element={<RTRPrivacySetting />} />
+
 
       {/* Email Templates  */}
 
@@ -140,6 +160,10 @@ const router = createBrowserRouter(
       <Route path="/email/job-posted" element={<JobPostedTemplates />} />
       <Route path="/email/messages" element={<MessageTemplate />} />
       <Route path="/email/messages-one" element={<MessageOneTemplate />} />
+      <Route path="/email/received-new-rtr" element={<ReceivedNewRTR />} />
+      <Route path="/email/recruiter-interested" element={<IntrestedRecruiter />} />
+
+
 
       {/* Admin Pannel  */}
 

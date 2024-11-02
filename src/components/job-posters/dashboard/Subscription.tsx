@@ -9,7 +9,7 @@ import { MdOutlineFileCopy } from "react-icons/md";
 
 
 const Plan: React.FC = () => {
-  const [selector, setSelector] = useState<boolean>(false);
+  const [selector, setSelector] = useState<number>(0);
   return (
     <div className="w-full h-full">
       <div className="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-between items-center">
@@ -39,9 +39,9 @@ const Plan: React.FC = () => {
         <div className="flex flex-wrap gap-10 items-center justify-center  ">
           <div
             onClick={() => {
-              setSelector(!selector);
+              setSelector(0);
             }}
-            className={` border ${!selector && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
+            className={` border ${selector===0 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
           >
             <div className="flex-col">
               <p className="text-lg font-semibold ">Post a Job for Free</p>
@@ -82,7 +82,7 @@ const Plan: React.FC = () => {
             </div>
 
             <div
-              className={`${!selector && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
+              className={`${selector ===0 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
             >
               <p className=" text-xs">Select package</p>
             </div>
@@ -90,9 +90,9 @@ const Plan: React.FC = () => {
 
           <div
             onClick={() => {
-              setSelector(!selector);
+              setSelector(1);
             }}
-            className={` border ${selector && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
+            className={` border ${selector===1 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
           >
             <div className="flex-col ">
               <p className="text-sm font-semibold ">Resume Sourcing</p>
@@ -107,9 +107,30 @@ const Plan: React.FC = () => {
             </div>
 
             <div
-              className={` ${selector && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
+              className={` ${selector===1 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
             >
               <p className=" text-xs">Select package</p>
+            </div>
+          </div>
+
+
+          <div
+            onClick={() => {
+              setSelector(2);
+            }}
+            className={` border ${selector===2 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
+          >
+            <div className="flex-col ">
+              <p className="text-sm font-semibold ">Bulk Hiring</p>
+               
+
+              
+            </div>
+
+            <div
+              className={` ${selector===2 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
+            >
+              <p className=" text-xs">Contact Us</p>
             </div>
           </div>
         </div>
@@ -125,12 +146,30 @@ const Plan: React.FC = () => {
         </p>
       </div>
 
-      <div className="max-w-xl border rounded-lg p-2   m-auto mt-2 flex justify-between items-center">
-        <h1 className="text-sm">Bulk Hiring ?</h1>
-        <p className="text-[#104B53] text-white bg-[#104B53] w-28 text-xs flex justify-center items-center rounded-full h-8">
-          Contact Us
+ 
+    </div>
+  );
+};
+
+const CardDetails: React.FC = () => {
+ 
+  return (
+    <div className="w-full h-full">
+    
+
+       
+
+      <div className="w-full border rounded-lg p-2   m-auto mt-2 flex justify-between items-center">
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">Card in the bag</h1>
+          <p className="text-xs">xxxx-xxxx-xxxx-8912</p>
+        </div>
+        <p className="text-[#104B53] border border-[#104B53] w-28 text-xs flex justify-center items-center rounded-full h-8">
+          Replace Card
         </p>
       </div>
+
+ 
     </div>
   );
 };
@@ -548,6 +587,11 @@ const Subscription: React.FC = () => {
     {
       label: 'Invoice',
       component: <Invoice />,
+      count: '',
+    },
+    {
+      label: 'Card Detail',
+      component: <CardDetails />,
       count: '',
     },
     {

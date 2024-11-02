@@ -17,17 +17,17 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
     {
       icon: <CgProfile />,
       name: 'User Profile',
-       link:'/job-poster/profile-setting'
+       link:'/dashboard-rtr/profile-setting'
     },
     {
       icon: <RiListSettingsLine />,
       name: 'Company Profile',
-       link:'/job-poster/company-profile-info'
+       link:'/dashboard-rtr/company-profile-info'
     }, 
     {
       icon: <GrUserSettings />,
       name: 'Privacy Setting',
-       link:'/job-poster/privacy-setting'
+       link:'/dashboard-rtr/privacy-setting'
     },
  
   ];
