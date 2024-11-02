@@ -124,9 +124,26 @@ const OfferReceived: React.FC = () => {
             <h1 className="text-sm font-semibold">Offer Received</h1>
             <div className="flex items-center space-x-5">
               <p className="text-xs">8 Job</p>
-              <p className="border border-[#E1E1E2]  text-xs p-2 rounded-full">
-                Posted in Last 7 Days
-              </p>
+              <div className="w-full sm:w-auto  flex justify-center items-center border border-[#A2A9B4] p-1 rounded-full">
+              <p className="text-[10px]  text-[#6B7588] font-[500]">Recevied Date:</p>
+
+              <select
+                name=""
+                id=""
+                className=" text-[10px] text-end  text-[#6B7588]  outline-none "
+              >
+                <option className="p-1" value="">
+                  Anytime
+                </option>
+
+                <option value="">24 Hours</option>
+                <option value="">Past 3 days</option>
+
+                <option value="">Past week</option>
+
+                <option value="">Past Month</option>
+              </select>
+            </div>
             </div>
           </div>
 

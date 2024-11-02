@@ -27,6 +27,7 @@ import Home from '../../../components/admin/dashboard/Home';
 import Verification from '../../../components/admin/dashboard/Verification';
  import Access from '../../../components/admin/dashboard/Access';
  import ResumeScouring from '../../../components/admin/dashboard/ResumeScouring';
+import CompanyTab from '../../../components/admin/dashboard/Companies';
 
 
 const Sidebar: React.FC = () => {
@@ -48,6 +49,12 @@ const Sidebar: React.FC = () => {
       label: 'Resume Database',
       icon: applicantIcon,
       queryString: 'resume-database',
+    },
+
+    {
+      label: 'Companies',
+      icon: applicantIcon,
+      queryString: 'companies',
     },
 
     {
@@ -174,6 +181,12 @@ const AdminDashboard: React.FC = () => {
       component:<ResumeScouring/>,
       queryString:'resume-database'
 
+    },
+
+    {
+      label: 'Companies',
+      component:<CompanyTab/>,
+      queryString: 'companies',
     },
 
     {

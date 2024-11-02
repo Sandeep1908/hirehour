@@ -16,15 +16,17 @@ const ReceivedNewRTR:React.FC = () => {
              
                         <div  className="flex flex-col border rounded-lg py-2 ">
                           
-                          <div className="p-2 ">
+                          <div className="p-2 flex justify-between items-center ">
                            
                             <div>
                                 <p className=" text-[#114B53] font-bold text-xs ">Java Full Stack</p>
                                 <p className=" text-[#6B7588] text-[10px]">Allen, Texas, United States</p>
                             </div>
+
+                            <p className='w-20 h-7 bg-[#EFFDFD] text-[#114B53] flex justify-center items-center text-[10px] rounded-full'>Rate: $60 / Hr</p>
                           </div>
 
-                        <div className=" px-2">
+                        <div className=" px-2 space-y-3">
                       
                          <div>
                          <p className=" text-[#3A3A3C] text-xs font-bold underline mt-2 ">From</p>
@@ -41,18 +43,22 @@ const ReceivedNewRTR:React.FC = () => {
                          </div>
 
 
+                         <div>
+                         <p className=" text-[#3A3A3C] text-xs  mt-2">Client: AT & T</p>
+                         <p className=" text-[#3A3A3C] text-xs mt-1 "><span className='font-semibold'>Prime Vendor :</span> Insight Global</p>
+                         <p className=" text-[#3A3A3C] text-xs mt-1 "><span className='font-semibold'>Implementation : </span> TCS</p>
+                         <p className=" text-[#3A3A3C] text-xs mt-1 "><span className='font-semibold'>Vendor : </span> AA Tech</p>
+
+                         </div>
+
+
 
                         </div>
 
 
                       
 
-
-                        {/* <div className="flex justify-between items-center px-2 mt-4">
-
-                            <p className="text-[8px]">Posted 1 day ago</p>
-                            <p className="text-[10px] w-20 rounded-full flex justify-center items-center h-6 bg-[#E9F358] text-[#104B53]">Apply Now</p>
-                        </div> */}
+ 
 
 
                 </div>
@@ -66,7 +72,7 @@ const ReceivedNewRTR:React.FC = () => {
             </div>
 
             <div className="flex flex-col  space-y-3 pb-4  mt-4 justify-center items-center">
-                    <p className="w-56  h-6 text-white font-semibold flex justify-center items-center bg-[#104B53] rounded-full text-[10px]">View</p>
+                    <p className="w-56  h-6 text-white font-semibold flex justify-center items-center bg-[#104B53] rounded-full text-[10px]">View & Sign</p>
                     <div className="flex flex-col justify-center items-center space-y-2">
                         <p className="text-xs font-[400] ">We have 1000+ Talents looking for Job Match!</p>
                         <p className="text-xs font-[400] ">All the best for hire right talent!</p>

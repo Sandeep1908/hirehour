@@ -4,12 +4,10 @@ import SummeryCards from './Analytics/SummeryCards';
 import MultilineChartWithLegend from './Analytics/jobseekers/MultiLineChartWithLegen';
 import SearchTitleStats from './Analytics/jobseekers/SearchTitleStats';
 import TrafficByLocationChart from './Analytics/jobseekers/TrafficByLocation';
-import JobSearchTitle from './Analytics/jobseekers/JobSearchTitle/JobSearchTitle';
-import TrafficByLocation from './Analytics/jobseekers/TrafficByLocation/TrafficByLocation';
+// import JobSearchTitle from './Analytics/jobseekers/JobSearchTitle/JobSearchTitle';
+// import TrafficByLocation from './Analytics/jobseekers/TrafficByLocation/TrafficByLocation';
 
-const JobSeekers: React.FC<{ setIsJobSeekersSubComponents: (e: number) => void }> = ({
-  setIsJobSeekersSubComponents,
-}) => {
+const JobSeekers: React.FC  = () => {
   const info = [
     {
       name: 'Footprint',
@@ -52,14 +50,73 @@ const JobSeekers: React.FC<{ setIsJobSeekersSubComponents: (e: number) => void }
       <div className="w-full   h-fit mt-3 flex justify-between   space-x-2">
         <div
           className="w-full max-w-[50%] bg-[#F2F2F5] rounded-md p-2"
-          onClick={() => setIsJobSeekersSubComponents(0)}
+         
         >
           <SearchTitleStats />
         </div>
 
         <div
           className="w-full max-w-[50%] bg-[#F2F2F5] rounded-md p-2"
-          onClick={() => setIsJobSeekersSubComponents(1)}
+         
+        >
+          <TrafficByLocationChart />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Recuriter: React.FC = () => {
+  const info = [
+    {
+      name: 'Footprint',
+      total: '200K',
+      bgColor: '#EFFDFD',
+    },
+    {
+      name: 'Total User',
+      total: '100K',
+      bgColor: '#F2F2F5',
+    },
+    {
+      name: 'New User',
+      total: '20K',
+      bgColor: '#EFFDFD',
+    },
+    {
+      name: 'Active User',
+      total: '70K',
+      bgColor: '#F2F2F5',
+    },
+  ];
+
+  return (
+    <div className="w-full h-full">
+      <div className="flex justify-between w-full">
+        {info?.map((item, i) => {
+          return (
+            <SummeryCards key={i} total={item.total} bgColor={item.bgColor} name={item.name} />
+          );
+        })}
+      </div>
+
+      {/* lineGraph  */}
+
+      <div className="w-full bg-[#F2F2F5] h-auto rounded-md mt-3  p-3  ">
+        <MultilineChartWithLegend />
+      </div>
+
+      <div className="w-full   h-fit mt-3 flex justify-between   space-x-2">
+        <div
+          className="w-full max-w-[50%] bg-[#F2F2F5] rounded-md p-2"
+          
+        >
+          <SearchTitleStats />
+        </div>
+
+        <div
+          className="w-full max-w-[50%] bg-[#F2F2F5] rounded-md p-2"
+           
         >
           <TrafficByLocationChart />
         </div>
@@ -70,34 +127,27 @@ const JobSeekers: React.FC<{ setIsJobSeekersSubComponents: (e: number) => void }
 
  
 
+
 const Analytics: React.FC = () => {
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
-  const [isJobSeekersSubComponent, setIsJobSeekersSubComponents] = useState<number>();
+  // const [isJobSeekersSubComponent, setIsJobSeekersSubComponents] = useState<number>();
   
 
   const jobFilters = [
     {
       label: 'Job Seekers',
-      component: <JobSeekers setIsJobSeekersSubComponents={setIsJobSeekersSubComponents} />,
+      component: <JobSeekers />,
     },
     {
       label: 'Recruiter',
-      component: '',
+      component: <Recuriter/>,
     },
   ];
-  console.log(isJobSeekersSubComponent);
-
+ 
   return (
     <div>
 
-     
-      { isJobSeekersSubComponent === 0 ? 
-        <JobSearchTitle />
-       : isJobSeekersSubComponent === 1 ? (
-        <TrafficByLocation />
-      ) :
-
-      (
+      
         <>
           <div className="flex justify-between items-center p-2">
             <div className="flex items-center space-x-4">
@@ -148,7 +198,7 @@ const Analytics: React.FC = () => {
             })}
           </div>
         </>
-      )}
+     
     </div>
   );
 };

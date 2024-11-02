@@ -78,7 +78,7 @@ const ResumeSourcing: React.FC = () => {
                    
                   <th className="p-2 text-sm text-[#3C3C3D]">Role</th>
                   <th className="p-2 text-sm text-[#3C3C3D]">RTR Sent</th>
-                  <th className="p-2 text-sm text-[#3C3C3D]">RTR Received</th>
+               
 
                   <th className="p-2 text-sm text-[#3C3C3D]">Action</th>
                 </tr>
@@ -91,7 +91,7 @@ const ResumeSourcing: React.FC = () => {
                     
                       <td className="text-xs p-2">Hiring Partner</td>
                       <td className="text-xs p-2">{i+1}</td>
-                      <td className="text-xs p-2">{i+1}</td>
+                     
 
                       <td className="text-xs p-2 flex justify-center items-center space-x-2">
                       <p className='w-24 h-6 flex justify-center items-center text-[#104B53] border border-[#104B53] rounded-full'>View</p>

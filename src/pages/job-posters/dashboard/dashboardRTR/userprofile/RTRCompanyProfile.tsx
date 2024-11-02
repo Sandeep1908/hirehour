@@ -2,35 +2,35 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
  
 import { FaEdit } from 'react-icons/fa';
-import bgCompany from '../../../assets/bg-company.png';
-import bgIcon from '../../../assets/icon-company.png';
-import locationIco from '../../../assets/companyprofile/location.png'
-import headquaterIco from '../../../assets/companyprofile/Building.png'
+import bgCompany from '../../../../../assets/bg-company.png';
+import bgIcon from '../../../../../assets/icon-company.png';
+import locationIco from '../../../../../assets/companyprofile/location.png'
+import headquaterIco from '../../../../../assets/companyprofile/Building.png'
 
-import companywebsiteIco from '../../../assets/companyprofile/Website.png'
+import companywebsiteIco from '../../../../../assets/companyprofile/Website.png'
 
-import companysizeIco from '../../../assets/companyprofile/companysize.png'
+import companysizeIco from '../../../../../assets/companyprofile/companysize.png'
 
-import foundedIco from '../../../assets/companyprofile/founded.png'
-import companyDescriptionIcon from '../../../assets/companyprofile/companydescription.png'
+import foundedIco from '../../../../../assets/companyprofile/founded.png'
+import companyDescriptionIcon from '../../../../../assets/companyprofile/companydescription.png'
 import { IoMdClose } from 'react-icons/io';
 
 import { MdDeleteOutline } from 'react-icons/md';
 
-const CompanyProfileSettings: React.FC = () => {
+const RTRCompanyProfile: React.FC = () => {
   const [isEditModalOpen,setIsEditModalOpen]=useState<boolean>(false)
   const titles = [
     {
         label:'User Profile',
-        link:'/job-poster/profile-setting'
+        link:'/dashboard-rtr/profile-setting'
     },
     {
         label:'Company Profile',
-        link:'/job-poster/company-profile-info'
+        link:'/dashboard-rtr/company-profile-info'
     },
     {
         label:'Privacy Setting',
-        link:'/job-poster/privacy-setting'
+        link:'/dashboard-rtr/privacy-setting'
     }
   ];
 
@@ -261,4 +261,4 @@ const CompanyProfileSettings: React.FC = () => {
   );
 };
 
-export default CompanyProfileSettings;
+export default RTRCompanyProfile;

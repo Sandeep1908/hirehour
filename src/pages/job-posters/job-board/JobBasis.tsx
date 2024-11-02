@@ -228,7 +228,7 @@ const JobBasis: React.FC = () => {
                     <label htmlFor="" className="text-xs">
                       Job Domain
                     </label>
-                    <span className="text-red-500">*</span>
+                     
                   </div>
 
                   <input
@@ -301,11 +301,12 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Job Domain"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <select name="" id="" className='p-2 text-xs border border-[#EBEBF0] rounded-md placeholder:text-xs'>
+                    <option value="">Single</option>
+                    <option value="">Multiple</option>
+
+                  </select>
+                 
                 </div>
               </div>
             </div>

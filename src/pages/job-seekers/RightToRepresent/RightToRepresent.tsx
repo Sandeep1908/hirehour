@@ -5,7 +5,9 @@ import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Logo from '../../../assets/logo/hirehour.png';
 import ViewRTR from '../../../components/common/ViewRTR';
- 
+import { BsInfoCircleFill } from "react-icons/bs";
+
+
  
 const RightToRepresent: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
@@ -190,7 +192,13 @@ const RightToRepresent: React.FC = () => {
                 <div className="flex items-center space-x-4">
                   <span className="text-sm text-[#6B7588]">Job Title: </span>
                   <p className="text-sm font-semibold">Full Stack Java Developer</p>
+                  <div className='flex items-center space-x-2'>
                   <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+                  <p className='w-8 h-4 bg-[#E9F358] text-[#104B53] rounded-full text-[10px] font-semibold flex justify-center items-center'>RTR</p>
+                  <BsInfoCircleFill   fill='#104B53'   />
+
+                  </div>
+                 
                 </div>
 
                 <div>
@@ -275,14 +283,20 @@ const RightToRepresent: React.FC = () => {
             </div>
 
             <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-              <div className="w-full flex  flex-col justify-start items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+              <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
                 <div className="flex items-center space-x-4">
                   <span className="text-sm text-[#6B7588]">Job Title: </span>
                   <p className="text-sm font-semibold">Full Stack Java Developer</p>
+                  <div className='flex items-center space-x-2'>
                   <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+                  
+                  <BsInfoCircleFill   fill='#104B53'   />
+
+                  </div>
+                 
                 </div>
 
-                <div className="flex justify-end w-full ">
+                <div>
                   <p className="text-sm">Rate : $60 / HR</p>
                 </div>
               </div>
@@ -315,7 +329,7 @@ const RightToRepresent: React.FC = () => {
                   <div className="flex justify- space-x-3 items-center">
                     <MdOutlineFileDownload size={20} color="#104B53" />
                     <p className="text-[#104B53] text-sm font-[600]">Export</p>
-                    <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+                    <p onClick={()=>setIsViewRTROpen(true)} className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
                       View
                     </p>
                   </div>
@@ -362,6 +376,7 @@ const RightToRepresent: React.FC = () => {
                 </div>
               </div>
             </div>
+            
 
             <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
               <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
@@ -1084,11 +1099,7 @@ const RightToRepresent: React.FC = () => {
                 </div>
               </div>
 
-              <div>
-                <p className="text-white w-[100px] text-[10px] p-2 rounded-full text-center bg-[#FF3837]">
-                  Decline
-                </p>
-              </div>
+               
             </div>
           </div>
         </div>

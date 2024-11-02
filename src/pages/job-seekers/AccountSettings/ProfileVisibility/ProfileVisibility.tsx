@@ -13,13 +13,13 @@ const ProfileVisibility: React.FC = () => {
     },
     {
       label: 'Privacy Settings',
-      link: '',
+      link: '/privacy-setting',
     },
   ];
 
   return (
-    <div className="w-full  h-full bg-[#F2F2F5] p-2 ">
-      <div className=" w-full max-w-[1280px] h-full bg-white  m-auto mt-10 rounded-lg p-5">
+    <div className="w-full   h-[calc(100vh-60px)] bg-[#F2F2F5] p-2 ">
+      <div className=" w-full max-w-[1280px] h-[60vh] bg-white  m-auto mt-10 rounded-lg p-5">
         <h1 className="text-3xl p-3 font-bold">Account Settings</h1>
         <hr />
         <div className="w-full">
@@ -40,11 +40,11 @@ const ProfileVisibility: React.FC = () => {
 
         {/* Setting Box  */}
 
-        <div className="w-full   max-w-[1200px] h-[838px] mt-10   m-auto border border-[#E1E1E2] rounded-lg">
+        <div className="w-full   max-w-[1200px]   mt-10   m-auto border border-[#E1E1E2] rounded-lg">
           <div className="w-full h-full flex flex-col space-y-10 p-10">
             <div className="flex justify-between items-center">
               <div className="flex flex-col space-y-3">
-                <h1 className="text-lg font-semibold">Visible to employers</h1>
+                <h1 className="text-sm font-semibold">Visible to employers</h1>
                 <p className="text-[#404040] text-xs">
                   We will hide your name, email, and contact details to employers and if they like
                   your profile, they can send you a message.
@@ -55,7 +55,7 @@ const ProfileVisibility: React.FC = () => {
 
             <div className="flex justify-between items-center">
               <div className="flex flex-col space-y-3">
-                <h1 className="text-lg font-semibold">Not Visible to employers</h1>
+                <h1 className="text-sm font-semibold">Not Visible to employers</h1>
                 <p className="text-[#404040] text-xs">
                   We will hide your name, email, and contact details to employers and if they like
                   your profile, they can send you a message.
