@@ -32,11 +32,11 @@ const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
     email: string;
     
   }
-  interface AuthResponse {
-    message: {
-      accessToken: string;
-    };
-  }
+  // interface AuthResponse {
+  //   message: {
+  //     accessToken: string;
+  //   };
+  // }
 
   const navigate = useNavigate();
   const mutation = useMutation({
@@ -45,7 +45,7 @@ const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
       console.log("response.data",response.data)
       localStorage.setItem('token', response.data.token);
       return response.data;    },
-      onSuccess: ({ message }: AuthResponse) => {
+      onSuccess: () => {
         // localStorage.setItem("authToken", message.accessToken);
         // alert("Send successfully");
         setEmail("")
@@ -54,7 +54,7 @@ const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
 
         
       },
-      onError: (error: any) => {
+      onError: () => {
         // alert("Invalid credentials or server error");
       },
   })

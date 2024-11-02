@@ -29,10 +29,10 @@ interface NewUser {
    password: string;
  }
  
- interface SignupResponse {
-   message: string;
-   [key: string]: any; 
- }
+//  interface SignupResponse {
+//    message: string;
+//    [key: string]: any; 
+//  }
  
  const navigate = useNavigate();
  
