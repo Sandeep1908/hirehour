@@ -30,11 +30,11 @@ interface FormErrors {
   password?: { _errors: string[] };
 }
 
-interface AuthResponse {
-  message: {
-    accessToken: string;
-  };
-}
+// interface AuthResponse {
+//   message: {
+//     accessToken: string;
+//   };
+// }
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -55,11 +55,11 @@ const Signin: React.FC = () => {
       localStorage.setItem('token', response.data.token);
       return response.data;
     },
-    onSuccess: ({ message }: AuthResponse) => {
+    onSuccess: () => {
       alert("Signed in successfully");
       navigate("/job-poster");
     },
-    onError: (error: any) => {
+    onError: () => {
       localStorage.removeItem("authToken");
       setValidateErrors(true)
       setEmail("")

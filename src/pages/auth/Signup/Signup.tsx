@@ -41,11 +41,11 @@ interface NewUser {
      const response = await axiosInstance.post("/api/candidate/signup", newUser);
      return response.data;
    },
-   onSuccess: (message: SignupResponse) => {
+   onSuccess: () => {
      alert("Signup successful!");
      navigate("/signin");
    },
-   onError: (error: unknown) => {
+   onError: () => {
    //   console.error("Signup failed", error);
      alert("Signup failed, please try again.");
    },

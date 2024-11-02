@@ -4,7 +4,7 @@ import { BsFillLightningFill } from "react-icons/bs";
 import { FaFlag } from 'react-icons/fa6';
 import { MdOutlineFlag, MdShare } from 'react-icons/md';
 import ReportJob from './report-job/ReportJob';
-import ReportDetal from './report-job/ReportDetail';
+// import ReportDetal from './report-job/ReportDetail';
 import ReportSubmit from './report-job/ReportSubmit';
 
 type JobCardProps={
@@ -18,7 +18,7 @@ type JobCardProps={
 const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
     const [showIcon, setShowIcon] = useState<boolean>(false);
     const [showReport, setShowReport] = useState<boolean>(false);
-    const [showReportDetail, setShowReportDetail] = useState<boolean>(false);
+    // const [showReportDetail, setShowReportDetail] = useState<boolean>(false);
     const [showReportSubmit, setShowReportSubmit] = useState<boolean>(false);
 
     const [isShareModal,setIsShareModal]=useState<boolean>(false)
