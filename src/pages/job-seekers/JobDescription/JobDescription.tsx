@@ -651,7 +651,8 @@ const JobDescription: React.FC = () => {
                                                     <img className='absolute top-[-20px]  w-full h-full' src={details.img} alt="" />
                                                 </div>
                                                 <div>
-                                                    <p className='font-bold text-[20px]'>{details.title}</p>
+                                        <div className='flex gap-4 items-center'>                                                    <p className='font-bold text-[20px]'>{details.title}</p> <p className='text-[#ED1515]  text-xs bg-[#FFC5C5] px-3 py-1 rounded-xl h-fit '>Multiple Position</p>
+                                        </div>
                                                     <ul className='flex list-disc gap-8 text-sm mt-1'>
                                                         <li>{details.company}</li>
                                                         <li>{details.designation}</li>

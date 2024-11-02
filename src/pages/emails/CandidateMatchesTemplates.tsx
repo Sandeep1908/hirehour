@@ -37,9 +37,12 @@ const CandidateMatchesTemplates:React.FC=()=>{
                                    </div>
                                    <div className="flex flex-col items-center justify-center mt-[-30px] md:mt-[-90px] pr-2">
                                    <p className=" text-[#114B53] text-xs ">Match AI</p>
-                                   <div className="w-8 h-8 border-[#06A560] border-[3px] rounded-full flex justify-center items-center">
+                                   <div className="w-8 h-8 border-[#06A560] border-[3px] rounded-full flex justify-center items-center blur-sm mt-1">
                                        <p className="text-[8px]">100%</p>
                                    </div>
+                               
+
+
                                    </div>
                                   </div>
                                     <p className=" text-[#6B7588] text-[10px] ">xyz company 12/2020 - Present <br className="md:hidden"  /> <span>Domain : Health Care</span></p>

@@ -64,7 +64,7 @@ interface NewUser {
     <div className='bg-[#114B53]  w-full h-[92vh] py-10  px-5  lg:px-10'>
      <div className='w-full h-full flex gap-20'>
         <div className=' hidden md:flex w-[50%]'>
-        <p className='text-white text-[32px] font-semibold'>Hire Hours</p>
+        <p className='text-white text-[32px] font-semibold'>TopEquator</p>
         </div>
         <div className='w-full h-fit md:w-[50%] flex justify-center  md:justify-end '>
            <div className='w-[335px] md:w-[519px] h-auto  bg-white px-5 md:px-8 py-3 rounded-xl'>
@@ -218,13 +218,13 @@ interface NewUser {
      </div>
 
      <p className='text-[14px] md:text-sm font-normal mt-8 md:mt-4 text-center md:text-left'>
-     By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
+     By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
      </p>
      <div className='flex justify-center'>
 
     
      <Link to={"/signin"} className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
-     Already on Hirehours ? Log in
+     Already on TopEquator ? Log in
      </Link>
      </div>
                 

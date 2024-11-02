@@ -23,11 +23,14 @@ import Summary from '../../../components/job-seekers/profile/Summary';
 import ProfileComplition from '../../../components/job-seekers/profile/ProfileComplition';
 import Certification from '../../../components/job-seekers/profile/Certification';
 import Achievement from '../../../components/job-seekers/profile/Achievement';
+import { SlArrowDown } from 'react-icons/sl';
+import Skills from '../../../components/job-seekers/profile/Skills';
 
 const Profile: React.FC = () => {
   const [profilePopup, setProfilePopup] = useState<boolean>(false);
   const [aboutusPop, setAboutusPop] = useState<boolean>(false);
   const [additionalInfoPopup, setAdditionalInfoPopup] = useState<boolean>(false);
+  const [skillsPopup, setSkillsPopup] = useState<boolean>(false);
   const [summaryPopup, setSummaryPopup] = useState<boolean>(false);
   const [experiencePopup, setExperiencePopup] = useState<boolean>(false);
   const [educationPopup, setEducationPopup] = useState<boolean>(false);
@@ -205,17 +208,68 @@ const Profile: React.FC = () => {
             {/* Skill section  */}
 
             <div className="  bg-white p-3 rounded-lg mt-3 ">
-              <div className="flex w-full justify-between items-center pb-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#EFF1F3]">
+              <div className="flex w-full justify-between items-center pb-5 relative before:absolute before:bottom-0 before:w-full   before:bg-[#EFF1F3]">
                 <h1 className="text-sm font-semibold">Skills</h1>
                 <div
                   className="flex justify-center items-center space-x-2"
                   onClick={() => {
-                    setAdditionalInfoPopup(true);
+                    setSkillsPopup(true);
                   }}
                 >
                   <FaEdit size={16} color="#104B53" />{' '}
                   <span className="text-[#104B53] text-sm">Edit</span>
                 </div>
+              </div>
+              <div className='flex gap-1 '>
+                  <div className='pt-1 bg-[#114B53] rounded-tl-lg rounded-tr-lg'>
+                     <p className='text-[#114B53] text-sm px-3 py-1 bg-white' >Overall Skills</p>
+                  </div>
+                  <div className='pt-1 '>
+                  <p className='text-[#3A3A3C] text-sm px-3 py-1' >Current Skills</p>
+
+                  </div>
+              </div>
+              <hr className='mt-2'/>
+              <div>
+                <div className='mt-4'>
+                  <div className='flex justify-between'>
+                    <p className='text-[#3A3A3C] text-xs font-semibold'>Java</p>
+                    <p className='text-[#3A3A3C] text-xs font-semibold'>4 years</p>
+                  </div>
+                  <div className='rounded-full bg-[#EBEBF0] w-full h-1 mt-2'>
+                      <div className='rounded-full h-1  w-[50%] bg-[#114B53]'>
+
+                      </div>
+                  </div>
+                </div>
+                <div className='mt-4'>
+                  <div className='flex justify-between'>
+                    <p className='text-[#3A3A3C] text-xs font-semibold'>React JS</p>
+                    <p className='text-[#3A3A3C] text-xs font-semibold'>4 years</p>
+                  </div>
+                  <div className='rounded-full bg-[#EBEBF0] w-full h-1 mt-2'>
+                      <div className='rounded-full h-1  w-[50%] bg-[#114B53]'>
+
+                      </div>
+                  </div>
+                </div>
+                <div className='mt-4'>
+                  <div className='flex justify-between'>
+                    <p className='text-[#3A3A3C] text-xs font-semibold'>Angular </p>
+                    <p className='text-[#3A3A3C] text-xs font-semibold'>4 years</p>
+                  </div>
+                  <div className='rounded-full bg-[#EBEBF0] w-full h-1 mt-2'>
+                      <div className='rounded-full h-1  w-[50%] bg-[#114B53]'>
+
+                      </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className='flex gap-2 items-center justify-center mt-5' >
+              <SlArrowDown size={15}/>
+
+                <p className='text-sm text-[#114B53] font-semibold'>View all 20</p>
               </div>
             </div>
           </div>
@@ -563,6 +617,7 @@ const Profile: React.FC = () => {
       {profilePopup && <ProfileComplition setProfilePopup={setProfilePopup} />}
       {aboutusPop && <AboutMe setAboutPop={setAboutusPop} />}
       {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} />}
+      {skillsPopup && <Skills setSkillsPopup={setSkillsPopup} />}
       {summaryPopup && <Summary setSummaryPopup={setSummaryPopup} />}
       {experiencePopup && <Experience setExperiencePopup={setExperiencePopup} />}
       {educationPopup && <Education setEducationPopup={setEducationPopup} />}

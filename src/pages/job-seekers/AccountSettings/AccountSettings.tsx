@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import {IoMdClose} from 'react-icons/io'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Timer from "../../../components/job-seekers/modals/authModals/Timer";
+import CloseAccount from "../../../components/job-seekers/close-account/CloseAccount";
+import SubmitAccount from "../../../components/job-seekers/close-account/SubmitAccount";
 
 const AccountSetting:React.FC=()=>{
     const [isInputModalOpen,setIsInputModalOpen]=useState<boolean>(false)
@@ -11,6 +13,9 @@ const AccountSetting:React.FC=()=>{
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const [isSuccessOpen, setIsSuccessOpen] = useState<boolean>(false);
+
+    const [showCloseAccout, setShowCloseAccout] = useState<boolean>(false);
+    const [showCloseAccoutSubmit, setShowCloseAccoutSubmit] = useState<boolean>(false);
 
 
     
@@ -140,7 +145,7 @@ const AccountSetting:React.FC=()=>{
 
 
 
-                                                    <div className=" flex justify-between items-center  relative   before:absolute before:bottom-[-10px] before:w-full before:h-[1px] before:bg-[#ECECEC]">
+                                                    <div onClick={()=>{setShowCloseAccout(true)}} className=" cursor-pointer flex justify-between items-center  relative   before:absolute before:bottom-[-10px] before:w-full before:h-[1px] before:bg-[#ECECEC]">
                                                         <p className="text-red-500 p-5 text-center w-full">Close your account</p>
                                                     </div>
 
@@ -277,6 +282,12 @@ const AccountSetting:React.FC=()=>{
            </div>
        </div>
     </div>
+
+    {/* close accoutn */}
+
+    {showCloseAccout &&<CloseAccount setShowCloseAccout={setShowCloseAccout}  setShowCloseAccoutSubmit={setShowCloseAccoutSubmit}  /> }
+{/* {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail}  setShowReportSubmit={setShowReportSubmit}/> } */}
+{showCloseAccoutSubmit &&<SubmitAccount setShowCloseAccout={setShowCloseAccout} setShowCloseAccoutSubmit={setShowCloseAccoutSubmit} /> }
 
 
         </div>

@@ -18,7 +18,7 @@ const Signup: React.FC = () => {
 
      <div className='w-full h-full flex gap-20'>
         <div className=' hidden md:flex w-[50%]'>
-        <p className='text-white text-[32px] font-semibold'>Hire Hours</p>
+        <p className='text-white text-[32px] font-semibold'>TopEquator</p>
         </div>
 
         <div className='w-full h-fit md:w-[50%] flex justify-center  md:justify-end '>
@@ -49,7 +49,7 @@ const Signup: React.FC = () => {
                   </div>
                 
 
-                  <div className='mt-3 md:mt-2'>
+                  {/* <div className='mt-3 md:mt-2'>
                       <div className='w-full h-[40px] mt-1'>
                             <select name="cars" id="cars"  className='border-[1px] text-sm px-2  border-[#E1E1E2] w-full h-full rounded-lg'>
                                <option> Select Company Here..</option>
@@ -59,7 +59,7 @@ const Signup: React.FC = () => {
                             </select>
                             </div>
 
-                     </div>
+                     </div> */}
                   <div className='mt-3 md:mt-2'>
                       <div className='w-full h-[40px] mt-1'>
                             <select name="cars" id="cars"  className='border-[1px] text-sm px-2  border-[#E1E1E2] w-full h-full rounded-lg'>
@@ -161,13 +161,13 @@ const Signup: React.FC = () => {
 
 
      <p className='text-[14px] md:text-sm font-normal mt-8 md:mt-4 text-center md:text-left'>
-     By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
+     By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
      </p>
      <div className='flex justify-center'>
 
     
      <Link to={"/job-poster/signin"} className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
-     Already on Hirehours ? Log in
+     Already on TopEquator ? Log in
      </Link>
      </div>
 

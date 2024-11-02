@@ -3,16 +3,16 @@ import { IoMdClose } from 'react-icons/io'
 
 type ReportJobProps={
   setShowReport : (arg:boolean) => void
-  setShowReportDetail : (arg:boolean) => void
+  setShowReportSubmit : (arg:boolean) => void
   
 }
 
-const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportDetail}) => {
+const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportSubmit}) => {
 
 
    const continueDetail=()=>{
     setShowReport(false)
-    setShowReportDetail(true)
+    setShowReportSubmit(true)
    }
 
     return (
@@ -23,7 +23,7 @@ const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportDetail}
             <div className='max-w-[846px] w-full bg-white rounded-lg overflow-auto z-[1000]'>
 
                 <div className=' px-5 py-4 flex justify-between items-center'>
-                    <div className='text-lg font-bold'><p>Apply to xyz Company</p> <p className='text-[#6B7588] text-sm font-normal mt-1'>Select a reason for report a job</p></div>
+                    <div className='text-lg font-bold'><p>Flag Job </p> <p className='text-[#6B7588] text-sm font-normal mt-1'>Select a reason for report a job</p></div>
                     <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setShowReport(false)}} />
                 </div>
                 <hr />
@@ -51,6 +51,10 @@ const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportDetail}
                   <div className='flex gap-3 items-center'>
                     <input className='w-4 h-4' type="radio" name="" id="" />
                     <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>Other</label>
+                  </div>
+                  <div className='flex gap-3 items-center'>
+                  <textarea name="" placeholder='Write a report' className='text-xs border rounded-lg p-3 w-full h-40' id=""></textarea>
+
                   </div>
                 </div>
                 <hr />
