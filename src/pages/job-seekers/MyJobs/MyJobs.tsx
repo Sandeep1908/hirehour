@@ -1,10 +1,15 @@
 import React,{useState} from 'react';
 import { Link } from 'react-router-dom';
 import { MdDeleteOutline } from "react-icons/md";
+import ViewJob from '../../../components/job-seekers/ViewJob';
+import ExpiredJob from '../../../components/job-seekers/ExpiredJob';
 
 
 const MyJobs: React.FC = () => {
     const [activeCard, setActiveCard] = useState<number | null>(null);
+    const [viewJobPopup, setViewJobPopup] = useState<boolean>(false);
+    const [expiredJobPopup, setExpiredJobPopupPopup] = useState<boolean>(false);
+
   const titles = [
     {
       label: 'My Jobs',
@@ -179,7 +184,7 @@ const MyJobs: React.FC = () => {
                   <div className="w-full flex justify-between items-center space-x-6 ">
                
 
-                            <p className="w-full border border-[#104B53] rounded-full p-1 flex justify-center items-center text-xs">
+                            <p onClick={()=>{setViewJobPopup(true)}} className="cursor-pointer w-full border border-[#104B53] rounded-full p-1 flex justify-center items-center text-xs">
                             View
                             </p>
                     
@@ -230,6 +235,11 @@ const MyJobs: React.FC = () => {
 
        
       </div>
+
+      {/* view Job  */}
+      {viewJobPopup &&  <ViewJob setViewJobPopup ={setViewJobPopup}/>}
+      {expiredJobPopup &&  <ExpiredJob setExpiredJobPopupPopup ={setExpiredJobPopupPopup}/>}
+
     </div>
   );
 };

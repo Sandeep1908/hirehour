@@ -21,7 +21,7 @@ const Signin: React.FC = () => {
     <div className='w-full h-full px-5 lg:px-10 flex gap-20'>
 
         <div className='hidden md:flex w-[50%]'>
-        <p className='text-white text-[32px] font-semibold'>Hire Hours</p>
+        <p className='text-white text-[32px] font-semibold'>TopEquator</p>
         </div>
 
 
@@ -120,11 +120,11 @@ const Signin: React.FC = () => {
 
 
      <p className='text-[14px]  font-normal mt-8 md:mt-4 text-center md:text-left'>
-     By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
+     By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
      </p>
      <div className='flex justify-center'>
      <Link to={"/job-poster/signup"} className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
-     New to Hirehours ? Sign up 
+     New to TopEquator ? Sign up 
      </Link>
      </div>
    

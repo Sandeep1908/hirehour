@@ -2,17 +2,17 @@ import React from 'react'
 import { IoMdClose } from 'react-icons/io'
 
 type ReportJobProps={
-  setShowReport : (arg:boolean) => void
-  setShowReportSubmit : (arg:boolean) => void
+  setShowCloseAccout : (arg:boolean) => void
+  setShowCloseAccoutSubmit : (arg:boolean) => void
   
 }
 
-const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportSubmit}) => {
+const CloseAccount: React.FC<ReportJobProps> = ({setShowCloseAccout,setShowCloseAccoutSubmit}) => {
 
 
    const continueDetail=()=>{
-    setShowReport(false)
-    setShowReportSubmit(true)
+    setShowCloseAccout(false)
+    setShowCloseAccoutSubmit(true)
    }
 
     return (
@@ -23,30 +23,30 @@ const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportSubmit}
             <div className='max-w-[846px] w-full bg-white rounded-lg overflow-auto z-[1000]'>
 
                 <div className=' px-5 py-4 flex justify-between items-center'>
-                    <div className='text-lg font-bold'><p>Report Job </p> <p className='text-[#6B7588] text-sm font-normal mt-1'>Select a reason for report a job</p></div>
-                    <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setShowReport(false)}} />
+                    <div className='text-lg font-bold'><p>Close Account </p> <p className='text-[#6B7588] text-sm font-normal mt-1'>Select a reason for report a job</p></div>
+                    <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setShowCloseAccout(false)}} />
                 </div>
                 <hr />
                 <div className='px-10 py-5 flex flex-col gap-5' >
                   <div className='flex gap-3 items-center'>
                     <input className='w-4 h-4' type="radio" name="" id="" />
-                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>Job is expired</label>
+                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>Why are you closing your account?</label>
                   </div>
                   <div className='flex gap-3 items-center'>
                     <input className='w-4 h-4' type="radio" name="" id="" />
-                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>It's offensive or harassing</label>
+                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>Did you find the job opportunities on our platform relevant to your skills and experience?</label>
                   </div>
                   <div className='flex gap-3 items-center'>
                     <input className='w-4 h-4' type="radio" name="" id="" />
-                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>Asking for money or seems like a fake job</label>
+                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>How would you rate your overall experience with our platform?</label>
                   </div>
                   <div className='flex gap-3 items-center'>
                     <input className='w-4 h-4' type="radio" name="" id="" />
-                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>Incorrect company, location or job details</label>
+                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>What features or improvements could have enhanced your experience?</label>
                   </div>
                   <div className='flex gap-3 items-center'>
                     <input className='w-4 h-4' type="radio" name="" id="" />
-                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>I think it's NOT a Job, but selling something</label>
+                    <label htmlFor="" className='text-[#3A3A3C] text-sm font-medium'>Would you consider using our platform again in the future?</label>
                   </div>
                   <div className='flex gap-3 items-center'>
                     <input className='w-4 h-4' type="radio" name="" id="" />
@@ -59,9 +59,9 @@ const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportSubmit}
                 </div>
                 <hr />
                 <div className='w-full flex justify-end px-5 py-4 gap-10  items-center'>
-                    <p className='cursor-pointer text-[#114B53] font-semibold text-base' onClick={()=>{setShowReport(false)}}> Cancel</p>
-                    <div className='bg-[#E9F358] w-[140px] h-[40px] flex justify-center items-center rounded-full cursor-pointer ' onClick={continueDetail}>
-                        <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
+                    <p className='cursor-pointer text-[#114B53] font-semibold text-base' onClick={continueDetail} > Delete</p>
+                    <div className='bg-[#E9F358] w-[140px] h-[40px] flex justify-center items-center rounded-full cursor-pointer 'onClick={()=>{setShowCloseAccout(false)}} >
+                        <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Want to Stay</p>
                     </div>
                 </div>
             </div>
@@ -70,5 +70,5 @@ const ReportJob: React.FC<ReportJobProps> = ({setShowReport,setShowReportSubmit}
 }
 
 
-export default ReportJob
+export default CloseAccount
 

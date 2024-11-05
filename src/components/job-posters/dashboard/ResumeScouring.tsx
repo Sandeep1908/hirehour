@@ -9,6 +9,7 @@ import { IoCallOutline, IoLocationOutline, IoMail } from 'react-icons/io5';
 import { MdDeleteOutline, MdOutlineMail } from 'react-icons/md';
 import resume from '../../../assets/resume.svg'
 import CandidateCard from './CandidateCard';
+
 // import { Link } from 'react-router-dom';
 
 

@@ -125,11 +125,11 @@ const Signin: React.FC = () => {
 
 
      <p className='text-[14px]  font-normal mt-8 md:mt-4 text-center md:text-left'>
-     By clicking Continue, you agree to HireHours Terms of Service & Privacy Policy.
+     By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
      </p>
      <div className='flex justify-center'>
      <Link to={"/admin/signup"} className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
-     New to Hirehours ? Sign up 
+     New to TopEquator ? Sign up 
      </Link>
      </div>
    

@@ -3,11 +3,11 @@ import { IoMdClose } from 'react-icons/io'
 import submitLogo from "../../../../assets/submit.png"
 
 type ReportSubmitProps={
-    setShowReportDetail : (arg:boolean) => void
+    setShowReport : (arg:boolean) => void
     setShowReportSubmit : (arg:boolean) => void
 }
 
-const ReportSubmit: React.FC<ReportSubmitProps> = ({setShowReportDetail,setShowReportSubmit}) => {
+const ReportSubmit: React.FC<ReportSubmitProps> = ({setShowReport,setShowReportSubmit}) => {
 
     
 
@@ -26,7 +26,7 @@ const ReportSubmit: React.FC<ReportSubmitProps> = ({setShowReportDetail,setShowR
                     <p className='mt-2 text-sm text-[#6B7588] font-medium'>The notification will send to the Job poster</p>
                  </div>
                 <div className='w-full flex justify-end px-5 py-4 gap-10  items-center'>
-                    <p className='cursor-pointer text-[#114B53] font-semibold text-base' onClick={()=>{setShowReportDetail(true)}}> Back</p>
+                    <p className='cursor-pointer text-[#114B53] font-semibold text-base' onClick={()=>{setShowReport(true)}}> Back</p>
                     <div className='bg-[#E9F358] w-[140px] h-[40px] flex justify-center items-center rounded-full cursor-pointer ' onClick={()=>{setShowReportSubmit(false)}}>
                         <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Submit</p>
                     </div>

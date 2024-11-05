@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { RxCross2 } from 'react-icons/rx'
-import Location2 from '../../../assets/location2.svg'
-import Job_banner from '../../../assets/Rectangle.png'
-import icon from '../../../assets/Employers Logo.svg'
+import Location2 from '../../assets/location2.svg'
+import Job_banner from '../../assets/Rectangle.png'
+import icon from '../../assets/Employers Logo.svg'
 
 // import ReportJob from './report-job/ReportJob'
 // import ReportDetal from './report-job/ReportDetail'
 // import ReportSubmit from './report-job/ReportSubmit'
-import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 
-import { IoMdMore } from 'react-icons/io'
 
 
 type ViewJobProps={
@@ -17,15 +15,7 @@ type ViewJobProps={
 }
 
 const ViewJob:React.FC<ViewJobProps> = ({setViewJobPopup}) => {
-    // const [showReport, setShowReport] = useState<boolean>(false);
-    // const [showReportDetail, setShowReportDetail] = useState<boolean>(false);
-    // const [showReportSubmit, setShowReportSubmit] = useState<boolean>(false);
 
-
-    const [like, setLike] = useState<boolean>(false);
-    const [midLike, setMidLike] = useState<boolean>(false);
-    const [disLike, setDisLike] = useState<boolean>(false);
-    const [moreOption, setMoreOption] = useState<boolean>(false);
 
   return (
 
@@ -38,64 +28,8 @@ const ViewJob:React.FC<ViewJobProps> = ({setViewJobPopup}) => {
 
     <div className='relative w-full h-auto flex gap-5 justify-center md:justify-between p-9 rounded-lg  bg-white'>
     <RxCross2 onClick={()=>{setViewJobPopup(false)}} className='absolute z-[40] cursor-pointer top-2 right-2' size={25} />
-        <div className='w-[25%]'> 
-            <p className='text-[#8F90A6] text-sm font-medium'>First name</p>
-            <p className='mt-2 text-sm font-medium'>Mathew</p>
-
-            <p className='mt-3 text-[#8F90A6] text-sm font-medium'>Last name</p>
-            <p className='mt-2 text-sm font-medium'>Sam</p>
-
-            <p className='mt-3 text-[#8F90A6] text-sm font-medium'>Email</p>
-            <p className='mt-2 text-sm font-medium'>Mathewxyz@gmail.com</p>
-
-            <p className='mt-3 text-[#8F90A6] text-sm font-medium'>Phone number</p>
-            <p className='mt-2 text-sm font-medium'>+1 xxx-xxx-xxxx</p>
-
-            <p className='mt-3 text-[#8F90A6] text-sm font-medium'>Company Website</p>
-            <p className='mt-2 text-sm font-medium'>http//:www.xyzcompany.com</p>
-            <div className='relative flex gap-2 mt-2'>
-                      <div className='flex gap-2'>
-                        <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-                        <div className='relative ' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={25} />
-                          <div className={`absolute w-20 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-[-10px] transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-medium'>Undo</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-medium'> delete</p>
-                              </div>
-                            
-                        </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-            <p className='mt-3 text-[#8F90A6] text-sm font-medium'>Notes</p>
-              <textarea name="" placeholder='Add notes here' className='w-full h-20 p-2 border rounded-lg mt-2' id=""></textarea>
-
-              <div className='flex justify-end items-center mt-5 gap-6'>
-                     <p className='text-sm text-[#114B53] font-medium'>Cancel</p>
-                     <p className='text-sm text-[#114B53] bg-[#E9F358] rounded-full px-3 py-1 font-medium' >Done</p>
-              </div>
-        </div>
-        <div className=' w-[75%] rounded-lg  border sticky top-3 bg-white'>
+      
+        <div className=' w-full rounded-lg  border sticky top-3 bg-white'>
             <div className='w-full shadow-lg '>
                 <img className='object-cover w-full'   src={Job_banner} alt="" />
                 <div className='w-[95%] m-auto transition-all ease-in-out duration-1000'>
@@ -116,15 +50,15 @@ const ViewJob:React.FC<ViewJobProps> = ({setViewJobPopup}) => {
                         </div>
 
                         <div className=" hidden md:flex  items-center gap-4">
-                            {/* <div className=" px-6 py-3 bg-[#114B53] rounded-full">
-                                <p className="text-white text-sm font-semibold">Message</p>
+                            <div className=" px-6 py-3  rounded-full">
+                                <p className="text-[#8F90A6] text-sm font-normal">Posted 1 day ago</p>
                             </div>
                             <div className=" px-6 py-3 bg-[#E9F358] rounded-full">
-                                <p className="text-[#114B53] text-sm font-semibold">Pause Job</p>
-                            </div> */}
+                                <p className="text-[#114B53] text-sm font-semibold">Quick Apply</p>
+                            </div>
                             
                             {/* <GrFlag onClick={()=>{setShowReport(true)}} /> */}
-                            <p className='text-sm text-[#114B53] font-semibold'>Edit</p>
+                            {/* <p className='text-sm text-[#114B53] font-semibold'>Edit</p> */}
 
 
                             <p></p>
@@ -146,7 +80,7 @@ const ViewJob:React.FC<ViewJobProps> = ({setViewJobPopup}) => {
             <div className='p-5 overflow-x-hidden overflow-y-auto h-[380px] bg-white'>
             <div className={`h-auto transition-all ease-in-out duration-1000 mb-5 `}>
                         <div className='flex flex-col md:flex-row h-auto '>
-                            <div className='flex flex-col gap-4 mt-2 max-w-[250px] w-full'>
+                            <div className='flex flex-col gap-4 mt-2 max-w-[450px] w-full'>
 
                                 <div className='flex gap-2'>
                                     <img src={Location2} alt="" />

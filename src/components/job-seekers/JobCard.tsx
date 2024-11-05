@@ -4,7 +4,8 @@ import { LuMoreVertical } from 'react-icons/lu';
 import { FaFlag, FaRegBookmark } from 'react-icons/fa6';
 import { MdShare } from 'react-icons/md';
 import ReportJob from './report-job/ReportJob';
-import ReportDetal from './report-job/ReportDetail';
+// import ReportDetal from './report-job/ReportDetail';
+import ReportSubmit from './report-job/ReportSubmit';
 
 type JobCardProps={
     jobDataId:number,
@@ -17,7 +18,9 @@ type JobCardProps={
 const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
     const [showIcon, setShowIcon] = useState<boolean>(false);
     const [showReport, setShowReport] = useState<boolean>(false);
-    const [showReportDetail, setShowReportDetail] = useState<boolean>(false);
+    // const [showReportDetail, setShowReportDetail] = useState<boolean>(false);
+    const [showReportSubmit, setShowReportSubmit] = useState<boolean>(false);
+
     const [isShareModal,setIsShareModal]=useState<boolean>(false)
 
     return (
@@ -118,8 +121,9 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,data,setId,jobDataId }) => {
             </div>
 
 
-            {showReport &&<ReportJob setShowReport={setShowReport}  setShowReportDetail={setShowReportDetail}  /> }
-            {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail} /> }
+            {showReport &&<ReportJob setShowReport={setShowReport}  setShowReportSubmit={setShowReportSubmit}  /> }
+{/* {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail}  setShowReportSubmit={setShowReportSubmit}/> } */}
+{showReportSubmit &&<ReportSubmit setShowReport={setShowReport} setShowReportSubmit={setShowReportSubmit} /> }
 
             
         </a>

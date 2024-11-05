@@ -28,11 +28,11 @@ export const Container: FC = () => {
       },
       {
         id: 2,
-        text: "RTR",
+        text: " Recruiter Screening",
       },
       {
         id: 3,
-        text: "Recruiter Screening",
+        text: "RTR",
       },
       {
         id: 4,

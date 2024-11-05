@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import {  FaCaretDown } from 'react-icons/fa'
 import {  IoMdMore } from 'react-icons/io'
+
 import ViewJob from './ViewJob'
 
 
