@@ -81,6 +81,7 @@ import IntrestedRecruiter from './pages/emails/IntrestedRecruiter.tsx';
 import RTRProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRProfile.tsx';
 import RTRCompanyProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRCompanyProfile.tsx';
 import RTRPrivacySetting from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
+import VerificationMainTemp from './pages/emails/Verification.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -162,6 +163,8 @@ const router = createBrowserRouter(
       <Route path="/email/messages-one" element={<MessageOneTemplate />} />
       <Route path="/email/received-new-rtr" element={<ReceivedNewRTR />} />
       <Route path="/email/recruiter-interested" element={<IntrestedRecruiter />} />
+      <Route path="/email/verification-status" element={<VerificationMainTemp />} />
+
 
 
 
