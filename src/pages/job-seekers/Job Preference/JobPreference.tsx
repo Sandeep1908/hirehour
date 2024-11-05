@@ -6,19 +6,9 @@ const JobPreference:React.FC = () => {
 
     const [showJobAlert, setShowjobAlert] = useState<boolean>(false)
     const [isJobAlertChecked, setIsJobAlertChecked] = useState<boolean>(false);
-    const [isJobAlertModalOpen, setIsJobAlertModalOpen] = useState<boolean>(false);
 
 
-  // Function to handle checkbox changes
-  const handleJobAlertChange = (checked: boolean) => {
-     if (!checked) {
-       setIsJobAlertModalOpen(true);
-       setIsJobAlertChecked(false);
-
-     } else {
-       setIsJobAlertChecked(true);
-     }
-   };
+ 
   return (
     <div className='w-full md:h-[100vh] bg-[#F2F2F5]  py-10'>
        <div className='max-w-[1280px] h-full bg-white rounded-lg px-8 py-10 m-auto '>
