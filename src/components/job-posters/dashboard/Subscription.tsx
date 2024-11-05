@@ -441,7 +441,7 @@ const BulkHiring: React.FC = () => {
       >
         <div
           className="   z-[10] w-full max-w-[400px] shadow-xl
-                        h-[70%] bg-white rounded-lg"
+                        h-[80%] bg-white rounded-lg"
         >
           <div className="flex justify-between items-center p-3">
             <div className="flex flex-col space-y-1">
