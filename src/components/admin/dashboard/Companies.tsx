@@ -2,7 +2,7 @@ import { useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { FaEdit } from "react-icons/fa";
 
- 
+import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import bgCompany from '../../../assets/bg-company.png';
 import bgIcon from '../../../assets/icon-company.png';
 import locationIco from '../../../assets/companyprofile/location.png'
@@ -14,9 +14,10 @@ import companysizeIco from '../../../assets/companyprofile/companysize.png'
 
 import foundedIco from '../../../assets/companyprofile/founded.png'
 import companyDescriptionIcon from '../../../assets/companyprofile/companydescription.png'
-import { IoMdClose } from 'react-icons/io';
+import { IoMdClose, IoMdMore } from 'react-icons/io';
 
 import { MdDeleteOutline } from 'react-icons/md';
+import { MdClose } from "react-icons/md";
  
 const Companies: React.FC<{setIsCompany:(e:string)=>void}> = ({setIsCompany}) => {
   const columns = ['Company Name', 'Location', 'Member Since', 'Job Posted', 'Total User', 'Sales','Active Jobs'];
@@ -300,6 +301,315 @@ const BulkHiring: React.FC = () => {
   );
 };
 
+// User Section 
+
+const JobPosted: React.FC = () => {
+  return (
+    <table className="table-auto w-full border rounded-lg overflow-auto ">
+            <thead className="bg-[#F2F2F5]  ">
+              <tr className="text-sm ">
+                <th className="p-2 text-sm text-[#3C3C3D]">Full Name</th>
+                 
+                <th className="p-2 text-sm text-[#3C3C3D]">Role</th>
+                <th className="p-2 text-sm text-[#3C3C3D]">Job Posted</th>
+                <th className="p-2 text-sm text-[#3C3C3D]">Action</th>
+              </tr>
+            </thead>
+            <tbody className="text-center">
+              {Array.from({ length: 5 }).map((_, i) => {
+                return (
+                  <tr className=" border" key={i}>
+                    <td className="text-xs p-3">Mathew</td>
+                  
+                    <td className="text-xs p-2">Hiring Partner</td>
+                    <td className="text-xs p-2">{i+1}</td>
+                    <td className="text-xs p-2 flex justify-center items-center space-x-2">
+                    <p className='w-24 h-6 flex justify-center items-center text-[#104B53] border border-[#104B53] rounded-full'>View</p>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+  );
+};
+
+const ResumeSourcing: React.FC = () => {
+    return (
+      <table className="table-auto w-full border rounded-lg overflow-auto ">
+              <thead className="bg-[#F2F2F5] pt-3 ">
+                <tr className="text-sm ">
+                  <th className="p-2 text-sm text-[#3C3C3D]">Full Name</th>
+                   
+                  <th className="p-2 text-sm text-[#3C3C3D]">Role</th>
+                  <th className="p-2 text-sm text-[#3C3C3D]">Resume Sourced</th>
+                  <th className="p-2 text-sm text-[#3C3C3D]">Action</th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                {Array.from({ length: 5 }).map((_, i) => {
+                  return (
+                    <tr className=" border" key={i}>
+                      <td className="text-xs p-3">Mathew</td>
+                    
+                      <td className="text-xs p-2">Hiring Partner</td>
+                      <td className="text-xs p-2">{i+1}</td>
+                      <td className="text-xs p-2 flex justify-center items-center space-x-2">
+                      <p className='w-24 h-6 flex justify-center items-center text-[#104B53] border border-[#104B53] rounded-full'>View</p>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+    );
+  };
+
+
+
+  const RightToRepresent: React.FC = () => {
+    return (
+      <table className="table-auto w-full border rounded-lg overflow-auto ">
+              <thead className="bg-[#F2F2F5] pt-3 ">
+                <tr className="text-sm ">
+                  <th className="p-2 text-sm text-[#3C3C3D]">Full Name</th>
+                   
+                  <th className="p-2 text-sm text-[#3C3C3D]">Role</th>
+                  <th className="p-2 text-sm text-[#3C3C3D]">RTR Sent</th>
+               
+
+                  <th className="p-2 text-sm text-[#3C3C3D]">Action</th>
+                </tr>
+              </thead>
+              <tbody className="text-center">
+                {Array.from({ length: 5 }).map((_, i) => {
+                  return (
+                    <tr className=" border" key={i}>
+                      <td className="text-xs p-3">Mathew</td>
+                    
+                      <td className="text-xs p-2">Hiring Partner</td>
+                      <td className="text-xs p-2">{i+1}</td>
+                     
+
+                      <td className="text-xs p-2 flex justify-center items-center space-x-2">
+                      <p className='w-24 h-6 flex justify-center items-center text-[#104B53] border border-[#104B53] rounded-full'>View</p>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+    );
+  };
+
+
+ 
+ 
+
+const Users: React.FC = () => {
+  
+    const [currentIdx,setCurrentIdx]=useState<number>(0);
+    const [isModalOpen,setIsModalOpen]=useState(false)
+    const [like, setLike] = useState<boolean>(false);
+    const [midLike, setMidLike] = useState<boolean>(false);
+    const [disLike, setDisLike] = useState<boolean>(false);
+    const [moreOption, setMoreOption] = useState<boolean>(false);
+    
+
+  const options=[
+    {
+        lable:'Job Posted',
+        count:2,
+        components:<JobPosted/>
+
+    },
+    {
+        lable:'Resume Sourcing',
+        count:3,
+        components:<ResumeSourcing/>
+
+    },
+    {
+        lable:'Right to Represent',
+        count:3,
+        components:<RightToRepresent/>
+
+    },
+  ]
+
+  return (
+    <div className='w-full'>
+ 
+
+  {/* plan  */}
+  <div className=" relative ">
+   
+
+    <div className="w-full h-[30vh] overflow-y-auto border">
+      <table className="table-auto w-full border rounded-lg">
+        <thead className="bg-[#F2F2F5] ">
+          <tr className="text-sm ">
+            <th className="p-2 text-sm text-[#3C3C3D]">Full Name</th>
+            <th className="p-2 text-sm text-[#3C3C3D]">Email Address</th>
+            <th className="p-2 text-sm text-[#3C3C3D]">Role</th>
+            <th className="p-2 text-sm text-[#3C3C3D]">Co-Hiring Access</th>
+            <th className="p-2 text-sm text-[#3C3C3D]">Action</th>
+          </tr>
+        </thead>
+        <tbody className="text-center">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <tr className="border" key={i}>
+              <td className="text-xs p-3">Mathew</td>
+              <td className="text-xs p-2" onClick={()=>setIsModalOpen(true)}>mathew@gmail.com</td>
+              <td className="text-xs p-2">06/20/2024</td>
+              <td className="text-xs p-2">Resume sourcing</td>
+              <td className="text-xs p-2 flex justify-center items-center  ">
+                 <p className="w-20 h-5 text-xs rounded-full bg-[#104B53] flex justify-center items-center text-white">Message</p>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  {/* options */}
+  <div className='w-full   mt-5'>
+    <ul className='w-full flex space-x-3'>
+      {options?.map((item, i) => (
+        <li onClick={() => setCurrentIdx(i)} className={`text-xs  p-2 border-b cursor-pointer ${currentIdx === i ? 'border-[#104B53] text-[#104B53] font-[600]' : ''}`} key={i}>
+          {item.lable} ({item.count})
+        </li>
+      ))}
+    </ul>
+
+    <div className="w-full mt-5 border">
+      {options?.map((item, i) => {
+        if (currentIdx === i) {
+          return (
+            <div className='w-full  h-[30vh] overflow-y-auto' key={i}>
+              {item.components}
+            </div>
+          );
+        }
+      })}
+    </div>
+  </div>
+
+
+
+  {/* Action modal  */}
+  <div
+        className={`w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isModalOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'} `}
+      >
+        <div
+          className="   z-[10] w-full max-w-[300px] shadow-xl
+                         p-3 bg-white rounded-lg"
+        >
+          <div className="flex justify-end items-center p-3">
+            <div className="flex  space-y-1">
+            <MdClose onClick={()=>setIsModalOpen(false)} />
+
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col space-y-4  p-3">
+            <div className="w-full space-y-3  ">
+              <div className="flex flex-col space-y-1">
+                <p className="text-[10px] text-[#8F90A6]">Full Name</p>
+                <p className="text-[10px] font-semibold">Mathew Albert</p>
+              </div>
+
+           
+
+              <div className="flex flex-col space-y-1">
+                <p className="text-[10px] text-[#8F90A6]">Email</p>
+                <p className="text-[10px] font-semibold">Mathew@xyz.com</p>
+              </div>
+
+              <div className="flex flex-col space-y-1">
+                <p className="text-[10px] text-[#8F90A6]">Phone number</p>
+                <p className="text-[10px] font-semibold">+1 xxx-xxx-xxxx</p>
+              </div>
+
+              <div className="flex flex-col space-y-1">
+                <p className="text-[10px] text-[#8F90A6]">Role</p>
+                <p className="text-[10px] font-semibold">Owner(1)</p>
+              </div>
+
+            
+
+              <div className="flex flex-col space-y-1">
+                <p className="text-[10px] text-[#8F90A6]">Co-Hiring Access</p>
+                <p className="text-[10px] font-semibold">Access for all jobs and resume sourcing</p>
+              </div>
+            </div>
+
+           
+
+            <div className="flex flex-col space-y-1">
+                <p className="text-[10px] text-[#8F90A6]">Access Decision</p>
+                <div className='relative flex gap-2'>
+                      <div className='flex gap-2'>
+                        <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                          <AiOutlineLike size={20} />
+
+                        </div>
+                        <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                          <AiOutlineLike size={20} className='rotate-90 ' />
+
+                        </div>
+                      </div>
+                      <div className='flex gap-10 items-center'>
+                        <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                          <AiOutlineDislike size={20} />
+
+                        </div>
+                       
+
+                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
+                          <IoMdMore size={25} />
+                          <div className={`absolute w-36 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-5 transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'>Undo</p>
+                              </div>
+                              <hr />
+                              <div className='px-3 py-2'>
+                                <p className='text-sm font-semibold'> Delete</p>
+                              </div>
+                        </div>
+                        </div>
+
+                      </div>
+
+                    </div>
+              </div>
+            </div>
+
+
+
+
+           
+
+             
+
+            <div className="w-full ">
+              
+
+              <p className="w-full h-8 flex justify-center items-center bg-[#104B53] text-white text-xs rounded-full">
+                Make Payment
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+
+  );
+};
+
+// User section end here 
+
 const CompanyProfile: React.FC = () => {
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
   const filtersItems = [
@@ -315,7 +625,7 @@ const CompanyProfile: React.FC = () => {
 
     {
       label: 'Users',
-      component: '',
+      component: <Users/>,
     },
     {
       label: 'Sales',
@@ -386,6 +696,9 @@ const CompanyProfile: React.FC = () => {
     </div>
   );
 };
+
+
+
 
 
 const CompanyProfileSettings: React.FC = () => {
