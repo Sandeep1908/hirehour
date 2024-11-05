@@ -5,7 +5,20 @@ import AddJobAlert from '../../../components/job-seekers/AddJobAlert'
 const JobPreference:React.FC = () => {
 
     const [showJobAlert, setShowjobAlert] = useState<boolean>(false)
+    const [isJobAlertChecked, setIsJobAlertChecked] = useState<boolean>(false);
+    const [isJobAlertModalOpen, setIsJobAlertModalOpen] = useState<boolean>(false);
 
+
+  // Function to handle checkbox changes
+  const handleJobAlertChange = (checked: boolean) => {
+     if (!checked) {
+       setIsJobAlertModalOpen(true);
+       setIsJobAlertChecked(false);
+
+     } else {
+       setIsJobAlertChecked(true);
+     }
+   };
   return (
     <div className='w-full md:h-[100vh] bg-[#F2F2F5]  py-10'>
        <div className='max-w-[1280px] h-full bg-white rounded-lg px-8 py-10 m-auto '>
@@ -33,6 +46,7 @@ const JobPreference:React.FC = () => {
                         <MdDeleteOutline color="#104B53" size={14} />
                         <p className="text-[#104B53] text-xs">Delete</p>
                         </div>
+                       
                     </div>
                     </div>
                      <div className='flex justify-between'>
@@ -59,15 +73,26 @@ const JobPreference:React.FC = () => {
                      </div>
 
                      <div className="hidden  w-full md:flex justify-end items-start space-x-4">
-                        <div className="flex items-center  " >
+                        <div className="flex items-center mt-1 " >
                         <FaEdit color="#104B53" size={14} />
                         <p className="text-[#104B53] text-xs">Edit</p>
                         </div>
 
-                        <div className="flex items-center ">
+                        <div className="flex items-center mt-1 ">
                         <MdDeleteOutline color="#104B53" size={14} />
                         <p className="text-[#104B53] text-xs">Delete</p>
                         </div>
+                        <div>
+                <label className="inline-flex items-center cursor-pointer outline-none">
+                  <input
+                    type="checkbox"
+                    checked={isJobAlertChecked}
+                    className="sr-only peer outline-none"
+                    onChange={() => {setIsJobAlertChecked(!isJobAlertChecked)}}
+                  />
+                  <div className="relative w-11 h-6 bg-gray-200 rounded-full dark:bg-gray-700 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#114B53]"></div>
+                </label>
+              </div>
                     </div>
                      </div>
                     
