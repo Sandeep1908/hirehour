@@ -6,6 +6,7 @@ import HeaderJP from './components/HeaderJP';
 import HeaderAdmin from './components/HeaderAdmin';
 
 import HeaderRTR from './components/HeaderRTR';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const App: React.FC = () => {
   const pathname = useLocation().pathname;
@@ -13,18 +14,18 @@ const App: React.FC = () => {
   const adminRoute = pathname.includes('/admin');
   const headerRTR=pathname.includes('/dashboard-rtr')
 
-  // const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
 
   return (
-    // <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
 
     <div className="w-full  bg-[#F2F2F5]">
       {adminRoute ? <HeaderAdmin /> : headerRTR ? <HeaderRTR/>: route ? <HeaderJP/>:<Header/>}
 
       <Outlet />
     </div>
-    // </QueryClientProvider>
+   </QueryClientProvider>
 
   );
 };
