@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSettingsKnobs } from "react-icons/gi";
 import { Link } from 'react-router-dom';
+import { IoIosInformationCircleOutline } from "react-icons/io";
+
 
 
 const ActiveJobs: React.FC = () => {
@@ -100,9 +102,8 @@ const ActiveJobs: React.FC = () => {
 const PausedJobs: React.FC = () => {
   return (
     <div className="space-y-3">
-    {Array.from({ length: 10 }).map((_, i) => {
-      return (
-        <div className="w-full h-auto border flex flex-col rounded-lg" key={i}>
+     
+        <div className="w-full h-auto border flex flex-col rounded-lg"  >
           <div className="w-full flex justify-between items-center bg-[#F2F2F5]   p-2 ">
             <div className="  flex items-start space-x-2 ">
               <input type="checkbox" />
@@ -117,6 +118,20 @@ const PausedJobs: React.FC = () => {
 
             <BsThreeDotsVertical  className='md:hidden'/>
             <div className="  space-x-4 justify-center items-center hidden md:flex ">
+
+            <div className="flex max-w-56  space-x-2 justify-center items-center p-1   bg-[#D9E4F7] rounded-lg ">
+            <IoIosInformationCircleOutline size={26} color='#356CFC'    />
+
+            <div className='flex flex-col justify-start items-center w-full '>   
+                <h1 className='text-[10px] text-[#356CFC] font-semibold'>Your Verification is pending</h1>
+              <p className='text-[8px] text-center'>You job not posted yet ones the verification is done it will be live.</p>
+
+            </div>
+
+                 
+              </div>
+
+
               <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
                 <span className="text-xs">2</span>
                 <h1 className="text-[10px] text-[#104B53] font-[600]">
@@ -128,9 +143,9 @@ const PausedJobs: React.FC = () => {
                 <select
                   name=""
                   id=""
-                  className="bg-[#E3F5EF] text-[10px] w-16 text-center h-6 rounded-full border border-[#33A070] text-[#33A070] outline-none"
+                  className="bg-[#FFF1C6] text-[10px] w-16 text-center h-6 rounded-full border border-[#FFCB5E] text-[#FFCB5E] outline-none"
                 >
-                  <option value="">Active</option>
+                  <option value="">Paused</option>
                 </select>
               </div>
 
@@ -184,8 +199,107 @@ const PausedJobs: React.FC = () => {
            
           </div>
         </div>
-      );
-    })}
+       
+
+
+        <div className="w-full h-auto border flex flex-col rounded-lg"  >
+          <div className="w-full flex justify-between items-center bg-[#F2F2F5]   p-2 ">
+            <div className="  flex items-start space-x-2 ">
+              <input type="checkbox" />
+              <div className="flex flex-col justify-start items-start bg-white p-2 rounded-lg space-y-1 ">
+                <h1 className="text-sm text-[#104B53] font-[500]">Java Full Stack</h1>
+                <ul className="flex text-[8px] space-x-2">
+                  <li>Dribble</li>
+                  <li>Allen, Texas, United States</li>
+                </ul>
+              </div>
+            </div>
+
+            <BsThreeDotsVertical  className='md:hidden'/>
+            <div className="  space-x-4 justify-center items-center hidden md:flex ">
+
+            <div className="flex max-w-56  space-x-2 justify-center items-center p-1   bg-[#D9E4F7] rounded-lg ">
+            <IoIosInformationCircleOutline size={26} color='#356CFC'    />
+
+            <div className='flex flex-col justify-start items-center w-full '>   
+                <h1 className='text-[10px] text-[#356CFC] font-semibold'>Job has been Paused</h1>
+              <p className='text-[8px] text-center'>your job is paused for long time.
+              Are you still hiring ?</p>
+
+            </div>
+
+                 
+              </div>
+
+
+              <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
+                <span className="text-xs">2</span>
+                <h1 className="text-[10px] text-[#104B53] font-[600]">
+                  Hire credit spend on job
+                </h1>
+              </div>
+
+              <div className="">
+                <select
+                  name=""
+                  id=""
+                  className="bg-[#FFF1C6] text-[10px] w-16 text-center h-6 rounded-full border border-[#FFCB5E] text-[#FFCB5E] outline-none"
+                >
+                  <option value="">Paused</option>
+                </select>
+              </div>
+
+              <BsThreeDotsVertical />
+            </div>
+          </div>
+
+          <div className="w-full flex flex-col md:flex-row justify-between items-center p-3">
+            <div className="w-full max-w-xl ">
+              <ul className="flex justify-between pl-5">
+                {Array.from({ length: 4 }).map((_, i) => {
+                  return (
+                    <li key={i} className="flex flex-col border-r p-2">
+                      <span className="text-sm">24</span>
+                      <span className="text-[#104B53] text-xs font-semibold">Job Views</span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+
+            <div className='w-full md:w-auto flex justify-between items-center'>
+
+            <div className="flex flex-col space-x-4 justify-center items-center md:hidden ">
+              <div className="flex flex-col justify-center items-center p-1 space-y-1 bg-white rounded-lg ">
+                <span className="text-xs">2</span>
+                <h1 className="text-[10px] text-[#104B53] font-[600]">
+                  Hire credit spend on job
+                </h1>
+              </div>
+
+              <div className="">
+                <select
+                  name=""
+                  id=""
+                  className="bg-[#FEF1C6] text-[10px] w-16 text-center h-6 rounded-full border border-[#FFBD35] text-[#FFBD35] outline-none"
+                >
+                  <option value="">Active</option>
+                </select>
+              </div>
+
+              
+            </div>
+              
+            <div className="flex flex-col space-y-2">
+              <p className="text-[10px] text-[#3A3A3C]">Posted by : Methew</p>
+              <p className="text-[10px] text-[#3A3A3C]">Posted date : 06/16/24</p>
+            </div>
+            </div>
+
+           
+          </div>
+        </div>
+     
   </div>
   );
 };
