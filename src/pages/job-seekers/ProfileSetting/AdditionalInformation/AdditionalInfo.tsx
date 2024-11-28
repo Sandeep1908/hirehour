@@ -1,10 +1,165 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TiTick } from 'react-icons/ti';
 
 import { FaPlus } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../../../axios/axiosInstance';
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import JobRoles from '../../../../utils/JobRoles';
+import Domains from '../../../../utils/Domains';
+import JobTypes from '../../../../utils/JobTypes';
+import LocationSearch from '../../../../utils/LocationSearch';
+import formatLocation from '../../../../utils/jobseekers/formatedLocation';
+
+type WorkExperience = {
+  companydetails: string;
+  place: string;
+  durationStart: string;
+  durationEnd: string;
+  presentEmployer: boolean;
+  descriptionOfExperience: string;
+  jobCategory: string;
+};
+
+type EducationDetails = {
+  degree: string;
+  schoolName: string;
+  durationStart: string;
+  durationEnd: string;
+  netMarks: number;
+  outOf: number;
+  isCurrentlyAttending: boolean;
+};
+
+type SummaryDetails={
+  summary:string
+}
+
+ 
 
 const AdditionalInfo: React.FC = () => {
+  const navigate = useNavigate();
+  const [role, setRole] = useState<number | null>(null);
+  const [domain, setDomain] = useState<number | null>(null);
+  const [jobtype, setType] = useState<number | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<LocationValue | null>(null);
+  const [selectedEducationLocation, setSelectedEducationLocation] = useState<LocationValue | null>(
+    null,
+  );
+
+  const [experience, setExperience] = useState<WorkExperience>({
+    companydetails: '',
+    place: '',
+    durationStart: '',
+    durationEnd: '',
+    presentEmployer: false,
+    descriptionOfExperience: '',
+    jobCategory: 'NA',
+  });
+
+  const [education, setEducation] = useState<EducationDetails>({
+    schoolName: '',
+    degree: '',
+    durationStart: '',
+    durationEnd: '',
+    isCurrentlyAttending: false,
+    netMarks: 100,
+    outOf: 100,
+  });
+
+  const [summary,setSummery]=useState<SummaryDetails>({summary:''})
+
+  //Work Experience
+  const mutation = useMutation({
+    mutationFn: async (newExperience: WorkExperience) => {
+      const response = await axiosInstance.post('/api/candidate/details/experience', newExperience);
+      return response.data;
+    },
+    onSuccess:(data)=>{
+      console.log("experience data",data);
+    },
+    onError: () => {
+      alert('Failed to add experience. Please try again.');
+    },
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const isChecked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
+
+    setExperience((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? isChecked : value,
+    }));
+  };
+
+  //Education
+
+  const educationMutation = useMutation({
+    mutationFn: async (newEducation: EducationDetails) => {
+      const response = await axiosInstance.post('/api/candidate/details/education', newEducation);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      console.log("education data",data);
+    },
+    onError: () => {
+      alert('Failed to add education. Please try again.');
+    },
+  });
+
+  //summery
+
+  const summeryMuation = useMutation({
+    mutationFn: async (summery:SummaryDetails) => {
+      const response = await axiosInstance.post('/api/candidate/details/update-details', summery);
+      return response.data;
+    },
+    onSuccess: (data) => {
+      console.log("summery data",data);
+    },
+    onError: () => {
+      alert('Failed to add education. Please try again.');
+    },
+  });
+
+  const handleEducationChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const isChecked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
+
+    setEducation((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? isChecked : value,
+    }));
+  };
+
+  const handleContinue = async () => {
+    const expeirenceData = {
+      ...experience,
+      jobType: jobtype,
+      role: role,
+      domain: domain,
+      place: formatLocation(selectedLocation),
+    };
+
+    const educationData = {
+      ...education,
+      schoolLocation: formatLocation(selectedEducationLocation),
+    };
+
+    try {
+      await Promise.all([
+        mutation.mutateAsync(expeirenceData),
+        educationMutation.mutateAsync(educationData),
+        summeryMuation.mutateAsync(summary)
+      ]);
+      navigate('/review-form');
+    } catch (error) {
+      console.error('One of the mutations failed:', error);
+    }
+  };
+
   return (
     <div className="w-full   pb-20 bg-[#F6F6F8]">
       <div className="max-w-[1280px] h-48  m-auto">
@@ -54,17 +209,13 @@ const AdditionalInfo: React.FC = () => {
         <div className="w-full max-w-[1064px] m-auto pt-10 flex flex-col space-y-5">
           <div className=" flex flex-col space-y-3">
             <h1 className="text-lg font-semibold">Summery</h1>
-            <div className="border p-7 border-[#EBEBF0] rounded-lg">
-              <p className="text-[#535354] text-sm">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                with desktop publishing software like Aldus PageMaker including versions of Lorem
-                Ipsum.
-              </p>
+            <div className="  border-[#EBEBF0] rounded-lg">
+            <textarea
+                    name="descriptionOfExperience"
+                    className="text-[#535354] border p-2 text-sm min-h-32 w-full"
+                    placeholder='Write you profile Summery'
+                    onChange={(e)=>setSummery({summary:e.target.value})}
+                  ></textarea>
             </div>
           </div>
 
@@ -77,7 +228,9 @@ const AdditionalInfo: React.FC = () => {
               {/* Total Experience  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-sm">Total Experience</label>
+                  <label htmlFor="" className="text-sm">
+                    Total Experience
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
@@ -102,29 +255,32 @@ const AdditionalInfo: React.FC = () => {
                 {/* Role  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Role</label>
+                    <label htmlFor="" className="text-sm">
+                      Role
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Role"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <JobRoles setRole={setRole} />
                 </div>
 
                 {/* Company  */}
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Select Company</label>
+                    <label htmlFor="" className="text-sm">
+                      Select Company
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
+                    name="companydetails"
+                    value={experience.companydetails}
+                    onChange={handleChange}
                     placeholder="company"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -133,30 +289,24 @@ const AdditionalInfo: React.FC = () => {
                 {/* Domain Worked  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Domain Worked</label>
-                    <span className="text-red-500">*</span>
+                    <label htmlFor="" className="text-sm">
+                      Domain Worked
+                    </label>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Domain Worked"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <Domains setDomain={setDomain} />
                 </div>
 
                 {/* Job Type  */}
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Job Type</label>
-                    <span className="text-red-500">*</span>
+                    <label htmlFor="" className="text-sm">
+                      Job Type
+                    </label>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Job Type"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <JobTypes setType={setType} />
                 </div>
               </div>
 
@@ -164,14 +314,19 @@ const AdditionalInfo: React.FC = () => {
                 {/* Date Started  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Date Started</label>
+                    <label htmlFor="" className="text-sm">
+                      Date Started
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
                     placeholder="Date Started"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    name="durationStart"
+                    value={experience.durationStart}
+                    onChange={handleChange}
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -179,14 +334,22 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Date Ended</label>
+                    <label htmlFor="" className="text-sm">
+                      Date Ended
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
                     placeholder="Date Ended"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    name="durationEnd"
+                    disabled={experience.presentEmployer}
+                    value={
+                      experience.presentEmployer ? new Date().toISOString() : experience.durationEnd
+                    }
+                    onChange={handleChange}
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -196,6 +359,16 @@ const AdditionalInfo: React.FC = () => {
                   <input
                     type="checkbox"
                     placeholder="Date Started"
+                    name="presentEmployer"
+                    checked={experience.presentEmployer}
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      setExperience((prev) => ({
+                        ...prev,
+                        presentEmployer: checked,
+                        durationEnd: checked ? new Date().toISOString() : '',
+                      }));
+                    }}
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
@@ -205,30 +378,24 @@ const AdditionalInfo: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-sm">Location</label>
+                  <label htmlFor="" className="text-sm">
+                    Location
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
-                <input
-                  type="email"
-                  placeholder="Select location and country"
-                  className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                />
+                <LocationSearch setSelectedLocation={setSelectedLocation} />
               </div>
 
               <div className=" flex flex-col space-y-3">
                 <h1 className="text-lg font-semibold"> Work Summery</h1>
-                <div className="border p-7 border-[#EBEBF0] rounded-lg">
-                  <p className="text-[#535354] text-sm">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                    unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                    with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                    recently with desktop publishing software like Aldus PageMaker including
-                    versions of Lorem Ipsum.
-                  </p>
+                <div className="border  border-[#EBEBF0] rounded-lg">
+                  <textarea
+                    name="descriptionOfExperience"
+                    className="text-[#535354] text-sm min-h-44 w-full"
+                    onChange={handleChange}
+                    value={experience.descriptionOfExperience}
+                  ></textarea>
                 </div>
               </div>
 
@@ -252,12 +419,17 @@ const AdditionalInfo: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-sm">Collage Name</label>
+                  <label htmlFor="" className="text-sm">
+                    Collage Name
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
                   type="email"
+                  name="schoolName"
+                  value={education.schoolName}
+                  onChange={handleEducationChange}
                   placeholder="
                 Enter Your Collage Name"
                   className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
@@ -269,12 +441,17 @@ const AdditionalInfo: React.FC = () => {
               degree  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Degree</label>
+                    <label htmlFor="" className="text-sm">
+                      Degree
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="text"
+                    name="degree"
+                    value={education.degree}
+                    onChange={handleEducationChange}
                     placeholder="Degree"
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
@@ -284,7 +461,9 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Major</label>
+                    <label htmlFor="" className="text-sm">
+                      Major
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
@@ -300,13 +479,18 @@ const AdditionalInfo: React.FC = () => {
                 {/* Date Started  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Date Started</label>
+                    <label htmlFor="" className="text-sm">
+                      Date Started
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
                     placeholder="Date Started"
+                    name="durationStart"
+                    value={education.durationStart}
+                    onChange={handleEducationChange}
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
@@ -315,12 +499,21 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">Date Ended</label>
+                    <label htmlFor="" className="text-sm">
+                      Date Ended
+                    </label>
                     <span className="text-red-500">*</span>
                   </div>
 
                   <input
                     type="date"
+                    disabled={education.isCurrentlyAttending}
+                    value={
+                      education.isCurrentlyAttending
+                        ? new Date().toISOString()
+                        : education.durationEnd
+                    }
+                    onChange={handleEducationChange}
                     placeholder="Date Ended"
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
@@ -332,6 +525,16 @@ const AdditionalInfo: React.FC = () => {
                   <input
                     type="checkbox"
                     placeholder="Date Started"
+                    name="presentEmployer"
+                    checked={education.isCurrentlyAttending}
+                    onChange={(e) => {
+                      const checked = e.target.checked;
+                      setEducation((prev) => ({
+                        ...prev,
+                        isCurrentlyAttending: checked,
+                        durationEnd: checked ? new Date().toISOString() : '',
+                      }));
+                    }}
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
@@ -341,15 +544,13 @@ const AdditionalInfo: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-sm">Location</label>
+                  <label htmlFor="" className="text-sm">
+                    Location
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
-                <input
-                  type="email"
-                  placeholder="Select location and country"
-                  className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                />
+                <LocationSearch setSelectedLocation={setSelectedEducationLocation} />
               </div>
 
               <div className="flex space-x-2 justify-start items-center">
@@ -364,14 +565,19 @@ const AdditionalInfo: React.FC = () => {
 
           {/* buttons  */}
 
-         
-
-
           <div className="flex w-full  justify-between md:justify-end items-center  space-x-4">
-            <Link to={'/upload-resume'} className="flex justify-center items-center w-full md:w-36 h-10  rounded-full cursor-pointer border border-[#104B53] text-[#104B53]">Back</Link>
-            <Link to={'/review-form'} className="flex justify-center items-center w-full md:w-36 h-10  rounded-full cursor-pointer bg-[#E9F358] ">
-              Continue
+            <Link
+              to={'/upload-resume'}
+              className="flex justify-center items-center w-full md:w-36 h-10  rounded-full cursor-pointer border border-[#104B53] text-[#104B53]"
+            >
+              Back
             </Link>
+            <p
+              onClick={handleContinue}
+              className="flex justify-center items-center w-full md:w-36 h-10  rounded-full cursor-pointer bg-[#E9F358] "
+            >
+              Continue
+            </p>
           </div>
         </div>
       </div>

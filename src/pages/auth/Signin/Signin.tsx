@@ -51,16 +51,17 @@ const Signin: React.FC = () => {
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
       const response = await axiosInstance.post("/api/candidate/login", userCredentials);
-      console.log("response.data", response.data);
-      localStorage.setItem('token', response.data.token);
+       
       return response.data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(" login",data);
       alert("Signed in successfully");
-      navigate("/job-poster");
+      localStorage.setItem('topequatortoken',data?.token)
+      navigate("/");
     },
     onError: () => {
-      localStorage.removeItem("authToken");
+      localStorage.removeItem("topequatortoken");
       setValidateErrors(true)
       setEmail("")
       setPassword("")
@@ -70,7 +71,6 @@ const Signin: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     // Validate form using Zod
     const result = signinSchema.safeParse({ email, password });
     if (!result.success) {

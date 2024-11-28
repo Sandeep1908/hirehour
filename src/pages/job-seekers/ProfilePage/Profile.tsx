@@ -18,13 +18,17 @@ import privateEye from '../../../assets/icon/private.png';
 import AboutMe from '../../../components/job-seekers/profile/AboutMe';
 import AdditionalDetails from '../../../components/job-seekers/profile/AdditionalDetails';
 import Experience from '../../../components/job-seekers/profile/Experience';
-import Education from '../../../components/job-seekers/profile/Education';
-import Summary from '../../../components/job-seekers/profile/Summary';
+import EducationEdit from '../../../components/job-seekers/profile/Education';
+import SummaryEdit from '../../../components/job-seekers/profile/Summary';
 import ProfileComplition from '../../../components/job-seekers/profile/ProfileComplition';
 import Certification from '../../../components/job-seekers/profile/Certification';
 import Achievement from '../../../components/job-seekers/profile/Achievement';
 import { SlArrowDown } from 'react-icons/sl';
 import Skills from '../../../components/job-seekers/profile/Skills';
+import ResumeUpload from './components/ResumeUploads';
+import Summary from './components/Summary';
+import WorkExperience from './components/WorkExperience';
+import Education from './components/Education';
 
 const Profile: React.FC = () => {
   const [profilePopup, setProfilePopup] = useState<boolean>(false);
@@ -37,7 +41,7 @@ const Profile: React.FC = () => {
   const [certificationPopup, setCertificationPopup] = useState<boolean>(false);
   const [achievementPopup, setAchievementPopup] = useState<boolean>(false);
   const [isPublic, setIsPublic] = useState<boolean>(true);
-  const [isUploadResumeOpen,setIsUploadResumeOpen]=useState(false)
+  const [isUploadResumeOpen, setIsUploadResumeOpen] = useState(false);
 
   return (
     <div className="w-full h-full relative ">
@@ -221,56 +225,49 @@ const Profile: React.FC = () => {
                   <span className="text-[#104B53] text-sm">Edit</span>
                 </div>
               </div>
-              <div className='flex gap-1 '>
-                  <div className='pt-1 bg-[#114B53] rounded-tl-lg rounded-tr-lg'>
-                     <p className='text-[#114B53] text-sm px-3 py-1 bg-white' >Overall Skills</p>
-                  </div>
-                  <div className='pt-1 '>
-                  <p className='text-[#3A3A3C] text-sm px-3 py-1' >Current Skills</p>
-
-                  </div>
+              <div className="flex gap-1 ">
+                <div className="pt-1 bg-[#114B53] rounded-tl-lg rounded-tr-lg">
+                  <p className="text-[#114B53] text-sm px-3 py-1 bg-white">Overall Skills</p>
+                </div>
+                <div className="pt-1 ">
+                  <p className="text-[#3A3A3C] text-sm px-3 py-1">Current Skills</p>
+                </div>
               </div>
-              <hr className='mt-2'/>
+              <hr className="mt-2" />
               <div>
-                <div className='mt-4'>
-                  <div className='flex justify-between'>
-                    <p className='text-[#3A3A3C] text-xs font-semibold'>Java</p>
-                    <p className='text-[#3A3A3C] text-xs font-semibold'>4 years</p>
+                <div className="mt-4">
+                  <div className="flex justify-between">
+                    <p className="text-[#3A3A3C] text-xs font-semibold">Java</p>
+                    <p className="text-[#3A3A3C] text-xs font-semibold">4 years</p>
                   </div>
-                  <div className='rounded-full bg-[#EBEBF0] w-full h-1 mt-2'>
-                      <div className='rounded-full h-1  w-[50%] bg-[#114B53]'>
-
-                      </div>
+                  <div className="rounded-full bg-[#EBEBF0] w-full h-1 mt-2">
+                    <div className="rounded-full h-1  w-[50%] bg-[#114B53]"></div>
                   </div>
                 </div>
-                <div className='mt-4'>
-                  <div className='flex justify-between'>
-                    <p className='text-[#3A3A3C] text-xs font-semibold'>React JS</p>
-                    <p className='text-[#3A3A3C] text-xs font-semibold'>4 years</p>
+                <div className="mt-4">
+                  <div className="flex justify-between">
+                    <p className="text-[#3A3A3C] text-xs font-semibold">React JS</p>
+                    <p className="text-[#3A3A3C] text-xs font-semibold">4 years</p>
                   </div>
-                  <div className='rounded-full bg-[#EBEBF0] w-full h-1 mt-2'>
-                      <div className='rounded-full h-1  w-[50%] bg-[#114B53]'>
-
-                      </div>
+                  <div className="rounded-full bg-[#EBEBF0] w-full h-1 mt-2">
+                    <div className="rounded-full h-1  w-[50%] bg-[#114B53]"></div>
                   </div>
                 </div>
-                <div className='mt-4'>
-                  <div className='flex justify-between'>
-                    <p className='text-[#3A3A3C] text-xs font-semibold'>Angular </p>
-                    <p className='text-[#3A3A3C] text-xs font-semibold'>4 years</p>
+                <div className="mt-4">
+                  <div className="flex justify-between">
+                    <p className="text-[#3A3A3C] text-xs font-semibold">Angular </p>
+                    <p className="text-[#3A3A3C] text-xs font-semibold">4 years</p>
                   </div>
-                  <div className='rounded-full bg-[#EBEBF0] w-full h-1 mt-2'>
-                      <div className='rounded-full h-1  w-[50%] bg-[#114B53]'>
-
-                      </div>
+                  <div className="rounded-full bg-[#EBEBF0] w-full h-1 mt-2">
+                    <div className="rounded-full h-1  w-[50%] bg-[#114B53]"></div>
                   </div>
                 </div>
               </div>
 
-              <div className='flex gap-2 items-center justify-center mt-5' >
-              <SlArrowDown size={15}/>
+              <div className="flex gap-2 items-center justify-center mt-5">
+                <SlArrowDown size={15} />
 
-                <p className='text-sm text-[#114B53] font-semibold'>View all 20</p>
+                <p className="text-sm text-[#114B53] font-semibold">View all 20</p>
               </div>
             </div>
           </div>
@@ -315,219 +312,19 @@ const Profile: React.FC = () => {
             </div>
 
             {/* Resume Upload Section  */}
-            <div className="bg-white w-full p-5 rounded-lg mt-3  ">
-              <div className="p-3 flex justify-between items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:bg-[#F0F1F3] pb-5">
-                <h1 className="text-2xl font-semibold">Resume</h1>
-
-                <div className="flex justify-center items-center space-x-3">
-                  <p className="text-xs text-[#A4A5B8]">Pdf, Doc, DocX (2MB)</p>
-
-                  <label
-                    onClick={()=>setIsUploadResumeOpen(true)}
-                    className={` flex justify-center items-center w-36 h-8 space-x-2    rounded-full cursor-pointer border-2 border-[#104B53]   `}
-                  >
-                    <BsUpload size={13} color="#104B53" />
-                    <span className={`text-xs font-semibold text-[#104B53]   `}>Upload Resume</span>
-                    
-                  </label>
-                </div>
-              </div>
-
-              <div className="w-full h-full flex space-x-3 justify-center items-center p-3 ">
-                <div className="flex  h-[60px] justify-between items-center w-full border border-black overflow-hidden rounded-lg ">
-                  <div className=" w-[100px] h-full flex justify-center items-center bg-[#E3EDFF]">
-                    <p className="text-sm font-semibold text-[#1F4AF1] ">PDF</p>
-                  </div>
-
-                  <div className="flex flex-col space-y-1">
-                    <h1 className="text-sm font-semibold">Resume 1</h1>
-                    <p className="text-xs text-[#6B7588]">Default Resume</p>
-                  </div>
-
-                  <div className="flex justify-center items-center space-x-4 pr-4">
-                    <p className="text-xs text-[#104B53]">Preview</p>
-                    <MdDeleteOutline size={20} />
-                  </div>
-                </div>
-
-                <div className="flex  h-[60px] justify-between items-center w-full border border-[#D1D1D1] rounded-lg ">
-                  <div className=" w-[100px] h-full flex justify-center items-center bg-[#E3EDFF]">
-                    <p className="text-sm font-semibold text-[#1F4AF1] ">PDF</p>
-                  </div>
-
-                  <div className="flex flex-col space-y-1">
-                    <h1 className="text-sm font-semibold">Resume 1</h1>
-                    <p className="text-xs text-[#6B7588]">Default Resume</p>
-                  </div>
-
-                  <div className="flex justify-center items-center space-x-4 pr-4">
-                    <p className="text-xs text-[#104B53]">Preview</p>
-                    <MdDeleteOutline size={20} />
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ResumeUpload setIsUploadResumeOpen={setIsUploadResumeOpen} />
 
             {/* Summery  */}
 
-            <div className="bg-white w-full p-4 rounded-lg mt-3">
-              <div className=" flex flex-col space-y-3">
-                <h1 className="text-lg font-semibold">Summery</h1>
-                <div className="border p-3 border-[#EBEBF0] rounded-lg">
-                  <div
-                    className="flex justify-end items-center space-x-2"
-                    onClick={() => {
-                      setSummaryPopup(true);
-                    }}
-                  >
-                    <FaEdit size={14} color="#104B53" />
-                    <p className="text-[#104B53] text-xs">Edit</p>
-                  </div>
-                  <p className="text-[#535354] text-justify text-sm">
-                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                    Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                    unknown printer took a galley of type and scrambled it to make a type specimen
-                    book. It has survived not only five centuries, but also the leap into electronic
-                    typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                    with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                    recently with desktop publishing software like Aldus PageMaker including
-                    versions of Lorem Ipsum.
-                  </p>
-                </div>
-              </div>
-            </div>
+            <Summary setSummaryPopup={setSummaryPopup} />
 
             {/* Experience  */}
 
-            <div className="bg-white w-full p-5 rounded-lg mt-3">
-              <div className=" flex flex-col space-y-3">
-                <div className="flex justify-between items-center">
-                  <h1 className="text-lg font-semibold">
-                    Work Experience (Total 4 years 4 months of experience)
-                  </h1>
-
-                  <div
-                    className="flex justify-end items-center space-x-2"
-                    onClick={() => {
-                      setExperiencePopup(true);
-                    }}
-                  >
-                    <BiPlus size={14} color="#104B53" />
-                    <p className="text-[#104B53] text-xs font-semibold">Add</p>
-                  </div>
-                </div>
-
-                <div className="border p-7 border-[#EBEBF0] rounded-lg">
-                  <div className="flex justify-end items-center space-x-4">
-                    <div
-                      className="flex items-center  "
-                      onClick={() => {
-                        setExperiencePopup(true);
-                      }}
-                    >
-                      <FaEdit color="#104B53" size={14} />
-                      <p className="text-[#104B53] text-xs">Edit</p>
-                    </div>
-
-                    <div className="flex items-center ">
-                      <MdDeleteOutline color="#104B53" size={14} />
-                      <p className="text-[#104B53] text-xs">Delete</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col space-y-5 ">
-                    <div className="flex flex-col space-y-4">
-                      <h1 className="text-sm font-semibold">Java Fullstack</h1>
-                      <p className="text-[#6B7588] text-xs">xyz Company - Texas, United States</p>
-                      <div className="flex space-x-3 flex-wrap  items-center w-full">
-                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-3 rounded-full font-semibold text-xs">
-                          Health Care
-                        </p>
-                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-3 rounded-full font-semibold text-xs">
-                          Full Time
-                        </p>
-                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-3 rounded-full font-semibold text-xs">
-                          12/2022 - Present
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col space-y-4 ">
-                      <h1 className="text-sm font-[600] ">Job summery</h1>
-                      <ul className="flex flex-col space-y-3">
-                        <li className="text-[#3A3A3C] text-sm text-justify">
-                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                          Lorem Ipsum has been the industry's standard dummy text ever since the
-                          1500s, when an unknown printer took a galley of type and scrambled it to
-                          make a type specimen book.{' '}
-                        </li>
-
-                        <li className="text-[#3A3A3C] text-sm text-justify">
-                          It has survived not only five centuries, but also the leap into electronic
-                          typesetting, remaining essentially unchanged. It was popularised in the
-                          1960s with the release of Letraset sheets containing Lorem Ipsum passages,
-                          and more recently with desktop publishing software like Aldus PageMaker
-                          including versions of Lorem Ipsum.
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <WorkExperience setExperiencePopup={setExperiencePopup} />
 
             {/* Education  */}
 
-            <div className="bg-white w-full p-5 rounded-lg mt-3">
-              <div className=" flex flex-col space-y-3">
-                <div className="flex justify-between items-center">
-                  <h1 className="text-lg font-semibold">Education</h1>
-
-                  <div
-                    className="flex justify-end items-center space-x-2"
-                    onClick={() => {
-                      setEducationPopup(true);
-                    }}
-                  >
-                    <BiPlus size={14} color="#104B53" />
-                    <p className="text-[#104B53] font-semibold">Add</p>
-                  </div>
-                </div>
-
-                <div className="border p-7 border-[#EBEBF0] rounded-lg">
-                  <div className="flex justify-end items-center space-x-4">
-                    <div
-                      className="flex items-center  "
-                      onClick={() => {
-                        setEducationPopup(true);
-                      }}
-                    >
-                      <FaEdit color="#104B53" size={14} />
-                      <p className="text-[#104B53] text-xs">Edit</p>
-                    </div>
-
-                    <div className="flex items-center ">
-                      <MdDeleteOutline size={14} color="#104B53" />
-                      <p className="text-[#104B53] text-xs">Delete</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <div className="flex flex-col space-y-4">
-                      <h1 className="text-sm font-semibold">BE Computer Science</h1>
-                      <p className="text-[#6B7588] text-xs">xyz Collage- Texas, United State</p>
-                      <div className="flex space-x-3 items-center">
-                        <p className="text-[#7C8596] bg-[#F2F2F5] p-2  rounded-full font-semibold text-xs">
-                          07/2016 - 06/2020
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div></div>
-                </div>
-              </div>
-            </div>
+            <Education setEducationPopup={setEducationPopup}/>
 
             {/* Certification  */}
 
@@ -620,12 +417,11 @@ const Profile: React.FC = () => {
       {aboutusPop && <AboutMe setAboutPop={setAboutusPop} />}
       {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} />}
       {skillsPopup && <Skills setSkillsPopup={setSkillsPopup} />}
-      {summaryPopup && <Summary setSummaryPopup={setSummaryPopup} />}
+      {summaryPopup && <SummaryEdit setSummaryPopup={setSummaryPopup} />}
       {experiencePopup && <Experience setExperiencePopup={setExperiencePopup} />}
-      {educationPopup && <Education setEducationPopup={setEducationPopup} />}
+      {educationPopup && <EducationEdit setEducationPopup={setEducationPopup} />}
       {certificationPopup && <Certification setCerticationPopup={setCertificationPopup} />}
       {achievementPopup && <Achievement setAchievementPopup={setAchievementPopup} />}
-
 
       <div
         className={`w-full h-full flex justify-center items-center fixed inset-0 transition-all duration-500 ${
@@ -643,16 +439,20 @@ const Profile: React.FC = () => {
             </button>
           </div>
 
-          <div className='flex flex-col items-center justify-center'>
-            <p className='text-sm text-center text-[#6B7588]'>Once the hiring partner accept the invite it will show in the 
-            co-hiring page  </p>
+          <div className="flex flex-col items-center justify-center">
+            <p className="text-sm text-center text-[#6B7588]">
+              Once the hiring partner accept the invite it will show in the co-hiring page{' '}
+            </p>
 
-            <div className='flex justify-between items-center w-full p-3 gap-5'>
-                 <p  className='text-xs w-full h-7 border border-[#104B53] rounded-full flex justify-center items-center text-[#104B53] font-[500]'>Just Upload</p>
-                 <p  className='w-full h-7 bg-[#E9F358] text-xs text-[#104B53] rounded-full flex justify-center items-center'>Upload and Overwrite</p>
+            <div className="flex justify-between items-center w-full p-3 gap-5">
+              <p className="text-xs w-full h-7 border border-[#104B53] rounded-full flex justify-center items-center text-[#104B53] font-[500]">
+                Just Upload
+              </p>
+              <p className="w-full h-7 bg-[#E9F358] text-xs text-[#104B53] rounded-full flex justify-center items-center">
+                Upload and Overwrite
+              </p>
             </div>
           </div>
-           
         </div>
       </div>
     </div>
