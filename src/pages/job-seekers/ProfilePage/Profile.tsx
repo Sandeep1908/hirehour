@@ -8,8 +8,7 @@ import { MdOutlineEmail } from 'react-icons/md';
 import { TiTick } from 'react-icons/ti';
 import { TbPhoneCalling } from 'react-icons/tb';
 import { PiSuitcase } from 'react-icons/pi';
-import { BsUpload } from 'react-icons/bs';
-import { MdDeleteOutline } from 'react-icons/md';
+ 
 
 import { BiPlus } from 'react-icons/bi';
 import publicEye from '../../../assets/icon/public.png';
@@ -29,6 +28,8 @@ import ResumeUpload from './components/ResumeUploads';
 import Summary from './components/Summary';
 import WorkExperience from './components/WorkExperience';
 import Education from './components/Education';
+import { useQuery } from '@tanstack/react-query';
+import { fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
 
 const Profile: React.FC = () => {
   const [profilePopup, setProfilePopup] = useState<boolean>(false);
@@ -43,6 +44,16 @@ const Profile: React.FC = () => {
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [isUploadResumeOpen, setIsUploadResumeOpen] = useState(false);
 
+  //Edit states
+  
+  const [experienceId,setExperienceId]=useState<number | null>(null)
+
+  const { data: userDetails } = useQuery({
+    queryKey: ['userDetails'],
+    queryFn: fetchUserDetails,
+  });
+  
+
   return (
     <div className="w-full h-full relative ">
       <div className="w-full max-w-[1280px] m-auto p-5 grid grid-cols-1 ">
@@ -56,7 +67,7 @@ const Profile: React.FC = () => {
           <div className="w-[450px] h-full pt-10     ">
             <div className="bg-white w-full mb-3   rounded-lg md:hidden  ">
               <div className="p-3">
-                <h1 className="text-lg font-semibold">Hello John,</h1>
+                <h1 className="text-lg font-semibold">Hello {userDetails?.user?.firstName},</h1>
                 <p className="text-[#6B7588] text-sm">
                   Recruiters are looking for Candidates like you, Complete your profile to Stand out
                 </p>
@@ -125,15 +136,16 @@ const Profile: React.FC = () => {
 
               <div className="w-full flex flex-col  space-y-3 justify-center items-center p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:mb-3 before:bg-[#EFF1F3]">
                 <div className="w-16 h-16 bg-[#CBFFFC] rounded-full flex justify-center items-center">
-                  <p className="text-xl text-[#104B53] font-semibold ">J</p>
+                  {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.chatAt(0)}
+                
                 </div>
 
                 <div className="flex flex-col justify-center items-center">
-                  <h1 className="text-lg font-semibold">John S Methew</h1>
+                  <h1 className="text-lg font-semibold">{userDetails?.user?.firstName}</h1>
                   <div className="flex justify-center items-center space-x-2">
                     <IoLocationOutline />
 
-                    <p className="text-xs">Allen, Texas, US</p>
+                    <p className="text-xs">{userDetails?.location}</p>
                   </div>
                 </div>
 
@@ -278,7 +290,7 @@ const Profile: React.FC = () => {
             {/* Hello Section  */}
             <div className="bg-white w-full p-3 rounded-lg  ">
               <div className="p-2">
-                <h1 className="text-2xl font-semibold">Hello John,</h1>
+                <h1 className="text-2xl font-semibold">Hello {userDetails?.user?.firstName},</h1>
                 <p className="text-[#6B7588] text-xs">
                   Recruiters are looking for Candidates like you, Complete your profile to Stand out
                 </p>
@@ -316,11 +328,11 @@ const Profile: React.FC = () => {
 
             {/* Summery  */}
 
-            <Summary setSummaryPopup={setSummaryPopup} />
+            <Summary setSummaryPopup={setSummaryPopup} summary={userDetails?.summary} />
 
             {/* Experience  */}
 
-            <WorkExperience setExperiencePopup={setExperiencePopup} />
+            <WorkExperience setExperiencePopup={setExperiencePopup} setExperienceId={setExperienceId} />
 
             {/* Education  */}
 
@@ -418,7 +430,7 @@ const Profile: React.FC = () => {
       {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} />}
       {skillsPopup && <Skills setSkillsPopup={setSkillsPopup} />}
       {summaryPopup && <SummaryEdit setSummaryPopup={setSummaryPopup} />}
-      {experiencePopup && <Experience setExperiencePopup={setExperiencePopup} />}
+      {experiencePopup && <Experience setExperiencePopup={setExperiencePopup} expeirenceId={experienceId} />}
       {educationPopup && <EducationEdit setEducationPopup={setEducationPopup} />}
       {certificationPopup && <Certification setCerticationPopup={setCertificationPopup} />}
       {achievementPopup && <Achievement setAchievementPopup={setAchievementPopup} />}

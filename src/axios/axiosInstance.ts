@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create an Axios instance
 const axiosInstance = axios.create({
-  baseURL: 'https://backend-test.topequator.ai',
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },

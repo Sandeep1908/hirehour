@@ -31,10 +31,13 @@ const Header: React.FC = () => {
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const params = useLocation().pathname;
-
+  
+ 
   const { data: userDetails } = useQuery({
     queryKey: ['userDetails'],
     queryFn: fetchUserDetails,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+    retry: 1, // Retry once on failure
   });
 
   const handlNavBar = () => {
@@ -197,7 +200,7 @@ const Header: React.FC = () => {
             >
               <div className="flex justify-center items-center space-x-3">
                 <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
-                  {userDetails?.user?.firstName.charAt(0)}
+                {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full rounded-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.chatAt(0)}
                 </p>
                 <p className="text-sm">{userDetails?.user?.firstName}</p>
               </div>

@@ -4,6 +4,7 @@ import { MdDeleteOutline } from "react-icons/md";
 import { useQuery, useQueryClient,useMutation } from "@tanstack/react-query";
 import { fetchUserDetails } from "../../../../utils/jobseekers/getUserDetails";
 import axiosInstance from "../../../../axios/axiosInstance";
+import { toast } from "react-toastify";
 
 
 type EducationProps={
@@ -29,10 +30,10 @@ const Education:React.FC<EducationProps>=({setEducationPopup})=>{
         },
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: ['userDetails'] });
-          alert('Education Deleted Susseccfully!');
+          toast.success('Education Deleted Susseccfully!');
         },
         onError: () => {
-          alert('Failed to delete experience. Please try again.');
+          toast.error('Failed to delete experience. Please try again.');
         },
       });
       const handleDeleteEducation = (id: number) => {

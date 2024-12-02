@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
 import {
@@ -134,8 +135,23 @@ const router = createBrowserRouter(
       />
 
       {/* Myjobs  */}
-      <Route path="/myjobs" element={<MyJobs />} />
-      <Route path="/myjobs-saved" element={<SavedJobs />} />
+      <Route
+        path="/myjobs"
+        element={
+          <ProtectedRoute>
+            {' '}
+            <MyJobs />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/myjobs-saved"
+        element={
+          <ProtectedRoute>
+            <SavedJobs />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/myjobs-application-started" element={<ApplicationStarted />} />
 
       <Route path="/myjobs-interviewing" element={<Interviewing />} />
@@ -154,7 +170,7 @@ const router = createBrowserRouter(
       <Route path="/privacy-setting" element={<PrivacySetting />} />
 
       {/* Pofile Page  */}
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       {/* Job preference  */}
       <Route path="/job-preference" element={<JobPreference />} />
       <Route path="/signup" element={<Signup />} />

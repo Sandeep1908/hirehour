@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link,  useLocation, useNavigate } from 'react-router-dom';
 import ForgetPassword from '../../../components/job-seekers/modals/authModals/ForgetPassword';
 import NewPassword from '../../../components/job-seekers/modals/authModals/NewPassword';
 import Verification from '../../../components/job-seekers/modals/authModals/Verification';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '../../../axios/axiosInstance';
 import {  z } from 'zod';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 
 
@@ -46,6 +48,7 @@ const Signin: React.FC = () => {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [validateErrors, setValidateErrors] = useState<boolean>(false);
 
+  const location =useLocation()
   const navigate = useNavigate();
 
   const mutation = useMutation({
@@ -55,12 +58,14 @@ const Signin: React.FC = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log(" login",data);
-      alert("Signed in successfully");
+      toast.success('Logged In Successfull');
       localStorage.setItem('topequatortoken',data?.token)
-      navigate("/");
+      const redirectTo = location.state?.from?.pathname || '/';
+      navigate(redirectTo);
     },
-    onError: () => {
+    onError: (error) => {
+      const axiosError = error as AxiosError<{message:string}>;
+      toast.error(axiosError?.response?.data?.message)
       localStorage.removeItem("topequatortoken");
       setValidateErrors(true)
       setEmail("")

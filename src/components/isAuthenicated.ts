@@ -6,6 +6,7 @@ const isAuthenticated = () => {
 
   try {
     const { exp } = jwtDecode(token);  
+     
     if (exp) {
       if (Date.now() >= exp * 1000) {
         localStorage.removeItem('topequatortoken');  

@@ -11,6 +11,8 @@ import Domains from '../../../../utils/Domains';
 import JobTypes from '../../../../utils/JobTypes';
 import LocationSearch from '../../../../utils/LocationSearch';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 type WorkExperience = {
   companydetails: string;
@@ -29,14 +31,9 @@ type EducationDetails = {
   durationEnd: string;
   netMarks: number;
   outOf: number;
+  major:string
   isCurrentlyAttending: boolean;
 };
-
-type SummaryDetails={
-  summary:string
-}
-
- 
 
 const AdditionalInfo: React.FC = () => {
   const navigate = useNavigate();
@@ -65,10 +62,11 @@ const AdditionalInfo: React.FC = () => {
     durationEnd: '',
     isCurrentlyAttending: false,
     netMarks: 100,
+    major:'',
     outOf: 100,
   });
 
-  const [summary,setSummery]=useState<SummaryDetails>({summary:''})
+  const [summary, setSummery] = useState<SummaryDetails>({ summary: '' });
 
   //Work Experience
   const mutation = useMutation({
@@ -76,11 +74,12 @@ const AdditionalInfo: React.FC = () => {
       const response = await axiosInstance.post('/api/candidate/details/experience', newExperience);
       return response.data;
     },
-    onSuccess:(data)=>{
-      console.log("experience data",data);
+    onSuccess: (data) => {
+      console.log('experience data', data);
     },
-    onError: () => {
-      alert('Failed to add experience. Please try again.');
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
     },
   });
 
@@ -102,25 +101,27 @@ const AdditionalInfo: React.FC = () => {
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("education data",data);
+      console.log('education data', data);
     },
-    onError: () => {
-      alert('Failed to add education. Please try again.');
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
     },
   });
 
   //summery
 
   const summeryMuation = useMutation({
-    mutationFn: async (summery:SummaryDetails) => {
+    mutationFn: async (summery: SummaryDetails) => {
       const response = await axiosInstance.post('/api/candidate/details/update-details', summery);
       return response.data;
     },
     onSuccess: (data) => {
-      console.log("summery data",data);
+      console.log('summery data', data);
     },
-    onError: () => {
-      alert('Failed to add education. Please try again.');
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
     },
   });
 
@@ -152,7 +153,7 @@ const AdditionalInfo: React.FC = () => {
       await Promise.all([
         mutation.mutateAsync(expeirenceData),
         educationMutation.mutateAsync(educationData),
-        summeryMuation.mutateAsync(summary)
+        summeryMuation.mutateAsync(summary),
       ]);
       navigate('/review-form');
     } catch (error) {
@@ -210,12 +211,12 @@ const AdditionalInfo: React.FC = () => {
           <div className=" flex flex-col space-y-3">
             <h1 className="text-lg font-semibold">Summery</h1>
             <div className="  border-[#EBEBF0] rounded-lg">
-            <textarea
-                    name="descriptionOfExperience"
-                    className="text-[#535354] border p-2 text-sm min-h-32 w-full"
-                    placeholder='Write you profile Summery'
-                    onChange={(e)=>setSummery({summary:e.target.value})}
-                  ></textarea>
+              <textarea
+                name="descriptionOfExperience"
+                className="text-[#535354] border p-2 text-sm min-h-32 w-full"
+                placeholder="Write you profile Summery"
+                onChange={(e) => setSummery({ summary: e.target.value })}
+              ></textarea>
             </div>
           </div>
 
@@ -366,7 +367,7 @@ const AdditionalInfo: React.FC = () => {
                       setExperience((prev) => ({
                         ...prev,
                         presentEmployer: checked,
-                        durationEnd: checked ? new Date().toISOString() : '',
+                        durationEnd: checked ? new Date().toISOString().split('T')[0] : '',
                       }));
                     }}
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
@@ -387,12 +388,12 @@ const AdditionalInfo: React.FC = () => {
                 <LocationSearch setSelectedLocation={setSelectedLocation} />
               </div>
 
-              <div className=" flex flex-col space-y-3">
+              <div className=" flex flex-col space-y-3 ">
                 <h1 className="text-lg font-semibold"> Work Summery</h1>
                 <div className="border  border-[#EBEBF0] rounded-lg">
                   <textarea
                     name="descriptionOfExperience"
-                    className="text-[#535354] text-sm min-h-44 w-full"
+                    className="text-[#535354] text-sm min-h-44 w-full p-3"
                     onChange={handleChange}
                     value={experience.descriptionOfExperience}
                   ></textarea>
@@ -469,7 +470,10 @@ const AdditionalInfo: React.FC = () => {
 
                   <input
                     type="text"
+                    name='major'
                     placeholder="Major"
+                    value={education.major}
+                    onChange={handleEducationChange}
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
@@ -510,7 +514,7 @@ const AdditionalInfo: React.FC = () => {
                     disabled={education.isCurrentlyAttending}
                     value={
                       education.isCurrentlyAttending
-                        ? new Date().toISOString()
+                        ? new Date().toISOString().split('T')[0]
                         : education.durationEnd
                     }
                     onChange={handleEducationChange}
@@ -532,13 +536,13 @@ const AdditionalInfo: React.FC = () => {
                       setEducation((prev) => ({
                         ...prev,
                         isCurrentlyAttending: checked,
-                        durationEnd: checked ? new Date().toISOString() : '',
+                        durationEnd: checked ? new Date().toISOString().split('T')[0] : '',
                       }));
                     }}
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
-                  <p>I am currently work here</p>
+                  <p>I am currently studying here</p>
                 </div>
               </div>
 

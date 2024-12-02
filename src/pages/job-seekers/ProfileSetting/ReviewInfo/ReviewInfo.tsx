@@ -9,6 +9,7 @@ import axiosInstance from '../../../../axios/axiosInstance';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { fetchUserDetails, fetchDomains,fetchRoleTypes,fetchRoles } from '../../../../utils/jobseekers/getUserDetails';
+import { toast } from 'react-toastify';
  
 
 
@@ -58,11 +59,11 @@ const ReviewInfo: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userDetails'] });
-      alert('Experience Deleted Susseccfully successfully!');
+      toast.success('Experience Deleted Successfully!');
       navigate('/review-form');
     },
     onError: () => {
-      alert('Failed to delete experience. Please try again.');
+      toast.error('Failed to delete experience. Please try again.');
     },
   });
   const handleDeleteExperience = (id: number) => {
@@ -79,11 +80,11 @@ const ReviewInfo: React.FC = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['userDetails'] });
-      alert('Education Deleted Susseccfully!');
+      toast.success('Education Deleted Successfully!');
       navigate('/review-form');
     },
     onError: () => {
-      alert('Failed to delete experience. Please try again.');
+      toast.error('Failed to delete experience. Please try again.');
     },
   });
   const handleDeleteEducation = (id: number) => {
@@ -191,14 +192,7 @@ const ReviewInfo: React.FC = () => {
                 <p className="text-[#104B53] text-xs">Edit</p>
               </div>
               <p className="text-[#535354] text-justify text-sm">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                with desktop publishing software like Aldus PageMaker including versions of Lorem
-                Ipsum.
+                {userDetails?.summary}
               </p>
             </div>
           </div>
@@ -359,7 +353,7 @@ const ReviewInfo: React.FC = () => {
                 Back
               </Link>
               <Link
-                to={''}
+                to={'/searchjob'}
                 className="flex justify-center items-center w-full md:w-36 h-8  rounded-full cursor-pointer bg-[#E9F358] "
               >
                 Submit

@@ -5,6 +5,8 @@ import apple_logo from '../../../assets/apple.svg';
 import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '../../../axios/axiosInstance';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -42,12 +44,17 @@ interface NewUser {
      return response.data;
    },
    onSuccess: () => {
-     alert("Signup successful!");
+     toast.success('User Regiester Successfully')
      navigate("/signin");
    },
-   onError: () => {
-   //   console.error("Signup failed", error);
-     alert("Signup failed, please try again.");
+   onError: (error) => {
+    const axiosError = error as AxiosError<{message:string}>;
+    toast.error(axiosError?.response?.data?.message)
+    setEmail('')
+    setFirstName('')
+    setLastName('')
+    setPhoneNumber('')
+    setPassword('')
    },
  });
  

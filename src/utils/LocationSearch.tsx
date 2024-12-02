@@ -11,10 +11,10 @@ type OptionType = {
 
 type LocationProps = {
   setSelectedLocation: (e: LocationValue | null) => void;
+  value?:string
 };
 
-
-type Feature ={
+type Feature = {
   properties: {
     name: string;
     city: string;
@@ -24,7 +24,7 @@ type Feature ={
   geometry: {
     coordinates: [number, number]; // Longitude, Latitude
   };
-}
+};
 
 const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
   // State definitions
@@ -52,19 +52,18 @@ const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
       });
 
       if (response.data && response.data.features.length > 0) {
-        
-        const formattedOptions: OptionType[] = response.data.features.map((feature:Feature) => ({
+        const formattedOptions: OptionType[] = response.data.features.map((feature: Feature) => ({
           value: {
-            place: feature.properties.name || 'Unknown',
-            city: feature.properties.city || 'N/A',
-            state: feature.properties.state || 'N/A',
-            country: feature.properties.country || 'N/A',
+            // place: feature.properties.name || 'Unknown',
+            city: feature.properties.city || '',
+            state: feature.properties.state || '',
+            country: feature.properties.country || '',
             latitude: feature.geometry.coordinates[1],
             longitude: feature.geometry.coordinates[0],
           },
-          label: `${feature.properties.name || 'Unknown'}, ${
-            feature.properties.city || 'N/A'
-          }, ${feature.properties.state || 'N/A'}, ${feature.properties.country || 'N/A'}`,
+          label: `  ${feature.properties.city || ''}${
+            feature.properties.city ? ',':  ''
+          } ${feature.properties.state || ''}${feature.properties.state?',': ''} ${feature.properties.country || ''}`
         }));
 
         setOptions(formattedOptions);
@@ -94,7 +93,6 @@ const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
 
   return (
     <div className="w-full">
-       
       <Select
         options={options}
         onInputChange={handleInputChange}
@@ -104,6 +102,7 @@ const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
         noOptionsMessage={() => (error ? error : 'Start typing to search')}
         className="react-select-container"
         classNamePrefix="react-select"
+        
       />
     </div>
   );

@@ -9,6 +9,8 @@ import LocationSearch from '../../../../utils/LocationSearch.tsx';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '../../../../axios/axiosInstance';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation.ts';
+import { toast } from 'react-toastify';
+import  { AxiosError } from 'axios';
 
 type ResumeType = {
   id: number;
@@ -41,16 +43,13 @@ const UploadResume: React.FC = () => {
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const queryClient = useQueryClient();
 
-  // Modal States
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
   const [selectedLocation, setSelectedLocation] = useState<LocationValue | null>(null);
   const [isVisaSponsored, setIsVisaSponsored] = useState<boolean>(false);
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+   
 
   const navigate = useNavigate();
 
-  //option of sponsorhip
+  //option of sponsorship
   const visaSponsorshipOptions = [
     { value: true, label: 'Required' },
     { value: false, label: 'Not Required' },
@@ -98,41 +97,50 @@ const UploadResume: React.FC = () => {
     onSuccess: () => {
       setUploadProgress(null);
       queryClient.invalidateQueries({ queryKey: ['resumes'] });
-      alert('Resume uploaded successfully!');
+      toast.success('Resume uploaded successfully!')
     },
     onError: (error) => {
-      console.log('eror resume', error);
+      const axiosError = error as AxiosError<{message:string}>
       setUploadProgress(null);
       localStorage.removeItem('filenameres');
       localStorage.removeItem('filesizeres');
-      alert('Failed to upload resume. Please try again.');
+      toast.error(axiosError?.response?.data?.message);
+    
     },
   });
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-    if (file) {
-      if (file.size > 2 * 1024 * 1024) {
-        alert('File size must be less than 2MB');
-        return;
-      }
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('description', description);
-      localStorage.setItem('filenameres', file?.name);
-      localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
-      uploadResumeMutation.mutate(formData);
+    if (!file) return;
+  
+    const validFileTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (!validFileTypes.includes(file.type)) {
+      toast.warning('Only PDF and DOCX files are allowed');
+      return;
     }
+  
+    if (file.size > 2 * 1024 * 1024) {
+      toast.warning('File size must be less than 2MB');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('description', description);
+    localStorage.setItem('filenameres', file.name);
+    localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
+    uploadResumeMutation.mutate(formData);
   };
+  
 
   //modal user form submit
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = {
-      firstName: firstName,
-      lastName: lastName,
-      phoneNumber: phoneNumber,
+      firstName: userDetails?.user?.firstName,
+      lastName: userDetails?.user?.lastName,
+      phoneNumber: userDetails?.user?.phoneNumber,
       needVisaSponsorship: isVisaSponsored,
     };
 
@@ -157,13 +165,14 @@ const UploadResume: React.FC = () => {
       return response.data;
     },
     onSuccess: () => {
-      alert('Contact information saved successfully!');
+      toast.success('Contact information saved successfully!');
       queryClient.invalidateQueries({ queryKey: ['userDetails'] });  
       setIsContinue(false);
       navigate('/additional-information');
     },
-    onError: () => {
-      alert('Failed to save contact information. Please try again.');
+    onError: (error) => {
+      const axiosError=error as AxiosError<{message:string}>
+      toast.error(axiosError?.response?.data?.message);
     },
   });
 
@@ -173,22 +182,25 @@ const UploadResume: React.FC = () => {
       const response = await axiosInstance.post('/api/candidate/details/update-details', formData);
       return response.data;
     },
-    onSuccess: (data) => {
-      console.log('Locaiton', data);
-      queryClient.invalidateQueries({ queryKey: ['location'] }); // Update related data
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['location'] });  
       setIsContinue(false);
     },
-    onError: () => {
-      alert('Failed to save location information. Please try again.');
+    onError: (error) => {
+      const axiosError=error as AxiosError<{message:string}>
+      toast.error(axiosError?.response?.data?.message);
     },
   });
+
+
+  
 
   useEffect(() => {
     const fileName = localStorage.getItem('filenameres');
     const fileSize = localStorage.getItem('filesizeres');
     setFileName(fileName);
     setFileSize(fileSize);
-  }, []);
+  }, [resumes]);
 
   return (
     <div className="w-full h-[calc(100vh-50px)] pb-20 bg-[#F6F6F8]">
@@ -241,7 +253,7 @@ const UploadResume: React.FC = () => {
         <div className="flex flex-col space-y-2">
           <h1 className="text-sm">Upload Your Resume</h1>
           <p className="text-xs text-[#6B7588]">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
           </p>
         </div>
 
@@ -280,7 +292,10 @@ const UploadResume: React.FC = () => {
 
                     <div className="flex flex-col space-y-3 w-full">
                       <p className="text-xs">
-                        <a download target="_blank" href={`${latestResume?.resumeLink}` || ''}>
+                        <a download="User"  
+  target="_blank"
+  href={latestResume?.resumeLink || ""}
+  rel="noopener noreferrer">
                           {' '}
                           {fileName} {fileSize} MB
                         </a>
@@ -351,8 +366,8 @@ const UploadResume: React.FC = () => {
                 <input
                   type="text"
                   placeholder="Enter your first name"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  value={userDetails?.user?.firstName}
+                  disabled
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
@@ -370,8 +385,9 @@ const UploadResume: React.FC = () => {
                 <input
                   type="text"
                   placeholder="Enter your last name"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  value={userDetails?.user?.lastName}
+                  disabled
+                   
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
@@ -389,8 +405,9 @@ const UploadResume: React.FC = () => {
 
                 <input
                   type="text"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  value={userDetails?.user?.phoneNumber}
+                  disabled
+                   
                   placeholder="Enter your phone no"
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />

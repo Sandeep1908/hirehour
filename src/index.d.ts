@@ -84,3 +84,8 @@ interface WorkExperienceDetail {
   createdAt: string;
   updatedAt: string;
 }
+
+
+type SummaryDetails={
+  summary:string
+}
