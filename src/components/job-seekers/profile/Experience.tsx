@@ -4,6 +4,7 @@ import { IoMdClose } from 'react-icons/io'
 
 type AddExperience ={
    setExperiencePopup:(agr:boolean) => void
+   expeirenceId:number | null
 }
 
 const Experience:React.FC<AddExperience> = ({setExperiencePopup}) => {

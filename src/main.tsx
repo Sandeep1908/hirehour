@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
+import 'react-toastify/dist/ReactToastify.css';
 import './index.css';
 
 import {
@@ -15,8 +16,15 @@ import { HeaderContextProvider } from './context/HeaderContext.tsx';
 //Chart js
 import 'chart.js/auto';
 
- 
- import { Tooltip,Legend,BarElement,CategoryScale,LinearScale,Chart as ChartJS,ArcElement } from 'chart.js/auto';
+import {
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Chart as ChartJS,
+  ArcElement,
+} from 'chart.js/auto';
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
@@ -82,21 +90,68 @@ import RTRProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/R
 import RTRCompanyProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRCompanyProfile.tsx';
 import RTRPrivacySetting from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
 import VerificationMainTemp from './pages/emails/Verification.tsx';
+import ProtectedRoute from './components/ProtectedRoute.tsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route path="/" element={<Home />} />
 
-      <Route path="/searchjob" element={<JobDescription />} />
+      <Route
+        path="/searchjob"
+        element={
+          <ProtectedRoute>
+            <JobDescription />
+          </ProtectedRoute>
+        }
+      />
 
       {/* Uploading resumes  */}
-      <Route path="/upload-resume" element={<UploadResume />} />
-      <Route path="/additional-information" element={<AdditionalInfo />} />
-      <Route path="/review-form" element={<ReviewInfo />} />
+      <Route
+        path="/upload-resume"
+        element={
+          <ProtectedRoute>
+            <UploadResume />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/additional-information"
+        element={
+          <ProtectedRoute>
+            <AdditionalInfo />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/review-form"
+        element={
+          <ProtectedRoute>
+            <ReviewInfo />
+          </ProtectedRoute>
+        }
+      />
+
       {/* Myjobs  */}
-      <Route path="/myjobs" element={<MyJobs />} />
-      <Route path="/myjobs-saved" element={<SavedJobs />} />
+      <Route
+        path="/myjobs"
+        element={
+          <ProtectedRoute>
+            {' '}
+            <MyJobs />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/myjobs-saved"
+        element={
+          <ProtectedRoute>
+            <SavedJobs />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/myjobs-application-started" element={<ApplicationStarted />} />
 
       <Route path="/myjobs-interviewing" element={<Interviewing />} />
@@ -114,10 +169,8 @@ const router = createBrowserRouter(
       <Route path="/profile-visibility" element={<ProfileVisibility />} />
       <Route path="/privacy-setting" element={<PrivacySetting />} />
 
-
-
       {/* Pofile Page  */}
-      <Route path="/profile" element={<Profile />} />
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       {/* Job preference  */}
       <Route path="/job-preference" element={<JobPreference />} />
       <Route path="/signup" element={<Signup />} />
@@ -140,20 +193,17 @@ const router = createBrowserRouter(
       <Route path="/job-poster/company-profile-info" element={<CompanyProfileSettings />} />
       <Route path="/job-poster/privacy-setting" element={<PrivacySettingJP />} />
 
-   
       <Route path="/job-poster/signup" element={<SignupPoster />} />
       <Route path="/job-poster/signin" element={<SigninPoster />} />
 
       <Route path="/job-poster/signup" element={<SignupPoster />} />
       <Route path="/job-poster/signin" element={<SigninPoster />} />
 
-
-     {/* ****************************** Dashboard rtr ***************************** */}
+      {/* ****************************** Dashboard rtr ***************************** */}
       <Route path="/dashboard-rtr" element={<DashBoardRTR />} />
       <Route path="/dashboard-rtr/profile-setting" element={<RTRProfile />} />
       <Route path="/dashboard-rtr/company-profile-info" element={<RTRCompanyProfile />} />
       <Route path="/dashboard-rtr/privacy-setting" element={<RTRPrivacySetting />} />
-
 
       {/* Email Templates  */}
 
@@ -164,9 +214,6 @@ const router = createBrowserRouter(
       <Route path="/email/received-new-rtr" element={<ReceivedNewRTR />} />
       <Route path="/email/recruiter-interested" element={<IntrestedRecruiter />} />
       <Route path="/email/verification-status" element={<VerificationMainTemp />} />
-
-
-
 
       {/* Admin Pannel  */}
 

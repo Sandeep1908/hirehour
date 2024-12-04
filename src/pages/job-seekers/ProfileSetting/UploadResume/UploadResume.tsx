@@ -1,13 +1,201 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { GrDocumentPdf } from 'react-icons/gr';
 import { IoMdClose } from 'react-icons/io';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import Select from 'react-select';
+import LocationSearch from '../../../../utils/LocationSearch.tsx';
+
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axiosInstance from '../../../../axios/axiosInstance';
+import formatLocation from '../../../../utils/jobseekers/formatedLocation.ts';
+import { toast } from 'react-toastify';
+import  { AxiosError } from 'axios';
+import { fetchResumes, fetchUserDetails } from '../../../../utils/jobseekers/getUserDetails.ts';
+
+type ResumeType = {
+  id: number;
+  resumeLink: string;
+  createdAt: string;
+};
+
+type ModalUserDetails = {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  needVisaSponsorship: boolean;
+};
+
+ 
+ 
 
 const UploadResume: React.FC = () => {
   const [isContinue, setIsContinue] = useState<boolean>(false);
+  const description = 'resume';
+   
+  const [fileSize, setFileSize] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const queryClient = useQueryClient();
+
+  const [selectedLocation, setSelectedLocation] = useState<LocationValue | null>(null);
+  const [isVisaSponsored, setIsVisaSponsored] = useState<boolean>(false);
+   
+
+  const navigate = useNavigate();
+
+  //option of sponsorship
+  const visaSponsorshipOptions = [
+    { value: true, label: 'Required' },
+    { value: false, label: 'Not Required' },
+  ];
+
+  const { data: resumes } = useQuery({
+    queryKey: ['resumes'],
+    queryFn: fetchResumes,
+  });
+
+  const { data: userDetails } = useQuery({
+    queryKey: ['userDetails'],
+    queryFn: fetchUserDetails,
+  });
+
+  let latestResume = [];
+  if (resumes?.resumes) {
+    const sortedResumes = resumes?.resumes?.sort(
+      (a: ResumeType, b: ResumeType) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    );
+    latestResume = sortedResumes?.[0];
+  }
+
+  //upload resume mutation
+  const uploadResumeMutation = useMutation({
+    mutationFn: async (formData: FormData) => {
+      const response = await axiosInstance.post(`/api/candidate/details/resumes`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+
+        onUploadProgress: ({ loaded, total }) => {
+          if (total) {
+            const progress = Math.round((loaded * 100) / total);
+            setUploadProgress(progress);
+          } else {
+            console.warn('Upload total size is undefined');
+          }
+        },
+      });
+      return response.data;
+    },
+
+    onSuccess: () => {
+      setUploadProgress(null);
+      queryClient.invalidateQueries({ queryKey: ['resumes'] });
+      toast.success('Resume uploaded successfully!')
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{message:string}>
+      setUploadProgress(null);
+      localStorage.removeItem('filesizeres');
+      toast.error(axiosError?.response?.data?.message);
+    
+    },
+  });
+
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+  
+    const validFileTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+    if (!validFileTypes.includes(file.type)) {
+      toast.warning('Only PDF and DOCX files are allowed');
+      return;
+    }
+  
+    if (file.size > 2 * 1024 * 1024) {
+      toast.warning('File size must be less than 2MB');
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('description', description);
+    localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
+    uploadResumeMutation.mutate(formData);
+  };
+  
+
+  //modal user form submit
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = {
+      firstName: userDetails?.user?.firstName,
+      lastName: userDetails?.user?.lastName,
+      phoneNumber: userDetails?.user?.phoneNumber,
+      needVisaSponsorship: isVisaSponsored,
+    };
+
+    submitContactInfoMutation.mutate(formData);
+
+   
+
+    const locationData = {
+      location: formatLocation(selectedLocation),
+    };
+
+    submitLocation.mutate(locationData);
+  };
+
+  // Mutation for submitting form data
+  const submitContactInfoMutation = useMutation({
+    mutationFn: async (formData: ModalUserDetails) => {
+      const response = await axiosInstance.post(
+        '/api/candidate/details/update-main-details',
+        formData,
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success('Contact information saved successfully!');
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });  
+      setIsContinue(false);
+      navigate('/additional-information');
+    },
+    onError: (error) => {
+      const axiosError=error as AxiosError<{message:string}>
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
+
+  // Mutation for Location
+  const submitLocation = useMutation({
+    mutationFn: async (formData: { location: string }) => {
+      const response = await axiosInstance.post('/api/candidate/details/update-details', formData);
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['location'] });  
+      setIsContinue(false);
+    },
+    onError: (error) => {
+      const axiosError=error as AxiosError<{message:string}>
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
+
+
+  
+
+  useEffect(() => {
+    
+    const fileSize = localStorage.getItem('filesizeres');
+ 
+    setFileSize(fileSize);
+  }, [resumes]);
+
   return (
-    <div className="w-full h-full pb-20 bg-[#F6F6F8]">
+    <div className="w-full h-[calc(100vh-50px)] pb-20 bg-[#F6F6F8]">
       <div className="max-w-[1200px] h-48  m-auto">
         <div className="">
           <div className="flex  flex-col  space-y-4 md:flex-row  md:justify-between md:items-center p-4">
@@ -34,12 +222,16 @@ const UploadResume: React.FC = () => {
               </li>
               <li className="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 h-8 text-[10px] flex justify-center items-center bg-[#C7C9D9] rounded-full">2</span>
+                  <span className="me-2 p-2 w-10 h-8 text-[10px] flex justify-center items-center bg-[#C7C9D9] rounded-full">
+                    2
+                  </span>
                   <p className="hidden md:block text-xs"> Additional Information</p>
                 </span>
               </li>
               <li className="flex items-center">
-                <span className="me-2 p-2 w-8 h-8 text-[10px] flex justify-center items-center bg-[#C7C9D9] rounded-full">3</span>
+                <span className="me-2 p-2 w-8 h-8 text-[10px] flex justify-center items-center bg-[#C7C9D9] rounded-full">
+                  3
+                </span>
                 <p className="hidden md:block  text-xs"> Review</p>
               </li>
             </ol>
@@ -53,7 +245,7 @@ const UploadResume: React.FC = () => {
         <div className="flex flex-col space-y-2">
           <h1 className="text-sm">Upload Your Resume</h1>
           <p className="text-xs text-[#6B7588]">
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
           </p>
         </div>
 
@@ -68,7 +260,7 @@ const UploadResume: React.FC = () => {
               >
                 <FaCirclePlus size={13} color="#104B53" className="" />
                 <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>Upload Here</span>
-                <input type="file" className="hidden" />
+                <input type="file" className="hidden" onChange={handleFileChange} />
               </label>
 
               <p className="text-xs text-[#6B7588]">
@@ -82,25 +274,39 @@ const UploadResume: React.FC = () => {
 
           <div className="w-full sm:w-[588px] h-[300px] p-4 flex flex-col justify-around md:justify-between items-center">
             <div className="flex flex-col space-y-5 w-full">
-              <h1 className="text-sm font-semibold">Uploading</h1>
+              {latestResume?.resumeLink ? (
+                <>
+                  <h1 className="text-sm font-semibold">
+                    {uploadProgress == 100 ? 'Uploading...' : 'Uploaded'}
+                  </h1>
+                  <div className="w-full flex justify-center items-center space-x-5">
+                    <GrDocumentPdf size={30} />
 
-              <div className="w-full flex justify-center items-center space-x-5">
-                <GrDocumentPdf size={30} />
+                    <div className="flex flex-col space-y-3 w-full">
+                      <p className="text-xs">
+                        <a download="User"  
+  target="_blank"
+  href={latestResume?.resumeLink || ""}
+  rel="noopener noreferrer">
+                          {' '}
+                          {latestResume?.resumeLink.split('@@')[1]} {fileSize} MB
+                        </a>
+                      </p>
 
-                <div className="flex flex-col space-y-3 w-full">
-                  <p className='text-xs'>resume.pdf 7.8mb</p>
-
-                  <div className="w-full max-w-60 bg-[#FFF1C6] rounded-full  ">
-                    <div
-                      className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
-                      style={{ width: '75%' }}
-                    >
-                      {' '}
-                      75%
+                      <div className="w-full max-w-60 bg-[#FFF1C6] rounded-full  ">
+                        <div
+                          className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
+                          style={{ width: `${uploadProgress !== 100 ? uploadProgress : 100}` }}
+                        >
+                          {uploadProgress == 100 ? uploadProgress : '100'}%
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </>
+              ) : (
+                <h1 className="text-sm text-center  font-semibold">No Resume Uploaded</h1>
+              )}
             </div>
 
             <div className="w-full ">
@@ -143,13 +349,17 @@ const UploadResume: React.FC = () => {
               {/* first name  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                   <label htmlFor="" className='text-sm' >First Name</label>
+                  <label htmlFor="" className="text-sm">
+                    First Name
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
                   type="text"
                   placeholder="Enter your first name"
+                  value={userDetails?.user?.firstName}
+                  disabled
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
@@ -158,13 +368,18 @@ const UploadResume: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                   <label htmlFor="" className='text-sm'>Last Name</label>
+                  <label htmlFor="" className="text-sm">
+                    Last Name
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
                   type="text"
                   placeholder="Enter your last name"
+                  value={userDetails?.user?.lastName}
+                  disabled
+                   
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
@@ -174,12 +389,17 @@ const UploadResume: React.FC = () => {
               {/* Phone No  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                   <label htmlFor="" className='text-sm'>Phone Number</label>
+                  <label htmlFor="" className="text-sm">
+                    Phone Number
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
                   type="text"
+                  value={userDetails?.user?.phoneNumber}
+                  disabled
+                   
                   placeholder="Enter your phone no"
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
@@ -189,13 +409,17 @@ const UploadResume: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                   <label htmlFor="" className='text-sm'>Email</label>
+                  <label htmlFor="" className="text-sm">
+                    Email
+                  </label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
                   type="email"
                   placeholder="Enter your email"
+                  value={userDetails?.user?.email}
+                  disabled
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
@@ -204,29 +428,31 @@ const UploadResume: React.FC = () => {
             {/* sponsership  */}
             <div className="flex flex-col space-y-2">
               <div className="flex ">
-                 <label htmlFor="" className='text-sm'>Visa Sponsorship</label>
+                <label htmlFor="" className="text-sm">
+                  Visa Sponsorship
+                </label>
                 <span className="text-red-500">*</span>
               </div>
 
-              <select className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs">
-                <option>Required</option>
-                <option>Not Required</option>
-              </select>
+              <Select
+                options={visaSponsorshipOptions}
+                value={visaSponsorshipOptions.find((option) => option.value === isVisaSponsored)}
+                onChange={(selectedOption) => setIsVisaSponsored(selectedOption?.value || false)}
+                placeholder="Select Visa Sponsorship"
+                isClearable
+              />
             </div>
 
             {/* Location  */}
 
-            <div className="flex flex-col space-y-2">
+            <div className="w-full">
               <div className="flex ">
-                 <label htmlFor="" className='text-sm'>Location</label>
+                <label htmlFor="" className="text-sm">
+                  Location
+                </label>
                 <span className="text-red-500">*</span>
               </div>
-
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-              />
+              <LocationSearch setSelectedLocation={setSelectedLocation} />
             </div>
 
             <p className="text-[#6B7588] text-xs">
@@ -238,9 +464,12 @@ const UploadResume: React.FC = () => {
 
           <div className="p-4">
             <div className="w-full flex justify-center md:justify-end md:mt-4">
-              <Link to={'/additional-information'} className="flex justify-center items-center w-full md:w-36 h-8 text-xs  rounded-full cursor-pointer bg-[#E9F358] ">
+              <button
+                onClick={(e) => handleFormSubmit(e)}
+                className="px-4 py-2 bg-[#E9F358] text-[#104B53] rounded-md"
+              >
                 Continue
-              </Link>
+              </button>
             </div>
           </div>
         </div>
