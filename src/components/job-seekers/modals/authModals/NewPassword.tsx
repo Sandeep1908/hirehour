@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Link } from 'react-router-dom';
 
 
 const NewPassword:React.FC = () => {
@@ -10,7 +11,7 @@ const NewPassword:React.FC = () => {
    
   return (
     <div className='absolute top-0 w-full h-[100vh]'>
-        <div className='w-full h-full absolute bg-black opacity-80 z-10'>
+        <div className='w-full h-full absolute bg-black z-10'>
 
         </div>
        <div className='w-full h-full flex justify-center items-center'>
@@ -51,9 +52,9 @@ const NewPassword:React.FC = () => {
                            </button>
                          </div>
                      </div>
-                     <button className='w-full h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                     <Link to={"/signin"} className='w-full h-[58px] flex justify-center items-center font-semibold text-base text-white rounded-lg bg-[#114B53]'>
                      Update password
-                    </button>
+                    </Link>
                 </form>
            </div>
        </div>

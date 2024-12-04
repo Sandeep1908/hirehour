@@ -3,14 +3,13 @@ import React, { useState } from 'react'
 import axiosInstance from '../../../../axios/axiosInstance';
 import {  useNavigate } from 'react-router-dom';
 import {  z } from 'zod';
-import { RxCross2 } from 'react-icons/rx';
 
 
-type VerifyProps={
-  setVerification: (e:boolean)=>void,
-  setForgetPassword: (e:boolean)=>void,
-  verification:Boolean
-}
+// type VerifyProps={
+//   setVerification: (e:boolean)=>void,
+//   setForgetPassword: (e:boolean)=>void,
+//   verification:Boolean
+// }
 
 
 interface FormErrors {
@@ -18,7 +17,8 @@ interface FormErrors {
 }
 
 // const ForgetPassword:React.FC<VerifyProps> = ({setVerification,verification}) => {
-const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
+const ForgetPassword:React.FC = () => {
+// const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
 
   const [email, setEmail] = useState<string>('');
   // const [message, setMessage] = useState<string>('');
@@ -43,14 +43,13 @@ const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
     mutationFn: async (emailId: EmailId )=>{
       const response = await axiosInstance.post("/api/candidate/signup/forgot-pass", emailId);
       console.log("response.data",response.data)
-      localStorage.setItem('token', response.data.token);
       return response.data;    },
       onSuccess: () => {
         // localStorage.setItem("authToken", message.accessToken);
-        // alert("Send successfully");
+        alert("Send successfully");
         setEmail("")
         navigate("/signin");
-        setForgetPassword(false)
+        // setForgetPassword(false)
 
         
       },
@@ -73,12 +72,13 @@ const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
   };
   return (
     <div className='absolute top-0 w-full h-[100vh]'>
-        <div className='w-full h-full absolute bg-black opacity-80 z-10'>
+        <div className='w-full h-full absolute bg-black  z-10'>
 
         </div>
        <div className='w-full h-full flex justify-center items-center'>
            <div className='relative z-20 w-[617px] h-[359px] bg-white rounded-lg p-10 flex flex-col gap-3'>
-           <RxCross2 onClick={()=>{setForgetPassword(false)}} size={25} className='absolute top-4 right-4' />
+           {/* <RxCross2  size={25} className='absolute top-4 right-4' /> */}
+           {/* <RxCross2 onClick={()=>{setForgetPassword(false)}} size={25} className='absolute top-4 right-4' /> */}
 
                 <p className='font-bold text-2xl text-[#114B53]'>Forgot Password</p>
                 <p className='text-base font-normal text-[#C7C9D9] '>Enter your email for the verification process, we will send 4 digits code to your email.</p>

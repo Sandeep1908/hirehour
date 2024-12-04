@@ -22,38 +22,9 @@ const Payment:React.FC = () => {
                </div>
                <div className='w-full px-5 mt-3 flex flex-col md:flex-row gap-5 md:gap-0 justify-around'>
 
-                  <div className='max-w-[700px] w-full h-fit border-[1px] border-[#EBEBF0] rounded-lg'>
-                          {/* <div onClick={()=>{setPaymentType("Paypal")}} className={`p-3 ${paymentType==="Paypal" ? "bg-[#EBEBF0]":"bg-white"}  `}>
-                         <div className='flex   gap-3'>
-                                <FaRegCheckCircle size={20} className={`${paymentType === "Paypal" ?"text-green-500":"text-[#EBEBF0]"}  mt-1`} />
-                                <div>
-                                    <p className='font-semibold text-sm'>Paypal</p>
-                                    <p className='font-normal text-xs'>Lorem Ipsum comes from sections 1.10.32 and 1.10.33 Extremes of Good <br /> and Evil) by Cicero, written in 45 BC.</p>
-
-                                </div>
-                         </div>
-
-                         <div className={`${paymentType ==="Paypal" ?"flex ":" hidden"} flex-col md:flex-row justify-between mt-3`}>
-                              <div>
-                                   <p className='text-sm font-normal'>Paypal ID</p>
-                                   <p className='text-[12px] font-normal text-[#6B7588]'>Enter the Paypal ID</p>
-                              </div>
-                           
-                              <div className='flex gap-2'>
-                                 <div>
-                                    <input type="text" className=' w-full md:w-[336px] h-[40px]  border-[1px] border-[#EBEBF0] p-2 rounded-lg' />
-                                    <div className='flex gap-2 md:justify-end items-center mt-2 '>
-                                        <input type="checkbox" className='w-4 h-4 rounded-lg border-[#EBEBF0] ' name="" id="" />
-                                        <label htmlFor="" className='text-xs font-normal'>Set us default</label>
-                                    </div>
-                                 </div>
-
-                                 <FaRegCheckCircle size={20} className='text-green-500 mt-3' />
-                              </div>
-                         </div>
-
-                          </div> */}
-                          <div onClick={()=>{setPaymentType("card")}} className={`p-3 ${paymentType==="card" ? "bg-[#EBEBF0]":"bg-white"}  `}>
+                  <div className='max-w-[700px] w-full h-fit '>
+                    <div className='w-full h-full border-[1px] border-[#EBEBF0] rounded-lg'>
+                    <div onClick={()=>{setPaymentType("card")}} className={`p-3 ${paymentType==="card" ? "bg-[#EBEBF0]":"bg-white"}  `}>
                          <div className='flex gap-3'>
                                 <FaRegCheckCircle size={20} className={`${paymentType === "card" ?"text-green-500":"text-[#EBEBF0]"}  mt-1`} />
                                 <div>
@@ -157,8 +128,48 @@ const Payment:React.FC = () => {
                                  <FaRegCheckCircle size={20} className='text-green-500 mt-3' />
                               </div>
                          </div>
+                         
 
                           </div>
+                  
+                    </div>
+                    <div className='mt-3 px-5 pb-5'>
+            <p className='text-base text-[#114B53] font-semibold'>
+            + Add More Payment method
+            </p>
+         </div>
+                          {/* <div onClick={()=>{setPaymentType("Paypal")}} className={`p-3 ${paymentType==="Paypal" ? "bg-[#EBEBF0]":"bg-white"}  `}>
+                         <div className='flex   gap-3'>
+                                <FaRegCheckCircle size={20} className={`${paymentType === "Paypal" ?"text-green-500":"text-[#EBEBF0]"}  mt-1`} />
+                                <div>
+                                    <p className='font-semibold text-sm'>Paypal</p>
+                                    <p className='font-normal text-xs'>Lorem Ipsum comes from sections 1.10.32 and 1.10.33 Extremes of Good <br /> and Evil) by Cicero, written in 45 BC.</p>
+
+                                </div>
+                         </div>
+
+                         <div className={`${paymentType ==="Paypal" ?"flex ":" hidden"} flex-col md:flex-row justify-between mt-3`}>
+                              <div>
+                                   <p className='text-sm font-normal'>Paypal ID</p>
+                                   <p className='text-[12px] font-normal text-[#6B7588]'>Enter the Paypal ID</p>
+                              </div>
+                           
+                              <div className='flex gap-2'>
+                                 <div>
+                                    <input type="text" className=' w-full md:w-[336px] h-[40px]  border-[1px] border-[#EBEBF0] p-2 rounded-lg' />
+                                    <div className='flex gap-2 md:justify-end items-center mt-2 '>
+                                        <input type="checkbox" className='w-4 h-4 rounded-lg border-[#EBEBF0] ' name="" id="" />
+                                        <label htmlFor="" className='text-xs font-normal'>Set us default</label>
+                                    </div>
+                                 </div>
+
+                                 <FaRegCheckCircle size={20} className='text-green-500 mt-3' />
+                              </div>
+                         </div>
+
+                          </div> */}
+                         
+                          
 
 
 
@@ -183,7 +194,7 @@ const Payment:React.FC = () => {
                   </div>
                   <div className='max-w-[400px] w-full   '>
                           
-                       <div className='w-full p-5  border-[1px] border-[#EBEBF0] rounded-lg'>
+                       <div className='w-full px-5 py-2 border-[1px] border-[#EBEBF0] rounded-lg'>
           
 
                        <div className=' flex gap-3 '>
@@ -194,14 +205,14 @@ const Payment:React.FC = () => {
 
                           </div>
 
-                       <div className=' flex justify-between gap-3 border-b-[1px] border-[#EBEBF0] py-4 '>
+                       <div className=' flex justify-between gap-3 border-b-[1px] border-[#EBEBF0] py-3 '>
 
                             <p className='font-medium text-sm'>Plan name</p>
                             <p className='font-medium text-sm'>Price</p>
 
 
                           </div>
-                       <div className=' flex justify-between gap-3 border-b-[1px] border-[#EBEBF0] py-5 '>
+                       <div className=' flex justify-between gap-3 border-b-[1px] border-[#EBEBF0] py-3'>
 
                             <p className='font-medium text-sm'>Hire Plus</p>
                             <p className='font-medium text-sm'>$ 14.99 </p>
@@ -213,24 +224,50 @@ const Payment:React.FC = () => {
 
                           </div>
                        </div>
-                       <div  className={`bg-[#114B53]  w-full h-[45px] border-[1px] text-white border-[#114B53] rounded-lg flex justify-center items-center mt-2`}>
+
+                       <div className='w-full mt-4'>
+                       <p className='font-semibold text-base '>Billing Address</p>
+                        <div className='w-full mt-2 '>
+                        <div className='w-full '>
+                   <p className='text-sm font-medium'>Name <span className='text-red-600'>*</span></p>
+                   <input type="text" className='text-sm w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-1  px-4 '  placeholder='Write name '/>
+                </div>
+                        <div className='w-full mt-2 '>
+                   <p className='text-sm font-medium'>Address <span className='text-red-600'>*</span></p>
+                   <input type="text" className='text-sm w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-1  px-4 '  placeholder='Write address* '/>
+                </div>
+
+                <div className='w-full mt-2'>
+                <p className='text-sm font-medium'>Location <span className='text-red-600'>*</span></p>
+                   <select name="" id="" className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-1 px-4 text-sm ' >
+                      <option value=""> Texas, US</option>
+                      <option value=""> Londan, Uk</option>
+                   </select>
+                </div>
+                <div className='w-full mt-2'>
+                <p className='text-sm font-medium'>Zipcode <span className='text-red-600'>*</span></p>
+                   <select name="" id="" className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-1 px-4 text-sm ' >
+                      <option value=""> 73960</option>
+                      <option value=""> 75001</option>
+                      <option value=""> 75032</option>
+                   </select>
+                </div>
+                        </div>
+                       </div>
+                       <Link to={'/job-poster/dashboard?key=myjobs'}  className={`bg-[#114B53]  w-full h-[45px] border-[1px] text-white border-[#114B53] rounded-lg flex justify-center items-center mt-2`}>
                 <p className=' text-sm'>Confirm Payment</p>
-              </div>
+              </Link>
                         
                   </div>
 
                </div>
-               <div className='mt-3 px-5 pb-5'>
-            <p className='text-base text-[#114B53] font-semibold'>
-            + Add More Payment method
-            </p>
-         </div>
-         <div className='fixed bottom-0 bg-white md:relative py-2 md:py-0 justify-center w-full flex md:justify-end md:px-10 mt-3 md:gap-10  items-center'>
+              
+         {/* <div className='fixed bottom-0 bg-white md:relative py-2 md:py-0 justify-center w-full flex md:justify-end md:px-10 mt-3 md:gap-10  items-center'>
                             <p  className='hidden md:block cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
                             <div  className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
                                 <Link to={'/job-poster/dashboard?key=myjobs'}  className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</Link>
                             </div>
-                        </div>
+                        </div> */}
          </div>
          
         

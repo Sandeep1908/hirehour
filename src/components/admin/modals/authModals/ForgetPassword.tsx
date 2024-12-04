@@ -6,6 +6,7 @@ type VerifyProps={
 }
 
 const ForgetPassword:React.FC<VerifyProps> = ({setVerification,verification}) => {
+// const ForgetPassword:React.FC = () => {
   return (
     <div className='absolute top-0 w-full h-[100vh]'>
         <div className='w-full h-full absolute bg-black opacity-80 z-10'>
@@ -19,6 +20,9 @@ const ForgetPassword:React.FC<VerifyProps> = ({setVerification,verification}) =>
                     
                     <label htmlFor="" className='text-[#8F90A6] font-medium'> Email</label>
                     <input type="text" className='w-full h-[54px] border-2 rounded-lg border-[#EBEBF0]' />
+                    <div className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                      Continue
+                    </div>
                     <div onClick={()=>{setVerification(!verification)}} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
                       Continue
                     </div>

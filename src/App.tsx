@@ -6,6 +6,7 @@ import HeaderJP from './components/HeaderJP';
 import HeaderAdmin from './components/HeaderAdmin';
 import HeaderRTR from './components/HeaderRTR';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import { ToastContainer } from 'react-toastify';
 
 
@@ -13,6 +14,7 @@ const App: React.FC = () => {
   const pathname = useLocation().pathname;
   const route = pathname.includes('/job-poster');
   const adminRoute = pathname.includes('/admin');
+
   const headerRTR = pathname.includes('/dashboard-rtr');
   const queryClient = new QueryClient();
 
@@ -20,6 +22,7 @@ const App: React.FC = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+
        
       <div className="w-full  bg-[#F2F2F5]">
         {adminRoute ? (

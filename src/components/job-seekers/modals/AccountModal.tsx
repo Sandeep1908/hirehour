@@ -4,6 +4,7 @@ import { RiListSettingsLine } from 'react-icons/ri';
 import { RiUserSettingsLine } from 'react-icons/ri';
 import { VscNotebook } from 'react-icons/vsc';
 import { GoSignOut } from 'react-icons/go';
+
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ type AccountModalProps = {
   username:string,
   email:string
 };
+
 
 const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountOpen ,username,email}) => {
   const navigate=useNavigate()
@@ -73,6 +75,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
           })}
 
           <hr />
+
 
           <li className="flex justify-start items-center space-x-2 p-1" onClick={()=>handleSignOut()}>
             <GoSignOut color="#FF4444" />
