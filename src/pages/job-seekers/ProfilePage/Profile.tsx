@@ -136,7 +136,7 @@ const Profile: React.FC = () => {
 
               <div className="w-full flex flex-col  space-y-3 justify-center items-center p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:mb-3 before:bg-[#EFF1F3]">
                 <div className="w-16 h-16 bg-[#CBFFFC] rounded-full flex justify-center items-center">
-                  {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.chatAt(0)}
+                  {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.charAt(0)}
                 
                 </div>
 

@@ -200,7 +200,7 @@ const Header: React.FC = () => {
             >
               <div className="flex justify-center items-center space-x-3">
                 <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
-                {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full rounded-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.chatAt(0)}
+                {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full rounded-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.charAt(0)}
                 </p>
                 <p className="text-sm">{userDetails?.user?.firstName}</p>
               </div>
