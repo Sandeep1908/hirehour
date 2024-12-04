@@ -4,16 +4,11 @@ import google_logo from '../../../../assets/Google.svg';
 import apple_logo from '../../../../assets/apple.svg';
 
 import { Link } from 'react-router-dom';
-import ForgetPassword from '../../../../components/admin/modals/authModals/ForgetPassword';
-import Verification from '../../../../components/admin/modals/authModals/Verification';
-import NewPassword from '../../../../components/admin/modals/authModals/NewPassword';
- 
+
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [forgetPassword, setForgetPassword] = useState<boolean>(false);
-  const [verification, setVerification] = useState<boolean>(false);
-  const [newPassword, setNewPassword] = useState<boolean>(false);
+
  
 
 
@@ -84,10 +79,11 @@ const Signin: React.FC = () => {
                       <p className='text-[14px] '>Remember me</p>
                   </div>
 
-                  <div onClick={()=>{setForgetPassword(!forgetPassword)}} className='font-medium text-[14px] md:text-base underline'>
+                  <Link  to={"/forget-password"} className='font-medium text-[14px] md:text-base underline'>
 
                   Forgot Password?
-                  </div>
+                  </Link>
+               
                   </div>
 
 
@@ -142,9 +138,7 @@ const Signin: React.FC = () => {
       </div>
 
 
-      {forgetPassword && <ForgetPassword setVerification={setVerification} verification={verification} />}
-      {verification && <Verification  setNewPassword={setNewPassword} newPassword={newPassword}  />}
-      {newPassword && <NewPassword  />}
+    
 
 
     </div>
