@@ -39,3 +39,53 @@ interface jobDescriptionTypes {
   companyPrivacy:string;
 }
 
+
+type LocationValue = {
+  place?: string | undefined;
+  city?: string | undefined;
+  state: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+};
+
+interface EducationDetail {
+  id: number;
+  userID: number;
+  degree: string;
+  schoolName: string;
+  schoolLocation: string;
+  durationStart: string;
+  durationEnd: string | null;
+  netMarks: number;
+  outOf: number;
+  isCurrentlyAttending: boolean;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
+ 
+interface WorkExperienceDetail {
+  ID: number;
+  userID: number;
+  companydetails: string;
+  domain: number;
+  role: number;
+  place: string;
+  durationStart: string;
+  durationEnd: string | null;
+  presentEmployer: boolean;
+  descriptionOfExperience: string;
+  jobCategory: string;
+  jobType: number;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+
+type SummaryDetails={
+  summary:string
+}

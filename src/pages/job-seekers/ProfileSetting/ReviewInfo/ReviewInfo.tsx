@@ -1,16 +1,95 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TiTick } from 'react-icons/ti';
 import { FaEdit, FaPlus } from 'react-icons/fa';
-import { reviewInfo } from '../../../../config/reviewinfo';
+
 import { BiPlus } from 'react-icons/bi';
 import { MdDeleteOutline } from 'react-icons/md';
 import { Link } from 'react-router-dom';
+import axiosInstance from '../../../../axios/axiosInstance';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { fetchUserDetails, fetchDomains,fetchRoleTypes,fetchRoles } from '../../../../utils/jobseekers/getUserDetails';
+import { toast } from 'react-toastify';
+ 
+
 
 const ReviewInfo: React.FC = () => {
-  const [details, setDetails] = useState<reviewDetailsTypes[]>([]);
-  useEffect(() => {
-    setDetails(reviewInfo);
-  }, []);
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { data: userDetails } = useQuery({
+    queryKey: ['userDetails'],
+    queryFn: fetchUserDetails,
+  });
+
+  const { data: role } = useQuery({
+    queryKey: ['roles'],
+    queryFn: fetchRoles,
+  });
+
+  const { data: domains } = useQuery({
+    queryKey: ['domains'],
+    queryFn: fetchDomains,
+  });
+
+  const { data: jobTypes } = useQuery({
+    queryKey: ['jobtypes'],
+    queryFn: fetchRoleTypes,
+  });
+
+  const getRoleNameById = (id: number) =>
+    role?.jobRoles?.find((role: { id: number; roleName: string }) => role.id === id)?.roleName ||
+    'N/A';
+
+  const getDomainNameById = (id: number) =>
+    domains?.domains?.find((domain: { id: number; domainName: string }) => domain.id === id)
+      ?.domainName || 'N/A';
+
+  const getJobTypeById = (id: number) =>
+    jobTypes?.jobRoles?.find((type: { id: number; typeName: string }) => type.id === id)
+      ?.typeName || 'N/A';
+
+  //deleting experience
+  const mutation = useMutation({
+    mutationFn: async (experienceID: number) => {
+      const response = await axiosInstance.post('/api/candidate/details/delete-experience', {
+        experienceID: experienceID,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+      toast.success('Experience Deleted Successfully!');
+      navigate('/review-form');
+    },
+    onError: () => {
+      toast.error('Failed to delete experience. Please try again.');
+    },
+  });
+  const handleDeleteExperience = (id: number) => {
+    mutation.mutate(id);
+  };
+
+  //deleteing education
+  const educationMutation = useMutation({
+    mutationFn: async (educationId: number) => {
+      const response = await axiosInstance.post('/api/candidate/details/delete-education', {
+        educationID: educationId,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+      toast.success('Education Deleted Successfully!');
+      navigate('/review-form');
+    },
+    onError: () => {
+      toast.error('Failed to delete experience. Please try again.');
+    },
+  });
+  const handleDeleteEducation = (id: number) => {
+    educationMutation.mutate(id);
+  };
 
   return (
     <div className="w-full   pb-20 bg-[#F6F6F8]">
@@ -66,18 +145,39 @@ const ReviewInfo: React.FC = () => {
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
               <div className="flex justify-end items-center space-x-2">
                 <FaEdit size={14} color="#104B53" />
-                <p className="text-[#104B53] text-xs" >Edit</p>
+                <p className="text-[#104B53] text-xs">Edit</p>
               </div>
 
               <div className="grid md:grid-cols-3 gap-5">
-                {details?.map((item, id) => {
-                  return (
-                    <div className="flex flex-col space-y-2" key={id}>
-                      <p className="text-[#838383] text-sm">{item.label}</p>
-                      <p className="font-semibold text-xs">{item.value}</p>
-                    </div>
-                  );
-                })}
+                <div className="flex flex-col space-y-2">
+                  <p className="text-[#838383] text-sm">First Name</p>
+                  <p className="font-semibold text-xs">{userDetails?.user?.firstName}</p>
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <p className="text-[#838383] text-sm">Last Name</p>
+                  <p className="font-semibold text-xs">{userDetails?.user?.lastName}</p>
+                </div>
+                <div className="flex flex-col space-y-2">
+                  <p className="text-[#838383] text-sm">Email</p>
+                  <p className="font-semibold text-xs">{userDetails?.user?.email}</p>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                  <p className="text-[#838383] text-sm">Phone Number</p>
+                  <p className="font-semibold text-xs">{userDetails?.user?.phoneNumber}</p>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                  <p className="text-[#838383] text-sm">Visa Sponsership</p>
+                  <p className="font-semibold text-xs">
+                    {userDetails?.needVisaSponsorship ? 'Yes' : 'No'}
+                  </p>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                  <p className="text-[#838383] text-sm">Location</p>
+                  <p className="font-semibold text-xs">{userDetails?.location}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -89,17 +189,10 @@ const ReviewInfo: React.FC = () => {
             <div className="border p-5 border-[#EBEBF0] rounded-lg">
               <div className="flex justify-end items-center space-x-2">
                 <FaEdit size={14} color="#104B53" />
-                <p className="text-[#104B53] text-xs" >Edit</p>
+                <p className="text-[#104B53] text-xs">Edit</p>
               </div>
               <p className="text-[#535354] text-justify text-sm">
-                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                unknown printer took a galley of type and scrambled it to make a type specimen book.
-                It has survived not only five centuries, but also the leap into electronic
-                typesetting, remaining essentially unchanged. It was popularised in the 1960s with
-                the release of Letraset sheets containing Lorem Ipsum passages, and more recently
-                with desktop publishing software like Aldus PageMaker including versions of Lorem
-                Ipsum.
+                {userDetails?.summary}
               </p>
             </div>
           </div>
@@ -118,66 +211,61 @@ const ReviewInfo: React.FC = () => {
               </div>
             </div>
 
-            <div className="border p-7 border-[#EBEBF0] rounded-lg">
-              <div className="flex justify-end items-center space-x-4">
-                <div className="flex items-center  ">
-                  <FaEdit size={14} color="#104B53" />
-                  <p className="text-[#104B53] text-xs" >Edit</p>
-                </div>
+            {userDetails?.candidatedetailsexperiences?.map((item:WorkExperienceDetail , i: number) => {
+              return (
+                <div key={i} className="border p-7 border-[#EBEBF0] rounded-lg">
+                  <div className="flex justify-end items-center space-x-4">
+                    <div className="flex items-center  ">
+                      <FaEdit size={14} color="#104B53" />
+                      <p className="text-[#104B53] text-xs">Edit</p>
+                    </div>
 
-                <div className="flex items-center ">
-                  <MdDeleteOutline color="#104B53" />
-                  <p className="text-[#104B53] text-xs">Delete</p>
-                </div>
-              </div>
+                    <div
+                      className="flex items-center cursor-pointer  "
+                      onClick={() => handleDeleteExperience(item?.ID)}
+                    >
+                      <MdDeleteOutline color="#104B53" />
+                      <p className="text-[#104B53] text-xs">Delete</p>
+                    </div>
+                  </div>
 
-              <div className="flex flex-col space-y-5 ">
-                <div className="flex flex-col space-y-4">
-                  <h1 className="text-sm font-semibold">Java Fullstack</h1>
-                  <p className="text-[#6B7588] text-xs">xyz Company - Texas, United States</p>
-                  <div className="flex space-x-3 flex-wrap  items-center w-full">
-                    <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
-                      Health Care
-                    </p>
-                    <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
-                      Full Time
-                    </p>
-                    <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
-                      12/2022 - Present
-                    </p>
+                  <div className="flex flex-col space-y-5 ">
+                    <div className="flex flex-col space-y-4">
+                      <h1 className="text-sm font-semibold">{getRoleNameById(item?.role)}</h1>
+                      <p className="text-[#6B7588] text-xs">
+                        {item?.companydetails} - {item?.place}
+                      </p>
+                      <div className="flex space-x-3 flex-wrap  items-center w-full">
+                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
+                          {getDomainNameById(item?.domain)}
+                        </p>
+                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
+                          {getJobTypeById(item?.jobType)}
+                        </p>
+                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
+                          {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
+                          {item?.presentEmployer ? 'Present' : item?.durationEnd}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col space-y-4 ">
+                      <h1 className="text-sm ">Job summery</h1>
+                      <ul className="flex flex-col space-y-3">
+                        <li className="text-[#3A3A3C] text-xs">{item?.descriptionOfExperience}</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-
-
-
-                <div className='flex flex-col space-y-4 '>
-
-                    <h1 className='text-sm '>Job summery</h1>
-                    <ul className='flex flex-col space-y-3'>
-                        <li className='text-[#3A3A3C] text-xs'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
-
-                        <li className='text-[#3A3A3C] text-xs'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
-                    </ul>
-                </div>
-
-
-
-
-              </div>
-
-               
-            </div>
+              );
+            })}
           </div>
 
+          {/* Education  */}
 
-
-                {/* Education  */}
-
-                <div className=" flex flex-col space-y-3">
+          <div className=" flex flex-col space-y-3">
             <div className="flex justify-between items-center">
-              <h1 className="text-lg font-semibold">
-                Education
-              </h1>
+              <h1 className="text-lg font-semibold">Education</h1>
 
               <div className="flex justify-end items-center space-x-2">
                 <BiPlus size={14} color="#104B53" />
@@ -185,44 +273,49 @@ const ReviewInfo: React.FC = () => {
               </div>
             </div>
 
-            <div className="border p-7 border-[#EBEBF0] rounded-lg">
-              <div className="flex justify-end items-center space-x-4">
-                <div className="flex items-center  ">
-                  <FaEdit size={14} color="#104B53" />
-                  <p className="text-[#104B53] text-xs" >Edit</p>
-                </div>
+            {userDetails?.candidatedetailseducationdetails?.map((item:EducationDetail, i: number) => {
+              return (
+                <div className="border p-7 border-[#EBEBF0] rounded-lg" key={i}>
+                  <div className="flex justify-end items-center space-x-4">
+                    <div className="flex items-center  ">
+                      <FaEdit size={14} color="#104B53" />
+                      <p className="text-[#104B53] text-xs">Edit</p>
+                    </div>
 
-                <div className="flex items-center ">
-                  <MdDeleteOutline color="#104B53" size={14} />
-                  <p className="text-[#104B53] text-xs">Delete</p>
-                </div>
-              </div>
-
-              <div className="flex flex-col">
-                <div className="flex flex-col space-y-4">
-                  <h1 className="text-sm font-semibold">BE Computer Science</h1>
-                  <p className="text-[#6B7588] text-xs">xyz Collage- Texas, United State</p>
-                  <div className="flex space-x-3 items-center">
-                    <p className="text-[#7C8596] bg-[#F2F2F5] p-2 rounded-full font-semibold text-xs">
-                    07/2016 - 06/2020
-                    </p>
-                     
+                    <div
+                      className="flex items-center cursor-pointer "
+                      onClick={() => handleDeleteEducation(item?.id)}
+                    >
+                      <MdDeleteOutline color="#104B53" size={14} />
+                      <p className="text-[#104B53] text-xs">Delete</p>
+                    </div>
                   </div>
+
+                  <div className="flex flex-col">
+                    <div className="flex flex-col space-y-4">
+                      <h1 className="text-sm font-semibold">{item?.degree}</h1>
+                      <p className="text-[#6B7588] text-xs">
+                        {item?.schoolName} - {item?.schoolLocation}
+                      </p>
+                      <div className="flex space-x-3 items-center">
+                        <p className="text-[#7C8596] bg-[#F2F2F5] p-2 rounded-full font-semibold text-xs">
+                          {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
+                          {item?.isCurrentlyAttending ? 'Present' : item?.durationEnd}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div></div>
                 </div>
-              </div>
-
-              <div></div>
-            </div>
+              );
+            })}
           </div>
-
-
 
           {/* Certification  */}
           <div className=" flex flex-col space-y-3">
             <div className="flex justify-between items-center">
-              <h1 className="text-lg font-semibold">
-                Ceritification
-              </h1>
+              <h1 className="text-lg font-semibold">Ceritification</h1>
 
               <div className="flex justify-end items-center space-x-2">
                 <BiPlus size={14} color="#104B53" />
@@ -231,40 +324,42 @@ const ReviewInfo: React.FC = () => {
             </div>
 
             <div className="border p-7 border-[#EBEBF0] rounded-lg">
-              
-
-              <div className='w-full max-w-[765px] h-[80px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
-              '>
-                    <p className='text-xs'>Added certificate will be shown here</p>
+              <div
+                className="w-full max-w-[765px] h-[80px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
+              "
+              >
+                <p className="text-xs">Added certificate will be shown here</p>
               </div>
             </div>
           </div>
 
-
- 
-  {/* more sections  */}
+          {/* more sections  */}
           <div className="flex space-x-2 justify-start items-center">
-                <FaPlus color="#104B53" size={14} />
-                <p className="text-[#104B53] text-sm font-semibold cursor-pointer">
-                  Add More Section
-                </p>
+            <FaPlus color="#104B53" size={14} />
+            <p className="text-[#104B53] text-sm font-semibold cursor-pointer">Add More Section</p>
           </div>
-
-
 
           {/* buttion  */}
-            
-            <div className='flex flex-col space-y-5 md:flex-row justify-between items-center pb-10'>
-                <p className='text-[#7D8697] text-xs w-full'>you can edit or modify the profile later in (profile)</p>
-                <div className="flex w-full  justify-between md:justify-end items-center  space-x-4">
-            <Link to={'/additional-information'} className="flex justify-center items-center w-full md:w-36 h-8  rounded-full cursor-pointer border border-[#104B53] text-[#104B53]">Back</Link>
-            <Link  to={''} className="flex justify-center items-center w-full md:w-36 h-8  rounded-full cursor-pointer bg-[#E9F358] ">
-              Submit
-            </Link>
-          </div>
+
+          <div className="flex flex-col space-y-5 md:flex-row justify-between items-center pb-10">
+            <p className="text-[#7D8697] text-xs w-full">
+              you can edit or modify the profile later in (profile)
+            </p>
+            <div className="flex w-full  justify-between md:justify-end items-center  space-x-4">
+              <Link
+                to={'/additional-information'}
+                className="flex justify-center items-center w-full md:w-36 h-8  rounded-full cursor-pointer border border-[#104B53] text-[#104B53]"
+              >
+                Back
+              </Link>
+              <Link
+                to={'/searchjob'}
+                className="flex justify-center items-center w-full md:w-36 h-8  rounded-full cursor-pointer bg-[#E9F358] "
+              >
+                Submit
+              </Link>
             </div>
-
-
+          </div>
         </div>
       </div>
     </div>

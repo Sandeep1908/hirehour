@@ -2,10 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
-import { Link, useNavigate } from 'react-router-dom';
+
+import { Link,  useLocation, useNavigate } from 'react-router-dom';
+import ForgetPassword from '../../../components/job-seekers/modals/authModals/ForgetPassword';
+import NewPassword from '../../../components/job-seekers/modals/authModals/NewPassword';
+import Verification from '../../../components/job-seekers/modals/authModals/Verification';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '../../../axios/axiosInstance';
-import { z } from 'zod';
+import {  z } from 'zod';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+
 
 
 
@@ -40,6 +47,7 @@ const Signin: React.FC = () => {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [validateErrors, setValidateErrors] = useState<boolean>(false);
 
+  const location =useLocation()
   const navigate = useNavigate();
 
   // Check if user is already logged in
@@ -54,16 +62,21 @@ const Signin: React.FC = () => {
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
       const response = await axiosInstance.post("/api/candidate/login", userCredentials);
-      console.log("response.data", response.data);
-      localStorage.setItem('token', response.data.token);
+       
       return response.data;
     },
-    onSuccess: () => {
-      alert("Signed in successfully");
-      navigate("/");
+
+    onSuccess: (data) => {
+      toast.success('Logged In Successfull');
+      localStorage.setItem('topequatortoken',data?.token)
+      const redirectTo = location.state?.from?.pathname || '/';
+      navigate(redirectTo);
+
     },
-    onError: () => {
-      localStorage.removeItem("authToken");
+    onError: (error) => {
+      const axiosError = error as AxiosError<{message:string}>;
+      toast.error(axiosError?.response?.data?.message)
+      localStorage.removeItem("topequatortoken");
       setValidateErrors(true)
       setEmail("")
       setPassword("")
@@ -73,7 +86,6 @@ const Signin: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     // Validate form using Zod
     const result = signinSchema.safeParse({ email, password });
     if (!result.success) {

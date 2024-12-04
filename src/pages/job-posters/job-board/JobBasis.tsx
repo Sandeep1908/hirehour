@@ -190,9 +190,29 @@ const JobBasis: React.FC = () => {
                   />
                 </div>
 
-                {/* Relocate  */}
+                 {/* Working Country  */}
+                 <div className="flex flex-col space-y-2">
+                  <div className="flex ">
+                    <label htmlFor="" className="text-xs">
+                      Working Country
+                    </label>
+                    <span className="text-red-500">*</span>
+                  </div>
 
-                <div className="flex justify-start items-center">
+                  <input
+                    type="text"
+                    placeholder="Country"
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  />
+                </div>
+
+             
+              </div>
+
+              <div className="w-full grid md:grid-cols-2 gap-3">
+   {/* Relocate  */}
+
+   <div className="flex justify-start items-center">
                   <input type="checkbox" placeholder="Job Type" className="w-10 h-5" />
 
                   <div className="flex ">
@@ -202,24 +222,9 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
                 </div>
-              </div>
 
-              <div className="w-full grid md:grid-cols-2 gap-3">
-                {/* Employment type  */}
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                      Employment type
-                    </label>
-                    <span className="text-red-500">*</span>
-                  </div>
 
-                  <Select
-                    options={employmentTypeOptions}
-                    isMulti
-                    className="text-xs text-[#9CA3AF]"
-                  />
-                </div>
+             
 
                 {/* Job Domain  */}
 
@@ -239,7 +244,49 @@ const JobBasis: React.FC = () => {
                 </div>
               </div>
 
+                <div className="w-full grid md:grid-cols-2 gap-3">
+
+
+
+
+                 {/* Employment type  */}
+                 <div className="flex flex-col space-y-2">
+                  <div className="flex ">
+                    <label htmlFor="" className="text-xs">
+                      Employment type
+                    </label>
+                    <span className="text-red-500">*</span>
+                  </div>
+
+                  <Select
+                    options={employmentTypeOptions}
+                    isMulti
+                    className="text-xs text-[#9CA3AF]"
+                  />
+                </div>
+
+{/* The role provide visa sponsorship*  */}
+
+<div className="flex flex-col space-y-2">
+  <div className="flex ">
+    <label htmlFor="" className="text-xs">
+      The role provide visa sponsorship
+    </label>
+    <span className="text-red-500">*</span>
+  </div>
+
+  <input
+    type="text"
+    placeholder="Job Domain"
+    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+  />
+</div>
+</div>
+
               <div className="w-full grid md:grid-cols-2 gap-3">
+
+
+
                 {/* Work Authorization   */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -256,21 +303,22 @@ const JobBasis: React.FC = () => {
                   />
                 </div>
 
-                {/* The role provide visa sponsorship*  */}
+              {/* Number of position hiring**  */}
 
-                <div className="flex flex-col space-y-2">
+              <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
-                      The role provide visa sponsorship
+                      Number of position hiring
                     </label>
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Job Domain"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <select name="" id="" className='p-2 text-xs border border-[#EBEBF0] rounded-md placeholder:text-xs'>
+                    <option value="">Single</option>
+                    <option value="">Multiple</option>
+
+                  </select>
+                 
                 </div>
               </div>
 
@@ -291,23 +339,24 @@ const JobBasis: React.FC = () => {
                   />
                 </div>
 
-                {/* Number of position hiring**  */}
 
-                <div className="flex flex-col space-y-2">
+                 {/* Experience Year*   */}
+                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
-                      Number of position hiring
+                      Year of Experience required
                     </label>
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <select name="" id="" className='p-2 text-xs border border-[#EBEBF0] rounded-md placeholder:text-xs'>
-                    <option value="">Single</option>
-                    <option value="">Multiple</option>
-
-                  </select>
-                 
+                  <Select
+                    options={employmentTypeOptions}
+                    isMulti
+                    className="text-xs text-[#9CA3AF]"
+                  />
                 </div>
+
+               
               </div>
             </div>
           </div>
