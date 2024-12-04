@@ -4,6 +4,10 @@ export const fetchUserDetails = async () => {
   const response = await axiosInstance.get('/api/candidate/details/get-all-details');
   return response.data;
 };
+export const fetchUserDetail = async () => {
+  const response = await axiosInstance.get('/api/candidate/details/get-details');
+  return response.data;
+};
 
 export const fetchRoles = async () => {
   const respons = await axiosInstance.get('/api/misc/dropdown/jobroles');
@@ -17,5 +21,11 @@ export const fetchDomains = async () => {
 
 export const fetchRoleTypes = async () => {
   const respons = await axiosInstance.get('/api/misc/dropdown/jobroletypes');
+  return respons.data;
+};
+
+
+export const fetchResumes = async () => {
+  const respons = await axiosInstance.get('/api/candidate/details/resumes');
   return respons.data;
 };

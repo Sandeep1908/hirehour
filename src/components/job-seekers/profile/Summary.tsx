@@ -1,50 +1,50 @@
-import { useQuery,useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import React, { useEffect, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
 import axiosInstance from '../../../axios/axiosInstance';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 type AddSummary = {
   setSummaryPopup: (agr: boolean) => void;
 };
 
- 
-
 const Summary: React.FC<AddSummary> = ({ setSummaryPopup }) => {
-    const [summary,setSummary]=useState<SummaryDetails>({summary:''})
+  const [summary, setSummary] = useState<SummaryDetails>({ summary: '' });
   const maxLength = 2000;
-  const {data:userDetails} = useQuery({queryKey:['userDetails'],queryFn:fetchUserDetails})
-  const queryClient=useQueryClient()
+  const { data: userDetails } = useQuery({ queryKey: ['userDetails'], queryFn: fetchUserDetails });
+  const queryClient = useQueryClient();
 
-  useEffect(()=>{
-    setSummary({summary:userDetails?.summary})
-  },[userDetails?.summary])
+  useEffect(() => {
+    setSummary({ summary: userDetails?.summary });
+  }, [userDetails?.summary]);
 
   const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     if (value.length <= maxLength) {
-      setSummary({summary:value});
+      setSummary({ summary: value });
     }
   };
 
   const summeryMuation = useMutation({
-    mutationFn: async (summery:SummaryDetails) => {
+    mutationFn: async (summery: SummaryDetails) => {
       const response = await axiosInstance.post('/api/candidate/details/update-details', summery);
       return response.data;
     },
     onSuccess: () => {
-      alert('Summary Edited Succesfully')
-      queryClient.invalidateQueries({queryKey:['userDetails']})
-      setSummaryPopup(false)
-
+      toast.success('Summary Edited Succesfully');
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+      setSummaryPopup(false);
     },
     onError: (error) => {
-      alert(error.message);
+      const axiosError= error as AxiosError<{message:string}>
+      toast.error(axiosError?.response?.data?.message)
     },
   });
 
   const handleContinue = () => {
-        summeryMuation.mutate(summary)
+    summeryMuation.mutate(summary);
   };
 
   return (
@@ -76,7 +76,9 @@ const Summary: React.FC<AddSummary> = ({ setSummaryPopup }) => {
             maxLength={maxLength}
           ></textarea>
           {/* Character count */}
-          <p className={`text-base font-normal text-right mr-2 ${summary?.summary?.length === maxLength ? 'text-red-500' : ''}`}>
+          <p
+            className={`text-base font-normal text-right mr-2 ${summary?.summary?.length === maxLength ? 'text-red-500' : ''}`}
+          >
             {summary?.summary?.length}/{maxLength}
           </p>
         </div>

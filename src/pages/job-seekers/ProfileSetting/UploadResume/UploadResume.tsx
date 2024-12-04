@@ -11,6 +11,7 @@ import axiosInstance from '../../../../axios/axiosInstance';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation.ts';
 import { toast } from 'react-toastify';
 import  { AxiosError } from 'axios';
+import { fetchResumes, fetchUserDetails } from '../../../../utils/jobseekers/getUserDetails.ts';
 
 type ResumeType = {
   id: number;
@@ -25,20 +26,13 @@ type ModalUserDetails = {
   needVisaSponsorship: boolean;
 };
 
-const fetchResumes = async () => {
-  const response = await axiosInstance.get('/api/candidate/details/resumes');
-  return response.data;
-};
-
-const fetchUserDetails = async () => {
-  const response = await axiosInstance.get('/api/candidate/details/get-all-details');
-  return response.data;
-};
+ 
+ 
 
 const UploadResume: React.FC = () => {
   const [isContinue, setIsContinue] = useState<boolean>(false);
   const description = 'resume';
-  const [fileName, setFileName] = useState<string | null>(null);
+   
   const [fileSize, setFileSize] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const queryClient = useQueryClient();
@@ -102,7 +96,6 @@ const UploadResume: React.FC = () => {
     onError: (error) => {
       const axiosError = error as AxiosError<{message:string}>
       setUploadProgress(null);
-      localStorage.removeItem('filenameres');
       localStorage.removeItem('filesizeres');
       toast.error(axiosError?.response?.data?.message);
     
@@ -127,7 +120,6 @@ const UploadResume: React.FC = () => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('description', description);
-    localStorage.setItem('filenameres', file.name);
     localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
     uploadResumeMutation.mutate(formData);
   };
@@ -196,9 +188,9 @@ const UploadResume: React.FC = () => {
   
 
   useEffect(() => {
-    const fileName = localStorage.getItem('filenameres');
+    
     const fileSize = localStorage.getItem('filesizeres');
-    setFileName(fileName);
+ 
     setFileSize(fileSize);
   }, [resumes]);
 
@@ -282,7 +274,7 @@ const UploadResume: React.FC = () => {
 
           <div className="w-full sm:w-[588px] h-[300px] p-4 flex flex-col justify-around md:justify-between items-center">
             <div className="flex flex-col space-y-5 w-full">
-              {fileName ? (
+              {latestResume?.resumeLink ? (
                 <>
                   <h1 className="text-sm font-semibold">
                     {uploadProgress == 100 ? 'Uploading...' : 'Uploaded'}
@@ -297,7 +289,7 @@ const UploadResume: React.FC = () => {
   href={latestResume?.resumeLink || ""}
   rel="noopener noreferrer">
                           {' '}
-                          {fileName} {fileSize} MB
+                          {latestResume?.resumeLink.split('@@')[1]} {fileSize} MB
                         </a>
                       </p>
 
