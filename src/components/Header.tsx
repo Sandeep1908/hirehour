@@ -22,7 +22,7 @@ import msgLogo from '../assets/header/message.svg';
 import jobLogo from '../assets/header/jobs.svg';
 
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserDetails } from '../utils/jobseekers/getUserDetails';
 import isAuthenticated from './isAuthenicated';
 
@@ -31,14 +31,15 @@ const Header: React.FC = () => {
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const params = useLocation().pathname;
-  
- 
+  const queryClient=useQueryClient()
   const { data: userDetails } = useQuery({
     queryKey: ['userDetails'],
     queryFn: fetchUserDetails,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    retry: 1, // Retry once on failure
   });
+
+  useEffect(()=>{
+    queryClient.invalidateQueries({queryKey:['userDetails']})
+  },[params==='/'])
 
   const handlNavBar = () => {
     setIsAccountOpen(false);
@@ -200,7 +201,15 @@ const Header: React.FC = () => {
             >
               <div className="flex justify-center items-center space-x-3">
                 <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
-                {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full rounded-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.charAt(0)}
+                  {userDetails?.profilePictureLink ? (
+                    <img
+                      src={userDetails?.profilePictureLink}
+                      className="w-full h-full rounded-full object-cover"
+                      alt="profile-alt"
+                    />
+                  ) : (
+                    userDetails?.user.firstName.charAt(0)
+                  )}
                 </p>
                 <p className="text-sm">{userDetails?.user?.firstName}</p>
               </div>
@@ -211,7 +220,12 @@ const Header: React.FC = () => {
 
               {/* Account Modal  */}
 
-              <AccountModal isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} username={userDetails?.user?.firstName} email={userDetails?.user?.email} />
+              <AccountModal
+                isAccountOpen={isAccountOpen}
+                setIsAccountOpen={setIsAccountOpen}
+                username={userDetails?.user?.firstName}
+                email={userDetails?.user?.email}
+              />
             </div>
           </div>
         )}

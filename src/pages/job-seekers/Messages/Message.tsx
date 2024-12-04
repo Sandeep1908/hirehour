@@ -6,13 +6,7 @@ import { FaFlag } from 'react-icons/fa';
 import { MdShare } from 'react-icons/md';
 import { MdOutlineAttachment } from 'react-icons/md';
 import { LuSendHorizonal } from 'react-icons/lu';
-
-interface MessageItem {
-    sender: string;
-    time: string;
-    text: string;
-    isSelf: boolean;
-  }
+ 
   
 const Message: React.FC = () => {
     const [isShareModal, setIsShareModal] = useState<boolean>(false);
@@ -196,7 +190,7 @@ const Message: React.FC = () => {
                 {
                     messages?.map((msg,i)=>{
                         return(
-                            <div className="w-full flex flex-col justify-end items-end space-y-4">
+                            <div key={i} className="w-full flex flex-col justify-end items-end space-y-4">
                             <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
                               <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">
                                 {msg}
