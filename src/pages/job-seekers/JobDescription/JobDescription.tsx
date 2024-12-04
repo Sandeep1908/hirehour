@@ -942,7 +942,7 @@ const JobDescription: React.FC = () => {
 
                 {/* Screening Questions  */}
                 <div
-                    className={`w-full h-full flex p-3 md:p-3    justify-center items-center  fixed inset-0 transition-all duration-500 ${isQuickApply ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+                    className={`w-full h-full flex p-3 md:p-3 justify-center items-center  fixed inset-0 transition-all duration-500 ${isQuickApply ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
                 >
                     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
                     <div className='max-w-[600px] h-full md:h-auto w-full bg-white rounded-lg overflow-auto z-[30]'>

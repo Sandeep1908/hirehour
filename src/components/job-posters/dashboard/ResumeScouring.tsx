@@ -1114,7 +1114,7 @@ const ResumeScouring: React.FC = () => {
 
 
     return (
-        <div className='w-full h-auto '>
+        <div className='w-full h-fix '>
             <div className="flex justify-between items-center p-3">
                 <h1 className="text-sm font-semibold">Resume Sourcing
                 </h1>
@@ -1214,15 +1214,15 @@ const ResumeScouring: React.FC = () => {
 
 
             {/* all Filter details  */}
-            {/* <div className="w-full  space-y-3  h-full">
+            <div className="w-full  space-y-3  h-full">
                 {jobFilters?.map((item, i) => {
                     if (jobFilterIdx === i) {
                         return <div key={i}>{item.component}</div>;
                     }
                 })}
-            </div> */}
+            </div>
 
-           <div className='w-full h-full'>
+           {/* <div className='w-full h-full'>
 
 
 
@@ -1283,7 +1283,7 @@ const ResumeScouring: React.FC = () => {
                   
 
        </div>
-           </div>
+           </div> */}
 
 
               {/* Add Candidate */}
