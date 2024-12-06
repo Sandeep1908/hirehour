@@ -3,7 +3,7 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../../assets/Google.svg';
 import apple_logo from '../../../../assets/apple.svg';
 
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '../../../../axios/axiosInstance';
 import { toast } from 'react-toastify';
@@ -40,7 +40,6 @@ const Signin: React.FC = () => {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [validateErrors, setValidateErrors] = useState<boolean>(false);
 
-  const location = useLocation()
   const navigate = useNavigate();
 
   // Check if user is already logged in
