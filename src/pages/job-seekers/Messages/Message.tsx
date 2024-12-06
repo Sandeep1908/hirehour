@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FaEdit } from 'react-icons/fa';
 import { HiOutlineDotsVertical } from 'react-icons/hi';
@@ -6,31 +6,72 @@ import { FaFlag } from 'react-icons/fa';
 import { MdShare } from 'react-icons/md';
 import { MdOutlineAttachment } from 'react-icons/md';
 import { LuSendHorizonal } from 'react-icons/lu';
- 
-  
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import axiosInstance from '../../../axios/axiosInstance';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+import { formatDistanceToNow } from 'date-fns';
+
+type MessageTypes = {
+  content: string;
+  senderId: number;
+  receiverId: number;
+};
+
+const fetchAllMessages = async () => {
+  const response = await axiosInstance.get('/api/utils/messager/messages/1/2');
+  return response.data;
+};
+
 const Message: React.FC = () => {
-    const [isShareModal, setIsShareModal] = useState<boolean>(false);
-    const [newMessage, setNewMessage] = useState<string>('');
-   const [messages,setMessages]=useState<string[]>([])
-  
-    const titles = [
-      { label: 'My Jobs', link: '/myjobs' },
-      { label: 'Right To Represent', link: '/right-to-represent' },
-      { label: 'Messages', link: '/messages' },
-    ];
-  
-    
-  
-    const handleSendMessage = () => {
-      if (newMessage.trim()) {
-        setMessages([
-          ...messages,
-         newMessage
-        ]);
-        setNewMessage('');
-      }
-    };
-  
+  const queryClient = useQueryClient();
+
+  const [isShareModal, setIsShareModal] = useState<boolean>(false);
+  const [newMessage, setNewMessage] = useState<string>('');
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
+
+  const titles = [
+    { label: 'My Jobs', link: '/myjobs' },
+    { label: 'Right To Represent', link: '/right-to-represent' },
+    { label: 'Messages', link: '/messages' },
+  ];
+
+  const { data: message } = useQuery({
+    queryKey: ['messages'],
+    queryFn: fetchAllMessages,
+  });
+
+  const sendMessageMutation = useMutation({
+    mutationFn: async (Message: MessageTypes) => {
+      const response = await axiosInstance.post('/api/utils/messager/send', Message);
+      return response.data;
+    },
+    onSuccess: () => {
+      
+      queryClient.invalidateQueries({ queryKey: ['messages'] });
+      setNewMessage('')
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
+
+  const handleMessageSend = () => {
+    if (!newMessage) {
+      toast.warning('Type something to send..');
+      return;
+    }
+
+    sendMessageMutation.mutate({ content: newMessage, senderId: 1, receiverId: 2 });
+   
+  };
+
+   // Scroll to bottom whenever messages update
+   useEffect(() => {
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [message]);
+
 
   return (
     <div className="w-full  min-h-[calc(100vh-70px)]  bg-[#F2F2F5]   ">
@@ -90,7 +131,7 @@ const Message: React.FC = () => {
 
             <div className="w-full flex flex-col space-y-4 h-[99%] overflow-auto">
               <div className="flex justify-center space-x-2 items-start bg-[#EFFDFD] p-3  border-l-4 border-[#104B53] ">
-              <p className="w-full max-w-[50px] h-[48px] rounded-full bg-[#A6F3D0] flex justify-center items-center font-semibold">
+                <p className="w-full max-w-[50px] h-[48px] rounded-full bg-[#A6F3D0] flex justify-center items-center font-semibold">
                   MT
                 </p>
                 <div className="w-full flex justify-between items-start">
@@ -106,7 +147,6 @@ const Message: React.FC = () => {
                   </div>
                 </div>
               </div>
- 
             </div>
           </div>
 
@@ -187,23 +227,37 @@ const Message: React.FC = () => {
 
             <div className="w-full  p-5 ">
               <div className="w-full  h-[50vh]  space-y-3  overflow-auto " id="message-box">
-                {
-                    messages?.map((msg,i)=>{
-                        return(
-                            <div key={i} className="w-full flex flex-col justify-end items-end space-y-4">
-                            <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
-                              <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">
-                                {msg}
-                              </p>
-                              <p className="text-[10px] text-[#C4C4C4]">Just Now</p>
-                            </div>
-                          </div>
-                        )
-                    })
-                }
-               
+                {message?.map((msg, i) => {
+                   const timeAgo = formatDistanceToNow(new Date(msg.createdAt), { addSuffix: true });
+                  if (msg?.senderId === 1) {
+                    return (
+                      <div key={i} className="w-full flex flex-col justify-end items-end space-y-4">
+                        <div className="flex flex-col space-y-1 justify-end items-end w-full max-w-[302px]">
+                          <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">
+                            {msg.content}
+                          </p>
+                          <p className="text-[10px] text-[#C4C4C4]">{timeAgo}</p>
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div
+                        key={i}
+                        className="w-full flex flex-col justify-end items-start space-y-4"
+                      >
+                        <div className="flex flex-col space-y-1 justify-start items-start w-full max-w-[302px]">
+                          <p className="text-xs border border-[#D6DBDE] p-2 rounded-lg">
+                            {msg.content}
+                          </p>
+                          <p className="text-[10px] text-[#C4C4C4]">{timeAgo}</p>
+                        </div>
+                      </div>
+                    );
+                  }
+                })}
 
-                
+<div ref={messageEndRef} /> {/* Scroll Anchor */}   
               </div>
 
               {/* send button  */}
@@ -221,7 +275,7 @@ const Message: React.FC = () => {
                 </div>
 
                 <p className=" bg-[#E9F358] p-3 cursor-pointer">
-                  <LuSendHorizonal color="#104B53" onClick={()=>handleSendMessage()} />
+                  <LuSendHorizonal color="#104B53" onClick={() => handleMessageSend()} />
                 </p>
               </div>
             </div>

@@ -91,7 +91,10 @@ import RTRCompanyProfile from './pages/job-posters/dashboard/dashboardRTR/userpr
 import RTRPrivacySetting from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
 import VerificationMainTemp from './pages/emails/Verification.tsx';
 import ProtectedRoute from './components/ProtectedRoute.tsx';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+
+const queryClient = new QueryClient();
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -224,10 +227,12 @@ const router = createBrowserRouter(
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
+    <QueryClientProvider client={queryClient}>
     <HeaderContextProvider>
       <DndProvider backend={HTML5Backend}>
         <RouterProvider router={router} />
       </DndProvider>
     </HeaderContextProvider>
+    </QueryClientProvider>
   </StrictMode>,
 );
