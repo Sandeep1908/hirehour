@@ -4,9 +4,6 @@ import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
 
 import { Link,  useLocation, useNavigate } from 'react-router-dom';
-import ForgetPassword from '../../../components/job-seekers/modals/authModals/ForgetPassword';
-import NewPassword from '../../../components/job-seekers/modals/authModals/NewPassword';
-import Verification from '../../../components/job-seekers/modals/authModals/Verification';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '../../../axios/axiosInstance';
 import {  z } from 'zod';
@@ -34,11 +31,6 @@ interface FormErrors {
   password?: { _errors: string[] };
 }
 
-// interface AuthResponse {
-//   message: {
-//     accessToken: string;
-//   };
-// }
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
