@@ -13,14 +13,17 @@ import ShortListed from './ShortListed'
 import axiosInstance from '../../../axios/axiosInstance'
 
 
+
+
 type accessProps={
   setAddAdmin : (arg:boolean) => void
   setAsign : (arg:boolean) => void
+  users: Users[];
   
 }
 
 
-// Define the User type
+
 type Role = {
   roleName: string;
 };
@@ -34,51 +37,57 @@ type UserPermLabelsAcrossApplications = {
   permTag: Permission;
 };
 
-// Define the User type
-type User = {
+
+
+
+interface Users {
   id: number;
   firstName: string;
   lastName: string;
   email: string;
-  role: string;
+  role: string; // Adjust fields as per your API response
+  createdAt: string; // Adjust fields as per your API response
+  recruiterdetail:string;
+  candidatedetail:string;
+  admindetail:string;
   userpermlabelsacrossapplications: UserPermLabelsAcrossApplications[];
 
-};
+}
 
 
-const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
+
+const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) => {
 
 
-  const [users, setUsers] = useState<User[]>([]); 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+    // const [users, setUsers] = useState<User[]>([]); 
+    // useEffect(() => {
+    //   const fetchUsers = async () => {
+    //     const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
 
-      if (!token) {
-        console.error("No token found in localStorage");
-        return;
-      }
+    //     if (!token) {
+    //       console.error("No token found in localStorage");
+    //       return;
+    //     }
 
-      try {
-        const response = await axiosInstance.get("/api/admin/user-management/users", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include the token
-          },
-        });
-        setUsers(response.data.users); // Assuming response.data contains the user array
-        console.log(response.data.users)
-      } catch (error) {
-        // console.error("Error fetching users:", error.response?.data || error.message);
-      }
-    };
+    //     try {
+    //       const response = await axiosInstance.get("/api/admin/user-management/users", {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`, 
+    //         },
+    //       });
+    //       setUsers(response.data.users);
+    //       console.log(response.data.users)
+    //     } catch (error) {
+    //     }
+    //   };
 
-    fetchUsers();
-  }, []);
+    //   fetchUsers();
+    // }, []);
 
 
   const [moreOption, setMoreOption] = useState<boolean>(false);
 
-
+  
   
   const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
   return (
@@ -107,11 +116,11 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
               </thead>
 
               <tbody>
-              
+             
                 {users.map((user, index) => (
                   <tr
                     key={index}
-                    className="border-[1px] border-[#D6DBDE] hover:bg-gray-50"
+                    className="relative border-[1px] border-[#D6DBDE] hover:bg-gray-50"
                   >
                     <td className="px-4 align-top py-3">
                       <div className="flex gap-4">
@@ -128,16 +137,12 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
                     <td className="align-top py-3">
                       <p className="text-[12px] font-medium">
                         {/* {user.role || "N/A"} */}
-                        {user.userpermlabelsacrossapplications.map((role,i)=>{
-                          return(<span key={i}>
-                            {role.role.roleName}
-                          </span>)
-                        })}
+                        {user.userpermlabelsacrossapplications[0].role.roleName}
                         </p>
                     </td>
                     <td className="py-3">
                       <div className="flex flex-col gap-2">
-                        <div className="relative justify-between pr-7 flex gap-2">
+                        <div className=" justify-between pr-7 flex gap-2">
                         <p className="text-[12px] font-medium">
                         {/* {user.role || "N/A"} */}
                         {user.userpermlabelsacrossapplications.map((permTag,i)=>{
@@ -153,8 +158,19 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
                             }}
                           >
                             <IoMdMore size={20} />
-                            <div
-                              className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-[-5px] transition-all duration-500 bg-white ${
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+
+{/* edit  */}
+
+              <div
+                              className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[90px] top-[165px] transition-all duration-500 bg-white ${
                                 moreOption
                                   ? "opacity-1 scale-[1.01] z-[40]"
                                   : "opacity-0 z-[-10]"
@@ -182,13 +198,8 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
                                 <p className="text-xs font-semibold">Delete</p>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+
+
               {/* <tbody className='mt-2'>
                 <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
                   <td className='px-4 align-top py-3'>
@@ -667,7 +678,7 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
     </div>
   )
 }
-const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
+const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) => {
 
     const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
     const [moreOption, setMoreOption] = useState<boolean>(false);
@@ -702,97 +713,73 @@ const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
                   <th className='text-[12px] text-start w-[15%]'  >Assign To</th>
                 </tr>
               </thead>
-
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Ken</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Kenadmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Hero</p>
-                    </td>
-
-
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Jobs, Verification</p>
-                    </td>
-
+              {users.map((user,i)=>{
+                if(user.userpermlabelsacrossapplications[0].role.roleName !=="recruiter" && user.userpermlabelsacrossapplications[0].role.roleName !=="candidate" ){
+                  return(
+                    <tbody key={i} className='mt-2'>
+                    <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
+                      <td className='px-4 align-top py-3'>
+                         <div className='flex gap-4 '>
+                        <div className='text-[12px] cursor-pointer'  >
+                          <p>{user.firstName || "N/A"} {user.lastName || "N/A"}</p>
+                         
+                        </div>
+                      </div> </td>
+                      <td className='align-top py-3'>
+                        <p className='text-[12px] cursor-pointer'> {user.email || "N/A"}</p>
+                      </td>
+                      <td className='align-top py-3'><p className='text-[12px] font-medium'> {user.userpermlabelsacrossapplications.map((role,i)=>{
+                          return(<span key={i}>
+                            {role.role.roleName}
+                          </span>)
+                        })}</p>
+                        </td>
     
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative justify-between pr-7 flex gap-2'>
-                     
-                        
-                       <p  className='text-[12px] cursor-pointer' >--</p>
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={20} />
-                          <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-[-5px] transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                              <div onClick={()=>{setAddAdmin(true)}} className='px-3 py-2'>
-                                <p className='text-xs font-semibold'>Edit</p>
-                              </div>
-                              <hr />
-                              <div onClick={()=>{setAsign(true)}} className='px-3 py-2'>
-                                <p className='text-xs font-semibold'>Move To</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-xs font-semibold'> Delete</p>
-                              </div>
-                        </div>
-                        </div>
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Peter</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Peteradmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Hero</p>
-                    </td>
-
-
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Verification</p>
-                    </td>
-
     
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative justify-between pr-7 flex gap-2'>
-                     
-                        
-                       <p  className='text-[10px] bg-[#F2F2F5]  text-[#6B7588] px-3 py-1 rounded-full cursor-pointer' >Team 1</p>
-
-                        <div className='relative'>
-                          <IoMdMore size={20} />
-                       
+                      <td className='align-top py-3'><p className='text-[12px] font-medium'> {user.userpermlabelsacrossapplications.map((permTag,i)=>{
+                          return(<span key={i}>
+                            {permTag.permTag.permName} , 
+                          </span>)
+                        })}</p>
+                        </td>
+    
+        
+    
+                      <td className='py-3'>
+                       <div className='flex flex-col gap-2'>
+                       <div className='relative justify-between pr-7 flex gap-2'>
+                         
+                            
+                           <p  className='text-[12px] cursor-pointer' >--</p>
+    
+                            <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
+                              <IoMdMore size={20} />
+                              <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-[-5px] transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+                                  <div onClick={()=>{setAddAdmin(true)}} className='px-3 py-2'>
+                                    <p className='text-xs font-semibold'>Edit</p>
+                                  </div>
+                                  <hr />
+                                  <div onClick={()=>{setAsign(true)}} className='px-3 py-2'>
+                                    <p className='text-xs font-semibold'>Move To</p>
+                                  </div>
+                                  <hr />
+                                  <div className='px-3 py-2'>
+                                    <p className='text-xs font-semibold'> Delete</p>
+                                  </div>
+                            </div>
+                            </div>
+    
                         </div>
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-              </tbody>
+    
+                       </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  )
+                }
+              })}
+           
+          
             
              
             </table>
@@ -1116,8 +1103,12 @@ const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
     </div>
   )
 }
-const PendingComponent: React.FC = () => {
-
+const PendingComponent: React.FC<accessProps> = ({users}) => {
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Extract only the YYYY-MM-DD part
+  };
+  
     const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
 
     // const [moreOption, setMoreOption] = useState<boolean>(false);
@@ -1148,81 +1139,69 @@ const PendingComponent: React.FC = () => {
                   <th className='text-[12px] text-start w-[20%]'  >Invite</th>
                 </tr>
               </thead>
-
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Ken</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Kenadmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Hero</p>
-                    </td>
-
-
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Jobs, Verification</p>
-                    </td>
-
-    
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='flex-col justify-between pr-7 flex gap-1'>
-                     
+              
+              {users.map((user,id)=>{
+                if(user.userpermlabelsacrossapplications[0].role.roleName !=="superadmin"){
+                  return(
+                    <tbody key={id} className='mt-2'>
+                  <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
+                    <td className='px-4 align-top py-3'>
+                       <div className='flex gap-4 '>
+                      <div className='text-[12px] cursor-pointer'  >
+                        <p>{user.firstName || "N/A"} {user.lastName || "N/A"}</p>
+                        <p>
+                      
+                        </p>
                         
-
-                       <p  className='w-fit text-[10px] text-[#06A560] bg-[#B4FEDD] rounded-full cursor-pointer font-medium px-3 py-1' > Logged in</p>
-                       <p  className='text-[12px] cursor-pointer font-medium' > Logged in Date : <span className='font-normal'>05/06/2024</span></p>
-
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Peter</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Peteradmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Hero</p>
+                      </div>
+                    </div> </td>
+                    <td className='align-top py-3'>
+                      <p className='text-[12px] cursor-pointer'>{user.email || "N/A"}</p>
                     </td>
+                    <td className='align-top py-3'><p className='text-[12px] font-medium'>
+                    {user.userpermlabelsacrossapplications[0].role.roleName}
+                    </p>
+                  
+                      </td>
+  
+  
+                    <td className='align-top py-3'><p className='text-[12px] font-medium'>
+                    {user.userpermlabelsacrossapplications.map((permTag,i)=>{
+                            return(<span key={i}>
+                              {permTag.permTag.permName} , 
+                            </span>)
+                          })}
+                    </p>
+                      </td>
+  
+      
+  
+                    <td className='py-3'>
+                     <div className='flex flex-col gap-2'>
+                     <div className='flex-col justify-between pr-7 flex gap-1'>
+                       
+                          
+                          
+                         <p className={`${user.candidatedetail === null && user.recruiterdetail === null ? "text-[#FFB520] bg-[#FFF1C6]":" text-[#06A560] bg-[#B4FEDD]"} w-fit text-[10px]  rounded-full cursor-pointer font-medium px-3 py-1`} > {user.candidatedetail === null && user.recruiterdetail === null ? " Pending":"Logged in"}</p>
+                      
+                      
+                         <p  className='text-[12px] cursor-pointer font-medium' > Logged in Date : <span className='font-normal'>{user.createdAt ? formatDate(user.createdAt) : "N/A"}</span></p>
 
-
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Verification</p>
+                       
+  
+  
+                      </div>
+  
+                     </div>
                     </td>
-
-    
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='flex-col justify-between pr-7 flex gap-1'>
-                     
-                        
-
-                       <p  className='w-fit text-[10px] text-[#FFB520] bg-[#FFF1C6] rounded-full cursor-pointer font-medium px-3 py-1' > Pending</p>
-                       <p  className='text-[12px] cursor-pointer font-medium' > Invite Sent Date : <span className='font-normal'>05/06/2024</span></p>
-
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-              </tbody>
+                  </tr>
+                </tbody>
+                  )
+                }
+               
+              })}
+            
+           
             
              
             </table>
@@ -1547,26 +1526,65 @@ const PendingComponent: React.FC = () => {
   )
 }
 
+
+
+
 const Access: React.FC = () => {
 
  
 
+  // const [accessCount, setAccessCount] = useState<number>(0);
+  // const [teamCount, setTeamCount] = useState<number>(0);
+  // const [pendingCount, setPendingCount] = useState<number>(0);
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
   const [addAdmin, setAddAdmin] = useState<boolean>(false);
   const [asign, setAsign] = useState<boolean>(false);
+
   // const [showShortList, setShowShortList] = useState<boolean>(false);
+
+
+
+  const [usersDetail, setUsersDetail] = useState<Users[]>([]); 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+
+      if (!token) {
+        console.error("No token found in localStorage");
+        return;
+      }
+
+      try {
+        const response = await axiosInstance.get("/api/admin/user-management/users", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+          },
+        });
+        setUsersDetail(response.data.users); // Assuming response.data contains the user array
+         
+        console.log(response.data.users)
+      } catch (error) {
+        // console.error("Error fetching users:", error.response?.data || error.message);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+
+
   const jobFilters = [
     {
       label: 'Access',
-      component: <AccessComponent setAddAdmin={setAddAdmin} setAsign={setAsign} />,
+      component: <AccessComponent setAddAdmin={setAddAdmin} setAsign={setAsign} users={usersDetail} />,
     },
     {
       label: 'Teams',
-      component: <TeamsComponent setAddAdmin={setAddAdmin} setAsign={setAsign}/>,
+      component: <TeamsComponent setAddAdmin={setAddAdmin} setAsign={setAsign} users={usersDetail}/>,
     },
     {
       label: 'Pending',
-      component: <PendingComponent />,
+      component: <PendingComponent setAddAdmin={setAddAdmin} setAsign={setAsign} users={usersDetail} />,
     },
   ];
 

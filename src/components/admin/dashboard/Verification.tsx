@@ -1,22 +1,50 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import {  FaCaretDown } from 'react-icons/fa'
 import {  IoMdMore } from 'react-icons/io'
 
 import ViewJob from './ViewJob'
+import axiosInstance from '../../../axios/axiosInstance'
 
 
 
+type verifyProps={
+  
+  users: Users[];
+  
+}
+
+type recruiterdetail = {
+  isVerifiedByUs: boolean;
+};
+
+interface Users {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string; // Adjust fields as per your API response
+  createdAt: string; // Adjust fields as per your API response
+  userProfileReference: string; 
+  isUserVerified:boolean;
+  recruiterdetail:recruiterdetail[];
+  // userpermlabelsacrossapplications: UserPermLabelsAcrossApplications[];
+
+}
 
 
-
-const AwaitingVerification: React.FC = () => {
+const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
 
   const [like, setLike] = useState<boolean>(false);
   const [midLike, setMidLike] = useState<boolean>(false);
   const [disLike, setDisLike] = useState<boolean>(false);
   const [moreOption, setMoreOption] = useState<boolean>(false);
   const [viewJobPopup, setViewJobPopup] = useState<boolean>(false);
+
+  const formatDate = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // Extract only the YYYY-MM-DD part
+  };
   
   return (
     <div className=''>
@@ -44,715 +72,88 @@ const AwaitingVerification: React.FC = () => {
                 </tr>
               </thead>
 
-              <tbody  className='mt-2'>
-                <tr onClick={()=>{setViewJobPopup(true)}}  className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div  className='text-[12px] cursor-pointer'  >
-                      <p >Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
 
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
+              {users.map((user,id)=>{
+                if( user.userProfileReference === "recruiter"  ){
+                  return(
+                    <tbody key={id}  className='mt-2'>
+                    <tr onClick={()=>{setViewJobPopup(true)}}  className='border-[1px] border-[#D6DBDE] mt-2 '>
+                      <td className='px-4 align-top py-3'>
+                         <div className='flex gap-4 '>
+                        <div  className='text-[12px] cursor-pointer'  >
+                          <p >{user.firstName || "N/A"}</p>
+                          <p></p>
+                         
                         </div>
-                        <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
+                      </div> </td>
+                      <td className='align-top py-3'>
+                        <p className='text-[12px] cursor-pointer'>{user.email || "N/A"}</p>
+                      </td>
+                      <td className='align-top py-3'><p className='text-[12px] font-medium'><span className='font-normal'>{user.createdAt ? formatDate(user.createdAt) : "N/A"}</span></p>
+                        </td>
+    
+                        <td className='align-top py-3'>
+                          <div>
+                          <p className='text-[12px] font-semibold' >Java Full stack developer</p>
+                          <div className='flex gap-2 text-[12px] '>
+                            <p>Figma</p>
+                            <p>Hybrid</p>
+                            <p>Allen, Texas, US</p>
+                          </div>
+                          </div>
+                        </td>
+    
+                      <td className='py-3'>
+                       <div className='flex flex-col gap-2'>
+                       <div className='relative flex gap-2'>
+                          <div className='flex gap-2'>
+                            <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                              <AiOutlineLike size={20} />
+    
+                            </div>
+                            <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                              <AiOutlineLike size={20} className='rotate-90 ' />
+    
+                            </div>
+                          </div>
+                          <div className='flex gap-10 items-center'>
+                            <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                              <AiOutlineDislike size={20} />
+    
+                            </div>
+                           
+    
+                            <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
+                              <IoMdMore size={25} />
+                              <div className={`absolute w-36 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-5 transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+                                  <div className='px-3 py-2'>
+                                    <p className='text-sm font-semibold'>Undo</p>
+                                  </div>
+                                  <hr />
+                                  <div className='px-3 py-2'>
+                                    <p className='text-sm font-semibold'> Delete</p>
+                                  </div>
+                            </div>
+                            </div>
+    
+                          </div>
+    
                         </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={25} />
-                          <div className={`absolute w-36 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-5 transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'>Undo</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'> Delete</p>
-                              </div>
-                        </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-              
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Mathew Thomas</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Mathew@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>05/06/2024</p>
-                    </td>
-
-                    <td className='align-top py-3'>
-                      <div>
-                      <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                      <div className='flex gap-2 text-[12px] '>
-                        <p>Figma</p>
-                        <p>Hybrid</p>
-                        <p>Allen, Texas, US</p>
-                      </div>
-                      </div>
-                    </td>
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className={` "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div  className={` "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                       
-
-                        <div className='relative' >
-                          <IoMdMore size={25} />
-                          
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
+                        <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
+    
+                       </div>
+                      </td>
+                    </tr>
+                    
+    
+    
+    
+                  </tbody>
+                  )
+                }
+              })}
+
+             
             </table>
           
           </div>
@@ -772,22 +173,92 @@ const AwaitingVerification: React.FC = () => {
 }
 const VerifiedAccount: React.FC = () => {
   return (
-    <div className='p-5'>
-      <p className='text-sm'>Verified Account</p>
-    </div>
+    <div className=''>
+    
+    <div className='w-full h-auto'>
+        <div className='w-full h-auto'>
+  
+       
+  
+          <div className='w-full h-auto px-3 '>
+  
+            <div className='w-full  mt-2'>
+  
+  
+              <table className=" w-full  table-auto">
+                <thead className=''>
+                  <tr className='bg-[#F2F2F5] border-[1px] border-[#D6DBDE] mt-2  rounded-full'>
+                    <th className=' px-4  py-2 w-[20%]'> <div className='flex items-center gap-4'> 
+                       <p className='text-[12px]' >Full name</p> </div></th>
+  
+                    <th className='text-[12px] text-start w-[15%]'>Email Address</th>
+                    <th className='text-[12px] text-start'> Date</th>
+                    <th className='text-[12px] text-start' >Position</th>
+                    <th className='text-[12px] text-start' >Action</th>
+                  </tr>
+                </thead>
+  
+  
+             
+  
+               
+              </table>
+            
+            </div>
+          </div>
+  
+        </div>
+      
+      </div>
+  
+  
+    
+         
+           {/* {viewJobPopup &&  <ViewJob setViewJobPopup ={setViewJobPopup}/>} */}
+   
+      </div>
   )
 }
 
 const Verification: React.FC = () => {
 
+  const [usersDetail, setUsersDetail] = useState<Users[]>([]); 
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+
+      if (!token) {
+        console.error("No token found in localStorage");
+        return;
+      }
+
+      try {
+        const response = await axiosInstance.get("/api/admin/user-management/users", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+          },
+        });
+        setUsersDetail(response.data.users); // Assuming response.data contains the user array
+         
+        console.log(response.data.users)
+      } catch (error) {
+        // console.error("Error fetching users:", error.response?.data || error.message);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+
   const jobFilters = [
     {
       label: 'Awaiting Verification',
-      component: <AwaitingVerification />,
+      component: <AwaitingVerification users={usersDetail} />,
     },
     {
       label: 'Verified Account',
-      component: <VerifiedAccount/>,
+      component: <VerifiedAccount />,
     },
   ];
 
