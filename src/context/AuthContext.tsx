@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 
 interface AuthContextType {
-  isAuthenticated: boolean;
+  isCandidateAuthenticated: boolean;
   login: () => void;
   logout: () => void;
 }
@@ -9,13 +9,13 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{children:ReactNode}> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isCandidateAuthenticated, setisCandidateAuthenticated] = useState(false);
 
-  const login = () => setIsAuthenticated(true);
-  const logout = () => setIsAuthenticated(false);
+  const login = () => setisCandidateAuthenticated(true);
+  const logout = () => setisCandidateAuthenticated(false);
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isCandidateAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

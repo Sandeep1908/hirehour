@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Navigate,useLocation } from 'react-router-dom';
-import isAuthenticated from './isAuthenicated';
+import {isCandidateAuthenticated} from './isAuthenicated';
 
 interface ProtectedRouteProps {
   children: ReactNode;
@@ -8,7 +8,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     
-  const isAuth = isAuthenticated();
+  const isAuth = isCandidateAuthenticated();
   const location = useLocation();
   if (!isAuth) {
     // Redirect to login and store the current location in state

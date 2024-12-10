@@ -24,7 +24,7 @@ import jobLogo from '../assets/header/jobs.svg';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchUserDetails } from '../utils/jobseekers/getUserDetails';
-import isAuthenticated from './isAuthenicated';
+import {isCandidateAuthenticated} from './isAuthenicated';
 
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
@@ -90,7 +90,7 @@ const Header: React.FC = () => {
             </Link>
           </div>
 
-          {isAuthenticated() && (
+          {isCandidateAuthenticated() && (
             <label
               className={`md:flex justify-center items-center w-32 h-7 p-0.5 rounded-full cursor-pointer bg-[#104B53]   hidden`}
             >
@@ -104,7 +104,7 @@ const Header: React.FC = () => {
 
         {/* Right Header without signup */}
 
-        {!isAuthenticated() && (
+        {!isCandidateAuthenticated() && (
           <div className="">
             <div className="">
               <div className="flex justify-center items-center space-x-5">
@@ -129,7 +129,7 @@ const Header: React.FC = () => {
 
         {/* With SignIn */}
 
-        {isAuthenticated() && (
+        {isCandidateAuthenticated() && (
           <div className=" hidden md:flex justify-center items-center space-x-7     ">
             <div className="flex justify-center items-center space-x-7">
               <Link to={'/right-to-represent'}>
