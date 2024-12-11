@@ -10,7 +10,7 @@ type JobAlertProps = {
 const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
 
 
-   const employmentTypes = ['Full-time', 'Part-time'] as const;
+   const employmentTypes = ['Full-time', 'Part-time'];
    type EmploymentType = typeof employmentTypes[number];
    
      const [selectedTypes, setSelectedTypes] = useState<EmploymentType[]>([]);

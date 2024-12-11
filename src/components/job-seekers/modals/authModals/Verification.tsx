@@ -1,16 +1,18 @@
 import React from 'react'
 import Timer from './Timer';
+import { Link } from 'react-router-dom';
 
-type NewPasswordProps={
-    setNewPassword: (e:boolean)=>void,
-    newPassword:Boolean
-  }
+// type NewPasswordProps={
+//     setNewPassword: (e:boolean)=>void,
+//     newPassword:Boolean
+//   }
 
-const Verification: React.FC<NewPasswordProps> = ({setNewPassword, newPassword}) => {
+const Verification: React.FC = () => {
+// const Verification: React.FC<NewPasswordProps> = ({setNewPassword, newPassword}) => {
 
     return (
         <div className='absolute top-0 w-full h-[100vh]'>
-        <div className='w-full h-full absolute bg-black opacity-80 z-10'>
+        <div className='w-full h-full absolute bg-black z-10'>
 
         </div>
        <div className='w-full h-full flex justify-center items-center'>
@@ -28,9 +30,12 @@ const Verification: React.FC<NewPasswordProps> = ({setNewPassword, newPassword})
 
                     </div>
                     <Timer/>
-                    <div onClick={()=>{setNewPassword(!newPassword)}} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                    {/* <div onClick={()=>{setNewPassword(!newPassword)}} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
                       Continue
-                    </div>
+                    </div> */}
+                    <Link to={"/reset-password"} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                      Continue
+                    </Link>
                     
 
                 </form>

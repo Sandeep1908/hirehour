@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
+
 import { Link,  useLocation, useNavigate } from 'react-router-dom';
-import ForgetPassword from '../../../components/job-seekers/modals/authModals/ForgetPassword';
-import NewPassword from '../../../components/job-seekers/modals/authModals/NewPassword';
-import Verification from '../../../components/job-seekers/modals/authModals/Verification';
 import { useMutation } from '@tanstack/react-query';
 import axiosInstance from '../../../axios/axiosInstance';
 import {  z } from 'zod';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+
 
 
 
@@ -20,11 +19,11 @@ interface UserCredentials {
 }
 
 // Zod schema for validation
-
 const signinSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' }),
   password: z.string().min(8, { message: 'Password must be at least 8 characters' }),
 });
+
 
 // Define the shape of form errors
 interface FormErrors {
@@ -32,17 +31,9 @@ interface FormErrors {
   password?: { _errors: string[] };
 }
 
-// interface AuthResponse {
-//   message: {
-//     accessToken: string;
-//   };
-// }
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [forgetPassword, setForgetPassword] = useState<boolean>(false);
-  const [verification, setVerification] = useState<boolean>(false);
-  const [newPassword, setNewPassword] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [formErrors, setFormErrors] = useState<FormErrors>({});
@@ -51,17 +42,28 @@ const Signin: React.FC = () => {
   const location =useLocation()
   const navigate = useNavigate();
 
+  // Check if user is already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/'); // Redirect to home or dashboard if the user is logged in
+    }
+  }, [navigate]);
+
+
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
       const response = await axiosInstance.post("/api/candidate/login", userCredentials);
        
       return response.data;
     },
+
     onSuccess: (data) => {
       toast.success('Logged In Successfull');
       localStorage.setItem('topequatortoken',data?.token)
       const redirectTo = location.state?.from?.pathname || '/';
       navigate(redirectTo);
+
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{message:string}>;
@@ -151,9 +153,10 @@ const Signin: React.FC = () => {
                   <input type="checkbox" className='w-5 h-5 md:w-4 md:h-4 border border-[#E1E1E2]' />
                   <p className='text-[14px]'>Remember me</p>
                 </div>
-                <div onClick={() => setForgetPassword(!forgetPassword)} className='font-medium text-[14px] md:text-base underline'>
+                <Link to={"/forget-password"} className='font-medium text-[14px] md:text-base underline'>
                   Forgot Password?
-                </div>
+                </Link>
+               
               </div>
 
               <button type="submit" className='w-full h-[40px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4'>
@@ -187,12 +190,19 @@ const Signin: React.FC = () => {
           </div>
         </div>
       </div>
-
-      {forgetPassword && <ForgetPassword setVerification={setVerification} verification={verification} setForgetPassword={setForgetPassword} />}
-      {verification && <Verification setNewPassword={setNewPassword} newPassword={newPassword} />}
-      {newPassword && <NewPassword />}
     </div>
   );
 };
 
 export default Signin;
+
+
+
+
+// Credential
+
+// email : ravi@gmail.com
+// pass:  Ravi@123
+
+// email : john@gmail.com
+// pass:  john@123

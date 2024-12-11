@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { FaBehanceSquare,  FaGithub, FaLinkedin } from 'react-icons/fa'
 import {  IoIosArrowDown, IoMdClose, IoMdMore } from 'react-icons/io'
@@ -10,6 +10,7 @@ import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
 
 import ShortListed from './ShortListed'
+import axiosInstance from '../../../axios/axiosInstance'
 
 
 type accessProps={
@@ -18,7 +19,61 @@ type accessProps={
   
 }
 
+
+// Define the User type
+type Role = {
+  roleName: string;
+};
+
+type Permission = {
+  permName: string;
+};
+
+type UserPermLabelsAcrossApplications = {
+  role: Role;
+  permTag: Permission;
+};
+
+// Define the User type
+type User = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  role: string;
+  userpermlabelsacrossapplications: UserPermLabelsAcrossApplications[];
+
+};
+
+
 const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
+
+
+  const [users, setUsers] = useState<User[]>([]); 
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+
+      if (!token) {
+        console.error("No token found in localStorage");
+        return;
+      }
+
+      try {
+        const response = await axiosInstance.get("/api/admin/user-management/users", {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the token
+          },
+        });
+        setUsers(response.data.users); // Assuming response.data contains the user array
+        console.log(response.data.users)
+      } catch (error) {
+        // console.error("Error fetching users:", error.response?.data || error.message);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
 
   const [moreOption, setMoreOption] = useState<boolean>(false);
@@ -51,58 +106,90 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
                 </tr>
               </thead>
 
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Arla</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Arlasuperadmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Superhero</p>
+              <tbody>
+              
+                {users.map((user, index) => (
+                  <tr
+                    key={index}
+                    className="border-[1px] border-[#D6DBDE] hover:bg-gray-50"
+                  >
+                    <td className="px-4 align-top py-3">
+                      <div className="flex gap-4">
+                        <div className="text-[12px] cursor-pointer">
+                          <p>{user.firstName || "N/A"}</p>
+                        </div>
+                      </div>
                     </td>
-
-    
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative justify-between pr-7 flex gap-2'>
-                     
-                        
-                       <p  className='text-[12px] cursor-pointer' >All Access</p>
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={20} />
-                          <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-[-5px] transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                              <div onClick={()=>{setAddAdmin(true)}} className='px-3 py-2'>
-                                <p className='text-xs font-semibold'>Edit</p>
+                    <td className="align-top py-3">
+                      <p className="text-[12px] cursor-pointer">
+                        {user.email || "N/A"}
+                      </p>
+                    </td>
+                    <td className="align-top py-3">
+                      <p className="text-[12px] font-medium">
+                        {/* {user.role || "N/A"} */}
+                        {user.userpermlabelsacrossapplications.map((role,i)=>{
+                          return(<span key={i}>
+                            {role.role.roleName}
+                          </span>)
+                        })}
+                        </p>
+                    </td>
+                    <td className="py-3">
+                      <div className="flex flex-col gap-2">
+                        <div className="relative justify-between pr-7 flex gap-2">
+                        <p className="text-[12px] font-medium">
+                        {/* {user.role || "N/A"} */}
+                        {user.userpermlabelsacrossapplications.map((permTag,i)=>{
+                          return(<span key={i}>
+                            {permTag.permTag.permName} , 
+                          </span>)
+                        })}
+                        </p>
+                          <div
+                            className="relative"
+                            onClick={() => {
+                              setMoreOption(!moreOption);
+                            }}
+                          >
+                            <IoMdMore size={20} />
+                            <div
+                              className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-[-5px] transition-all duration-500 bg-white ${
+                                moreOption
+                                  ? "opacity-1 scale-[1.01] z-[40]"
+                                  : "opacity-0 z-[-10]"
+                              }`}
+                            >
+                              <div
+                                onClick={() => {
+                                  setAddAdmin(true);
+                                }}
+                                className="px-3 py-2"
+                              >
+                                <p className="text-xs font-semibold">Edit</p>
                               </div>
                               <hr />
-                              <div onClick={()=>{setAsign(true)}} className='px-3 py-2'>
-                                <p className='text-xs font-semibold'> Assign To</p>
+                              <div
+                                onClick={() => {
+                                  setAsign(true);
+                                }}
+                                className="px-3 py-2"
+                              >
+                                <p className="text-xs font-semibold">Assign To</p>
                               </div>
                               <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-xs font-semibold'> Delete</p>
+                              <div className="px-3 py-2">
+                                <p className="text-xs font-semibold">Delete</p>
                               </div>
+                            </div>
+                          </div>
                         </div>
-                        </div>
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
-              <tbody className='mt-2'>
+              {/* <tbody className='mt-2'>
                 <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
                   <td className='px-4 align-top py-3'>
                      <div className='flex gap-4 '>
@@ -257,7 +344,7 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign}) => {
 
 
 
-              </tbody>
+              </tbody> */}
              
             </table>
           
