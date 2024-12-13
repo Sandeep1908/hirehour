@@ -14,10 +14,10 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
 
     <div className='max-w-[533px] h-full md:h-auto w-full bg-white rounded-lg overflow-y-auto z-[30] p-8'>
         <div className='  flex justify-between items-center'>
-            <div className='text-base md:text-2xl font-bold'><p> Hello John,</p></div>
+            <div className='text-sm md:text-2xl font-bold'><p> Hello John,</p></div>
             <IoMdClose size={30} className="cursor-pointer" onClick={()=>{setProfilePopup(false)}} />
         </div>
-        <p className='text-base text-[#6B7588] font-normal mt-2'>Recruiters are looking for Candidates like you, Complete your profile to Stand out </p>
+        <p className='text-sm text-[#6B7588] font-normal mt-2'>Recruiters are looking for Candidates like you, Complete your profile to Stand out </p>
         <div className="w-full flex items-center space-x-3 mt-3">
             <p className='font-bold'>75%</p>
                                                 <div className="w-full bg-[#FFF1C6] rounded-full  ">
@@ -39,7 +39,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
           <div className='border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone />
-              <p className='text-[#8F90A6] text-base font-medium'>Signing up with TopEquator</p>
+              <p className='text-[#8F90A6] text-sm font-medium'>Signing up with TopEquator</p>
              </div>
              <FaRegArrowAltCircleRight size={20} color='#8F90A6'/>
 
@@ -47,7 +47,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
           <div className='border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone />
-              <p className='text-[#8F90A6] text-base font-medium'>Add Resume</p>
+              <p className='text-[#8F90A6] text-sm font-medium'>Add Resume</p>
              </div>
              <FaRegArrowAltCircleRight size={20} color='#8F90A6'/>
 
@@ -55,7 +55,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
           <div className='border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone />
-              <p className='text-[#8F90A6] text-base font-medium'>Add about me</p>
+              <p className='text-[#8F90A6] text-sm font-medium'>Add about me</p>
              </div>
              <FaRegArrowAltCircleRight size={20} color='#8F90A6'/>
 
@@ -63,7 +63,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
           <div className='border-[1px] border-[#C7C9D9] bg-[#F2F2F5] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone color='#8F90A6' />
-              <p className='text-[#000000] text-base font-medium'>Job preference</p>
+              <p className='text-[#000000] text-sm font-medium'>Job preference</p>
              </div>
              <FaRegArrowAltCircleRight size={20} color='#114B53'/>
 
@@ -71,7 +71,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
           <div className='border-[1px] border-[#C7C9D9] bg-[#F2F2F5] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone color='#8F90A6' />
-              <p className='text-[#000000] text-base font-medium'>Add Skill Set</p>
+              <p className='text-[#000000] text-sm font-medium'>Add Skill Set</p>
              </div>
              <FaRegArrowAltCircleRight size={20} color='#114B53'/>
 
@@ -79,7 +79,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
           <div className='border-[1px] border-[#C7C9D9] bg-[#F2F2F5] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone color='#8F90A6' />
-              <p className='text-[#000000] text-base font-medium'>Add Social links</p>
+              <p className='text-[#000000] text-sm font-medium'>Add Social links</p>
              </div>
              <FaRegArrowAltCircleRight size={20} color='#114B53'/>
 
@@ -87,7 +87,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
           <div className='border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone />
-              <p className='text-[#8F90A6] text-base font-medium'>Add domain to your work experience</p>
+              <p className='text-[#8F90A6] text-sm font-medium'>Add domain to your work experience</p>
              </div>
              <FaRegArrowAltCircleRight size={20} color='#8F90A6'/>
 
@@ -96,7 +96,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup}) => {
 
         <div className='w-full flex justify-end  gap-10  items-center mt-3'>
             <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer ' >
-                <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Submit</p>
+                <p className='text-sm font-semibold text-[#114B53] cursor-pointer'>Submit</p>
             </div>
         </div>
     </div>

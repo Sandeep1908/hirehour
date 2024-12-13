@@ -1,0 +1,21 @@
+/* Custom Slider Styles */
+.rc-slider-rail {
+    background-color: #e4e4e4; /* Color for the rail (background line) */
+  }
+  
+  .rc-slider-track {
+    background-color: #4caf50; /* Color for the progress bar (filled part) */
+  }
+  
+  .rc-slider-handle {
+    border-color: #4caf50; /* Color for the slider handle border */
+    background-color: #ffffff; /* Color for the slider handle */
+  }
+  
+  .rc-slider-handle:focus, 
+  .rc-slider-handle:hover, 
+  .rc-slider-handle:active {
+    border-color: #388e3c; /* Color when the handle is focused or hovered */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  

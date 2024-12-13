@@ -1,12 +1,18 @@
 import React from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { IoMdClose } from 'react-icons/io'
+// import Slider from "rc-slider";
+// import "rc-slider/assets/index.css";
+// import "./style.css"
 
 type AddInfo ={
    setSkillsPopup: (agr:boolean)=>void
 }
 
 const Skills:React.FC<AddInfo> = ({setSkillsPopup}) => {
+
+    // const [value, setValue] = useState(10);
+
   return (
     <div className='w-full h-full flex p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
@@ -81,6 +87,22 @@ const Skills:React.FC<AddInfo> = ({setSkillsPopup}) => {
                       </div>
                   </div>
                 </div>
+
+
+               {/* <div className='mt-4'>
+               <div className="flex items-center space-x-4">
+      <label className="text-gray-700 font-medium">Time period</label>
+      <Slider
+        min={0}
+        max={30}
+        value={value}
+        onChange={(v) => setValue(v as number)}
+      />
+      <div className="bg-[#114B53] text-green-700 font-bold px-3 py-1 rounded-md">
+        {value}Yr
+      </div>
+    </div>
+                </div> */}
                 <div className='mt-4 flex gap-1 items-center'>
                 <AiOutlinePlus size={15} className='text-[#114B53]'/>
 

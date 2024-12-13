@@ -24,35 +24,35 @@ const Experience:React.FC<AddExperience> = ({setExperiencePopup}) => {
               <div>
               <div className='w-full flex gap-4 mt-3'>
                 <div className='w-full '>
-                   <p className='text-base font-medium'>Job Title <span className='text-red-600'>*</span></p>
-                   <input type="text" value={"Java Full Stack "} className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
+                   <p className='text-sm font-medium'>Job Title <span className='text-red-600'>*</span></p>
+                   <input type="text" value={"Java Full Stack "} className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
                 </div>
                 <div className='w-full '>
-                   <p className='text-base font-medium'>Domain <span className='text-red-600'>*</span></p>
-                   <input type="text" value={"Health Care"} className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
-                </div>
-             </div>
-             <div className='w-full flex gap-4 mt-3'>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>Date of joining* <span className='text-red-600'>*</span></p>
-                   <input type="date" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
-                </div>
-                <div className='w-full '>
-                   <p className='text-base font-medium'>Date of Relieving <span className='text-red-600'>*</span></p>
-                   <input type="date" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4' />
+                   <p className='text-sm font-medium'>Domain <span className='text-red-600'>*</span></p>
+                   <input type="text" value={"Health Care"} className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
                 </div>
              </div>
              <div className='w-full flex gap-4 mt-3'>
                 <div className='w-full '>
-                   <p className='text-base font-medium'>Company Name <span className='text-red-600'>*</span></p>
-                   <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                   <p className='text-sm font-medium'>Date of joining* <span className='text-red-600'>*</span></p>
+                   <input type="date" className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
+                </div>
+                <div className='w-full '>
+                   <p className='text-sm font-medium'>Date of Relieving <span className='text-red-600'>*</span></p>
+                   <input type="date" className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4' />
+                </div>
+             </div>
+             <div className='w-full flex gap-4 mt-3'>
+                <div className='w-full '>
+                   <p className='text-sm font-medium'>Company Name <span className='text-red-600'>*</span></p>
+                   <select name="" id="" className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
                       <option value=""> xyz Comoany </option>
                       <option value=""> abc Comoany </option>
                    </select>
                 </div>
                 <div className='w-full '>
-                   <p className='text-base font-medium'>Location <span className='text-red-600'>*</span></p>
-                   <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                   <p className='text-sm font-medium'>Location <span className='text-red-600'>*</span></p>
+                   <select name="" id="" className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
                       <option value=""> Texas, US</option>
                       <option value=""> Londan, Uk</option>
                    </select>
@@ -60,8 +60,8 @@ const Experience:React.FC<AddExperience> = ({setExperiencePopup}) => {
              </div>
              <div className='w-full flex gap-4 mt-3'>
                 <div className='w-full '>
-                   <p className='text-base font-medium'>Job Type <span className='text-red-600'>*</span></p>
-                   <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                   <p className='text-sm font-medium'>Job Type <span className='text-red-600'>*</span></p>
+                   <select name="" id="" className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
                       <option value=""> Full-Time </option>
                       <option value=""> Part-Time </option>
                    </select>
@@ -70,7 +70,7 @@ const Experience:React.FC<AddExperience> = ({setExperiencePopup}) => {
              </div>
              <div className='w-full flex gap-4 mt-3'>
                 <div className='w-full '>
-                   <p className='text-base font-medium'>Job Summary <span className='text-red-600'>*</span></p>
+                   <p className='text-sm font-medium'>Job Summary <span className='text-red-600'>*</span></p>
                    <textarea name="" id="" value={"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum"} className='w-full h-[190px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 p-4 ' >
                  
                    </textarea>
@@ -85,7 +85,7 @@ const Experience:React.FC<AddExperience> = ({setExperiencePopup}) => {
 
         <div className='w-full flex justify-end  gap-10  items-center'>
             <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
-                <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
+                <p className='text-sm font-semibold text-[#114B53] cursor-pointer'>Continue</p>
             </div>
         </div>
     </div>

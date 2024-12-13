@@ -21,10 +21,21 @@ type ProfileDetails = {
   needVisaSponsorship: string;
 };
 
+// type WorkDetails ={
+//   WorkPlatformName: string | null |undefined;
+//   WorkLink: string | null |undefined;
+// }
  
 
 const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
   const { data: userDetails } = useQuery({ queryKey: ['userDetails'], queryFn: fetchUserDetails });
+  
+  // const { data: socialDetails } = useQuery({ queryKey: ['socialDetail'], queryFn: fetchSocialDetail });
+  // const [workDetails, setWorkDetails] = useState({
+  //   WorkPlatformName: socialDetails?.[0]?.WorkPlatformName,
+  //   WorkLink: socialDetails?.[0]?.WorkLink,
+  // });
+
   const queryClient = useQueryClient();
 
   const [profileDetails, setProfileDetails] = useState<ProfileDetails>({
@@ -34,13 +45,17 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
     needVisaSponsorship: userDetails?.needVisaSponsorship,
   });
 
+ 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+   
     const { name, value } = e.target;
     setProfileDetails((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+
+
 
   // Mutation for submitting form data
   const editProfileMutation = useMutation({
@@ -61,10 +76,51 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
     },
   });
 
+
+   //for Socail Links
+  
+
+     
+
+ 
+    // const gitHub = socialDetails?.[0]?.WorkLink
+    // const [WorkPlatformName, setWorkPlatformName] = useState<string | null |undefined>()
+    // const [WorkLink, setWorkLink] = useState<string | null>()
+
+    
+    // Mutation for work details
+    // const workDetailsMutation = useMutation({
+    //   mutationFn: async (workData: WorkDetails) => {
+    //     console.log("workData",workData)
+    //     const response = await axiosInstance.post(
+    //       '/api/candidate/details/work',
+    //       workData
+    //     );
+    //     return response.data;
+    //   },
+    //   onSuccess: () => {
+    //     toast.success('Work details saved');
+    //   },
+    //   onError: (error) => {
+    //     const axiosError = error as AxiosError<{ message: string }>;
+    //     toast.error(axiosError?.response?.data?.message);
+    //   },
+    // });
+  
+
   const handleProfileEdit = () => {
     editProfileMutation.mutate(profileDetails);
+   
     setAboutPop(false);
   };
+  // const handleSocialLinkEdit = () => {
+    
+  //   const socialDetaill = {WorkPlatformName, WorkLink}
+  //   workDetailsMutation.mutate(socialDetaill);
+  //   setAboutPop(false);
+  // };
+
+
 
   //upload avatar mutation
   const uploadAvatar = useMutation({
@@ -125,7 +181,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
         <hr className="mt-3" />
         <div className=" py-3 flex flex-col gap-5">
           <div>
-            <p className="text-[14px] md:text-xl font-semibold">Profile picture</p>
+            <p className="text-[14px] md:text-base font-semibold">Profile picture</p>
             <div className="flex flex-col md:flex-row items-center gap-5 mt-3 ">
               <div className="w-[100px] h-[100px] rounded-full bg-[#CBFFFC] flex justify-center items-center ">
                 {/* <p className="text-[40px] font-extrabold">J</p> */}
@@ -134,21 +190,21 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
               <div className="flex gap-2 items-center">
                 <div className="border-[1px] border-[#114B53] rounded-full px-5 py-2 h-[42px] ">
                   <label
-                    className={`flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer    `}
+                    className={`flex justify-center items-center px-5  p-0.5 rounded-full cursor-pointer    `}
                   >
-                    <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>Upload Here</span>
+                    <span className={`text-sm text-[#104B53]  font-[500] pl-2`}>Upload Here</span>
                     <input type="file" className="hidden" onChange={handleAvatarChange} />
                   </label>
                 </div>
-                <div className="border-[1px] border-[#114B53] rounded-full px-5 py-2 h-[42px]">
-                  <p className="text-[#114B53] text-base font-semibold">Delete profile</p>
+                <div className="border-[1px] border-[#114B53] rounded-full px-5 h-[42px] flex justify-center items-center">
+                  <p className="text-[#114B53] text-sm font-[500]">Delete profile</p>
                 </div>
               </div>
             </div>
             <div>
               <div className="w-full flex gap-4 mt-3 flex-col md:flex-row">
                 <div className="w-full ">
-                  <p className="text-base font-medium">
+                  <p className="text-sm font-medium">
                     First name <span className="text-red-600">*</span>
                   </p>
                   <input
@@ -156,11 +212,11 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
                     name="firstName"
                     value={profileDetails.firstName}
                     onChange={handleInputChange}
-                    className="w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4 "
+                    className="w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4 text-sm "
                   />
                 </div>
                 <div className="w-full ">
-                  <p className="text-base font-medium">
+                  <p className="text-sm font-medium">
                     Last name <span className="text-red-600">*</span>
                   </p>
                   <input
@@ -168,44 +224,44 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
                     name="lastName"
                     value={profileDetails.lastName}
                     onChange={handleInputChange}
-                    className="w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 "
+                    className="w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-sm "
                   />
                 </div>
               </div>
               <div className="w-full flex gap-4 mt-5 flex-col md:flex-row">
                 <div className="w-full ">
-                  <p className="text-base font-medium">
-                    Phone number* <span className="text-red-600">*</span>
+                  <p className="text-sm font-medium">
+                    Phone number <span className="text-red-600">*</span>
                   </p>
                   <input
                     type="number"
                     name="phoneNumber"
                     value={profileDetails.phoneNumber}
                     onChange={handleInputChange}
-                    className="w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4  "
+                    className="w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4  text-sm"
                   />
                 </div>
                 <div className="w-full ">
-                  <p className="text-base font-medium">
-                    Email* <span className="text-red-600">*</span>
+                  <p className="text-sm font-medium">
+                    Email <span className="text-red-600">*</span>
                   </p>
                   <input
                     type="email"
                     value={userDetails?.user?.email}
                     disabled
-                    className="w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 "
+                    className="w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-sm "
                   />
                 </div>
               </div>
               <div className="w-full flex gap-4 mt-3 ">
                 <div className="w-full ">
-                  <p className="text-base font-medium">
+                  <p className="text-sm font-medium">
                     Location <span className="text-red-600">*</span>
                   </p>
                   <select
                     name=""
                     id=""
-                    className="w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 "
+                    className="w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-sm"
                   >
                     <option value=""> Texas, US</option>
                     <option value=""> Londan, Uk</option>
@@ -214,14 +270,14 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
               </div>
               <div className="w-full flex gap-4 mt-3 flex-col md:flex-row">
                 <div className="w-full ">
-                  <p className="text-base font-medium">
+                  <p className="text-sm font-medium">
                     Experience <span className="text-red-600">*</span>
                   </p>
                   <div className="w-full flex gap-4">
                     <select
                       name=""
                       id=""
-                      className="w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 "
+                      className="w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-sm"
                     >
                       <option value=""> 1 year</option>
                       <option value=""> 2 year</option>
@@ -231,7 +287,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
                     <select
                       name=""
                       id=""
-                      className="w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 "
+                      className="w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-sm "
                     >
                       <option value=""> 1 Months</option>
                       <option value=""> 2 Months</option>
@@ -244,31 +300,51 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
               <div className="mt-3">
                 <p className="text-base font-medium">Social Profiles </p>
                 <div className="mt-4">
-                  <div className="flex gap-4 items-center relative">
+                  <div className="flex gap-4 items-center relative text-sm">
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 ">
                       <FaLinkedin size={20} />
-                      <input type="text" name="" id="" placeholder="Your Linkedin profile url" />
+                      <input type="text" name="" id=""  placeholder="Your Linkedin profile url" />
                     </div>
                     <ImCross className="absolute right-4" size={13} />
                   </div>
-                  <div className="flex gap-4 items-center relative">
+                  <div className=" gap-4 items-center relative ">
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 mt-3">
                       <FaGithub size={20} />
-                      <input type="text" name="" id="" placeholder="Your Github profile url" />
+                      <input className='w-full h-full pl-2 text-sm' type="text" name="" id="" 
+                      //  value={gitHub} 
+                        // onChange={(e) => {
+                        //   const inputValue = e.target.value;
+
+                        //   if (inputValue.includes("github.com")) {
+                        //     setWorkLink(inputValue); 
+                        //     setWorkPlatformName("GitHub"); 
+                        //   } else if (inputValue.includes("linkedin.com")) {
+                        //     setWorkLink(inputValue); 
+                        //     setWorkPlatformName("LinkedIn");
+                        //   } else {
+                        //     setWorkLink(inputValue); 
+                        //     setWorkPlatformName("Other"); 
+                        //   }
+                        // }} 
+                        placeholder="Your Github profile url" />
                     </div>
-                    <ImCross className="absolute right-4 " size={13} />
+                    {/* <FaCheck  onClick={handleSocialLinkEdit} className="absolute right-12 top-4 " size={13} /> */}
+                    <ImCross className="absolute right-4 top-4 " size={13} />
                   </div>
-                  <div className="flex gap-4 items-center relative">
+
+                
+                 
+                  <div className="flex gap-4 items-center relative text-sm" >
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 mt-3">
                       <FaBehanceSquare size={20} />
                       <input type="text" name="" id="" placeholder="Your Behance profile url" />
                     </div>
                     <ImCross className="absolute right-4" size={13} />
                   </div>
-                  <div className="flex gap-4 items-center">
+                  <div className="flex gap-4 items-center text-sm">
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 mt-3">
                       <FiChrome size={20} />
-                      <input type="text" name="" id="" placeholder="Other web profile url" />
+                      <input type="text" name="" id=""  placeholder="Other web profile url" />
                     </div>
                   </div>
                 </div>

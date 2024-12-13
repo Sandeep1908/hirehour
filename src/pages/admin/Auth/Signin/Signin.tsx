@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../../assets/Google.svg';
 import apple_logo from '../../../../assets/apple.svg';
@@ -41,15 +41,6 @@ const Signin: React.FC = () => {
   const [validateErrors, setValidateErrors] = useState<boolean>(false);
 
   const navigate = useNavigate();
-
-  // Check if user is already logged in
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/'); // Redirect to home or dashboard if the user is logged in
-    }
-  }, [navigate]);
-
 
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
