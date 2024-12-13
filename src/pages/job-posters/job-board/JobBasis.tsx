@@ -3,28 +3,122 @@ import { Link } from 'react-router-dom';
 
 import Select from 'react-select';
 
+import {
+  workAuthorizationOptions,
+  experienceLevelOptoion,
+  employmentTypeOptions,
+  sponshorshipOption,
+  numberOfPostionOption,
+  jobTypeOption,
+} from '../../../config/jobposters/jobboardsoptions';
+import LocationSearch from '../../../utils/LocationSearch';
+import JobRoles from '../../../utils/JobRoles';
+import Domains from '../../../utils/Domains';
+import formatLocation from '../../../utils/jobseekers/formatedLocation';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { fetchDomains, fetchRoles } from '../../../utils/jobseekers/getUserDetails';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
+
+type JobBoardData = {
+  hasOwnATS: boolean;
+  atsLink?: string;
+  willingnessToRelocateQuestionnaire: boolean;
+  employmentType: string[];
+  isVisaSponsorshipProvided: boolean;
+  workAuthorizationAccepting: string[];
+  numberOfPositionsHiring: number;
+  experienceLevelNeeded: string;
+  yearsOfExpNeeded: number;
+  accommodationType: string;
+};
+
 const JobBasis: React.FC = () => {
-  const [selectedOption, setSelectedOption] = useState<string>('hirehour');
-  const employmentTypeOptions = [
-    {
-      value: 'Crop to Crop',
-      label: 'Crop to Crop',
+  const [jobTitle, setTitle] = useState<number>();
+  const [domain, setDomain] = useState<number | null>(null);
+  const [workingCompanyLocation, setWorkingCompanyLocation] = useState<LocationValue | null>(null);
+  const navigate = useNavigate();
+
+  const [jobBoard, setJobBoard] = useState<JobBoardData>({
+    hasOwnATS: false,
+    atsLink: '',
+    willingnessToRelocateQuestionnaire: false,
+    employmentType: [],
+    isVisaSponsorshipProvided: false,
+    workAuthorizationAccepting: [],
+    numberOfPositionsHiring: 0,
+    experienceLevelNeeded: '',
+    yearsOfExpNeeded: 0,
+    accommodationType: '',
+  });
+
+  const { data: role } = useQuery({
+    queryKey: ['roles'],
+    queryFn: fetchRoles,
+  });
+
+  const { data: domains } = useQuery({
+    queryKey: ['domains'],
+    queryFn: fetchDomains,
+  });
+
+  const getRoleNameById = (id: number) =>
+    role?.jobRoles?.find((role: { id: number; roleName: string }) => role.id === id)?.roleName ||
+    'N/A';
+
+  const getDomainNameById = (id: number) =>
+    domains?.domains?.find((domain: { id: number; domainName: string }) => domain.id === id)
+      ?.domainName || 'N/A';
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
+
+    setJobBoard((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : type === 'radio' ? value === 'true' : value,
+    }));
+  };
+
+  const jobBoardMutation = useMutation({
+    mutationFn: async (jobBoard: JobBoardData) => {
+      const response = await axiosrecruiterinstance.post('/api/recruiter/jobs/part1', jobBoard);
+      return response.data;
     },
-    {
-      value: 'Contract to hire',
-      label: 'Contract to hire',
+    onSuccess: (data) => {
+      toast.success('Job Basis Data Saved');
+      navigate('/job-poster/job-description',{state:{jobId:data?.job?.id}});
     },
-  ];
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
+
+  const handleJobBoardSubmit = () => {
+    const newJobBoard = {
+      ...jobBoard,
+      jobRoleName: getRoleNameById(jobTitle || 0),
+      jobLocation: formatLocation(workingCompanyLocation),
+      jobDomain: getDomainNameById(domain || 0),
+    };
+    console.log(newJobBoard);
+    jobBoardMutation.mutate(newJobBoard);
+  };
+
+
   return (
     <div className="w-full  h-full  md:pb-20  ">
       <div className="max-w-[1080px]  pt-2 rounded-lg m-auto">
         <div className=" bg-white">
-        <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
+          <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
               <p className="font-semibold text-[#104B53] text-xs">Cancel </p>
-              <p className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p onClick={()=>navigate('/job-poster/dashboard?key=myjobs')} className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
                 Save & Exit
               </p>
             </div>
@@ -92,11 +186,11 @@ const JobBasis: React.FC = () => {
                     <div className="flex justify-center items-center space-x-3">
                       <input
                         type="radio"
-                        name="platform"
+                        name="hasOwnATS"
                         id="hirehour"
-                        value="hirehour"
-                        checked={selectedOption === 'hirehour'}
-                        onChange={(e) => setSelectedOption(e.target.value)}
+                        value="false" // Explicitly set the value
+                        checked={!jobBoard.hasOwnATS}
+                        onChange={handleChange}
                       />
                       <label htmlFor="hirehour" className="text-xs">
                         HireHours
@@ -105,11 +199,11 @@ const JobBasis: React.FC = () => {
                     <div className="flex justify-center items-center space-x-3">
                       <input
                         type="radio"
-                        name="platform"
+                        name="hasOwnATS"
                         id="ownats"
-                        value="ownats"
-                        checked={selectedOption === 'ownats'}
-                        onChange={(e) => setSelectedOption(e.target.value)}
+                        value="true"
+                        checked={jobBoard.hasOwnATS}
+                        onChange={handleChange}
                       />
                       <label htmlFor="ownats" className="text-xs">
                         Own ATS/Website
@@ -119,7 +213,7 @@ const JobBasis: React.FC = () => {
 
                   {/* Link for sourcing  */}
 
-                  {selectedOption === 'ownats' && (
+                  {jobBoard.hasOwnATS && (
                     <div className="flex flex-col space-y-2">
                       <div className="flex ">
                         <label htmlFor="" className="text-xs">
@@ -131,6 +225,9 @@ const JobBasis: React.FC = () => {
                       <input
                         type="text"
                         placeholder="Link"
+                        name='atsLink'
+                        value={jobBoard.atsLink}
+                        onChange={handleChange}
                         className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                       />
                     </div>
@@ -148,11 +245,7 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Search by job role"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <JobRoles setRole={setTitle} />
                 </div>
 
                 {/* Job Location  */}
@@ -165,10 +258,17 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="company"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  <Select
+                    options={jobTypeOption}
+                    name="accommodationType"
+                    className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedVal) => {
+                      const value = selectedVal?.value || '';
+                      setJobBoard((prev) => ({
+                        ...prev,
+                        accommodationType: value,
+                      }));
+                    }}
                   />
                 </div>
               </div>
@@ -183,15 +283,11 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Domain Worked"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <LocationSearch setSelectedLocation={setWorkingCompanyLocation} />
                 </div>
 
-                 {/* Working Country  */}
-                 <div className="flex flex-col space-y-2">
+                {/* Working Country  */}
+                <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
                       Working Country
@@ -205,15 +301,20 @@ const JobBasis: React.FC = () => {
                     className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
-
-             
               </div>
 
               <div className="w-full grid md:grid-cols-2 gap-3">
-   {/* Relocate  */}
+                {/* Relocate  */}
 
-   <div className="flex justify-start items-center">
-                  <input type="checkbox" placeholder="Job Type" className="w-10 h-5" />
+                <div className="flex justify-start items-center">
+                  <input
+                    type="checkbox"
+                    name="willingnessToRelocateQuestionnaire"
+                    placeholder="Job Type"
+                    className="w-10 h-5"
+                    checked={jobBoard.willingnessToRelocateQuestionnaire}
+                    onChange={handleChange}
+                  />
 
                   <div className="flex ">
                     <label htmlFor="" className="text-sm font-[300]">
@@ -223,9 +324,6 @@ const JobBasis: React.FC = () => {
                   </div>
                 </div>
 
-
-             
-
                 {/* Job Domain  */}
 
                 <div className="flex flex-col space-y-2">
@@ -233,24 +331,15 @@ const JobBasis: React.FC = () => {
                     <label htmlFor="" className="text-xs">
                       Job Domain
                     </label>
-                     
                   </div>
 
-                  <input
-                    type="text"
-                    placeholder="Job Domain"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  <Domains setDomain={setDomain} />
                 </div>
               </div>
 
-                <div className="w-full grid md:grid-cols-2 gap-3">
-
-
-
-
-                 {/* Employment type  */}
-                 <div className="flex flex-col space-y-2">
+              <div className="w-full grid md:grid-cols-2 gap-3">
+                {/* Employment type  */}
+                <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
                       Employment type
@@ -262,31 +351,43 @@ const JobBasis: React.FC = () => {
                     options={employmentTypeOptions}
                     isMulti
                     className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedOptions) => {
+                      const values = selectedOptions
+                        ? selectedOptions.map((option) => option.value)
+                        : [];
+                      setJobBoard((prev) => ({
+                        ...prev,
+                        employmentType: values,
+                      }));
+                    }}
                   />
                 </div>
 
-{/* The role provide visa sponsorship*  */}
+                {/* The role provide visa sponsorship*  */}
 
-<div className="flex flex-col space-y-2">
-  <div className="flex ">
-    <label htmlFor="" className="text-xs">
-      The role provide visa sponsorship
-    </label>
-    <span className="text-red-500">*</span>
-  </div>
+                <div className="flex flex-col space-y-2">
+                  <div className="flex ">
+                    <label htmlFor="" className="text-xs">
+                      The role provide visa sponsorship
+                    </label>
+                    <span className="text-red-500">*</span>
+                  </div>
 
-  <input
-    type="text"
-    placeholder="Job Domain"
-    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-  />
-</div>
-</div>
+                  <Select
+                    options={sponshorshipOption}
+                    className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedVal) => {
+                      const value = selectedVal?.value || false;
+                      setJobBoard((prev) => ({
+                        ...prev,
+                        isVisaSponsorshipProvided: value,
+                      }));
+                    }}
+                  />
+                </div>
+              </div>
 
               <div className="w-full grid md:grid-cols-2 gap-3">
-
-
-
                 {/* Work Authorization   */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
@@ -297,15 +398,24 @@ const JobBasis: React.FC = () => {
                   </div>
 
                   <Select
-                    options={employmentTypeOptions}
+                    options={workAuthorizationOptions}
                     isMulti
                     className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedOptions) => {
+                      const values = selectedOptions
+                        ? selectedOptions.map((option) => option.value)
+                        : [];
+                      setJobBoard((prev) => ({
+                        ...prev,
+                        workAuthorizationAccepting: values,
+                      }));
+                    }}
                   />
                 </div>
 
-              {/* Number of position hiring**  */}
+                {/* Number of position hiring**  */}
 
-              <div className="flex flex-col space-y-2">
+                <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
                       Number of position hiring
@@ -313,12 +423,17 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <select name="" id="" className='p-2 text-xs border border-[#EBEBF0] rounded-md placeholder:text-xs'>
-                    <option value="">Single</option>
-                    <option value="">Multiple</option>
-
-                  </select>
-                 
+                  <Select
+                    options={numberOfPostionOption}
+                    className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedValue) => {
+                      const value = selectedValue?.value || 1;
+                      setJobBoard((prev) => ({
+                        ...prev,
+                        numberOfPositionsHiring: value,
+                      }));
+                    }}
+                  />
                 </div>
               </div>
 
@@ -333,15 +448,20 @@ const JobBasis: React.FC = () => {
                   </div>
 
                   <Select
-                    options={employmentTypeOptions}
-                    isMulti
+                    options={experienceLevelOptoion}
                     className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedValue) => {
+                      const value = selectedValue?.value || '';
+                      setJobBoard((prev) => ({
+                        ...prev,
+                        experienceLevelNeeded: value,
+                      }));
+                    }}
                   />
                 </div>
 
-
-                 {/* Experience Year*   */}
-                 <div className="flex flex-col space-y-2">
+                {/* Experience Year*   */}
+                <div className="flex flex-col space-y-2">
                   <div className="flex ">
                     <label htmlFor="" className="text-xs">
                       Year of Experience required
@@ -349,14 +469,14 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <Select
-                    options={employmentTypeOptions}
-                    isMulti
-                    className="text-xs text-[#9CA3AF]"
+                  <input
+                    type="number"
+                    placeholder="Year of experience"
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    value={jobBoard.yearsOfExpNeeded}
+                    onChange={handleChange}
                   />
                 </div>
-
-               
               </div>
             </div>
           </div>
@@ -370,12 +490,12 @@ const JobBasis: React.FC = () => {
             >
               Back
             </Link>
-            <Link
-              to={'/job-poster/job-description'}
+            <p
+              onClick={() => handleJobBoardSubmit()}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
-              Continue
-            </Link>
+              {jobBoardMutation.isPending ? 'Saving.....' : 'Continue'}
+            </p>
           </div>
         </div>
       </div>

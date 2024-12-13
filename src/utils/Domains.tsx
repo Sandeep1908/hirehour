@@ -43,7 +43,7 @@ const Domains: React.FC<JobRolesProps> = ({ setDomain }) => {
         options={options}
         onChange={handleSelectChange}
         placeholder="Select Role"
-        className="react-select-container"
+        className="react-select-container text-xs"
         classNamePrefix="react-select"
       />
     </div>

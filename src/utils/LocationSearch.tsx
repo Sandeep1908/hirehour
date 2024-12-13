@@ -11,7 +11,7 @@ type OptionType = {
 
 type LocationProps = {
   setSelectedLocation: (e: LocationValue | null) => void;
-  value?:string
+  selectedValue?:string
 };
 
 type Feature = {
@@ -91,18 +91,21 @@ const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
     setSelectedLocation(selectedOption?.value || null);
   };
 
+
+
+  
   return (
     <div className="w-full">
       <Select
         options={options}
+        
         onInputChange={handleInputChange}
         onChange={handleSelection}
         placeholder="Enter location"
         isLoading={loading}
         noOptionsMessage={() => (error ? error : 'Start typing to search')}
-        className="react-select-container"
+        className="react-select-container text-xs"
         classNamePrefix="react-select"
-        
       />
     </div>
   );

@@ -1,23 +1,89 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { TiTick } from 'react-icons/ti';
 import Select from 'react-select';
 import { FaPlus } from 'react-icons/fa6';
+import {
+  rateOption,
+  showPayByOption,
+  workStackOptions,
+} from '../../../../config/jobposters/jobdescrioptionboardoptions';
+import axiosrecruiterinstance from '../../../../axios/axiosrecruiterinstance';
+import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+
+type JobDescriptionRequest = {
+  salaryOfferedRangeStart: number;
+  salaryOfferedRangeEnd: number;
+  salaryOfferedRangeType: string;
+  jobDescription: string;
+  workStack: string[];
+  additionalBenefits: string[];
+};
+
 const JobDescriptionBoard: React.FC = () => {
-  const techStackOptions = [
-    {
-      value: 'Java',
-      label: 'Java',
+  const [formData, setFormData] = useState<JobDescriptionRequest>({
+    salaryOfferedRangeStart: 0,
+    salaryOfferedRangeEnd: 0,
+    salaryOfferedRangeType: '',
+    jobDescription: '',
+    workStack: [],
+    additionalBenefits: [],
+  });
+
+  const navigate=useNavigate()
+  const jobId=useLocation().state?.jobId
+ 
+  const [benefitOptions] = useState([
+    { value: 'Health Insurance', label: 'Health Insurance' },
+    { value: 'Paid Time Off', label: 'Paid Time Off' },
+  ]);
+
+  const suggestedBenefits = ['Visa Sponsorship', 'Remote Work', 'Flexible Hours'];
+
+  const handleSuggestedBenefitClick = (benefit: string) => {
+    console.log('benefit', benefit);
+    setFormData((prev) => {
+      const updatedBenefits = new Set([...prev.additionalBenefits, benefit]);
+      return { ...prev, additionalBenefits: Array.from(updatedBenefits) };
+    });
+  };
+
+  
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : type === 'radio' ? value === 'true' : value,
+    }));
+  };
+
+  
+  const jobDescriptionMutation = useMutation({
+    mutationFn: async (jobDescription: JobDescriptionRequest) => {
+      const response = await axiosrecruiterinstance.post(`/api/recruiter/jobs/part2/${jobId}`, jobDescription);
+      return response.data;
     },
-    {
-      value: 'React Js',
-      label: 'React Js',
+    onSuccess: () => {
+      toast.success('Job Description Data Saved');
+      navigate('/job-poster/company-profile',{state:{jobId:jobId}});
     },
-    {
-      value: 'Angular',
-      label: 'Anfular',
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
     },
-  ];
+  });
+
+  const handleJobBoardSubmit = () => {
+    jobDescriptionMutation.mutate(formData);
+  };
+
+
+
   return (
     <div className="w-full   md:pb-20 bg-[#F6F6F8]">
       <div className="max-w-[1080px]  pt-2 rounded-lg m-auto">
@@ -97,11 +163,7 @@ const JobDescriptionBoard: React.FC = () => {
                       <label htmlFor="">Show pay by</label>
                     </div>
 
-                    <input
-                      type="text"
-                      placeholder="Range"
-                      className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
-                    />
+                    <Select options={showPayByOption} className="text-xs text-[#9CA3AF]" />
                   </div>
 
                   {/* Min
@@ -113,7 +175,10 @@ const JobDescriptionBoard: React.FC = () => {
                     </div>
 
                     <input
-                      type="email"
+                      type="number"
+                      name="salaryOfferedRangeStart"
+                      value={formData.salaryOfferedRangeStart}
+                      onChange={handleChange}
                       placeholder="Per hour"
                       className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
                     />
@@ -127,8 +192,11 @@ const JobDescriptionBoard: React.FC = () => {
                     </div>
 
                     <input
-                      type="email"
+                      type="number"
                       placeholder="Max"
+                      name="salaryOfferedRangeEnd"
+                      value={formData.salaryOfferedRangeEnd}
+                      onChange={handleChange}
                       className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
                     />
                   </div>
@@ -138,10 +206,16 @@ const JobDescriptionBoard: React.FC = () => {
                       <label htmlFor="">Rate</label>
                     </div>
 
-                    <input
-                      type="text"
-                      placeholder="Range"
-                      className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
+                    <Select
+                      options={rateOption}
+                      className="text-xs text-[#9CA3AF]"
+                      onChange={(selectedOption) => {
+                        const value = selectedOption?.value || '';
+                        setFormData((prev) => ({
+                          ...prev,
+                          salaryOfferedRangeType: value,
+                        }));
+                      }}
                     />
                   </div>
                 </div>
@@ -149,9 +223,9 @@ const JobDescriptionBoard: React.FC = () => {
 
               {/* Job Description  */}
               <div className="w-full flex flex-col space-y-1 ">
-              <div className="flex ">
+                <div className="flex ">
                   <label htmlFor="" className="text-xs">
-                  Job description
+                    Job description
                   </label>
                   <span className="text-red-500">*</span>
                 </div>
@@ -166,18 +240,12 @@ const JobDescriptionBoard: React.FC = () => {
                     </p>
                   </div>
 
-                  <textarea className="w-full  text-[10px] p-2 min-h-60 text-[#3A3A3C] tracking-wide">
-                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-                    in a piece of classical Latin literature from 45 BC, making it over 2000 years
-                    old. Richard McClintock, a Latin professor at Hampden-Sydney College in
-                    Virginia, looked up one of the more obscure Latin words, consectetur, from a
-                    Lorem Ipsum passage, and going through the cites of the word in classical
-                    literature, discovered the undoubtable source. Lorem Ipsum comes from sections
-                    1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
-                    Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of
-                    ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
-                    "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                  </textarea>
+                  <textarea
+                    className="w-full  text-[10px] p-2 min-h-60 text-[#3A3A3C] tracking-wide"
+                    name="jobDescription"
+                    value={formData.jobDescription}
+                    onChange={handleChange}
+                  ></textarea>
                 </div>
               </div>
 
@@ -191,7 +259,18 @@ const JobDescriptionBoard: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <Select options={techStackOptions} isMulti className="text-xs text-[#9CA3AF]" />
+                  <Select
+                    options={workStackOptions}
+                    isMulti
+                    className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedOption) => {
+                      const values = selectedOption ? selectedOption.map((i) => i.value) : [];
+                      setFormData((prev) => ({
+                        ...prev,
+                        workStack: values,
+                      }));
+                    }}
+                  />
                 </div>
               </div>
 
@@ -202,26 +281,35 @@ const JobDescriptionBoard: React.FC = () => {
                     <label htmlFor="" className="text-xs">
                       Benefits
                     </label>
-                    
                   </div>
 
-                  <Select options={techStackOptions} isMulti className="text-xs text-[#9CA3AF]" />
+                  <Select
+                    options={benefitOptions}
+                    isMulti
+                    className="text-xs text-[#9CA3AF]"
+                    onChange={(selectedOption) => {
+                      const values = selectedOption ? selectedOption.map((i) => i.value) : [];
+                      setFormData((prev) => ({
+                        ...prev,
+                        additionalBenefits: values,
+                      }));
+                    }}
+                  />
                 </div>
 
                 <div className="w-full min-h-32 border rounded-lg flex flex-col space-y-4 p-2">
                   <p className="text-xs ">Suggested Benefits to add</p>
                   <div className="w-full grid grid-cols-2 sm:grid-cols-4  md:grid-cols-6 gap-5 place-items-center">
-                    {Array.from({ length: 9 }).map((_, id) => {
-                      return (
-                        <div
-                          key={id}
-                          className="w-full max-w-32 p-1 rounded-lg flex justify-center items-center space-x-2 border border-[#104B53] "
-                        >
-                          <FaPlus size={10} />
-                          <p className="text-[10px] text-[#104B53]">Visa Sponsorship</p>
-                        </div>
-                      );
-                    })}
+                    {suggestedBenefits.map((benefit, id) => (
+                      <div
+                        key={id}
+                        className="w-full max-w-32 p-1 rounded-lg flex justify-center items-center space-x-2 border border-[#104B53] cursor-pointer"
+                        onClick={() => handleSuggestedBenefitClick(benefit)}
+                      >
+                        <FaPlus size={10} />
+                        <p className="text-[10px] text-[#104B53]">{benefit}</p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -242,7 +330,6 @@ const JobDescriptionBoard: React.FC = () => {
                         <label htmlFor="" className="text-xs">
                           1. Question
                         </label>
-                        
                       </div>
 
                       <input
@@ -251,9 +338,6 @@ const JobDescriptionBoard: React.FC = () => {
                         className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
                       />
                     </div>
-
-
-             
                   </div>
                 </div>
               </div>
@@ -265,16 +349,12 @@ const JobDescriptionBoard: React.FC = () => {
                     <label htmlFor="" className="text-xs">
                       Question Type
                     </label>
-                    
                   </div>
 
-                  <select className='p-2 border border-[#EBEBF0] rounded-md outline-none text-[] text-xs'>
-                        <option value="yes">yes</option>
-                        <option value="no">no</option>
-
-
+                  <select className="p-2 border border-[#EBEBF0] rounded-md outline-none text-[] text-xs">
+                    <option value="yes">yes</option>
+                    <option value="no">no</option>
                   </select>
-                    
                 </div>
 
                 {/* Ideal Answer  */}
@@ -287,18 +367,17 @@ const JobDescriptionBoard: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <select className='p-2 border border-[#EBEBF0] rounded-md outline-noen text-[] text-xs'>
-                        <option value="yes">yes</option>
-                        <option value="no">no</option>
-
-
+                  <select className="p-2 border border-[#EBEBF0] rounded-md outline-noen text-[] text-xs">
+                    <option value="yes">yes</option>
+                    <option value="no">no</option>
                   </select>
-                    
                 </div>
 
-                <div className='flex items-center space-x-4'>
-                    <input type="checkbox" className='w-7 h-7' name="qualitifcation" id="" />
-                    <label htmlFor="qualitifcation" className='text-sm font-[400]'>Must have qualification</label>
+                <div className="flex items-center space-x-4">
+                  <input type="checkbox" className="w-7 h-7" name="qualitifcation" id="" />
+                  <label htmlFor="qualitifcation" className="text-sm font-[400]">
+                    Must have qualification
+                  </label>
                 </div>
               </div>
             </div>
@@ -313,12 +392,12 @@ const JobDescriptionBoard: React.FC = () => {
             >
               Back
             </Link>
-            <Link
-              to={'/job-poster/company-profile'}
+            <p
+              onClick={()=>handleJobBoardSubmit()}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
-              Continue
-            </Link>
+             {jobDescriptionMutation.isPaused?'Saving.....':'Continue'}
+            </p>
           </div>
         </div>
       </div>

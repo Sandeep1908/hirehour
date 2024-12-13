@@ -16,6 +16,7 @@ const isCandidateAuthenticated = () => {
     }
   } catch (error) {
     console.error('Invalid token:', error);
+    localStorage.removeItem('topequatortoken');  
     return false;
   }
 };
@@ -27,7 +28,6 @@ const isRecruiterAuthenticated = () => {
 
   try {
     const { exp } = jwtDecode(token);  
-     
     if (exp) {
       if (Date.now() >= exp * 1000) {
         localStorage.removeItem('topequatorrecruitertoken');  
@@ -37,6 +37,7 @@ const isRecruiterAuthenticated = () => {
     }
   } catch (error) {
     console.error('Invalid token:', error);
+    localStorage.removeItem('topequatorrecruitertoken'); 
     return false;
   }
 };

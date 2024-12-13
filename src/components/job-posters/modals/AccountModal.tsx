@@ -3,7 +3,7 @@ import { CgProfile } from 'react-icons/cg';
 import { RiListSettingsLine } from 'react-icons/ri';
  
 import { GoSignOut } from 'react-icons/go';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { GrUserSettings } from "react-icons/gr";
 
 
@@ -13,6 +13,7 @@ type AccountModalProps = {
 };
 
 const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountOpen }) => {
+  const navigate=useNavigate()
   const accountOptions = [
     {
       icon: <CgProfile />,
@@ -31,6 +32,13 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
     },
  
   ];
+
+  const handleSignOut=()=>{
+    alert('Signout Successfully')
+    localStorage.removeItem('topequatorrecruitertoken')
+    navigate('/job-poster')
+
+  }
   return (
     <div
       className={`   overflow-auto p-3 bg-white absolute    top-16 left-[-40px]  rounded-lg transition-all duration-500 shadow-2xl ${isAccountOpen ? 'opacity-1 z-[20] translate-y-[-10px]' : 'opacity-0   z-[-30]'}`}
@@ -59,7 +67,7 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
 
           <hr />
 
-          <li className="flex justify-start items-center space-x-2 p-1">
+          <li className="flex justify-start items-center space-x-2 p-1" onClick={()=>handleSignOut()}>
             <GoSignOut color="#FF4444" />
             <p className="text-[12px] text-[#FF4444] ">Sign Out</p>
           </li>

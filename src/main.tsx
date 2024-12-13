@@ -90,9 +90,8 @@ import RTRProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/R
 import RTRCompanyProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRCompanyProfile.tsx';
 import RTRPrivacySetting from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
 import VerificationMainTemp from './pages/emails/Verification.tsx';
-import ProtectedRoute from './components/ProtectedRoute.tsx';
+import { CandidateProtectedRoute, RecruiterProtectedRoute } from './components/ProtectedRoute.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -103,9 +102,9 @@ const router = createBrowserRouter(
       <Route
         path="/searchjob"
         element={
-          <ProtectedRoute>
+          <CandidateProtectedRoute>
             <JobDescription />
-          </ProtectedRoute>
+          </CandidateProtectedRoute>
         }
       />
 
@@ -113,27 +112,27 @@ const router = createBrowserRouter(
       <Route
         path="/upload-resume"
         element={
-          <ProtectedRoute>
+          <CandidateProtectedRoute>
             <UploadResume />
-          </ProtectedRoute>
+          </CandidateProtectedRoute>
         }
       />
 
       <Route
         path="/additional-information"
         element={
-          <ProtectedRoute>
+          <CandidateProtectedRoute>
             <AdditionalInfo />
-          </ProtectedRoute>
+          </CandidateProtectedRoute>
         }
       />
 
       <Route
         path="/review-form"
         element={
-          <ProtectedRoute>
+          <CandidateProtectedRoute>
             <ReviewInfo />
-          </ProtectedRoute>
+          </CandidateProtectedRoute>
         }
       />
 
@@ -141,18 +140,18 @@ const router = createBrowserRouter(
       <Route
         path="/myjobs"
         element={
-          <ProtectedRoute>
+          <CandidateProtectedRoute>
             {' '}
             <MyJobs />
-          </ProtectedRoute>
+          </CandidateProtectedRoute>
         }
       />
       <Route
         path="/myjobs-saved"
         element={
-          <ProtectedRoute>
+          <CandidateProtectedRoute>
             <SavedJobs />
-          </ProtectedRoute>
+          </CandidateProtectedRoute>
         }
       />
       <Route path="/myjobs-application-started" element={<ApplicationStarted />} />
@@ -173,7 +172,14 @@ const router = createBrowserRouter(
       <Route path="/privacy-setting" element={<PrivacySetting />} />
 
       {/* Pofile Page  */}
-      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+      <Route
+        path="/profile"
+        element={
+          <CandidateProtectedRoute>
+            <Profile />
+          </CandidateProtectedRoute>
+        }
+      />
       {/* Job preference  */}
       <Route path="/job-preference" element={<JobPreference />} />
       <Route path="/signup" element={<Signup />} />
@@ -181,15 +187,52 @@ const router = createBrowserRouter(
 
       {/*  *****************************job posters routes *************************************  */}
       <Route path="/job-poster" element={<JobPosterHome />} />
-      <Route path="/job-poster/job-basis" element={<JobBoard />} />
-      <Route path="/job-poster/job-description" element={<JobDescriptionBoard />} />
-      <Route path="/job-poster/company-profile" element={<CompanyProfile />} />
-      <Route path="/job-poster/review" element={<Review />} />
-      <Route path="/job-poster/job-review" element={<JobPreview />} />
+      <Route
+        path="/job-poster/job-basis"
+        element={
+          <RecruiterProtectedRoute>
+            <JobBoard />
+          </RecruiterProtectedRoute>
+        }
+      />
+      <Route
+        path="/job-poster/job-description"
+        element={
+          <RecruiterProtectedRoute>
+            <JobDescriptionBoard />
+          </RecruiterProtectedRoute>
+        }
+      />
+      <Route
+        path="/job-poster/company-profile"
+        element={
+          <RecruiterProtectedRoute>
+            <CompanyProfile />
+          </RecruiterProtectedRoute>
+        }
+      />
+      <Route path="/job-poster/review" element={
+           <RecruiterProtectedRoute>
+          <Review />
+         </RecruiterProtectedRoute>
+      
+        
+        } />
+      <Route path="/job-poster/job-review" element={
+         <RecruiterProtectedRoute>
+        <JobPreview />
+        </RecruiterProtectedRoute>
+       
+        } />
       <Route path="/job-poster/messages" element={<MessageJP />} />
       <Route path="/job-poster/job-preview" element={<JobPreview />} />
 
-      <Route path="/job-poster/dashboard" element={<DashBoard />} />
+      <Route path="/job-poster/dashboard" element={
+           <RecruiterProtectedRoute>
+                <DashBoard />
+           </RecruiterProtectedRoute>
+ 
+        } />
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />
       <Route path="/job-poster/profile-setting" element={<ProfileSetting />} />
@@ -228,11 +271,11 @@ const router = createBrowserRouter(
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-    <HeaderContextProvider>
-      <DndProvider backend={HTML5Backend}>
-        <RouterProvider router={router} />
-      </DndProvider>
-    </HeaderContextProvider>
+      <HeaderContextProvider>
+        <DndProvider backend={HTML5Backend}>
+          <RouterProvider router={router} />
+        </DndProvider>
+      </HeaderContextProvider>
     </QueryClientProvider>
   </StrictMode>,
 );

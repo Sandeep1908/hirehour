@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Navigate,useLocation } from 'react-router-dom';
-import {isCandidateAuthenticated} from './isAuthenicated';
+import {isCandidateAuthenticated, isRecruiterAuthenticated} from './isAuthenicated';
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const CandidateProtectedRoute = ({ children }: ProtectedRouteProps) => {
     
   const isAuth = isCandidateAuthenticated();
   const location = useLocation();
@@ -19,4 +19,20 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
    
 };
 
-export default ProtectedRoute;
+
+const RecruiterProtectedRoute = ({ children }: ProtectedRouteProps) => {
+
+ 
+    
+  const isAuth = isRecruiterAuthenticated();
+  const location = useLocation();
+ console.log(isAuth);
+  if (!isAuth) {
+    return <Navigate to="/job-poster/signin" state={{ from: location }} replace />;
+  }
+
+  return <>{children}</>;
+   
+};
+
+export  {CandidateProtectedRoute, RecruiterProtectedRoute}

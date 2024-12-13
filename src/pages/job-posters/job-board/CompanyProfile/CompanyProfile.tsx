@@ -1,14 +1,153 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { TiTick } from 'react-icons/ti';
 import { MdOutlineLinkedCamera } from 'react-icons/md';
+import LocationSearch from '../../../../utils/LocationSearch';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+import axiosrecruiterinstance from '../../../../axios/axiosrecruiterinstance';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import formatLocation from '../../../../utils/jobseekers/formatedLocation';
+import Companies from '../../../../utils/jobposters/Companies';
+import { fetchOneCompany } from '../../../../utils/jobposters/jobboards/getCompanyDetails';
+
+type CompanyDetailsRequest = {
+  companyName: string;
+  companyLogo: string;
+  companyCoverImage: string;
+  aboutCompany: string;
+  companySizeInTermsOfEmpCount: number;
+  domainItWorksIn: string;
+  companyWebsiteURL: string;
+  companyPhoneNumber: string;
+};
 
 const CompanyProfile: React.FC = () => {
+  const navigate = useNavigate();
+  const [company, setCompany] = useState<number | null>(null);
+  const [headquaterLocation, setHeadQuaterLocation] = useState<LocationValue | null>(null);
+  const jobId = useLocation().state?.jobId;
+
+  const [formData, setFormData] = useState<CompanyDetailsRequest>({
+    companyName: '',
+    companyLogo:
+      'https://dynamic.brandcrowd.com/asset/logo/189954ad-c0f4-4cd9-a5bb-a8e03970b056/logo-search-grid-1x?logoTemplateVersion=3&v=638644179405900000',
+    companyCoverImage:
+      'https://www.shutterstock.com/image-vector/abstract-corporate-business-digital-agency-600nw-2095258798.jpg',
+    aboutCompany: '',
+
+    companySizeInTermsOfEmpCount: 0,
+    domainItWorksIn: 'NA',
+    companyWebsiteURL: '',
+    companyPhoneNumber: '',
+  });
+
+  const { data: companyDetail } = useQuery({
+    queryKey: ['companydetail', company],
+    queryFn: () => fetchOneCompany(company ?? 0),
+    enabled: !!company,
+  });
+
+  useEffect(() => {
+    if (companyDetail) {
+      setFormData({
+        ...formData,
+        companyName: companyDetail.companyName,
+        companyLogo: companyDetail.companyLogo,
+        companyCoverImage: companyDetail.companyCoverImage,
+        aboutCompany: companyDetail.aboutCompany,
+        companySizeInTermsOfEmpCount: companyDetail.companySizeInTermsOfEmpCount,
+        domainItWorksIn: companyDetail.domainItWorksIn,
+        companyWebsiteURL: companyDetail.companyWebsiteURL,
+        companyPhoneNumber: companyDetail.companyPhoneNumber,
+      });
+    }
+  }, [companyDetail, company]);
+
+  // Handle file input for cover image
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    const name = e.target.name;
+    if (file) {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: file.name,
+      }));
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    const checked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : type === 'radio' ? value === 'true' : value,
+    }));
+  };
+
+  // Mutating for company details
+  const companyDescritionMutation = useMutation({
+    mutationFn: async (companyDescription: CompanyDetailsRequest) => {
+      const response = await axiosrecruiterinstance.post(
+        '/api/recruiter/company-management/create-company',
+        companyDescription,
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      const companyId = data?.company?.id; // Assuming the response includes `companyId`
+      associateCompanyWithJob(companyId); // Trigger the next API call
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ errors: string[] }>;
+      console.log('myaxos', axiosError.response?.data.errors);
+      toast.error(axiosError.response?.data.errors[0]);
+    },
+  });
+
+  // Mutation for associating the company with a job
+  const associateCompanyWithJobMutation = useMutation({
+    mutationFn: async (companyID: number) => {
+      const response = await axiosrecruiterinstance.post(`/api/recruiter/jobs/part3/${jobId}`, {
+        companyID,
+      });
+      return response.data;
+    },
+    onSuccess: (data) => {
+      toast.success('Company Associated with Job Successfully');
+      navigate('/job-poster/review', { state: { userDetails: data?.job, message: data?.message } });
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ errors: string[] }>;
+      console.log('myaxos', axiosError.response?.data.errors);
+      toast.error(axiosError.response?.data.errors[0]);
+    },
+  });
+
+  const associateCompanyWithJob = (companyId: number) => {
+    associateCompanyWithJobMutation.mutate(companyId);
+  };
+
+  const handleJobBoardSubmit = () => {
+    if (company === null) return toast.warning('please fill company details');
+    if (company === 0) {
+      const newCompanyDescription = {
+        ...formData,
+        headquartersLocation: formatLocation(headquaterLocation),
+      };
+      companyDescritionMutation.mutate(newCompanyDescription);
+    } else {
+      associateCompanyWithJob(company);
+    }
+  };
+
   return (
     <div className="w-full   pb-10 bg-[#F6F6F8]">
       <div className="max-w-[1080px]   pt-2 rounded-lg m-auto">
         <div className=" bg-white">
-        <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
+          <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
@@ -59,210 +198,222 @@ const CompanyProfile: React.FC = () => {
         </div>
       </div>
 
-   {/* Cover Images  */}
+      {/* Cover Images  */}
 
       <div className="max-w-[1080px] mt-2 h-full rounded-lg   bg-white m-auto  pb-4">
         <div className="w-full max-w-[800px] m-auto  p-3 flex flex-col space-y-5">
           <div className="w-full h-40 border  bg-white relative">
             <div className="w-full h-24 bg-[#F2F2F5]">
-              <div className='flex justify-center items-center h-full'>
+              <div className="flex justify-center items-center h-full">
                 <label className={`flex justify-center items-center space-x-3`}>
-                  <span className={`text-[10px] text-[#6B7588]  font-[500] pl-2`}>Company Cover Image</span>
+                  <span className={`text-[10px] text-[#6B7588]  font-[500] pl-2`}>
+                    Company Cover Image
+                  </span>
                   <MdOutlineLinkedCamera size={13} color="#6B7588" className="" />
-                  <input type="file" className="hidden" />
+                  <input
+                    type="file"
+                    className="hidden"
+                    name="companyCoverImage"
+                    onChange={handleFileChange}
+                  />
+                  <p className="text-[9px]">{formData.companyCoverImage}</p>
                 </label>
               </div>
             </div>
 
-
-            <div className='w-20 h-20 flex justify-center items-center border absolute top-10 left-14 shadow-lg bg-[#F2F2F5]' >
-            <label className={`flex flex-col justify-center items-center space-y-1`}>
-                  <span className={`text-[7px] text-[#6B7588] text-center font-[500] pl-2`}>Company Logo</span>
-                  <MdOutlineLinkedCamera size={13} color="#6B7588" className="" />
-                  <input type="file" className="hidden" />
-                </label>
+            <div className="w-20 h-20 flex justify-center items-center border absolute top-10 left-14 shadow-lg bg-[#F2F2F5]">
+              <label className={`flex flex-col justify-center items-center space-y-1`}>
+                <span className={`text-[7px] text-[#6B7588] text-center font-[500] pl-2`}>
+                  Company Logo
+                </span>
+                <MdOutlineLinkedCamera size={13} color="#6B7588" className="" />
+                <input
+                  type="file"
+                  className="hidden"
+                  name="companyLogo"
+                  onChange={handleFileChange}
+                />
+                <p className="text-[9px]">{formData.companyLogo}</p>
+              </label>
             </div>
           </div>
 
-
           <div className="w-full grid md:md:grid-cols-2 gap-3">
-                {/* Company Name  */}
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
+            {/* Company Name  */}
+            {company === 0 ? (
+              <div className="flex flex-col space-y-2">
+                <div className="flex ">
+                  <label htmlFor="" className="text-xs">
+                    Enter Company Name
+                  </label>
+                  <span className="text-red-500">*</span>
+                </div>
+
+                <input
+                  type="text"
+                  value={formData.companyName}
+                  name="companyName"
+                  onChange={handleChange}
+                  placeholder="Search by location"
+                  className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                />
+              </div>
+            ) : (
+              <div className="flex flex-col space-y-2">
+                <div className="flex ">
+                  <label htmlFor="" className="text-xs">
                     Company Name
-                    </label>
-                    <span className="text-red-500">*</span>
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Company Name"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
+                  </label>
+                  <span className="text-red-500">*</span>
                 </div>
 
-                {/* Company Address  */}
+                <Companies setCompanyId={setCompany} />
+              </div>
+            )}
 
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                    Company Address
-                    </label>
-                    <span className="text-red-500">*</span>
-                     
-                  </div>
+            {/* Company Address  */}
 
-                  <input
-                    type="text"
-                    placeholder="Search by location"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-                </div>
+            <div className="flex flex-col space-y-2">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs">
+                  Company Address
+                </label>
+                <span className="text-red-500">*</span>
               </div>
 
-
-              <div className="w-full grid md:grid-cols-2 gap-3">
-                {/* Location  */}
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                    Location
-                    </label>
-                    <span className="text-red-500">*</span>
-                    
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Location"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-                </div>
-
-
-
-                {/* Headquater  */}
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                    Headquater Location
-                    </label>
-                    <span className="text-red-500">*</span>
-                    
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Location"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-                </div>
-
-                 
-              </div>
+              <input
+                type="text"
+                placeholder="Search by location"
+                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+              />
+            </div>
+          </div>
 
           <div className="w-full grid md:grid-cols-2 gap-3">
-                {/* Company Size  */}
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                    Company Size
-                    </label>
-                    <span className="text-red-500">*</span>
-                    
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Company size"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-                </div>
-
-                {/* Notification Email  */}
-
-                <div className="flex flex-col justify-start items-start">
-                <div className="flex ">
-                    <label htmlFor="" className="text-xs font-[300]">
-                      Receive notification through emails
-                    </label>
-                
-                  </div>
-                  <div className='flex justify-between p-2 w-full'>
-                    <p className='text-sm'>mathewxyz.com</p>
-                   
-                  </div>
-
-                
-                </div>
+            {/* Location  */}
+            <div className="flex flex-col space-y-2">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs">
+                  Location
+                </label>
+                <span className="text-red-500">*</span>
               </div>
 
+              <input
+                type="text"
+                placeholder="Location"
+                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+              />
+            </div>
 
-      
-
-              <div className="w-full grid md:grid-cols-2 gap-3">
-                {/* Company Website  */}
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                    Company Website URL
-                    </label>
-                    <span className="text-red-500">*</span>
-                   
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Company URL"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-                </div>
-
-                {/* Company Location  */}
-
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                    Phone Number
-                    </label>
-                    <span className="text-red-500">*</span>
-                    
-                  </div>
-
-                  <input
-                    type="text"
-                    placeholder="Phone No"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-                </div>
+            {/* Headquater  */}
+            <div className="flex flex-col space-y-2">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs">
+                  Headquater Location
+                </label>
+                <span className="text-red-500">*</span>
               </div>
 
+              <LocationSearch setSelectedLocation={setHeadQuaterLocation} />
+            </div>
+          </div>
 
-
-              <div className="w-full  ">
-                 
-
-                {/* Company Description  */}
-
-                <div className="flex flex-col space-y-2">
-                  <div className="flex ">
-                    <label htmlFor="" className="text-xs">
-                    Company Description
-                    </label>
-                    
-                  </div>
-
-                  <textarea
-                    
-                   
-                    className="p-2 border w-full border-[#EBEBF0] min-h-44 rounded-md placeholder:text-xs"
-                  />
-                </div>
+          <div className="w-full grid md:grid-cols-2 gap-3">
+            {/* Company Size  */}
+            <div className="flex flex-col space-y-2">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs">
+                  Company Size
+                </label>
+                <span className="text-red-500">*</span>
               </div>
 
-              
-                {/* buttons  */}
+              <input
+                type="number"
+                placeholder="Company size"
+                value={formData.companySizeInTermsOfEmpCount}
+                name="companySizeInTermsOfEmpCount"
+                onChange={handleChange}
+                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+              />
+            </div>
+
+            {/* Notification Email  */}
+
+            <div className="flex flex-col justify-start items-start">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs font-[300]">
+                  Receive notification through emails
+                </label>
+              </div>
+              <div className="flex justify-between p-2 w-full">
+                <p className="text-sm">mathewxyz.com</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="w-full grid md:grid-cols-2 gap-3">
+            {/* Company Website  */}
+            <div className="flex flex-col space-y-2">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs">
+                  Company Website URL
+                </label>
+                <span className="text-red-500">*</span>
+              </div>
+
+              <input
+                type="text"
+                placeholder="Company URL"
+                value={formData.companyWebsiteURL}
+                name="companyWebsiteURL"
+                onChange={handleChange}
+                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+              />
+            </div>
+
+            {/* Company phone  */}
+
+            <div className="flex flex-col space-y-2">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs">
+                  Phone Number
+                </label>
+                <span className="text-red-500">*</span>
+              </div>
+
+              <input
+                type="text"
+                placeholder="Phone No"
+                value={formData.companyPhoneNumber}
+                name="companyPhoneNumber"
+                onChange={handleChange}
+                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+              />
+            </div>
+          </div>
+
+          <div className="w-full  ">
+            {/* Company Description  */}
+
+            <div className="flex flex-col space-y-2">
+              <div className="flex ">
+                <label htmlFor="" className="text-xs">
+                  Company Description
+                </label>
+              </div>
+
+              <textarea
+                value={formData.aboutCompany}
+                name="aboutCompany"
+                onChange={handleChange}
+                className="p-2 border w-full border-[#EBEBF0] min-h-44 rounded-md placeholder:text-xs"
+              />
+            </div>
+          </div>
+
+          {/* buttons  */}
 
           <div className="flex w-full  justify-between md:justify-end items-center  space-x-4">
             <Link
@@ -271,17 +422,14 @@ const CompanyProfile: React.FC = () => {
             >
               Back
             </Link>
-            <Link
-              to={'/job-poster/review'}
+            <p
+              onClick={() => handleJobBoardSubmit()}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
-              Continue
-            </Link>
+              {companyDescritionMutation.isPending ? 'Saving...' : 'Continue'}
+            </p>
           </div>
         </div>
-
-
-        
       </div>
     </div>
   );

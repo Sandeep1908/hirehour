@@ -42,7 +42,7 @@ const JobTypes: React.FC<JobRolesProps> = ({ setType }) => {
         options={options}
         onChange={handleSelectChange}
         placeholder="Select Role"
-        className="react-select-container"
+        className="react-select-container text-xs"
         classNamePrefix="react-select"
       />
     </div>

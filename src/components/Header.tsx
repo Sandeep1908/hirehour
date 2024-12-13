@@ -116,7 +116,7 @@ const Header: React.FC = () => {
                 </Link>
 
                 <p className="text-xs tracking-wide hidden md:block ">
-                  <Link to={'/job-poster/signup'}> Employer </Link>/
+                  <Link to={'/job-poster'}> Employer </Link>/
                   <Link to={'/job-poster'}> Job Poster</Link>
                 </p>
                 <IoIosMenu size={40} onClick={() => setIsNavOpen(true)} className="md:hidden" />

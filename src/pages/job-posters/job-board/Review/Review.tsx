@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { json, Link } from 'react-router-dom';
 import { TiTick } from 'react-icons/ti';
 
 import { FaEdit } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
 import Logo from '../../../../assets/logo/hirehour.png';
-
+import { useLocation } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { fetchOneCompany } from '../../../../utils/jobposters/jobboards/getCompanyDetails';
 
 const Review: React.FC = () => {
-
   const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
+  
+const userDetails=useLocation()?.state?.userDetails
+const { data: companyDetail } = useQuery({
+  queryKey: ['companydetail'],
+  queryFn: () => fetchOneCompany(userDetails?.companyID),
+ 
+});
 
-
-
-   
-  const quickApplyDone =()=>{
-      setQuickApplyStep3(false);
-  }
+console.log("company",companyDetail);
+ 
+  const quickApplyDone = () => {
+    setQuickApplyStep3(false);
+  };
   return (
     <div className="w-full   pb-10 bg-[#F6F6F8]">
       <div className="max-w-[1080px]   pt-2 rounded-lg m-auto">
@@ -84,12 +91,12 @@ const Review: React.FC = () => {
             <div className="grid grid-cols-2 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Job Title</h1>
-                <p className="text-xs font-semibold">John S</p>
+                <p className="text-xs font-semibold">{userDetails?.jobRoleName}</p>
               </div>
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Job Location</h1>
-                <p className="text-xs font-semibold">Onsite, Remote</p>
+                <p className="text-xs font-semibold">{userDetails?.accommodationType}</p>
               </div>
             </div>
 
@@ -108,12 +115,12 @@ const Review: React.FC = () => {
             <div className="grid grid-cols-2 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Working Location</h1>
-                <p className="text-xs font-semibold">Street name 1, allen, TX, United States</p>
+                <p className="text-xs font-semibold">{userDetails?.jobLocation}</p>
               </div>
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Employment type</h1>
-                <p className="text-xs font-semibold">Full time, Contract Crop to crop (C2C) </p>
+                <p className="text-xs font-semibold">{JSON.parse(userDetails?.employmentType).join(', ')} </p>
               </div>
             </div>
 
@@ -125,19 +132,19 @@ const Review: React.FC = () => {
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Company name in job listing</h1>
-                <p className="text-xs font-semibold">xyz Company</p>
+                <p className="text-xs font-semibold">{companyDetail?.companyName}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Company Website</h1>
-                <p className="text-xs font-semibold">xyzcompany.com</p>
+                <p className="text-xs font-semibold">{companyDetail?.companyWebsiteURL}</p>
               </div>
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Company Domain</h1>
-                <p className="text-xs font-semibold">Health Care</p>
+                <p className="text-xs font-semibold">{companyDetail?.domainItWorksIn}</p>
               </div>
             </div>
           </div>
@@ -151,31 +158,31 @@ const Review: React.FC = () => {
             <div className="grid grid-cols-2 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">work Authorization accepting</h1>
-                <p className="text-xs font-semibold">H1 Visa, green card holder</p>
+                <p className="text-xs font-semibold">{JSON.parse(userDetails?.workAuthorizationAccepting).join(', ')}</p>
               </div>
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Job Location</h1>
-                <p className="text-xs font-semibold">Onsite, Remote</p>
+                <p className="text-xs font-semibold">{userDetails?.accommodationType}</p>
               </div>
             </div>
 
             <div className="grid grid-cols-2 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Number of position hire</h1>
-                <p className="text-xs font-semibold">4</p>
+                <p className="text-xs font-semibold">{userDetails?.numberOfPositionsHiring}</p>
               </div>
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Experience Level</h1>
-                <p className="text-xs font-semibold">Senior Associate level </p>
+                <p className="text-xs font-semibold">{userDetails?.experienceLevelNeeded} </p>
               </div>
             </div>
 
             <div className="grid px-4 gap-5">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Tech Stack</h1>
-                <p className="text-xs font-semibold">Java, React</p>
+                <p className="text-xs font-semibold">{JSON.parse(userDetails?.workStack).join(', ')}</p>
               </div>
 
               <div className="flex flex-col space-y-1">
@@ -201,39 +208,35 @@ const Review: React.FC = () => {
             <div className="flex flex-col space-y-6 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Pay Range</h1>
-                <p className="text-xs font-semibold">97,558.73-117,490 per year</p>
+                <p className="text-xs font-semibold">{userDetails?.salaryOfferedRangeStart}-{userDetails?.salaryOfferedRangeEnd} {userDetails?.salaryOfferedRangeType}</p>
               </div>
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Job description</h1>
                 <p className="text-xs font-semibold">
-                  Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in
-                  a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-                  Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia,
-                  looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum
-                  passage, and going through the cites of the word in classical literature,
-                  discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and
-                  1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by
-                  Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very
-                  popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor
-                  sit amet..", comes from a line in section 1.10.32.
+                  {companyDetail?.aboutCompany}
                 </p>
               </div>
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Benefits</h1>
-                <p className="text-xs font-semibold">Visa Sponsorship, Green card sponsorship</p>
+                <p className="text-xs font-semibold">{JSON.parse(userDetails?.additionalBenefits).join(', ')}</p>
               </div>
             </div>
           </div>
 
           <div className="w-full  h-full p-2 mt-5 flex justify-end items-center space-x-2 ">
-            <Link to={"/job-poster/job-review"} className="w-28 flex justify-center items-center rounded-full text-xs h-7 text-[#124C53] border border-[#124C53]">
+            <Link
+              to={'/job-poster/job-review'}
+              className="w-28 flex justify-center items-center rounded-full text-xs h-7 text-[#124C53] border border-[#124C53]"
+            >
               Job Preview
             </Link>
 
             <div
-              onClick={()=>{setQuickApplyStep3(!isQuickApplyStep3)}}
+              onClick={() => {
+                setQuickApplyStep3(!isQuickApplyStep3);
+              }}
               className="w-24 flex justify-center items-center rounded-full text-xs h-7 text-[#124C53] border bg-[#E9F358]"
             >
               Submit
@@ -242,66 +245,74 @@ const Review: React.FC = () => {
         </div>
       </div>
 
-
-
-      
-{/* Popup  */}
-    <div
+      {/* Popup  */}
+      <div
         className={`w-full h-full flex overflow-scroll justify-center items-center fixed inset-0 transition-all duration-500 ${isQuickApplyStep3 ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
       >
-                  <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+        <div className="w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black "></div>
 
-                       
-                        <div className='z-[30] max-w-[600px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px]'>
-            <div className=' p-4 flex justify-between items-center'>
-                 <p className='text-base font-bold'>Apply to xyz Company</p>
-                 <IoMdClose size={30} onClick={()=>{setQuickApplyStep3(false)}}  className="cursor-pointer" />
-            </div>
-            <hr />
-            <div className='w-full p-10'>
-
-
+        <div className="z-[30] max-w-[600px] w-full h-auto bg-white rounded-lg overflow-auto relative top-[0px]">
+          <div className=" p-4 flex justify-between items-center">
+            <p className="text-base font-bold">Apply to xyz Company</p>
+            <IoMdClose
+              size={30}
+              onClick={() => {
+                setQuickApplyStep3(false);
+              }}
+              className="cursor-pointer"
+            />
+          </div>
+          <hr />
+          <div className="w-full p-10">
             <div className="w-full flex justify-between items-center">
-                                <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>1</p>
-                                    </div>
-                                    <p className='hidden md:block text-[10px] font-medium text-[#114B53]'>Screening Questions</p>
-                                </div>
-                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]'>
-
-                                </div>
-                                <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>2</p>
-                                    </div>
-                                    <p className='hidden md:block text-[10px] font-medium text-[#114B53]'>Review Application</p>
-                                </div>
-                                <div className='border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]'>
-
-                                </div>
-                                <div className='w-[167px] flex justify-center items-center gap-2'>
-                                    <div className='w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center'>
-                                        <p className='text-base text-white font-semibold'>3</p>
-                                    </div>
-                                    <p className='hidden md:block text-[10px] font-medium text-[#114B53]'>Applied Successfully</p>
-                                </div>
-                            </div>
-          
-            </div>
-                <div className='flex flex-col justify-center items-center'>
-                    <img src={Logo} alt="" />
-                    <p className='text-sm font-semibold text-[#3A3A3C] mt-5'>Your application was submitted successfully to XYZ Company</p>
-                    <p className='text-xs font-normal text-[#6B7588] mt-2'>You can track you application any time from my jobs</p>
+              <div className="w-[167px] flex justify-center items-center gap-2">
+                <div className="w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center">
+                  <p className="text-base text-white font-semibold">1</p>
                 </div>
-            
-            <div className='w-full flex justify-center p-10'>
-            <Link
-              to={'/job-poster/pricing'} onClick={quickApplyDone}  className='cursor-pointer bg-[#E9F358] w-[100px] h-[40px] flex justify-center items-center rounded-full '>
-                    <p className='text-sm font-semibold text-[#114B53]'>Done</p>
-                </Link>
+                <p className="hidden md:block text-[10px] font-medium text-[#114B53]">
+                  Screening Questions
+                </p>
+              </div>
+              <div className="border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]"></div>
+              <div className="w-[167px] flex justify-center items-center gap-2">
+                <div className="w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center">
+                  <p className="text-base text-white font-semibold">2</p>
+                </div>
+                <p className="hidden md:block text-[10px] font-medium text-[#114B53]">
+                  Review Application
+                </p>
+              </div>
+              <div className="border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]"></div>
+              <div className="w-[167px] flex justify-center items-center gap-2">
+                <div className="w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center">
+                  <p className="text-base text-white font-semibold">3</p>
+                </div>
+                <p className="hidden md:block text-[10px] font-medium text-[#114B53]">
+                  Applied Successfully
+                </p>
+              </div>
             </div>
-                     </div>
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <img src={Logo} alt="" />
+            <p className="text-sm font-semibold text-[#3A3A3C] mt-5">
+              Your application was submitted successfully to XYZ Company
+            </p>
+            <p className="text-xs font-normal text-[#6B7588] mt-2">
+              You can track you application any time from my jobs
+            </p>
+          </div>
+
+          <div className="w-full flex justify-center p-10">
+            <Link
+              to={'/job-poster/pricing'}
+              onClick={quickApplyDone}
+              className="cursor-pointer bg-[#E9F358] w-[100px] h-[40px] flex justify-center items-center rounded-full "
+            >
+              <p className="text-sm font-semibold text-[#114B53]">Done</p>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
