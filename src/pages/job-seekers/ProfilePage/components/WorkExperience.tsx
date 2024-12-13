@@ -13,10 +13,11 @@ import { toast } from 'react-toastify';
 
 type WorkExperience = {
   setExperiencePopup: (e: boolean) => void;
+  setAddExperiencePopup: (e: boolean) => void;
   setExperienceId:(e:number)=>void
 };
 
-const WorkExperience: React.FC<WorkExperience> = ({ setExperiencePopup,setExperienceId }) => {
+const WorkExperience: React.FC<WorkExperience> = ({ setExperiencePopup,setExperienceId,setAddExperiencePopup }) => {
   const { data: userDetails } = useQuery({
     queryKey: ['userDetails'],
     queryFn: fetchUserDetails,
@@ -84,7 +85,7 @@ const WorkExperience: React.FC<WorkExperience> = ({ setExperiencePopup,setExperi
             Work Experience (Total 4 years 4 months of experience)
           </h1>
 
-          <div className="flex justify-end items-center space-x-2">
+          <div className="flex justify-end items-center space-x-2" onClick={()=>{setAddExperiencePopup(true)}}>
             <BiPlus size={14} color="#104B53" />
             <p className="text-[#104B53] text-xs font-semibold">Add</p>
           </div>
@@ -123,7 +124,7 @@ const WorkExperience: React.FC<WorkExperience> = ({ setExperiencePopup,setExperi
                     </p>
                     <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
                       {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
-                      {item?.presentEmployer ? 'Present' : item?.durationEnd}
+                      {item?.presentEmployer ? 'Present' : item?.durationEnd?.split('T')[0]}
                     </p>
                   </div>
                 </div>

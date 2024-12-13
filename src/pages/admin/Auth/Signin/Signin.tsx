@@ -42,15 +42,6 @@ const Signin: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // Check if user is already logged in
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/'); // Redirect to home or dashboard if the user is logged in
-    }
-  }, [navigate]);
-
-
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
       const response = await axiosInstance.post("/api/admin/login", userCredentials);

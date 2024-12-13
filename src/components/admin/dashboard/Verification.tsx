@@ -66,8 +66,9 @@ const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
                      <p className='text-[12px]' >Full name</p> </div></th>
 
                   <th className='text-[12px] text-start w-[15%]'>Email Address</th>
-                  <th className='text-[12px] text-start'> Date</th>
+                  <th className='text-[12px] text-start w-[10%]'> Date</th>
                   <th className='text-[12px] text-start' >Position</th>
+                  <th className='text-[12px] text-start ' >Account Verified</th>
                   <th className='text-[12px] text-start' >Action</th>
                 </tr>
               </thead>
@@ -77,7 +78,7 @@ const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
                 if( user.userProfileReference === "recruiter"  ){
                   return(
                     <tbody key={id}  className='mt-2'>
-                    <tr onClick={()=>{setViewJobPopup(true)}}  className='border-[1px] border-[#D6DBDE] mt-2 '>
+                    <tr   className='border-[1px] border-[#D6DBDE] mt-2 '>
                       <td className='px-4 align-top py-3'>
                          <div className='flex gap-4 '>
                         <div  className='text-[12px] cursor-pointer'  >
@@ -92,7 +93,7 @@ const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
                       <td className='align-top py-3'><p className='text-[12px] font-medium'><span className='font-normal'>{user.createdAt ? formatDate(user.createdAt) : "N/A"}</span></p>
                         </td>
     
-                        <td className='align-top py-3'>
+                        <td onClick={()=>{setViewJobPopup(true)}} className='align-top py-3'>
                           <div>
                           <p className='text-[12px] font-semibold' >Java Full stack developer</p>
                           <div className='flex gap-2 text-[12px] '>
@@ -100,6 +101,12 @@ const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
                             <p>Hybrid</p>
                             <p>Allen, Texas, US</p>
                           </div>
+                          </div>
+                        </td>
+                        <td className='align-top py-3'>
+                          <div>
+                          <p className='text-[12px] font-semibold' >Yes</p>
+                          
                           </div>
                         </td>
     
@@ -194,6 +201,7 @@ const VerifiedAccount: React.FC = () => {
                     <th className='text-[12px] text-start w-[15%]'>Email Address</th>
                     <th className='text-[12px] text-start'> Date</th>
                     <th className='text-[12px] text-start' >Position</th>
+                    <th className='text-[12px] text-start' >Account Verified</th>
                     <th className='text-[12px] text-start' >Action</th>
                   </tr>
                 </thead>

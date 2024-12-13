@@ -143,7 +143,7 @@ const Signup: React.FC = () => {
                     {formErrors.firstName && <p className="absolute  text-red-500 text-[10px]">{formErrors.firstName}</p>}
 
                   </div>
-                </ div>
+                </div>
                 <div className='grow'>
                   <label htmlFor="firstName" className='text-sm'>
                     Last Name <span className='text-[#E71717]'>*</span>
