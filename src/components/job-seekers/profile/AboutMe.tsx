@@ -310,7 +310,8 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
                   <div className=" gap-4 items-center relative ">
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 mt-3">
                       <FaGithub size={20} />
-                      <input className='w-full h-full pl-2 text-sm' type="text" name="" id=""  value={gitHub} 
+                      <input className='w-full h-full pl-2 text-sm' type="text" name="" id="" 
+                      //  value={gitHub} 
                         // onChange={(e) => {
                         //   const inputValue = e.target.value;
 

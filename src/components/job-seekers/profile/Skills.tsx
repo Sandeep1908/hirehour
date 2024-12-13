@@ -11,7 +11,7 @@ type AddInfo ={
 
 const Skills:React.FC<AddInfo> = ({setSkillsPopup}) => {
 
-    const [value, setValue] = useState(10);
+    // const [value, setValue] = useState(10);
 
   return (
     <div className='w-full h-full flex p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
