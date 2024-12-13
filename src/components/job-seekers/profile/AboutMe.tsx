@@ -5,7 +5,7 @@ import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { FiChrome } from 'react-icons/fi';
 import { ImCross } from 'react-icons/im';
 import { IoMdClose } from 'react-icons/io';
-import { fetchSocialDetail, fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
+import { fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
 import axiosInstance from '../../../axios/axiosInstance';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
@@ -30,7 +30,7 @@ type ProfileDetails = {
 const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
   const { data: userDetails } = useQuery({ queryKey: ['userDetails'], queryFn: fetchUserDetails });
   
-  const { data: socialDetails } = useQuery({ queryKey: ['socialDetail'], queryFn: fetchSocialDetail });
+  // const { data: socialDetails } = useQuery({ queryKey: ['socialDetail'], queryFn: fetchSocialDetail });
   // const [workDetails, setWorkDetails] = useState({
   //   WorkPlatformName: socialDetails?.[0]?.WorkPlatformName,
   //   WorkLink: socialDetails?.[0]?.WorkLink,
@@ -83,7 +83,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
      
 
  
-    const gitHub = socialDetails?.[0]?.WorkLink
+    // const gitHub = socialDetails?.[0]?.WorkLink
     // const [WorkPlatformName, setWorkPlatformName] = useState<string | null |undefined>()
     // const [WorkLink, setWorkLink] = useState<string | null>()
 
