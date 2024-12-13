@@ -32,9 +32,9 @@ const JobDescriptionBoard: React.FC = () => {
     additionalBenefits: [],
   });
 
-  const navigate=useNavigate()
-  const jobId=useLocation().state?.jobId
- 
+  const navigate = useNavigate();
+  const jobId = useLocation().state?.jobId;
+
   const [benefitOptions] = useState([
     { value: 'Health Insurance', label: 'Health Insurance' },
     { value: 'Paid Time Off', label: 'Paid Time Off' },
@@ -50,8 +50,6 @@ const JobDescriptionBoard: React.FC = () => {
     });
   };
 
-  
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
@@ -62,27 +60,27 @@ const JobDescriptionBoard: React.FC = () => {
     }));
   };
 
-  
   const jobDescriptionMutation = useMutation({
     mutationFn: async (jobDescription: JobDescriptionRequest) => {
-      const response = await axiosrecruiterinstance.post(`/api/recruiter/jobs/part2/${jobId}`, jobDescription);
+      const response = await axiosrecruiterinstance.post(
+        `/api/recruiter/jobs/part2/${jobId}`,
+        jobDescription,
+      );
       return response.data;
     },
     onSuccess: () => {
       toast.success('Job Description Data Saved');
-      navigate('/job-poster/company-profile',{state:{jobId:jobId}});
+      navigate('/job-poster/company-profile', { state: { jobId: jobId } });
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<{ message: string }>;
-      toast.error(axiosError?.response?.data?.message);
+      const axiosError = error as AxiosError<{ errors: [{ message: string }] }>;
+      toast.error(axiosError?.response?.data?.errors[0].message);
     },
   });
 
   const handleJobBoardSubmit = () => {
     jobDescriptionMutation.mutate(formData);
   };
-
-
 
   return (
     <div className="w-full   md:pb-20 bg-[#F6F6F8]">
@@ -92,8 +90,16 @@ const JobDescriptionBoard: React.FC = () => {
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
-              <p className="font-semibold text-[#104B53] text-xs">Cancel </p>
-              <p className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p
+                className="font-semibold text-[#104B53] text-xs"
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+              >
+                Cancel{' '}
+              </p>
+              <p
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+                className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]"
+              >
                 Save & Exit
               </p>
             </div>
@@ -393,10 +399,10 @@ const JobDescriptionBoard: React.FC = () => {
               Back
             </Link>
             <p
-              onClick={()=>handleJobBoardSubmit()}
+              onClick={() => handleJobBoardSubmit()}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
-             {jobDescriptionMutation.isPaused?'Saving.....':'Continue'}
+              {jobDescriptionMutation.isPaused ? 'Saving.....' : 'Continue'}
             </p>
           </div>
         </div>

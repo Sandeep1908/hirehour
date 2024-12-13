@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { ResourseCard } from '../../../config/home';
 
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import Footer from '../../../components/Footer';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPostedJob } from '../../../utils/jobposters/jobboards/getJobs';

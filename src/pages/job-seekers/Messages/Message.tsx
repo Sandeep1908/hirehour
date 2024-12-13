@@ -227,7 +227,7 @@ const Message: React.FC = () => {
 
             <div className="w-full  p-5 ">
               <div className="w-full  h-[50vh]  space-y-3  overflow-auto " id="message-box">
-                {message?.map((msg, i) => {
+                {message?.map((msg:{createdAt:string,senderId:number,content:string}, i:number) => {
                    const timeAgo = formatDistanceToNow(new Date(msg.createdAt), { addSuffix: true });
                   if (msg?.senderId === 1) {
                     return (

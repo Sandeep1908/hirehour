@@ -89,11 +89,11 @@ const JobBasis: React.FC = () => {
     },
     onSuccess: (data) => {
       toast.success('Job Basis Data Saved');
-      navigate('/job-poster/job-description',{state:{jobId:data?.job?.id}});
+      navigate('/job-poster/job-description', { state: { jobId: data?.job?.id } });
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<{ message: string }>;
-      toast.error(axiosError?.response?.data?.message);
+      const axiosError = error as AxiosError<{ error: [{ message: string }] }>;
+      toast.error(axiosError.response?.data.error[0]?.message);
     },
   });
 
@@ -104,10 +104,8 @@ const JobBasis: React.FC = () => {
       jobLocation: formatLocation(workingCompanyLocation),
       jobDomain: getDomainNameById(domain || 0),
     };
-    console.log(newJobBoard);
     jobBoardMutation.mutate(newJobBoard);
   };
-
 
   return (
     <div className="w-full  h-full  md:pb-20  ">
@@ -117,8 +115,16 @@ const JobBasis: React.FC = () => {
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
-              <p className="font-semibold text-[#104B53] text-xs">Cancel </p>
-              <p onClick={()=>navigate('/job-poster/dashboard?key=myjobs')} className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p
+                className="font-semibold text-[#104B53] text-xs"
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+              >
+                Cancel{' '}
+              </p>
+              <p
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+                className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]"
+              >
                 Save & Exit
               </p>
             </div>
@@ -225,7 +231,7 @@ const JobBasis: React.FC = () => {
                       <input
                         type="text"
                         placeholder="Link"
-                        name='atsLink'
+                        name="atsLink"
                         value={jobBoard.atsLink}
                         onChange={handleChange}
                         className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"

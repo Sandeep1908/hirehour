@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { json, Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { TiTick } from 'react-icons/ti';
 
 import { FaEdit } from 'react-icons/fa';
@@ -11,16 +11,15 @@ import { fetchOneCompany } from '../../../../utils/jobposters/jobboards/getCompa
 
 const Review: React.FC = () => {
   const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
-  
-const userDetails=useLocation()?.state?.userDetails
-const { data: companyDetail } = useQuery({
-  queryKey: ['companydetail'],
-  queryFn: () => fetchOneCompany(userDetails?.companyID),
- 
-});
+  const userDetails = useLocation()?.state?.userDetails;
+  const navigate = useNavigate();
+  const { data: companyDetail } = useQuery({
+    queryKey: ['companydetail'],
+    queryFn: () => fetchOneCompany(userDetails?.companyID),
+  });
 
-console.log("company",companyDetail);
- 
+  console.log('company', companyDetail);
+
   const quickApplyDone = () => {
     setQuickApplyStep3(false);
   };
@@ -32,8 +31,16 @@ console.log("company",companyDetail);
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
-              <p className="font-semibold text-[#104B53] text-xs">Cancel </p>
-              <p className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p
+                className="font-semibold text-[#104B53] text-xs"
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+              >
+                Cancel{' '}
+              </p>
+              <p
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+                className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]"
+              >
                 Save & Exit
               </p>
             </div>
@@ -120,7 +127,9 @@ console.log("company",companyDetail);
 
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Employment type</h1>
-                <p className="text-xs font-semibold">{JSON.parse(userDetails?.employmentType).join(', ')} </p>
+                <p className="text-xs font-semibold">
+                  {JSON.parse(userDetails?.employmentType).join(', ')}{' '}
+                </p>
               </div>
             </div>
 
@@ -158,7 +167,9 @@ console.log("company",companyDetail);
             <div className="grid grid-cols-2 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">work Authorization accepting</h1>
-                <p className="text-xs font-semibold">{JSON.parse(userDetails?.workAuthorizationAccepting).join(', ')}</p>
+                <p className="text-xs font-semibold">
+                  {JSON.parse(userDetails?.workAuthorizationAccepting).join(', ')}
+                </p>
               </div>
 
               <div className="flex flex-col space-y-1">
@@ -182,7 +193,9 @@ console.log("company",companyDetail);
             <div className="grid px-4 gap-5">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Tech Stack</h1>
-                <p className="text-xs font-semibold">{JSON.parse(userDetails?.workStack).join(', ')}</p>
+                <p className="text-xs font-semibold">
+                  {JSON.parse(userDetails?.workStack).join(', ')}
+                </p>
               </div>
 
               <div className="flex flex-col space-y-1">
@@ -208,19 +221,22 @@ console.log("company",companyDetail);
             <div className="flex flex-col space-y-6 px-4">
               <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Pay Range</h1>
-                <p className="text-xs font-semibold">{userDetails?.salaryOfferedRangeStart}-{userDetails?.salaryOfferedRangeEnd} {userDetails?.salaryOfferedRangeType}</p>
-              </div>
-
-              <div className="flex flex-col space-y-1">
-                <h1 className="text-xs text-[#8F90A6]">Job description</h1>
                 <p className="text-xs font-semibold">
-                  {companyDetail?.aboutCompany}
+                  {userDetails?.salaryOfferedRangeStart}-{userDetails?.salaryOfferedRangeEnd}{' '}
+                  {userDetails?.salaryOfferedRangeType}
                 </p>
               </div>
 
               <div className="flex flex-col space-y-1">
+                <h1 className="text-xs text-[#8F90A6]">Job description</h1>
+                <p className="text-xs font-semibold">{companyDetail?.aboutCompany}</p>
+              </div>
+
+              <div className="flex flex-col space-y-1">
                 <h1 className="text-xs text-[#8F90A6]">Benefits</h1>
-                <p className="text-xs font-semibold">{JSON.parse(userDetails?.additionalBenefits).join(', ')}</p>
+                <p className="text-xs font-semibold">
+                  {JSON.parse(userDetails?.additionalBenefits).join(', ')}
+                </p>
               </div>
             </div>
           </div>

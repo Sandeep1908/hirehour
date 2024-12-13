@@ -121,7 +121,6 @@ const CompanyProfile: React.FC = () => {
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ errors: string[] }>;
-      console.log('myaxos', axiosError.response?.data.errors);
       toast.error(axiosError.response?.data.errors[0]);
     },
   });
@@ -131,7 +130,7 @@ const CompanyProfile: React.FC = () => {
   };
 
   const handleJobBoardSubmit = () => {
-    if (company === null) return toast.warning('please fill company details');
+    if (company === null) return toast.warning('Please Enter Company Details');
     if (company === 0) {
       const newCompanyDescription = {
         ...formData,
@@ -151,8 +150,16 @@ const CompanyProfile: React.FC = () => {
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
-              <p className="font-semibold text-[#104B53] text-xs">Cancel </p>
-              <p className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p
+                className="font-semibold text-[#104B53] text-xs"
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+              >
+                Cancel{' '}
+              </p>
+              <p
+                onClick={() => navigate('/job-poster/dashboard?key=myjobs')}
+                className=" w-28 h-7 text-[10px] bg-[#104B53] md:bg-transparent  text-white  rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]"
+              >
                 Save & Exit
               </p>
             </div>
