@@ -120,7 +120,7 @@ const Signup: React.FC = () => {
 
 
   return (
-    <div className="bg-[#114B53]  w-full h-[92vh] py-10  px-5  lg:px-10">
+    <div className="bg-[#114B53]  w-full  min-h-[calc(100vh-56px)] py-10  px-5  lg:px-10">
       <div className="w-full h-full flex gap-20">
         <div className=" hidden md:flex w-[50%]">
           <p className="text-white text-[32px] font-semibold">TopEquator</p>
