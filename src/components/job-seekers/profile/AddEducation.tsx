@@ -8,7 +8,14 @@ import axiosInstance from '../../../axios/axiosInstance'
 type EducationProps = {
     setAddEducationPopup:(agr:boolean) => void
 }
-
+type AddEdu ={
+   degree: string,
+   major: string,
+   durationStart: string,
+   durationEnd: string;
+   schoolName: string;
+   schoolLocation: string;
+ }
 const AddEducation:React.FC<EducationProps> = ({setAddEducationPopup}) => {
      
     const [degree, setDegree] = useState<string>("");
@@ -17,16 +24,8 @@ const AddEducation:React.FC<EducationProps> = ({setAddEducationPopup}) => {
     const [durationEnd, setDurationEnd] = useState<string>("");
     const [schoolName, setSchoolName] = useState<string>("");
     const [schoolLocation, setSchoolLocation] = useState<string>("");
-
-    interface AddEdu {
-        degree: string,
-        major: string,
-        durationStart: string,
-        durationEnd: string;
-        schoolName: string;
-        schoolLocation: string;
-      }
-
+    const [boxCheck, setBoxCheck] = useState(false); // State to track checkbox status
+    
 
 
       const mutation = useMutation({
@@ -49,12 +48,12 @@ const AddEducation:React.FC<EducationProps> = ({setAddEducationPopup}) => {
     
       const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if(boxCheck === true){
+         setDurationEnd("Present")
+        }
         const formData = { degree, major, durationStart, durationEnd, schoolName,schoolLocation };
 
         mutation.mutate(formData);
-    
-    
-    
       };   
 
 
@@ -83,14 +82,19 @@ const AddEducation:React.FC<EducationProps> = ({setAddEducationPopup}) => {
                 </div>
              </div>
              <div className='w-full flex gap-4 mt-3 flex-col md:flex-row'>
-                <div className='w-full '>
+                <div className='w-[48%] '>
                    <p className='text-sm font-medium'>Start of Course <span className='text-red-600'>*</span></p>
                    <input type="date" value={durationStart?.split("T")[0]} onChange={(e) => setDurationStart(e.target.value)} className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
                 </div>
-                <div className='w-full '>
+                <div className={`w-[49%] ${boxCheck && "hidden"}`}>
                    <p className='text-sm font-medium'>End of Course <span className='text-red-600'>*</span></p>
                    <input type="date" value={durationEnd?.split("T")[0]} onChange={(e) => setDurationEnd(e.target.value)} className='w-full h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  px-4' />
                 </div>
+             </div>
+             <div className='mt-3 flex gap-4'>
+               <input type="checkbox" name="" id="" checked={boxCheck} onChange={(e)=>{setBoxCheck(e.target.checked)}} className='w-[20px] h-[20px]' /> 
+               <p className='text-sm font-medium'>I am currently Studing </p>
+
              </div>
              <div className='w-full flex gap-4 mt-3 flex-col md:flex-row'>
                 <div className='w-full '>

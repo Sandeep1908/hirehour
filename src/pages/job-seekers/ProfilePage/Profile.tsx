@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { FaEdit } from 'react-icons/fa';
 import { IoLocationOutline } from 'react-icons/io5';
@@ -17,10 +17,8 @@ import privateEye from '../../../assets/icon/private.png';
 import AboutMe from '../../../components/job-seekers/profile/AboutMe';
 import AdditionalDetails from '../../../components/job-seekers/profile/AdditionalDetails';
 import Experience from '../../../components/job-seekers/profile/Experience';
-import EducationEdit from '../../../components/job-seekers/profile/Education';
 import SummaryEdit from '../../../components/job-seekers/profile/Summary';
 import ProfileComplition from '../../../components/job-seekers/profile/ProfileComplition';
-import Certification from '../../../components/job-seekers/profile/Certification';
 import Achievement from '../../../components/job-seekers/profile/Achievement';
 import { SlArrowDown } from 'react-icons/sl';
 import Skills from '../../../components/job-seekers/profile/Skills';
@@ -28,6 +26,7 @@ import ResumeUpload from './components/ResumeUploads';
 import Summary from './components/Summary';
 import WorkExperience from './components/WorkExperience';
 import Education from './components/Education';
+import Certification from './components/Certification';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
 import AddEducation from '../../../components/job-seekers/profile/AddEducation';
@@ -35,6 +34,11 @@ import AddExperience from '../../../components/job-seekers/profile/AddExperience
 import axiosInstance from '../../../axios/axiosInstance';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import AddCertification from '../../../components/job-seekers/profile/AddCertification';
+import CertificationEdit from '../../../components/job-seekers/profile/Certification';
+import OverallSkill from './components/OverallSkill';
+import CurrentSkill from './components/CurrentSkill';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 
 
@@ -46,31 +50,146 @@ type AdditionalDetailsProps = {
 
 
 const Profile: React.FC = () => {
+
+  const { data: userDetails } = useQuery({
+    queryKey: ['userDetails'],
+    queryFn: fetchUserDetails,
+  });
+  const queryClient = useQueryClient();
+
   const [profilePopup, setProfilePopup] = useState<boolean>(false);
   const [aboutusPop, setAboutusPop] = useState<boolean>(false);
   const [additionalInfoPopup, setAdditionalInfoPopup] = useState<boolean>(false);
   const [skillsPopup, setSkillsPopup] = useState<boolean>(false);
   const [summaryPopup, setSummaryPopup] = useState<boolean>(false);
   const [experiencePopup, setExperiencePopup] = useState<boolean>(false);
-  const [educationPopup, setEducationPopup] = useState<boolean>(false);
+  // const [educationPopup, setEducationPopup] = useState<boolean>(false);
   const [certificationPopup, setCertificationPopup] = useState<boolean>(false);
   const [achievementPopup, setAchievementPopup] = useState<boolean>(false);
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [isUploadResumeOpen, setIsUploadResumeOpen] = useState(false);
 
-  // Checek Profile Complition
+// Checek Profile Complition
 
-  // const [signingUpwithTopEquator,setSigningUpWithTopEquator] = useState<any>();
-  // const [addResume,setAddResume] = useState<any>();
-  // const [addAboutMe,setAddAboutMe] = useState<any>();
-  // const [jobPreference,setJobPreference] = useState<any>();
-  // const [addSkillSet,setAddSkillSet] = useState<any>();
-  // const [signingUpwithTopEquator,setSigningUpWithTopEquator] = useState<any>();
+const [signingUpwithTopEquator,setSigningUpWithTopEquator] = useState<boolean>(false);
+const [addResume,setAddResume] = useState<boolean>(false);
+const [addAboutMe,setAddAboutMe] = useState<boolean>(false);
+// const [jobPreference,setJobPreference] = useState<boolean>(false);
+const [addSkillSet,setAddSkillSet] = useState<boolean>(false);
+const [addSociallinks, setAddSociallinks] = useState<boolean>(false);
+const [addDomain, setAddDomain] = useState<boolean>(false);
+const [completionPercentage, setCompletionPercentage] = useState<number>(0);
+const [counttotal, setCountTotal] = useState<number>(0);
+
+
+
+// const [skillDetails, setSkillDetails] = useState<any>()
+const [skillSectionId, setSkillSectionId] = useState<number>(0)
+// setSkillDetails(userDetails)
+const skillSection =[
+  {
+      id: 0,
+      label: "Overall Skill",
+      component : <OverallSkill userDetails={userDetails} />
+  },
+  {
+      id: 1,
+      label: "Current Skill",
+      component : <CurrentSkill/>
+  }
+]
+
+
+
+
+
+let count = 0; 
+
+const handelProfileComplition = () => { 
+  
+  console.log("userDetails", userDetails);
+
+  
+  // Check and update count based on conditions
+  if (userDetails.user?.firstName) {
+    setSigningUpWithTopEquator(true)
+    count++;
+    console.log("signingUpwithTopEquator",signingUpwithTopEquator)
+  }
+
+  if (userDetails.selectedResume) {
+    setAddResume(true);
+    count++;
+  } else {
+    setAddResume(false);
+  }
+
+  if (userDetails.profilePictureLink) {
+    setAddAboutMe(true);
+    count++;
+    console.log("addAboutMe",addAboutMe)
+  } else {
+    setAddAboutMe(false);
+  }
+
+  // if (userDetails.profilePictureLink) {
+  //   setJobPreference(true);
+  //   count++;
+  // } else {
+  //   setJobPreference(false);
+  // }
+
+  if (userDetails.candidatedetailsskills?.length > 0) {
+    setAddSkillSet(true);
+    count++;
+    console.log("addSkillSet",addSkillSet)
+  } else { 
+    setAddSkillSet(false);
+  }
+
+  if (userDetails.candidatedetailsworks.length > 0) {
+    setAddSociallinks(true);
+    count++;
+    console.log("addSociallinks",addSociallinks)
+  } else {
+    setAddSociallinks(false);
+  }
+
+  if (userDetails.candidatedetailsexperiences.length > 0) {
+    setAddDomain(true);
+    count++;
+    console.log("addDomain",addDomain)
+  } else {
+    setAddDomain(false);
+  }
+
+  calculateCompletion(count)
+
+  console.log("Profile Completion Count:", count);
+};
+
+
+const calculateCompletion = (count:number) => {
+  const percentage = Math.round((count / 7) * 100);
+  setCompletionPercentage(percentage);
+  setCountTotal(count)
+  console.log("percentage",completionPercentage)
+  console.log("count",count)
+};
+
+useEffect(() => {
+  if (userDetails) {
+    handelProfileComplition();
+  }
+
+}, [userDetails]); 
+
 
   // Add State 
 
   const [addEducationPopup, setAddEducationPopup] = useState<boolean>(false);
   const [addExperiencePopup, setAddExperiencePopup] = useState<boolean>(false);
+  const [addCertificationPopup, setAddCertificationPopup] = useState<boolean>(false);
 
 
 
@@ -82,11 +201,7 @@ const Profile: React.FC = () => {
   
   const [experienceId,setExperienceId]=useState<number | null>(null)
 
-  const { data: userDetails } = useQuery({
-    queryKey: ['userDetails'],
-    queryFn: fetchUserDetails,
-  });
-  const queryClient = useQueryClient();
+
 
        // Mutation for submitting form data
   const additionaldetailsMutation = useMutation({
@@ -143,21 +258,19 @@ const Profile: React.FC = () => {
                   <div className="w-full bg-[#FFF1C6] rounded-full  ">
                     <div
                       className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
-                      style={{ width: '75%' }}
+                      style={{ width: completionPercentage+"%" }}
                     >
                       {' '}
-                      75%
+                      {completionPercentage}%
                     </div>
                   </div>
-                  <p className="text-xs">4/7 Completed</p>
+                  <p className="text-xs">{counttotal}/7 Completed</p>
                 </div>
 
                 <div className=" pt-4 flex justify-end items-end w-full">
                   <p
                     className="w-32 text-sm h-8 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center items-center p-3 "
-                    onClick={() => {
-                      setProfilePopup(true);
-                    }}
+                    onClick={()=>{setProfilePopup(true)}}
                   >
                     Let's Go{' '}
                   </p>
@@ -298,47 +411,37 @@ const Profile: React.FC = () => {
                     setSkillsPopup(true);
                   }}
                 >
-                  <FaEdit size={16} color="#104B53" />{' '}
-                  <span className="text-[#104B53] text-sm">Edit</span>
+                  <AiOutlinePlus size={16} color="#104B53" />{' '}
+                  <span className="text-[#104B53] text-sm">Add</span>
                 </div>
               </div>
               <div className="flex gap-1 ">
-                <div className="pt-1 bg-[#114B53] rounded-tl-lg rounded-tr-lg">
+                {skillSection.map((item,id)=>{
+                  return(
+                  <div key={id} onClick={()=>{setSkillSectionId(id)}} className={` ${item.id === skillSectionId ?"bg-[#114B53]":""} pt-1  rounded-tl-lg rounded-tr-lg`}>
+                  <p className="text-[#114B53] text-sm px-3 py-1 bg-white">{item.label}</p>
+                </div>
+                  )
+                })}
+                {/* <div className="pt-1 bg-[#114B53] rounded-tl-lg rounded-tr-lg">
                   <p className="text-[#114B53] text-sm px-3 py-1 bg-white">Overall Skills</p>
                 </div>
                 <div className="pt-1 ">
                   <p className="text-[#3A3A3C] text-sm px-3 py-1">Current Skills</p>
-                </div>
+                </div> */}
               </div>
               <hr className="mt-2" />
+
+              {skillSection.map((item,id)=>{
+                if(item.id === skillSectionId){
+                  return(
+                    <div key={id}>
+                      {item.component}
+                    </div>
+                  )}
+                })}              
               <div>
-                <div className="mt-4">
-                  <div className="flex justify-between">
-                    <p className="text-[#3A3A3C] text-xs font-semibold">Java</p>
-                    <p className="text-[#3A3A3C] text-xs font-semibold">4 years</p>
-                  </div>
-                  <div className="rounded-full bg-[#EBEBF0] w-full h-1 mt-2">
-                    <div className="rounded-full h-1  w-[50%] bg-[#114B53]"></div>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <div className="flex justify-between">
-                    <p className="text-[#3A3A3C] text-xs font-semibold">React JS</p>
-                    <p className="text-[#3A3A3C] text-xs font-semibold">4 years</p>
-                  </div>
-                  <div className="rounded-full bg-[#EBEBF0] w-full h-1 mt-2">
-                    <div className="rounded-full h-1  w-[50%] bg-[#114B53]"></div>
-                  </div>
-                </div>
-                <div className="mt-4">
-                  <div className="flex justify-between">
-                    <p className="text-[#3A3A3C] text-xs font-semibold">Angular </p>
-                    <p className="text-[#3A3A3C] text-xs font-semibold">4 years</p>
-                  </div>
-                  <div className="rounded-full bg-[#EBEBF0] w-full h-1 mt-2">
-                    <div className="rounded-full h-1  w-[50%] bg-[#114B53]"></div>
-                  </div>
-                </div>
+               
               </div>
 
               <div className="flex gap-2 items-center justify-center mt-5">
@@ -366,21 +469,19 @@ const Profile: React.FC = () => {
                   <div className="w-full bg-[#FFF1C6] rounded-full  ">
                     <div
                       className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
-                      style={{ width: '75%' }}
+                      style={{ width: completionPercentage+"%" }}
                     >
                       {' '}
-                      75%
+                      {completionPercentage}%
                     </div>
                   </div>
-                  <p className="text-sm">4/7 Completed</p>
+                  <p className="text-sm">{counttotal}/7 Completed</p>
                 </div>
 
                 <div className="w-1/4 flex justify-end items-center">
                   <p
                     className="w-36 h-10 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center text-xs cursor-pointer items-center p-3 "
-                    onClick={() => {
-                      setProfilePopup(true);
-                    }}
+                    onClick={()=>{setProfilePopup(true)}}
                   >
                     Let's Go{' '}
                   </p>
@@ -401,36 +502,12 @@ const Profile: React.FC = () => {
 
             {/* Education  */}
 
-            <Education setEducationPopup={setEducationPopup} setAddEducationPopup={setAddEducationPopup}/>
+            <Education setAddEducationPopup={setAddEducationPopup}/>
 
             {/* Certification  */}
 
-            <div className="bg-white w-full p-5 rounded-lg mt-3">
-              <div className=" flex flex-col space-y-3">
-                <div className="flex justify-between items-center">
-                  <h1 className="text-lg font-semibold">Ceritification</h1>
+            <Certification setCertificationPopup={setCertificationPopup} setAddCertificationPopup={setAddCertificationPopup}/>
 
-                  <div
-                    className="flex justify-end items-center space-x-2"
-                    onClick={() => {
-                      setCertificationPopup(true);
-                    }}
-                  >
-                    <BiPlus size={14} color="#104B53" />
-                    <p className="text-[#104B53] text-sm font-semibold">Add</p>
-                  </div>
-                </div>
-
-                <div className="border p-7 border-[#EBEBF0] rounded-lg">
-                  <div
-                    className="w-full max-w-[765px] h-[80px] m-auto flex justify-center items-center border border-dashed border-[#C7C9D9] bg-[#F2F2F5] rounded-lg
-              "
-                  >
-                    <p className="text-xs">Added certificate will be shown here</p>
-                  </div>
-                </div>
-              </div>
-            </div>
 
             {/* Acheivment  */}
 
@@ -490,14 +567,14 @@ const Profile: React.FC = () => {
 
       {/* Edit About us Popup */}
 
-      {profilePopup && <ProfileComplition setProfilePopup={setProfilePopup} />}
+      {profilePopup && <ProfileComplition setProfilePopup={setProfilePopup} signingUpwithTopEquator={signingUpwithTopEquator} addResume={addResume} addAboutMe={addAboutMe} addSkillSet={addSkillSet} addSociallinks={addSociallinks} addDomain={addDomain} completionPercentage={completionPercentage} count={counttotal}/>}    
       {aboutusPop && <AboutMe setAboutPop={setAboutusPop} />}
       {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} handleAdditionalDetails={handleAdditionalDetails} setIsVisibleToRecruiters={setIsVisibleToRecruiters} setNeedVisaSponsorship={setNeedVisaSponsorship}/>}
       {skillsPopup && <Skills setSkillsPopup={setSkillsPopup} />}
       {summaryPopup && <SummaryEdit setSummaryPopup={setSummaryPopup} />}
       {experiencePopup && <Experience setExperiencePopup={setExperiencePopup} expeirenceId={experienceId} />}
-      {educationPopup && <EducationEdit setEducationPopup={setEducationPopup} />}
-      {certificationPopup && <Certification setCerticationPopup={setCertificationPopup} />}
+      {/* {educationPopup && <EducationEdit setEducationPopup={setEducationPopup} />} */}
+      {certificationPopup && <CertificationEdit setCerticationPopup={setCertificationPopup}  />}
       {achievementPopup && <Achievement setAchievementPopup={setAchievementPopup} />}
 
        {/* Add Popus  */}
@@ -505,6 +582,7 @@ const Profile: React.FC = () => {
 
        {addEducationPopup && <AddEducation setAddEducationPopup={setAddEducationPopup} />}
        {addExperiencePopup && <AddExperience setAddExperiencePopup={setAddExperiencePopup} />}
+       {addCertificationPopup && <AddCertification setAddCertificationPopup={setAddCertificationPopup} />}
 
 
 

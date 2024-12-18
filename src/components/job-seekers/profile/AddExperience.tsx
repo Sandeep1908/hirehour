@@ -13,6 +13,16 @@ import LocationSearch from '../../../utils/LocationSearch'
 type AddExperiences ={
     setAddExperiencePopup:(agr:boolean) => void
 }
+type AddExperince= {
+   companydetails: string,
+   domain: number | null,
+   durationStart: string,
+   place: string | null;
+   jobCategory: string | null;
+   descriptionOfExperience: string;
+   role: number | null;
+   jobType: number | null;
+ }
 
 const AddExperience:React.FC<AddExperiences> = ({setAddExperiencePopup}) => {
 
@@ -28,20 +38,13 @@ const AddExperience:React.FC<AddExperiences> = ({setAddExperiencePopup}) => {
     const [descriptionOfExperience, setDescriptionOfExperience] = useState<string>("");
     const [jobType, setJobType] = useState<number | null>(null);
 
+    const [boxCheck, setBoxCheck] = useState(false); // State to track checkbox status
+
    
 
 
 
-    interface AddExperince {
-        companydetails: string,
-        domain: number | null,
-        durationStart: string,
-        place: string | null;
-        jobCategory: string | null;
-        descriptionOfExperience: string;
-        role: number | null;
-        jobType: number | null;
-      }
+   
 
          
     useEffect(() => {
@@ -76,6 +79,7 @@ const AddExperience:React.FC<AddExperiences> = ({setAddExperiencePopup}) => {
       const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const formData = { companydetails, domain, durationStart, place,jobCategory, descriptionOfExperience,role,jobType };
+        console.log("formData",formData)
 
         mutation.mutate(formData);
     
@@ -115,23 +119,28 @@ const AddExperience:React.FC<AddExperiences> = ({setAddExperiencePopup}) => {
                    </div>
                 </div>
              </div>
-             <div className='w-full flex gap-4 mt-3'>
+             <div className='w-full flex gap-4 mt-3 '>
                 <div className='w-full '>
-                   <p className='text-sm font-medium'>Job Type <span className='text-red-600'>*</span></p>
+                   <p className='text-sm font-medium '>Job Category <span className='text-red-600'>*</span></p>
                    <input type="text" value={jobCategory} onChange={(e) => setJobCategory(e.target.value)} className='w-full h-[40px] rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
                   
                 </div>
                
              </div>
              <div className='w-full flex gap-4 mt-3'>
-                <div className='w-full '>
+                <div className='w-[48%] '>
                    <p className='text-sm font-medium'>Date of joining <span className='text-red-600'>*</span></p>
                    <input type="date" value={durationStart} onChange={(e) => setDurationStart(e.target.value)}  className='w-full h-[40px] rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' />
                 </div>
-                <div className='w-full '>
-                   <p className='text-sm font-medium'>Date of Relieving <span className='text-red-600'>*</span></p>
+                <div className={`w-[49%] ${boxCheck && "hidden"}`}>
+                   <p className='text-sm font-medium'>Date of Relieving </p>
                    <input type="date" value={durationEnd} onChange={(e) => setDurationEnd(e.target.value)}  className='w-full h-[40px] rounded-md border-[1px] border-[#E1E1E2] mt-2  px-4' />
                 </div>
+             </div>
+             <div className='mt-3 flex gap-4'>
+               <input type="checkbox" name="" id="" checked={boxCheck} onChange={(e)=>{setBoxCheck(e.target.checked)}} className='w-[20px] h-[20px]' /> 
+               <p className='text-sm font-medium'>I am currently working </p>
+
              </div>
              <div className='w-full flex gap-4 mt-3'>
                 <div className='w-full '>
@@ -142,6 +151,7 @@ const AddExperience:React.FC<AddExperiences> = ({setAddExperiencePopup}) => {
                       <option value=""> abc Comoany </option>
                    </select> */}
                 </div>
+
                 <div className='w-full '>
                    <p className='text-sm font-medium'>Location <span className='text-red-600'>*</span></p>
                    {/* <select name="" id="" className='w-full h-[40px] rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >

@@ -5,13 +5,20 @@ import { useQuery, useQueryClient,useMutation } from "@tanstack/react-query";
 import { fetchUserDetails } from "../../../../utils/jobseekers/getUserDetails";
 import axiosInstance from "../../../../axios/axiosInstance";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import EducationEdit from '../../../../components/job-seekers/profile/Education';
+
 
 
 type EducationProps={
-    setEducationPopup:(e:boolean)=>void
+    // setEducationPopup:(e:boolean)=>void
     setAddEducationPopup:(e:boolean)=>void
 }
-const Education:React.FC<EducationProps>=({setEducationPopup,setAddEducationPopup})=>{
+const Education:React.FC<EducationProps>=({setAddEducationPopup})=>{
+
+    const [educationPopup, setEducationPopup] = useState<boolean>(false);
+    const [degreeName, setDegreeName] = useState<string>("");
+  
 
     const { data: userDetails } = useQuery({
         queryKey: ['userDetails'],
@@ -21,7 +28,7 @@ const Education:React.FC<EducationProps>=({setEducationPopup,setAddEducationPopu
       const queryClient=useQueryClient()
       
 
-
+ 
       const educationMutation = useMutation({
         mutationFn: async (educationId: number) => {
           const response = await axiosInstance.post('/api/candidate/details/delete-education', {
@@ -39,6 +46,11 @@ const Education:React.FC<EducationProps>=({setEducationPopup,setAddEducationPopu
       });
       const handleDeleteEducation = (id: number) => {
         educationMutation.mutate(id);
+      };
+      const handleEditEducation = (degreeName: string) => {
+        setEducationPopup(true)
+        setDegreeName(degreeName)
+        // educationMutation.mutate(id);
       };
     
 
@@ -58,7 +70,7 @@ const Education:React.FC<EducationProps>=({setEducationPopup,setAddEducationPopu
               return (
                 <div className="border p-7 border-[#EBEBF0] rounded-lg" key={i}>
                   <div className="flex justify-end items-center space-x-4">
-                    <div className="flex items-center  " onClick={()=>setEducationPopup(true)}>
+                    <div className="flex items-center  " onClick={()=>handleEditEducation(item?.degree)}>
                       <FaEdit size={14} color="#104B53" />
                       <p className="text-[#104B53] text-xs">Edit</p>
                     </div>
@@ -92,6 +104,8 @@ const Education:React.FC<EducationProps>=({setEducationPopup,setAddEducationPopu
               );
             })}
           </div>
+
+          {educationPopup && <EducationEdit setEducationPopup={setEducationPopup} degreeName={degreeName} />}
             </div>
     )
 }

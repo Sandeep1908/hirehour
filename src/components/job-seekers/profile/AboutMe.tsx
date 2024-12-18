@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import { FaBehanceSquare } from 'react-icons/fa';
+import React, {  useState } from 'react';
+import { FaBehanceSquare, FaCheck } from 'react-icons/fa';
 import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { FiChrome } from 'react-icons/fi';
 import { ImCross } from 'react-icons/im';
 import { IoMdClose } from 'react-icons/io';
-import { fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
+import { fetchSocialDetail, fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
 import axiosInstance from '../../../axios/axiosInstance';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
@@ -21,20 +21,22 @@ type ProfileDetails = {
   needVisaSponsorship: string;
 };
 
-// type WorkDetails ={
-//   WorkPlatformName: string | null |undefined;
-//   WorkLink: string | null |undefined;
-// }
+type WorkDetails ={
+  WorkPlatformName: string | null |undefined;
+  WorkLink: string | null |undefined;
+}
  
 
 const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
   const { data: userDetails } = useQuery({ queryKey: ['userDetails'], queryFn: fetchUserDetails });
   
-  // const { data: socialDetails } = useQuery({ queryKey: ['socialDetail'], queryFn: fetchSocialDetail });
+  const { data: socialDetails } = useQuery({ queryKey: ['socialDetail'], queryFn: fetchSocialDetail });
   // const [workDetails, setWorkDetails] = useState({
   //   WorkPlatformName: socialDetails?.[0]?.WorkPlatformName,
   //   WorkLink: socialDetails?.[0]?.WorkLink,
   // });
+
+
 
   const queryClient = useQueryClient();
 
@@ -78,47 +80,109 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
 
 
    //for Socail Links
-  
-
-     
 
  
-    // const gitHub = socialDetails?.[0]?.WorkLink
-    // const [WorkPlatformName, setWorkPlatformName] = useState<string | null |undefined>()
-    // const [WorkLink, setWorkLink] = useState<string | null>()
+      // const gitHub = socialDetails?.[1]?.WorkLink
+      const gitHub = socialDetails?.find(
+        (item: { WorkPlatformName: string; WorkLink: string }) =>
+          item.WorkPlatformName === 'GitHub'
+      )?.WorkLink;
+    
+    const [WorkPlatformName, setWorkPlatformName] = useState<string | null |undefined>()
+    const [WorkLink, setWorkLink] = useState<string | null>()
+
+    // const  = socialDetails?.[5]?.WorkLink
+    const linkedIn = socialDetails?.find(
+      (item: { WorkPlatformName: string; WorkLink: string }) =>
+        item.WorkPlatformName === 'LinkedIn'
+    )?.WorkLink;
+    const [linkedInName, setLinkedInName] = useState<string | null |undefined>()
+    const [linkedInLink, setLinkedInLink] = useState<string | null>()
+
+    // const behance = socialDetails?.[6]?.WorkLink
+    const behance = socialDetails?.find(
+      (item: { WorkPlatformName: string; WorkLink: string }) =>
+        item.WorkPlatformName === 'Behance'
+    )?.WorkLink;
+    const [behanceName, setBehanceName] = useState<string | null |undefined>()
+    const [behancenLink, setBehanceLink] = useState<string | null>()
 
     
     // Mutation for work details
-    // const workDetailsMutation = useMutation({
-    //   mutationFn: async (workData: WorkDetails) => {
-    //     console.log("workData",workData)
-    //     const response = await axiosInstance.post(
-    //       '/api/candidate/details/work',
-    //       workData
-    //     );
-    //     return response.data;
-    //   },
-    //   onSuccess: () => {
-    //     toast.success('Work details saved');
-    //   },
-    //   onError: (error) => {
-    //     const axiosError = error as AxiosError<{ message: string }>;
-    //     toast.error(axiosError?.response?.data?.message);
-    //   },
-    // });
+    const workDetailsMutation = useMutation({
+      mutationFn: async (workData: WorkDetails) => {
+        console.log("workData",workData)
+        const response = await axiosInstance.post(
+          '/api/candidate/details/work',
+          workData
+        );
+        return response.data;
+      },
+      onSuccess: () => {
+        toast.success('Work details saved');
+      },
+      onError: (error) => {
+        const axiosError = error as AxiosError<{ message: string }>;
+        toast.error(axiosError?.response?.data?.message);
+      },
+    });
   
 
   const handleProfileEdit = () => {
     editProfileMutation.mutate(profileDetails);
-   
+    console.log("socialDetails",socialDetails)
     setAboutPop(false);
   };
-  // const handleSocialLinkEdit = () => {
+  
+  const handleSocialLinkEdit = () => {
+
+  // Check if the platform already exists
+  const isPlatformPresent = socialDetails.some(
+    (links:any) => links.WorkPlatformName === WorkPlatformName
+  );
+
+  if (isPlatformPresent) {
+    toast.error("This Link Is Already Available");
+    return; // Skip mutation
+  }
+
+  const socialDetaill = {WorkPlatformName, WorkLink}
+  workDetailsMutation.mutate(socialDetaill);
     
-  //   const socialDetaill = {WorkPlatformName, WorkLink}
-  //   workDetailsMutation.mutate(socialDetaill);
-  //   setAboutPop(false);
-  // };
+  };
+
+  const handleLinkedInLinkEdit = () => {
+    setWorkPlatformName(linkedInName)
+    setWorkLink(linkedInLink)
+      // Check if the platform already exists
+  const isPlatformPresent = socialDetails.some(
+    (links:any) => links.WorkPlatformName === WorkPlatformName
+  );
+
+  if (isPlatformPresent) {
+    toast.error("This Link Is Already Available");
+    return; // Skip mutation
+  }
+    const socialDetaill = {WorkPlatformName, WorkLink}
+    workDetailsMutation.mutate(socialDetaill);
+    
+  };
+  const handleBehanceLinkEdit = () => {
+    setWorkPlatformName(behanceName)
+    setWorkLink(behancenLink)
+      // Check if the platform already exists
+  const isPlatformPresent = socialDetails.some(
+    (links:any) => links.WorkPlatformName === WorkPlatformName
+  );
+
+  if (isPlatformPresent) {
+    toast.error("This Link Is Already Available");
+    return; // Skip mutation
+  }
+    const socialDetaill = {WorkPlatformName, WorkLink}
+    workDetailsMutation.mutate(socialDetaill);
+    
+  };
 
 
 
@@ -158,6 +222,35 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
     const formData = new FormData();
     formData.append('file', file);
     uploadAvatar.mutate(formData);
+  };
+
+
+  // Delete Social links
+
+
+  const deleteSocialLinkMutation = useMutation({
+    mutationFn: async (workID: number) => {
+      const response = await axiosInstance.post('/api/candidate/details/delete-work', {
+        workID: workID,
+      });
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+      toast.success('Social Link Deleted Susseccfully!');
+    },
+    onError: () => {
+      toast.error('Failed to delete Social Link. Please try again.');
+    },
+  });
+  const handleDeleteSocialLink = (linkName: string) => {
+
+    const id = socialDetails?.find(
+      (item: { WorkPlatformName: string; WorkLink: string }) =>
+        item.WorkPlatformName === linkName
+    )?.id;
+
+    deleteSocialLinkMutation.mutate(id);
   };
 
 
@@ -303,33 +396,38 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
                   <div className="flex gap-4 items-center relative text-sm">
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 ">
                       <FaLinkedin size={20} />
-                      <input type="text" name="" id=""  placeholder="Your Linkedin profile url" />
+                      <input className='w-full h-full pl-2 text-sm' type="text" name="" id="" 
+                       value={linkedIn} disabled={linkedIn ? true : false}
+                       onChange={(e) => {
+                         const inputValue = e.target.value;
+
+                         if (inputValue.includes("linkedin.com")) {
+                           setLinkedInLink(inputValue); 
+                           setLinkedInName("Linkedin"); 
+                         } 
+                       }} 
+                       placeholder="Your Linkedin profile url" />
                     </div>
-                    <ImCross className="absolute right-4" size={13} />
+                    <FaCheck  onClick={handleLinkedInLinkEdit} className="absolute right-12 top-4 " size={13} />
+                    <ImCross className="absolute right-4 top-4"onClick={()=>{handleDeleteSocialLink("Linkedin")}}  size={13} />
                   </div>
                   <div className=" gap-4 items-center relative ">
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 mt-3">
                       <FaGithub size={20} />
                       <input className='w-full h-full pl-2 text-sm' type="text" name="" id="" 
-                      //  value={gitHub} 
-                        // onChange={(e) => {
-                        //   const inputValue = e.target.value;
+                       value={gitHub} disabled={gitHub ? true : false}
+                        onChange={(e) => {
+                          const inputValue = e.target.value;
 
-                        //   if (inputValue.includes("github.com")) {
-                        //     setWorkLink(inputValue); 
-                        //     setWorkPlatformName("GitHub"); 
-                        //   } else if (inputValue.includes("linkedin.com")) {
-                        //     setWorkLink(inputValue); 
-                        //     setWorkPlatformName("LinkedIn");
-                        //   } else {
-                        //     setWorkLink(inputValue); 
-                        //     setWorkPlatformName("Other"); 
-                        //   }
-                        // }} 
+                          if (inputValue.includes("github.com")) {
+                            setWorkLink(inputValue); 
+                            setWorkPlatformName("GitHub"); 
+                          } 
+                        }} 
                         placeholder="Your Github profile url" />
                     </div>
-                    {/* <FaCheck  onClick={handleSocialLinkEdit} className="absolute right-12 top-4 " size={13} /> */}
-                    <ImCross className="absolute right-4 top-4 " size={13} />
+                    <FaCheck  onClick={handleSocialLinkEdit} className="absolute right-12 top-4 " size={13} />
+                    <ImCross className="absolute right-4 top-4" onClick={()=>{handleDeleteSocialLink("GitHub")}}  size={13} />
                   </div>
 
                 
@@ -337,10 +435,20 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
                   <div className="flex gap-4 items-center relative text-sm" >
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 mt-3">
                       <FaBehanceSquare size={20} />
-                      <input type="text" name="" id="" placeholder="Your Behance profile url" />
+                      <input className='w-full h-full pl-2 text-sm' type="text" name="" id=""
+                        value={behance} disabled={behance ? true : false }
+                        onChange={(e) => {
+                          const inputValue = e.target.value;
+ 
+                          if (inputValue.includes("behance.com")) {
+                            setBehanceLink(inputValue); 
+                            setBehanceName("Behance"); 
+                          } 
+                        }} 
+                       placeholder="Your Behance profile url" />
                     </div>
-                    <ImCross className="absolute right-4" size={13} />
-                  </div>
+                    <FaCheck  onClick={handleBehanceLinkEdit} className="absolute right-12 top-4 " size={13} />
+                    <ImCross className="absolute right-4 top-4 "  onClick={()=>{handleDeleteSocialLink("Behance")}}  size={13} />                  </div>
                   <div className="flex gap-4 items-center text-sm">
                     <div className="w-[465px] border-[1px] border-[#E1E1E2] rounded-lg flex items-center gap-3 px-5 py-3 mt-3">
                       <FiChrome size={20} />
