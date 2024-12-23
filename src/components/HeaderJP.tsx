@@ -70,7 +70,7 @@ const HeaderJP: React.FC = () => {
             <div className="">
               <div className="flex justify-center items-center space-x-5">
                 <Link
-                  to={'/signin'}
+                  to={'/job-poster/signin'}
                   className="w-24 h-8 text-xs flex justify-center items-center border-[1px] rounded-full border-[#104B53] text-[#104B53]   cursor-pointer"
                 >
                   Sign In
