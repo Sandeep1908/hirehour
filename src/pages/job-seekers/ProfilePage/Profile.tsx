@@ -28,8 +28,22 @@ import ResumeUpload from './components/ResumeUploads';
 import Summary from './components/Summary';
 import WorkExperience from './components/WorkExperience';
 import Education from './components/Education';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
+import AddEducation from '../../../components/job-seekers/profile/AddEducation';
+import AddExperience from '../../../components/job-seekers/profile/AddExperience';
+import axiosInstance from '../../../axios/axiosInstance';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+
+
+
+type AdditionalDetailsProps = {
+  isVisibleToRecruiters: boolean | null;
+  needVisaSponsorship: boolean | null;
+
+};
+
 
 const Profile: React.FC = () => {
   const [profilePopup, setProfilePopup] = useState<boolean>(false);
@@ -44,6 +58,26 @@ const Profile: React.FC = () => {
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [isUploadResumeOpen, setIsUploadResumeOpen] = useState(false);
 
+  // Checek Profile Complition
+
+  // const [signingUpwithTopEquator,setSigningUpWithTopEquator] = useState<any>();
+  // const [addResume,setAddResume] = useState<any>();
+  // const [addAboutMe,setAddAboutMe] = useState<any>();
+  // const [jobPreference,setJobPreference] = useState<any>();
+  // const [addSkillSet,setAddSkillSet] = useState<any>();
+  // const [signingUpwithTopEquator,setSigningUpWithTopEquator] = useState<any>();
+
+  // Add State 
+
+  const [addEducationPopup, setAddEducationPopup] = useState<boolean>(false);
+  const [addExperiencePopup, setAddExperiencePopup] = useState<boolean>(false);
+
+
+
+  const [isVisibleToRecruiters, setIsVisibleToRecruiters] = useState<boolean | null>(null);
+  const [needVisaSponsorship, setNeedVisaSponsorship] = useState<boolean | null>(null);
+  
+
   //Edit states
   
   const [experienceId,setExperienceId]=useState<number | null>(null)
@@ -52,6 +86,37 @@ const Profile: React.FC = () => {
     queryKey: ['userDetails'],
     queryFn: fetchUserDetails,
   });
+  const queryClient = useQueryClient();
+
+       // Mutation for submitting form data
+  const additionaldetailsMutation = useMutation({
+    mutationFn: async (AddData: AdditionalDetailsProps) => {
+      console.log("add",AddData)
+      const response = await axiosInstance.post(
+        '/api/candidate/details/update-details',
+        AddData,
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success('Information Saved');
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+    },
+    onError: (error) => {
+      const axiosError=error as AxiosError<{message:string}>
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
+
+
+  const handleAdditionalDetails = () => {
+    const additionalDetails = {isVisibleToRecruiters,needVisaSponsorship}
+    additionaldetailsMutation.mutate(additionalDetails);
+    setAdditionalInfoPopup(false);
+  };
+
+
+  
   
 
   return (
@@ -207,12 +272,12 @@ const Profile: React.FC = () => {
               <div className="flex flex-col space-y-5 p-2">
                 <div className="flex flex-col space-y-2">
                   <p className="text-sm text-[#8F90A6]">Willing to work / Looking for job change</p>
-                  <h1 className="text-xs font-semibold">Yes</h1>
+                  <h1 className="text-xs font-semibold">{userDetails?.isVisibleToRecruiters === true ? "Yes":"No"} </h1>
                 </div>
 
                 <div className="flex flex-col space-y-2">
                   <p className="text-sm text-[#8F90A6]">Visa Sponsorship</p>
-                  <h1 className="text-xs font-semibold">Yes</h1>
+                  <h1 className="text-xs font-semibold">{userDetails?.needVisaSponsorship === true ? "Yes":"No"} </h1>
                 </div>
 
                 <div className="flex flex-col space-y-2">
@@ -332,11 +397,11 @@ const Profile: React.FC = () => {
 
             {/* Experience  */}
 
-            <WorkExperience setExperiencePopup={setExperiencePopup} setExperienceId={setExperienceId} />
+            <WorkExperience setExperiencePopup={setExperiencePopup} setExperienceId={setExperienceId} setAddExperiencePopup={setAddExperiencePopup} />
 
             {/* Education  */}
 
-            <Education setEducationPopup={setEducationPopup}/>
+            <Education setEducationPopup={setEducationPopup} setAddEducationPopup={setAddEducationPopup}/>
 
             {/* Certification  */}
 
@@ -427,13 +492,21 @@ const Profile: React.FC = () => {
 
       {profilePopup && <ProfileComplition setProfilePopup={setProfilePopup} />}
       {aboutusPop && <AboutMe setAboutPop={setAboutusPop} />}
-      {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} />}
+      {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} handleAdditionalDetails={handleAdditionalDetails} setIsVisibleToRecruiters={setIsVisibleToRecruiters} setNeedVisaSponsorship={setNeedVisaSponsorship}/>}
       {skillsPopup && <Skills setSkillsPopup={setSkillsPopup} />}
       {summaryPopup && <SummaryEdit setSummaryPopup={setSummaryPopup} />}
       {experiencePopup && <Experience setExperiencePopup={setExperiencePopup} expeirenceId={experienceId} />}
       {educationPopup && <EducationEdit setEducationPopup={setEducationPopup} />}
       {certificationPopup && <Certification setCerticationPopup={setCertificationPopup} />}
       {achievementPopup && <Achievement setAchievementPopup={setAchievementPopup} />}
+
+       {/* Add Popus  */}
+
+
+       {addEducationPopup && <AddEducation setAddEducationPopup={setAddEducationPopup} />}
+       {addExperiencePopup && <AddExperience setAddExperiencePopup={setAddExperiencePopup} />}
+
+
 
       <div
         className={`w-full h-full flex justify-center items-center fixed inset-0 transition-all duration-500 ${

@@ -9,8 +9,9 @@ import { toast } from "react-toastify";
 
 type EducationProps={
     setEducationPopup:(e:boolean)=>void
+    setAddEducationPopup:(e:boolean)=>void
 }
-const Education:React.FC<EducationProps>=({setEducationPopup})=>{
+const Education:React.FC<EducationProps>=({setEducationPopup,setAddEducationPopup})=>{
 
     const { data: userDetails } = useQuery({
         queryKey: ['userDetails'],
@@ -47,7 +48,7 @@ const Education:React.FC<EducationProps>=({setEducationPopup})=>{
             <div className="flex justify-between items-center">
               <h1 className="text-lg font-semibold">Education</h1>
 
-              <div className="flex justify-end items-center space-x-2">
+              <div className="flex justify-end items-center space-x-2" onClick={()=>{setAddEducationPopup(true)}}>
                 <BiPlus size={14} color="#104B53" />
                 <p className="text-[#104B53] text-xs font-semibold">Add</p>
               </div>
@@ -80,7 +81,7 @@ const Education:React.FC<EducationProps>=({setEducationPopup})=>{
                       <div className="flex space-x-3 items-center">
                         <p className="text-[#7C8596] bg-[#F2F2F5] p-2 rounded-full font-semibold text-xs">
                           {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
-                          {item?.isCurrentlyAttending ? 'Present' : item?.durationEnd}
+                          {item?.isCurrentlyAttending ? 'Present' : item?.durationEnd?.split('T')[0]}
                         </p>
                       </div>
                     </div>
