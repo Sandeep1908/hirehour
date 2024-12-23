@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FaCheckCircle } from 'react-icons/fa';
 
 import { useQuery } from '@tanstack/react-query';
