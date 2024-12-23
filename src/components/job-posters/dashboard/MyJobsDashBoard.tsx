@@ -7,13 +7,10 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPostedJob } from '../../../utils/jobposters/jobboards/getJobs';
 import VerifyJobIco from '../../../assets/dashboardrtr/nothing.png';
 
-const ActiveJobs: React.FC = () => {
-  const { data: viewJobs } = useQuery({
-    queryKey: ['viewjobs'],
-    queryFn: fetchPostedJob,
-  });
-  const activeJobs = viewJobs?.jobs?.filter((i: JobTypes) => i.isActive === true);
+ 
 
+const ActiveJobs: React.FC<{activeJobs:JobTypes[]}> = ({activeJobs}) => {
+ 
   return (
     <div className="space-y-3 ">
       {activeJobs?.length !== 0 ? (
@@ -113,13 +110,8 @@ const ActiveJobs: React.FC = () => {
   );
 };
 
-const PausedJobs: React.FC = () => {
-  const { data: viewJobs } = useQuery({
-    queryKey: ['viewjobs'],
-    queryFn: fetchPostedJob,
-  });
-  const pausedJob = viewJobs?.jobs?.filter((i: JobTypes) => i.isActive === null);
-  
+const PausedJobs: React.FC<{pausedJob:JobTypes[]}> = ({pausedJob}) => {
+ 
   return (
     <div className="space-y-3">
       {pausedJob?.map((item: JobTypes, id: number) => {
@@ -395,16 +387,23 @@ const ClosedJobs: React.FC = () => {
 };
 
 const MyJobsDashBoard: React.FC = () => {
+  const { data: viewJobs } = useQuery({
+    queryKey: ['viewjobs'],
+    queryFn: fetchPostedJob,
+  });
+  const activeJobs = viewJobs?.jobs?.filter((i: JobTypes) => i.isActive === true);
+  const pausedJobs = viewJobs?.jobs?.filter((i: JobTypes) => i.isActive !== true);
+
   const jobFilters = [
     {
       label: 'Active Jobs',
-      component: <ActiveJobs />,
-      count: '',
+      component: <ActiveJobs activeJobs={activeJobs} />,
+      count: activeJobs?.length,
     },
     {
       label: 'Paused Jobs',
-      component: <PausedJobs />,
-      count: '',
+      component: <PausedJobs pausedJob={pausedJobs} />,
+      count: pausedJobs?.length,
     },
     {
       label: 'Closed Jobs',

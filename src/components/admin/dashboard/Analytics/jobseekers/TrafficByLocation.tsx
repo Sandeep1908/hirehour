@@ -1,80 +1,82 @@
-
-
 import React from 'react';
 import { Bar } from 'react-chartjs-2';
+import { getGeolocationStats } from '../../../../../utils/admin/getUserStats';
+import { useQuery } from '@tanstack/react-query';
+
+ 
+type CandidateLocationType = {
+  count: number;
+  country: string;
+  month: string;
+};
+
  
 
-interface TrafficData {
-  country: string;
-  trafficCount: number;
-}
-
-const trafficData: TrafficData[] = [
-  { country: 'United States', trafficCount: 80 },
-  { country: 'Canada', trafficCount: 60 },
-  { country: 'Costa Rica', trafficCount: 40 },
-  { country: 'Mexico', trafficCount: 20 },
-  { country: 'Others', trafficCount: 50 },
-];
-
 const TrafficByLocationChart: React.FC = () => {
-  const labels = trafficData.map((data) => data.country);
-  const data  = {
-    labels: labels,
+  const { data: analytics } = useQuery({
+    queryKey: ['analytics'],
+    queryFn: getGeolocationStats,
+  });
+
+  const dataS= analytics?.data?.data?.candidate?.map((i:CandidateLocationType)=>{
+    return(
+      {
+        country:i?.country,
+        count:i?.count
+      }
+    )
+  })
+
+  const data = {
+    labels: dataS?.map((i:CandidateLocationType)=>i.country),
     datasets: [
       {
         label: 'Traffic',
-        data: trafficData.map((data) => data.trafficCount),
-        backgroundColor: ['#BDECBF', '#A5B3F9', '#022931', '#CECFF7', '#88B0A1'], // Colors for bars
+        data: dataS?.map((i:CandidateLocationType)=>i.count),
+        backgroundColor: ['#BDECBF', '#A5B3F9', '#022931', '#CECFF7', '#88B0A1'],  
         hoverBackgroundColor: [
           'rgba(189, 236, 191, 0.7)',
           'rgba(165, 179, 249, 0.7)',
           'rgba(2, 41, 49, 0.7)',
           'rgba(206, 207, 247, 0.7)',
           'rgba(136, 176, 161, 0.7)',
-        ], 
+        ],
         borderRadius: 10,
         barThickness: 50,
-        
       },
     ],
   };
 
   const options = {
     responsive: true,
-   
-    
+
     plugins: {
       legend: {
         display: false,
       },
 
-      datalabels:{
-        display:false
-    },
+      datalabels: {
+        display: false,
+      },
     },
     scales: {
-        x: {
-            grid: {
-              display: false,  
-            },
-          },
+      x: {
+        grid: {
+          display: false,
+        },
+      },
       y: {
         beginAtZero: true,
         grid: {
-             display: true,  
-             color: '#E5E5EF',
-             drawBorder: false,
-
-        
-          },
-        ticks: {
-          callback: function (value:string) {
-            return `${value}k`;
-          },
-        
+          display: true,
+          color: '#E5E5EF',
+          drawBorder: false,
         },
-        
+        ticks: {
+          callback: function (value: string) {
+            return `${value}`;
+          },
+        },
       },
     },
   };

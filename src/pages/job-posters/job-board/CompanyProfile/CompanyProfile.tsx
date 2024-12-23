@@ -117,7 +117,7 @@ const CompanyProfile: React.FC = () => {
     },
     onSuccess: (data) => {
       toast.success('Company Associated with Job Successfully');
-      navigate('/job-poster/review', { state: { userDetails: data?.job, message: data?.message } });
+      navigate('/job-poster/review', { state: { userDetails: data?.job, message: data?.message,jobId:jobId } });
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ errors: string[] }>;

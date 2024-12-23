@@ -4,29 +4,41 @@ import SummeryCards from './Analytics/SummeryCards';
 import MultilineChartWithLegend from './Analytics/jobseekers/MultiLineChartWithLegen';
 import SearchTitleStats from './Analytics/jobseekers/SearchTitleStats';
 import TrafficByLocationChart from './Analytics/jobseekers/TrafficByLocation';
+import { getUserStats } from '../../../utils/admin/getUserStats';
+import { useQuery } from '@tanstack/react-query';
+ 
 // import JobSearchTitle from './Analytics/jobseekers/JobSearchTitle/JobSearchTitle';
 // import TrafficByLocation from './Analytics/jobseekers/TrafficByLocation/TrafficByLocation';
 
+ 
+
 const JobSeekers: React.FC  = () => {
+  const { data: stats } = useQuery({
+    queryKey: ['userstats'],
+    queryFn: getUserStats,
+  });
+  const statistics=stats?.data?.data
+
+ 
   const info = [
     {
       name: 'Footprint',
-      total: '200K',
+      total: statistics?.totalUsers,
       bgColor: '#EFFDFD',
     },
     {
       name: 'Total User',
-      total: '100K',
+      total: statistics?.totalUsers,
       bgColor: '#F2F2F5',
     },
     {
       name: 'New User',
-      total: '20K',
+      total: statistics?.newUsers,
       bgColor: '#EFFDFD',
     },
     {
       name: 'Active User',
-      total: '70K',
+      total: statistics?.activeUserCount,
       bgColor: '#F2F2F5',
     },
   ];
@@ -66,7 +78,7 @@ const JobSeekers: React.FC  = () => {
   );
 };
 
-const Recuriter: React.FC = () => {
+const Recuriter: React.FC  = () => {
   const info = [
     {
       name: 'Footprint',
@@ -131,12 +143,14 @@ const Recuriter: React.FC = () => {
 const Analytics: React.FC = () => {
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
   // const [isJobSeekersSubComponent, setIsJobSeekersSubComponents] = useState<number>();
+
+
   
 
   const jobFilters = [
     {
       label: 'Job Seekers',
-      component: <JobSeekers />,
+      component: <JobSeekers/>,
     },
     {
       label: 'Recruiter',

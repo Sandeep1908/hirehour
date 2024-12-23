@@ -24,8 +24,9 @@ const isCandidateAuthenticated = () => {
 
 const isRecruiterAuthenticated = () => {
   const token = localStorage.getItem('topequatorrecruitertoken');
-  if (!token) return false;
 
+  if (!token) return false;
+   
   try {
     const { exp } = jwtDecode(token);  
     if (exp) {

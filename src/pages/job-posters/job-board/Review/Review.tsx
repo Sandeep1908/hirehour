@@ -8,17 +8,28 @@ import Logo from '../../../../assets/logo/hirehour.png';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchOneCompany } from '../../../../utils/jobposters/jobboards/getCompanyDetails';
+import { publishJob } from '../../../../utils/jobposters/jobboards/publishJob';
 
 const Review: React.FC = () => {
   const [isQuickApplyStep3, setQuickApplyStep3] = useState<boolean>(false);
   const userDetails = useLocation()?.state?.userDetails;
+
   const navigate = useNavigate();
   const { data: companyDetail } = useQuery({
     queryKey: ['companydetail'],
     queryFn: () => fetchOneCompany(userDetails?.companyID),
   });
 
-  console.log('company', companyDetail);
+  const { data, refetch } = useQuery({
+    queryKey: ['postedJob'],
+    queryFn: () => publishJob(userDetails?.id),
+    enabled: false,
+  });
+
+  const handlePosted = () => {
+    refetch();
+    setQuickApplyStep3(!isQuickApplyStep3);
+  };
 
   const quickApplyDone = () => {
     setQuickApplyStep3(false);
@@ -250,9 +261,7 @@ const Review: React.FC = () => {
             </Link>
 
             <div
-              onClick={() => {
-                setQuickApplyStep3(!isQuickApplyStep3);
-              }}
+              onClick={() => handlePosted()}
               className="w-24 flex justify-center items-center rounded-full text-xs h-7 text-[#124C53] border bg-[#E9F358]"
             >
               Submit
@@ -279,44 +288,11 @@ const Review: React.FC = () => {
             />
           </div>
           <hr />
-          <div className="w-full p-10">
-            <div className="w-full flex justify-between items-center">
-              <div className="w-[167px] flex justify-center items-center gap-2">
-                <div className="w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center">
-                  <p className="text-base text-white font-semibold">1</p>
-                </div>
-                <p className="hidden md:block text-[10px] font-medium text-[#114B53]">
-                  Screening Questions
-                </p>
-              </div>
-              <div className="border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]"></div>
-              <div className="w-[167px] flex justify-center items-center gap-2">
-                <div className="w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center">
-                  <p className="text-base text-white font-semibold">2</p>
-                </div>
-                <p className="hidden md:block text-[10px] font-medium text-[#114B53]">
-                  Review Application
-                </p>
-              </div>
-              <div className="border-t-[1px] max-w-[30px] w-full border-dashed border-[#114B53]"></div>
-              <div className="w-[167px] flex justify-center items-center gap-2">
-                <div className="w-8 h-8 bg-[#114B53] rounded-full flex justify-center items-center">
-                  <p className="text-base text-white font-semibold">3</p>
-                </div>
-                <p className="hidden md:block text-[10px] font-medium text-[#114B53]">
-                  Applied Successfully
-                </p>
-              </div>
-            </div>
-          </div>
+
           <div className="flex flex-col justify-center items-center">
             <img src={Logo} alt="" />
-            <p className="text-sm font-semibold text-[#3A3A3C] mt-5">
-              Your application was submitted successfully to XYZ Company
-            </p>
-            <p className="text-xs font-normal text-[#6B7588] mt-2">
-              You can track you application any time from my jobs
-            </p>
+            <p className="text-sm font-semibold text-[#3A3A3C] mt-5">{data?.message}</p>
+            <p className="text-xs font-normal text-[#6B7588] mt-2">{data?.message.includes('verification pending') ?'Once the verification is completed job will posted successfully':'Your job on live you can track the stats in job page anytime'}</p>
           </div>
 
           <div className="w-full flex justify-center p-10">

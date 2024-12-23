@@ -1,23 +1,47 @@
-import React, { useState } from 'react'
-import { FaCheckCircle } from 'react-icons/fa'
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { FaCheckCircle } from 'react-icons/fa';
 
-const Pricing:React.FC = () => {
+import { useQuery } from '@tanstack/react-query';
+import { fetchPricing } from '../../../utils/jobposters/jobboards/pricing';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-   
-    const [selector, setSelector] = useState<boolean>(false);
-   
+const Pricing: React.FC = () => {
+  const [selector, setSelector] = useState<boolean>(false);
+  const [isPaymentOn, setIsPaymentOn] = useState<boolean>(false);
+  const navigate=useNavigate()
+
+  const { data: response } = useQuery({
+    queryKey: ['pricing'],
+    queryFn: fetchPricing,
+    enabled: isPaymentOn && selector
+  });
+
+
+  const handlePayment=()=>{
+      if(selector){
+        setIsPaymentOn(true)
+        toast.success('You are being redirect to the payment page.')
+        if(response?.paymentLink){
+          window.location.href=response?.paymentLink
+        }
+      }
+      else{
+        navigate('/job-poster/dashboard')
+      }
+  }
+  
 
   return (
-    <div className='relative w-full h-auto md:h-[94vh]' >
-       <div className='max-w-[1280px] md:mt-5 m-auto pb-20'>
-         <div className='w-full  px-5  py-4 md:bg-white rounded-lg'>
-               <p className='text-base font-semibold '>Please Select the plan to Post your Job Live</p>
-         </div>
-         <div className="flex flex-col  md:flex-row gap-10 items-center justify-center mt-4 md:mt-10">
+    <div className="relative w-full h-auto md:h-[94vh]">
+      <div className="max-w-[1280px] md:mt-5 m-auto pb-20">
+        <div className="w-full  px-5  py-4 md:bg-white rounded-lg">
+          <p className="text-base font-semibold ">Please Select the plan to Post your Job Live</p>
+        </div>
+        <div className="flex flex-col  md:flex-row gap-10 items-center justify-center mt-4 md:mt-10">
           <div
             onClick={() => {
-              setSelector(!selector);
+              setSelector(false);
             }}
             className={` border ${!selector && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
           >
@@ -68,7 +92,7 @@ const Pricing:React.FC = () => {
 
           <div
             onClick={() => {
-              setSelector(!selector);
+              setSelector(true);
             }}
             className={` border ${selector && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
           >
@@ -91,16 +115,21 @@ const Pricing:React.FC = () => {
             </div>
           </div>
         </div>
-                   <div className='fixed bottom-0 bg-white md:bg-transparent md:relative py-3  w-full  m-auto flex justify-center md:justify-end md:px-10 mt-10 gap-10  items-center'>
-                            <p  className='hidden md:block cursor-pointer text-[#114B53] font-semibold text-base'> Back</p>
-                            <Link to={'/job-poster/payment'} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer '>
-                                <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Continue</p>
-                            </Link>
-                        </div>
-
-       </div>
+        <div className="fixed bottom-0 bg-white md:bg-transparent md:relative py-3  w-full  m-auto flex justify-center md:justify-end md:px-10 mt-10 gap-10  items-center">
+          <p className="hidden md:block cursor-pointer text-[#114B53] font-semibold text-base">
+            {' '}
+            Back
+          </p>
+          <div
+            onClick={() => handlePayment()}
+            className="bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer "
+          >
+            <p className="text-base font-semibold text-[#114B53] cursor-pointer">Continue</p>
+          </div>
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Pricing
+export default Pricing;
