@@ -92,6 +92,7 @@ import RTRPrivacySetting from './pages/job-posters/dashboard/dashboardRTR/userpr
 import VerificationMainTemp from './pages/emails/Verification.tsx';
 import { CandidateProtectedRoute, RecruiterProtectedRoute } from './components/ProtectedRoute.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import PaymentStatus from './pages/job-posters/payment-status/PaymentStatus.tsx';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -235,6 +236,8 @@ const router = createBrowserRouter(
         } />
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />
+      <Route path="/payment-status" element={<PaymentStatus />} />
+
       <Route path="/job-poster/profile-setting" element={<ProfileSetting />} />
       <Route path="/job-poster/company-profile-info" element={<CompanyProfileSettings />} />
       <Route path="/job-poster/privacy-setting" element={<PrivacySettingJP />} />
