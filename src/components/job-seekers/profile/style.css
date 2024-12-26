@@ -4,18 +4,36 @@
   }
   
   .rc-slider-track {
-    background-color: #4caf50; /* Color for the progress bar (filled part) */
+    background-color: #114B53; /* Color for the progress bar (filled part) */
   }
   
   .rc-slider-handle {
-    border-color: #4caf50; /* Color for the slider handle border */
+    border-color: #114B53; /* Color for the slider handle border */
     background-color: #ffffff; /* Color for the slider handle */
   }
   
   .rc-slider-handle:focus, 
   .rc-slider-handle:hover, 
   .rc-slider-handle:active {
-    border-color: #388e3c; /* Color when the handle is focused or hovered */
+    border-color: #114B53;  /* Color when the handle is focused or hovered */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  .rc-slider-handle-dragging.rc-slider-handle-dragging.rc-slider-handle-dragging {
+    border-color: #114B53;
+    box-shadow: 0 0 0 3px #114B53;
+  }
+  .rc-slider-rail{
+    height: 8px;
+  }
+  .rc-slider-track{
+height: 8px;
+  }
+  .rc-slider-handle{
+    width: 18px;
+    height: 18px;
+  }
+
+  .rc-slider-handle{
+    z-index: 0;
   }
   

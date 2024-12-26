@@ -11,6 +11,7 @@ import { MdOutlineKeyboardArrowDown } from 'react-icons/md'
 import { CiFilter } from "react-icons/ci";
 import { IoMdClose } from 'react-icons/io'
 import Logo from '../../../assets/logo/hirehour.png';
+import jobImg from '../../../assets/icon-company.png';
 import { LuUpload } from "react-icons/lu";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { FaRegEdit } from "react-icons/fa";
@@ -18,9 +19,19 @@ import { MdOutlineMail } from "react-icons/md";
 import { IoCallOutline } from 'react-icons/io5'
 import Footer from '../../../components/Footer'
 import { JobDescriptionDetails } from '../../../config/jobdescription'
+import { useQuery } from '@tanstack/react-query'
+import { fetchJobsList } from '../../../utils/jobseekers/getUserDetails'
+import axiosInstance from '../../../axios/axiosInstance'
 
 
 const JobDescription: React.FC = () => {
+ 
+    // const { data: jobsList } = useQuery({
+    //     queryKey: ['jobsList'],
+    //     queryFn: fetchJobsList,
+    //   });
+     const { data: jobsList } = useQuery({ queryKey: ['jobsList'], queryFn: fetchJobsList });
+
 
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
     const [isQuickApplyStep2, setQuickApplyStep2] = useState<boolean>(false);
@@ -30,13 +41,45 @@ const JobDescription: React.FC = () => {
    
 
     const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
-    const [jobDataId, setJobDataId] = useState<number>(1);
+    const [jobDataId, setJobDataId] = useState<number>(0);
     const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
 
+    // const [workStackArray, setWorkStackArray] = useState<any>([]); // Initialize with an empty array
 
 
+    const [jobsListAll, setJobsListAll] = useState<any>([]); 
+    useEffect(() => {
+      const fetchUsers = async () => {
+        const token = localStorage.getItem('topequatortoken'); // Fetch the token
+  
+        if (!token) {
+          console.error("No token found in localStorage");
+          return;
+        }
+  
+        try {
+          const response = await axiosInstance.get("/api/candidate/jobs/jobs", {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include the token
+            },
+          });
+          setJobsListAll(response.data); // Assuming response.data contains the user array
+           
+          console.log("jobsList",jobsListAll)  
+          console.log(response.data)
+
+        } catch (error) {
+          // console.error("Error fetching users:", error.response?.data || error.message);
+        }
+      };
+  
+      fetchUsers();
+    }, []);
 
     useEffect(() => {
+
+     console.log("jobsList",jobsListAll)  
+
 
      setJobData(JobDescriptionDetails)
     
@@ -50,13 +93,29 @@ const JobDescription: React.FC = () => {
         setFilterData(filterData)
     }
 
-
+  
+    
     
 
 
-    }, [jobDataId,jobData,setJobData]);
+    }, [jobDataId,jobData,setJobData,]);
 
 
+    
+        // useEffect(() => {
+        //     if (jobsList?.jobs?.workStack) {
+        //         try {
+        //             // Parse the JSON and set the state
+        //             // const parsedWorkStack = JSON.parse(jobsList?.jobs.workStack);
+        //             // setWorkStackArray(parsedWorkStack); // Use the setState function correctly
+        //             console.log("object",workStackArray)
+        //         } catch (error) {
+        //             console.error("Error parsing workStack JSON:", error);
+        //         }
+        //     }
+        // }, [jobsList?.jobs.workStack,jobDataId,jobData,setJobData ]); // Add dependencies to the useEffect hook
+    
+     
 
     const step2 = () => {
         setQuickApply(false);
@@ -605,9 +664,14 @@ const JobDescription: React.FC = () => {
                             <p className='text-[12px] '><span className='font-extrabold'>Upload Your Resume -</span> Let employers find you.</p>
                             <p className='text-[12px] mt-2 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
                             <div className='mt-4 flex flex-col gap-4 justify-center'>
-                                {jobData.map((details, id) => (
-                                    <JobCard key={id} setIsOpen={setQuickApply} data={details} setId={setJobDataId} jobDataId={jobDataId} />
-                                ))}
+
+                                {jobsList?.jobs.map((details:any,id:number)=>{
+                                    return(<div key={id} onClick={()=>{setJobDataId(id)}}>
+                                    <JobCard    setIsOpen={setQuickApply} details={details} jobDataId={jobDataId}  />
+                                    </div>)
+                                })}
+
+
 
                             </div>
                         </div>
@@ -636,7 +700,9 @@ const JobDescription: React.FC = () => {
                     {/*Description  */}
 
                <div className='hidden md:block max-w-[845px] w-full'  >
-               {jobFilterData.map((details,id)=>{
+               {jobsList?.jobs.map((details:any,id:number)=>{
+            
+                if(jobDataId === id){
                         return(
                             <div key={id} className=' max-w-[845px]   w-full rounded-lg  border'>
                                 <div className='w-full min-h-[100vh]'>
@@ -648,21 +714,21 @@ const JobDescription: React.FC = () => {
                                             <div className='flex gap-2 items-center'>
                                                 <div className='relative w-[100px] h-[100px] '>
 
-                                                    <img className='absolute top-[-20px]  w-full h-full' src={details.img} alt="" />
+                                                    <img className='absolute top-[-20px]  w-full h-full' src={jobImg} alt="" />
                                                 </div>
                                                 <div>
-                                        <div className='flex gap-4 items-center'>                                                    <p className='font-bold text-[20px]'>{details.title}</p> <p className='text-[#1F4AF1]  text-xs bg-[#90B9FF80] px-3 py-1 rounded-xl h-fit '>Multiple Position</p>
+                                        <div className='flex gap-4 items-center'>                                                    <p className='font-bold text-[20px]'>{details.jobRoleName}</p> <p className='text-[#1F4AF1]  text-xs bg-[#90B9FF80] px-3 py-1 rounded-xl h-fit '>Multiple Position</p>
                                         </div>
-                                                    <ul className='flex list-disc gap-8 text-sm mt-1'>
-                                                        <li>{details.company}</li>
-                                                        <li>{details.designation}</li>
-                                                        <li>{details.location}</li>
+                                                    <ul className='flex  gap-8 text-sm mt-1'>
+                                                        {/* <li>{details.company}</li> */}
+                                                        <li>{details.jobDomain}</li>
+                                                        <li>{details.jobLocation}</li>
                                                     </ul>
                                                 </div>
                                             </div>
 
                                             <div className="flex justify-between items-center gap-4">
-                                                <p className="text-[#A9A9A9] text-[12px] font-normal ">Posted 1 day ago</p>
+                                                <p className="text-[#A9A9A9] text-[12px] font-normal ">Posted {details?.updatedAt.split('T')[0]}</p>
                                                 <div className=" px-6 py-2 bg-[#E9F358] rounded-full">
                                                     <p className="text-[#114B53] text-sm font-semibold">Quick Apply</p>
                                                 </div>
@@ -670,128 +736,7 @@ const JobDescription: React.FC = () => {
                                         </div>
 
 
-                                        {/* <div className="job-description my-4">
-
-                                     <div
-                                        ref={contentRef}
-                                        style={{ height: height }}
-                                        className="overflow-hidden transition-height duration-700 ease-in-out"
-                                    >
-                                        <div className="description">
-                                        <div className={`w-full  transition-all ease-in-out duration-700    `} >
-                                            <div className={`flex h-auto relative transition-all delay-75   `}>
-                                                <div className='flex flex-col gap-4 mt-2 max-w-[350px] w-full'>
-
-                                                    <div className='flex gap-2'>
-                                                        <img src={Location2} alt="" />
-                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[12px]'>{details.mode}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='flex gap-2'>
-                                                        <img src={Location2} alt="" />
-                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[12px]'>{details.pay} / hours</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='flex gap-2'>
-                                                        <img src={Location2} alt="" />
-                                                        <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[12px]'>{details.workTime}</p>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-
-                                                <div className='border  bg-[#D6DBDE] '>
-
-                                                </div>
-
-
-                                                <div className={`flex flex-col  gap-7 ml-4 justify-center  `}>
-
-                                                    <div className=''>
-
-                                                        <p className='text-[14px] text-[#3A3A3C] font-semibold'>Employment Type</p>
-
-                                                        <div className='flex gap-2 mt-3'>
-
-                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                <p className='text-[12px] text-[#3A3A3C] font-medium'>Crop to Crop </p>
-                                                            </div>
-                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                <p className='text-[12px] text-[#3A3A3C] font-medium'>Contract to Hire </p>
-                                                            </div>
-                                                            <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                <p className='text-[12px] text-[#3A3A3C] font-medium'>Contract W2 </p>
-                                                            </div>
-
-
-                                                        </div>
-
-                                                    </div>
-
-
-
-
-                                                    <div className=''>
-
-                                                        <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
-
-                                                        <div className='flex gap-2 mt-3'>
-                                                            {details.workAuthorization.map((value, id) => (
-                                                                <div key={id} className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>{value} </p>
-                                                                </div>
-                                                            ))}
-
-                                                         
-                                                        </div>
-
-                                                    </div>
-
-
-
-                                                </div>
-                                            </div>
-
-                                            <div className={`mt-4 delay-75 `}>
-
-                                                <p className='text-[14px] font-semibold'>Tech Stacks</p>
-
-                                                <div className='flex gap-2 mt-1'>
-                                                    {details.techStacks.map((value, id) => (
-                                                        <div key={id} className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                                            <p className='text-[12px] font-semibold'>{value} </p>
-                                                        </div>
-                                                    ))}
-
-                                                  
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div> 
-                                    </div> */}
-
                                      
-
-
-
-
-                                       
-
-
-
-                                        {/* <div className='w-full flex justify-center items-center mt-8' >
-                                            <FaChevronUp className={`${!isOpen ? "hidden" : ""}`} onClick={() => { setIsOpen(!isOpen) }} />
-
-                                            <FaChevronDown className={`${isOpen ? "hidden" : ""}`} onClick={() => { setIsOpen(!isOpen) }} />
-
-                                        </div> */}
 
 
 
@@ -814,19 +759,19 @@ const JobDescription: React.FC = () => {
                                                     <div className='flex gap-2'>
                                                         <img src={Location2} alt="" />
                                                         <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[12px]'>{details.mode}</p>
+                                                            <p className='text-[12px]'>{details.accommodationType}</p>
                                                         </div>
                                                     </div>
                                                     <div className='flex gap-2'>
                                                         <img src={Location2} alt="" />
                                                         <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[12px]'>{details.pay} / hours</p>
+                                                            <p className='text-[12px]'>{details.salaryOfferedRangeEnd}$ -{details.salaryOfferedRangeStart}$ {details.salaryOfferedRangeType}</p>
                                                         </div>
                                                     </div>
                                                     <div className='flex gap-2'>
                                                         <img src={Location2} alt="" />
                                                         <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                            <p className='text-[12px]'>{details.workTime}</p>
+                                                            <p className='text-[12px]'>{JSON.parse(details.employmentType)}</p>
                                                         </div>
                                                     </div>
 
@@ -869,11 +814,13 @@ const JobDescription: React.FC = () => {
                                                         <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
 
                                                         <div className='flex gap-2 mt-3'>
-                                                            {details.workAuthorization.map((value, id) => (
-                                                                <div key={id} className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
-                                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>{value} </p>
+                                                          
+                                                                <div  className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                                                                   
+                                                                    <p className='text-[12px] text-[#3A3A3C] font-medium'>{JSON.parse(details.
+workAuthorizationAccepting)} </p>
                                                                 </div>
-                                                            ))}
+                                                    
 
                                                          
                                                         </div>
@@ -888,17 +835,13 @@ const JobDescription: React.FC = () => {
                                             <div className={`mt-4 delay-75 `}>
 
                                                 <p className='text-[14px] font-semibold'>Tech Stacks</p>
-
-                                                <div className='flex gap-2 mt-1'>
-                                                    {details.techStacks.map((value, id) => (
-                                                        <div key={id} className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
-                                                            <p className='text-[12px] font-semibold'>{value} </p>
-                                                        </div>
-                                                    ))}
-
-                                                  
-
-                                                </div>
+{/* 
+                                                {workStackArray.map(( value:any,id:number)=>(
+                                 
+                                 <div key={id} className='px-2 md:px-3 py-1 bg-[#CAFDFC] rounded-full'>
+                                    <p className='text-[12px] font-semibold'>{value} </p>
+                                </div>
+                               ))} */}
 
                                             </div>
                                         </div>
@@ -911,13 +854,13 @@ const JobDescription: React.FC = () => {
                                     <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>{details.jobDescription}</p>
 
                                     <p className='text-base font-semibold mt-3'>Additional benefits</p>
-                                    <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>{details.additionalBenefits}</p>
+                                    <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>{JSON.parse(details.additionalBenefits)}</p>
 
                                     <p className='text-base font-semibold mt-3'>Notes</p>
                                     <p className='text-sm text-[#3A3A3C] mt-3 text-justify'>{details.notes}</p>
 
                                     <div className='w-full flex justify-between items-center mt-10'>
-                                        <p className='text-[#8F90A6] text-xs font-normal '>Posted 1 day ago</p>
+                                        <p className='text-[#8F90A6] text-xs font-normal '>Posted {details?.updatedAt.split('T')[0]}</p>
                                         <div className=' px-6 py-2 bg-[#114B53] rounded-full'>
                                             <p className='text-white text-sm font-semibold'>Report</p>
                                         </div>
@@ -928,7 +871,7 @@ const JobDescription: React.FC = () => {
                           
 
                         </div>
-                        )
+                        )}
                       
                     })}
                </div>

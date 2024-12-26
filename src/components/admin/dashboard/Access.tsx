@@ -10,7 +10,8 @@ import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
 
 import ShortListed from './ShortListed'
-import axiosInstance from '../../../axios/axiosInstance'
+import { fetchAllUserDetails } from '../../../utils/admin/getAllUserDetails'
+import { useQuery } from '@tanstack/react-query'
 
 
 
@@ -1543,33 +1544,18 @@ const Access: React.FC = () => {
   // const [showShortList, setShowShortList] = useState<boolean>(false);
 
 
+  const { data: allUserDetail } = useQuery({ queryKey: ['allUserDetail'], queryFn: fetchAllUserDetails });
+ 
 
   const [usersDetail, setUsersDetail] = useState<Users[]>([]); 
   useEffect(() => {
-    const fetchUsers = async () => {
-      const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+    if(allUserDetail){
+      
+      setUsersDetail(allUserDetail.users);
+      console.log("object",usersDetail)
+    }
 
-      if (!token) {
-        console.error("No token found in localStorage");
-        return;
-      }
-
-      try {
-        const response = await axiosInstance.get("/api/admin/user-management/users", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include the token
-          },
-        });
-        setUsersDetail(response.data.users); // Assuming response.data contains the user array
-         
-        console.log(response.data.users)
-      } catch (error) {
-        // console.error("Error fetching users:", error.response?.data || error.message);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  }, [allUserDetail]);
 
 
 

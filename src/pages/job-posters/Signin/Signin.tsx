@@ -4,13 +4,15 @@ import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
 
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 import { jwtDecode } from 'jwt-decode';
 import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
+import { fetchGeoLocation } from '../../../utils/getGeolocation';
+import axiosInstance from '../../../axios/axiosInstance';
 
 interface UserCredentials {
   email: string;
@@ -37,6 +39,15 @@ interface JwtPayload {
   iat: number;
   exp: number;
 }
+type geoData={
+  ip: string
+  city: string
+  region: string
+  country: string
+  loc: string
+  org:string
+  postal: string
+}
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -47,7 +58,23 @@ const Signin: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
- 
+  const { data: geoLocation } = useQuery({ queryKey: ['geoLocation'], queryFn: fetchGeoLocation });
+
+  const geoLocationMutation = useMutation({
+    mutationFn: async (geoData: geoData) => {
+      const response = await axiosInstance.post("/api/misc/logger/geolocation", geoData);
+       
+      return response.data;
+    },
+
+    onSuccess: () => {
+     console.log("GeoLocationMutation success")
+
+    },
+    onError: () => {
+      console.log("GeoLocationMutation error")
+    },
+  });
 
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
@@ -70,6 +97,7 @@ const Signin: React.FC = () => {
           navigate(redirectTo);
         }
       }
+      geoLocationMutation.mutate(geoLocation);
       // const redirectTo = location.state?.from?.pathname || '/';
       // navigate(redirectTo);
     },
@@ -100,7 +128,7 @@ const Signin: React.FC = () => {
     setShowPassword(!showPassword);
   };
   return (
-    <div className=" bg-[#114B53]   w-full h-[93vh] pt-10 lg:pt-10">
+    <div className=" bg-[#114B53]   w-full  min-h-[100vh] pt-10 lg:pt-10">
       <div className="w-full h-full px-5 lg:px-10 flex gap-20">
         <div className="hidden md:flex w-[50%]">
           <p className="text-white text-[32px] font-semibold">TopEquator</p>

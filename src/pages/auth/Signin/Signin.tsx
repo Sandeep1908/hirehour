@@ -4,11 +4,13 @@ import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
 
 import { Link,  useLocation, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import axiosInstance from '../../../axios/axiosInstance';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
 import {  z } from 'zod';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import { fetchGeoLocation } from '../../../utils/getGeolocation';
+import axiosInstance from '../../../axios/axiosInstance';
 
 
 
@@ -16,6 +18,16 @@ import { AxiosError } from 'axios';
 interface UserCredentials {
   email: string;
   password: string;
+}
+
+type geoData={
+  ip: string
+  city: string
+  region: string
+  country: string
+  loc: string
+  org:string
+  postal: string
 }
 
 // Zod schema for validation
@@ -43,7 +55,23 @@ const Signin: React.FC = () => {
   const navigate = useNavigate();
 
  
+  const { data: geoLocation } = useQuery({ queryKey: ['geoLocation'], queryFn: fetchGeoLocation });
 
+  const geoLocationMutation = useMutation({
+    mutationFn: async (geoData: geoData) => {
+      const response = await axiosInstance.post("/api/misc/logger/geolocation", geoData);
+       
+      return response.data;
+    },
+
+    onSuccess: () => {
+     console.log("GeoLocationMutation success")
+
+    },
+    onError: () => {
+      console.log("GeoLocationMutation error")
+    },
+  });
 
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
@@ -57,7 +85,8 @@ const Signin: React.FC = () => {
       localStorage.setItem('topequatortoken',data?.token)
       const redirectTo = location.state?.from?.pathname || '/';
       navigate(redirectTo);
-
+      geoLocationMutation.mutate(geoLocation);
+      
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{message:string}>;
@@ -70,8 +99,12 @@ const Signin: React.FC = () => {
     },
   });
 
+
+
   const handleSubmit = (e: React.FormEvent) => {
+    // console.log("geoLocation",geoLocation)
     e.preventDefault();
+
     // Validate form using Zod
     const result = signinSchema.safeParse({ email, password });
     if (!result.success) {
@@ -79,15 +112,20 @@ const Signin: React.FC = () => {
     } else {
       setFormErrors({});
       mutation.mutate({ email, password });
+    
     }
+
   };
 
   const togglePasswordVisibility = () => {
+    console.log("geoLocation",geoLocation)
+    console.log("geoData",geoLocation)
+
     setShowPassword(!showPassword);
   };
 
   return (
-    <div className=' bg-[#114B53] w-full h-[92vh] pt-10 lg:pt-10'>
+    <div className=' bg-[#114B53] w-full min-h-[calc(100vh-56px)] pt-10 lg:pt-10'>
       <div className='w-full h-full px-5 lg:px-10 flex gap-20'>
         <div className='hidden md:flex w-[50%]'>
           <p className='text-white text-[32px] font-semibold'>TopEquator</p>

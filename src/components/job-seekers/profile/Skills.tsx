@@ -1,17 +1,58 @@
-import React from 'react'
-import { AiOutlinePlus } from 'react-icons/ai'
+import React, { useState } from 'react'
 import { IoMdClose } from 'react-icons/io'
-// import Slider from "rc-slider";
-// import "rc-slider/assets/index.css";
-// import "./style.css"
+import SkillTypes from '../../../utils/SkillTypes'
+import SkillName from '../../../utils/SkillName'
+import { useMutation } from '@tanstack/react-query'
+import axiosInstance from '../../../axios/axiosInstance'
+import { toast } from 'react-toastify'
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
+import "./style.css"
 
 type AddInfo ={
    setSkillsPopup: (agr:boolean)=>void
 }
 
+type AddSkills= {
+  
+  skillType: string | null,
+  skillName: string | null,
+  yearsOfExperience: number,
+ 
+}
+
+
 const Skills:React.FC<AddInfo> = ({setSkillsPopup}) => {
 
-    // const [value, setValue] = useState(10);
+    // const [value, setValue] = useState<number>(0);
+    const [skillType, setSkillType] = useState<string | null>(null);
+    const [skillName, setSkillName] = useState<string | null>(null);
+    const [yearsOfExperience, setYearsOfExperience] = useState<number>(0);
+
+    const mutation = useMutation({
+      mutationFn: async (addSkills: AddSkills) => {
+        const response = await axiosInstance.post("/api/candidate/details/skills", addSkills);
+        console.log("response.data",response.data)
+        return response.data;
+      
+      },
+      onSuccess: () => {
+          
+        toast.success('Skill detail added successfully');
+      },
+      onError: () => {
+          toast.error('Failed to add skill. Please try again.');
+
+       },
+    });
+  
+  
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const skillData = { skillType, skillName, yearsOfExperience };
+
+      mutation.mutate(skillData);
+    };   
 
   return (
     <div className='w-full h-full flex p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
@@ -37,83 +78,53 @@ const Skills:React.FC<AddInfo> = ({setSkillsPopup}) => {
                <p className='text-sm font-semibold'>Add your top skills & technologies</p>
 
                <div className='mt-4'>
-                  <div className='flex justify-between items-center'>
-                  <select name="" id="" className='w-80 h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-xs ' >
+                  <div className='flex justify-between items-center mb-3'>
+                    <div className='flex gap-3 w-[60%]'>
+                       <div className='w-[50%]'>
+                        
+                          <SkillTypes setSkillType={setSkillType} />
+                       </div>
+                       <div className='w-[50%]'>
+
+                        <SkillName setSkillName={setSkillName} />
+                       </div>
+                    </div>
+                  {/* <select name="" id="" className='w-80 h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-xs ' >
                       <option value=""> Java</option>
                       <option value=""> Python</option>
-                   </select>
+                   </select> */}
                    <div className='w-10 h-10 flex justify-center items-center border rounded-md'>
-
-                    <p className='text-[#3A3A3C] text-xs font-semibold '>04</p>
+                    {/* <input type="number" name="" id="" onChange={(e) => setYearsOfExperience(e.target.value)} className='w-10 h-10 flex justify-center items-center p-1 border rounded-md' /> */}
+                    <p className='text-[#3A3A3C] text-xs font-semibold '>{yearsOfExperience}</p>
                    </div>
                   </div>
-                  <div className='rounded-full bg-[#EBEBF0] w-full h-2 mt-4'>
+                  <Slider
+                      min={0}
+                      max={30}
+                      value={yearsOfExperience}
+                      onChange={(v) => setYearsOfExperience(v as number)}
+                    />
+                  {/* <div className='rounded-full bg-[#EBEBF0] w-full h-2 mt-4'>
                       <div className='rounded-full h-2  w-[50%] bg-[#114B53]'>
 
                       </div>
-                  </div>
+                  </div> */}
                 </div>
-               <div className='mt-4'>
-                  <div className='flex justify-between items-center'>
-                  <select name="" id="" className='w-80 h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 text-xs ' >
-                      <option value=""> React JS</option>
-                      <option value=""> Python</option>
-                   </select>
-                   <div className='w-10 h-10 flex justify-center items-center border rounded-md'>
-
-                    <p className='text-[#3A3A3C] text-xs font-semibold '>04</p>
-                   </div>
-                  </div>
-                  <div className='rounded-full bg-[#EBEBF0] w-full h-2 mt-4'>
-                      <div className='rounded-full h-2  w-[50%] bg-[#114B53]'>
-
-                      </div>
-                  </div>
-                </div>
-               <div className='mt-4'>
-                  <div className='flex justify-between items-center'>
-                  <select name="" id="" className='w-80 h-[40px] rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4  text-xs' >
-                      <option value=""> Angular</option>
-                      <option value=""> Python</option>
-                   </select>
-                   <div className='w-10 h-10 flex justify-center items-center border rounded-md'>
-
-                    <p className='text-[#3A3A3C] text-xs font-semibold '>04</p>
-                   </div>
-                  </div>
-                  <div className='rounded-full bg-[#EBEBF0] w-full h-2 mt-4'>
-                      <div className='rounded-full h-2  w-[50%] bg-[#114B53]'>
-
-                      </div>
-                  </div>
-                </div>
+             
 
 
-               {/* <div className='mt-4'>
-               <div className="flex items-center space-x-4">
-      <label className="text-gray-700 font-medium">Time period</label>
-      <Slider
-        min={0}
-        max={30}
-        value={value}
-        onChange={(v) => setValue(v as number)}
-      />
-      <div className="bg-[#114B53] text-green-700 font-bold px-3 py-1 rounded-md">
-        {value}Yr
-      </div>
-    </div>
-                </div> */}
-                <div className='mt-4 flex gap-1 items-center'>
+             
+                {/* <div className='mt-4 flex gap-1 items-center'>
                 <AiOutlinePlus size={15} className='text-[#114B53]'/>
 
                 <p className='text-[#114B53] text-xs font-semibold '>Add</p>
 
-                </div>
+                </div> */}
                 </div> 
        </div>
 
         <div className='w-full flex justify-end  gap-10  items-center'>
-            <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer ' onClick={()=>setSkillsPopup(false)}>
+            <div onClick={handleSubmit}  className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer ' >
                 <p className='text-base font-semibold text-[#114B53] cursor-pointer'>Update  </p>
             </div>
         </div>

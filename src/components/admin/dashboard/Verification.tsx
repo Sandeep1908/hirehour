@@ -4,7 +4,8 @@ import {  FaCaretDown } from 'react-icons/fa'
 import {  IoMdMore } from 'react-icons/io'
 
 import ViewJob from './ViewJob'
-import axiosInstance from '../../../axios/axiosInstance'
+import { useQuery } from '@tanstack/react-query'
+import { fetchAllUserDetails } from '../../../utils/admin/getAllUserDetails'
 
 
 
@@ -230,33 +231,20 @@ const VerifiedAccount: React.FC = () => {
 
 const Verification: React.FC = () => {
 
+
+
+  const { data: allUserDetail } = useQuery({ queryKey: ['allUserDetail'], queryFn: fetchAllUserDetails });
+ 
+
   const [usersDetail, setUsersDetail] = useState<Users[]>([]); 
-
   useEffect(() => {
-    const fetchUsers = async () => {
-      const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+    if(allUserDetail){
+      
+      setUsersDetail(allUserDetail.users);
+      console.log("object",usersDetail)
+    }
 
-      if (!token) {
-        console.error("No token found in localStorage");
-        return;
-      }
-
-      try {
-        const response = await axiosInstance.get("/api/admin/user-management/users", {
-          headers: {
-            Authorization: `Bearer ${token}`, // Include the token
-          },
-        });
-        setUsersDetail(response.data.users); // Assuming response.data contains the user array
-         
-        console.log(response.data.users)
-      } catch (error) {
-        // console.error("Error fetching users:", error.response?.data || error.message);
-      }
-    };
-
-    fetchUsers();
-  }, []);
+  }, [allUserDetail]);
 
 
   const jobFilters = [
