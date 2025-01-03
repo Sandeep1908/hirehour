@@ -19,8 +19,13 @@ import { IoCallOutline } from 'react-icons/io5'
 // import Footer from '../../../components/Footer'
 import { JobDescriptionDetails } from '../../../config/jobdescription'
 import JobCard from './JobCard'
+import axiosInstance from '../../../axios/axiosInstance'
+import { useQuery } from '@tanstack/react-query'
+import { fetchJobsList } from '../../../utils/jobseekers/getUserDetails'
 
 const Home:React.FC = () => {
+
+    const { data: jobsList } = useQuery({ queryKey: ['jobsList'], queryFn: fetchJobsList });
 
 
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
@@ -30,32 +35,32 @@ const Home:React.FC = () => {
     const [dropdown, setDropdown] = useState<number>(0);
    
 
-    const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
-    const [jobDataId, setJobDataId] = useState<number>(1);
-    const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
+    // const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
+    // const [jobDataId, setJobDataId] = useState<number>(1);
+    // const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
 
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-     setJobData(JobDescriptionDetails)
+    //  setJobData(JobDescriptionDetails)
     
-     if(!jobFilterData){
-        setFilterData([jobData[0]])
-     }
+    //  if(!jobFilterData){
+    //     setFilterData([jobData[0]])
+    //  }
        
    
-    if(jobData && jobDataId){
-        const filterData=jobData.filter(item=>item.id===jobDataId)
-        setFilterData(filterData)
-    }
+    // if(jobData && jobDataId){
+    //     const filterData=jobData.filter(item=>item.id===jobDataId)
+    //     setFilterData(filterData)
+    // }
 
 
     
 
 
-    }, [jobDataId,jobData,setJobData]);
+    // }, [jobDataId,jobData,setJobData]);
 
 
 
@@ -165,6 +170,68 @@ const Home:React.FC = () => {
     const handleResetEmployee = () => {
         setSelectedOptionEmployee([]);
     };
+
+
+
+
+    
+    const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
+    const [jobDataId, setJobDataId] = useState<number>(0);
+    const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
+
+
+    const [jobsListAll, setJobsListAll] = useState<any>([]); 
+    useEffect(() => {
+      const fetchUsers = async () => {
+        const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+  
+        if (!token) {
+          console.error("No token found in localStorage");
+          return;
+        }
+  
+        try {
+          const response = await axiosInstance.get("/api/candidate/jobs/jobs", {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include the token
+            },
+          });
+          setJobsListAll(response.data); // Assuming response.data contains the user array
+           
+          console.log("jobsList",jobsListAll)  
+          console.log(response.data)
+
+        } catch (error) {
+          // console.error("Error fetching users:", error.response?.data || error.message);
+        }
+      };
+  
+      fetchUsers();
+    }, []);
+
+    useEffect(() => {
+
+     console.log("jobsList",jobsListAll)  
+
+
+     setJobData(JobDescriptionDetails)
+    
+     if(!jobFilterData){
+        setFilterData([jobData[0]])
+     }
+       
+   
+    if(jobData && jobDataId){
+        const filterData=jobData.filter(item=>item.id===jobDataId)
+        setFilterData(filterData)
+    }
+
+  
+    
+    
+
+
+    }, [jobDataId,jobData,setJobData,]);
 
 
     // const [isOpen, setIsOpen] = useState(true); 
@@ -666,7 +733,7 @@ const Home:React.FC = () => {
                 {/* Job Cards And Job Description */}
 
 
-                <div className='w-fullh-full sticky top-[10px]'>
+                <div className='w-full h-full sticky top-[10px]'>
                 <div id='mainJobDescription' className='w-full max-w-[1280px] m-auto   h-full flex gap-3  justify-center md:justify-between pt-7  md:px-3'>
 
                     {/* Job Card Component */}

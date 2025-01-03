@@ -19,18 +19,24 @@ import { MdOutlineMail } from "react-icons/md";
 import { IoCallOutline } from 'react-icons/io5'
 import Footer from '../../../components/Footer'
 import { JobDescriptionDetails } from '../../../config/jobdescription'
-import { useQuery } from '@tanstack/react-query'
-import { fetchJobsList } from '../../../utils/jobseekers/getUserDetails'
+import {  useMutation, useQuery } from '@tanstack/react-query'
+import { fetchJobsList, fetchUserDetails } from '../../../utils/jobseekers/getUserDetails'
 import axiosInstance from '../../../axios/axiosInstance'
+import { toast } from 'react-toastify'
+import { AxiosError } from 'axios'
 
+type ProfileDetails = {
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
+    needVisaSponsorship: string;
+  };
 
 const JobDescription: React.FC = () => {
  
-    // const { data: jobsList } = useQuery({
-    //     queryKey: ['jobsList'],
-    //     queryFn: fetchJobsList,
-    //   });
+  
      const { data: jobsList } = useQuery({ queryKey: ['jobsList'], queryFn: fetchJobsList });
+     const { data: userDetails } = useQuery({ queryKey: ['userDetails'], queryFn: fetchUserDetails });
 
 
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
@@ -42,9 +48,8 @@ const JobDescription: React.FC = () => {
 
     const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
     const [jobDataId, setJobDataId] = useState<number>(0);
+    const [jobMainId, setJobMainId] = useState<number>(0);
     const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
-
-    // const [workStackArray, setWorkStackArray] = useState<any>([]); // Initialize with an empty array
 
 
     const [jobsListAll, setJobsListAll] = useState<any>([]); 
@@ -64,9 +69,7 @@ const JobDescription: React.FC = () => {
             },
           });
           setJobsListAll(response.data); // Assuming response.data contains the user array
-           
-          console.log("jobsList",jobsListAll)  
-          console.log(response.data)
+       
 
         } catch (error) {
           // console.error("Error fetching users:", error.response?.data || error.message);
@@ -78,7 +81,8 @@ const JobDescription: React.FC = () => {
 
     useEffect(() => {
 
-     console.log("jobsList",jobsListAll)  
+     console.log("jobsList",jobsListAll?.jobs)  
+     console.log("jobsList",userDetails)  
 
 
      setJobData(JobDescriptionDetails)
@@ -118,13 +122,15 @@ const JobDescription: React.FC = () => {
      
 
     const step2 = () => {
+        handleProfileEdit()
         setQuickApply(false);
         setQuickApplyStep2(true);
         setQuickApplyEdit(false);
     }
     const step3 = () => {
+        handleSubmit()
         setQuickApplyStep2(false);
-        setQuickApplyStep3(true)
+        
     }
     const editPop = () => {
         setQuickApplyStep2(false);
@@ -136,6 +142,12 @@ const JobDescription: React.FC = () => {
     }
     const quickApplyDone = () => {
         setQuickApplyStep3(false);
+    }
+
+
+    const updateId = (id:number,mainID:number) => {
+          setJobDataId(id)
+          setJobMainId(mainID)
     }
 
 
@@ -250,7 +262,87 @@ const JobDescription: React.FC = () => {
     //     window.removeEventListener('scroll', handleScroll);
     //   };
     // }, []);
+
+     const [profileDetails, setProfileDetails] = useState<ProfileDetails>({
+        firstName: userDetails?.user?.firstName,
+        lastName: userDetails?.user?.lastName,
+        phoneNumber: userDetails?.user?.phoneNumber,
+        needVisaSponsorship: userDetails?.needVisaSponsorship,
+      });
+
+     const handleProfileInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+         
+          const { name, value } = e.target;
+          setProfileDetails((prevState) => ({
+            ...prevState,
+            [name]: value,
+          }));
+        };
+
+         // Mutation for submitting form data
+  const editProfileMutation = useMutation({
+    mutationFn: async (formData: ProfileDetails) => {
+      const response = await axiosInstance.post(
+        '/api/candidate/details/update-main-details',
+        formData,
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success('Information Saved');
+    //   QueryClient.invalidateQueries({ queryKey: ['userDetails'] });
+    },
+    onError: (error) => {
+      const axiosError=error as AxiosError<{message:string}>
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
+      
+  const handleProfileEdit = () => {
+    editProfileMutation.mutate(profileDetails);
+    
+  }; 
+
+    // submit question for job post 
   
+    const [responses, setResponses] = useState<{ [key: string]: string }>({});
+    
+    const appliedJobMutation = useMutation({
+        mutationFn: async (data: { jobID: number; responses: { [key: string]: string } }) => {
+            console.log("Submitting data:", data);
+            const response = await axiosInstance.post('/api/candidate/jobs/apply', data);
+            return response.data;
+        },
+        onSuccess: () => {
+            // toast.success('Answers were successfully submitted');
+            setQuickApplyStep3(true)
+            // queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+        },
+        onError: (error) => {
+            const axiosError = error as any; // If you use `AxiosError`, ensure proper typing.
+            console.log("axiosError",axiosError)
+            toast.error(axiosError?.response?.data?.error );
+        },
+    });
+
+    const handleInputChange = (questionId: string, value: string) => {
+        setResponses((prevResponses) => ({
+            ...prevResponses,
+            [questionId]: value,
+        }));
+    };
+
+    const handleSubmit = () => {
+        const data = {
+            jobID: jobMainId,
+            responses: responses,
+        };
+        appliedJobMutation.mutate(data);
+        console.log("userDetails",userDetails)
+    };
+
+
+
 
 
     return (
@@ -666,8 +758,8 @@ const JobDescription: React.FC = () => {
                             <div className='mt-4 flex flex-col gap-4 justify-center'>
 
                                 {jobsList?.jobs.map((details:any,id:number)=>{
-                                    return(<div key={id} onClick={()=>{setJobDataId(id)}}>
-                                    <JobCard    setIsOpen={setQuickApply} details={details} jobDataId={jobDataId}  />
+                                    return(<div key={id} onClick={()=>{updateId(id,details.id)}}>
+                                    <JobCard setIsOpen={setQuickApply} details={details} jobDataId={jobDataId}  />
                                     </div>)
                                 })}
 
@@ -932,28 +1024,55 @@ workAuthorizationAccepting)} </p>
                                 Answer the Screening questions
                             </p>
 
-                            <div className='mt-5'>
-                                <label htmlFor="" className='text-[14px] font-medium'>How many years of experience do you have in Java ? ( in years) <span className='text-red-600'> *</span></label>
-                                <input type="number" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' />
-                            </div>
-                            <div className='mt-5'>
-                                <label htmlFor="" className='text-[14px] font-medium'>Can you able to Relocate the Job Location ? <span className='text-red-600'> *</span></label>
-                                {/* <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' /> */}
-                                <select name="" id="" className='w-full h-[40px] mt-2 border-[1px] rounded-lg'>
-                                    <option value="">Select an option</option>
-                                    <option value="">Yes</option>
-                                    <option value="">No</option>
-                                </select>
-                            </div>
-                            <div className='mt-5'>
-                                <label htmlFor="" className='text-[14px] font-medium'>Immediate Joiner ? <span className='text-red-600'> *</span></label>
-                                {/* <input type="text" className='w-full h-[40px] mt-2 border-[1px] rounded-lg' /> */}
-                                <select name="" id="" className='w-full h-[40px] mt-2 border-[1px] rounded-lg'>
-                                    <option value="">Select an option</option>
-                                    <option value="">Yes</option>
-                                    <option value="">No</option>
-                                </select>
-                            </div>
+        
+                          {/* {jobsList?.jobs.map((details: any, id: number) => {
+                                if (jobDataId === id) {
+                                    return (
+                                        <div key={id}>
+                                            {details.jobassociatedquestionnaires.map((item: any, index: number) => (
+                                                <div key={index} className="mt-5">
+                                                    <label htmlFor="" className="text-[14px] font-medium">
+                                                        {item.question} <span className="text-red-600"> *</span>
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        className="w-full h-[40px] mt-2 border-[1px] rounded-lg p-2"
+                                                    />
+                                                </div>
+                                            ))}
+                                        </div>
+                                    );
+                                }
+                                return null; 
+                            })} */}
+
+           {jobsList?.jobs.map((details: any, id: number) => {
+                if (jobDataId === id) {
+                    return (
+                        <div key={id}>
+                            {details.jobassociatedquestionnaires.map((item: any) => (
+                                <div key={item.ID} className="mt-5">
+                                    <label htmlFor={`question-${item.ID}`} className="text-[14px] font-medium">
+                                        {item.question} <span className="text-red-600">*</span>
+                                    </label>
+                                    <input
+                                        id={`question-${item.ID}`}
+                                        type="text"
+                                        className="w-full h-[40px] mt-2 border-[1px] rounded-lg"
+                                        value={responses[item.ID] || ""}
+                                        onChange={(e) => handleInputChange(item.ID, e.target.value)}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    );
+                }
+                return null;
+            })}
+
+
+                            
+                           
 
                         </div>
                         <hr />
@@ -1025,16 +1144,16 @@ workAuthorizationAccepting)} </p>
                                         <hr className='mt-3' />
                                         <div className='flex flex-col justify-center items-center mt-3'>
                                             <div className='w-[100px] h-[100px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
-                                                <p className='text-[40px] font-extrabold'>J</p>
+                                                <p className='text-[40px] font-extrabold'>{userDetails?.user?.firstName?.charAt(0) || ''}</p>
                                             </div>
-                                            <p className='text-base font-semibold mt-3'>John S Mathew</p>
+                                            <p className='text-base font-semibold mt-3'>{userDetails?.user?.firstName} {userDetails?.user?.lastName} </p>
                                         </div>
                                         <hr className='mt-3' />
                                         <div className='mt-3 flex items-center justify-between'>
                                             <div className='flex items-center gap-2 '>
                                                 <MdOutlineMail size={20} />
 
-                                                <p className='text-sm font-medium text-[#3A3A3C] '>John@xyz.com</p>
+                                                <p className='text-sm font-medium text-[#3A3A3C] '>{userDetails?.user?.email}</p>
                                             </div>
 
                                         </div>
@@ -1042,12 +1161,12 @@ workAuthorizationAccepting)} </p>
                                             <div className='flex items-center gap-2 '>
                                                 <IoCallOutline size={20} />
 
-                                                <p className='text-sm font-medium text-[#3A3A3C] '>+1 xxx-xxx-xxxx</p>
+                                                <p className='text-sm font-medium text-[#3A3A3C] '>{userDetails?.user?.phoneNumber}</p>
                                             </div>
 
                                         </div>
                                         <p className='text-sm font-medium text-[#8F90A6] mt-3'>Visa sponsorship</p>
-                                        <p className='text-sm font-semibold text-[#000000] mt-2'>Required</p>
+                                        <p className='text-sm font-semibold text-[#000000] mt-1'>{userDetails?.needVisaSponsorship === true ?"Yes":"No"}</p>
                                     </div>
                                     <div className='md:max-w-[276px] w-full border-[1px] border-[#D6DBDE] rounded-lg px-2 py-3 md:px-3 md:py-2'>
                                         <div className='flex justify-between items-center'>
@@ -1111,13 +1230,41 @@ workAuthorizationAccepting)} </p>
                                     </div>
                                     <hr className='mt-3' />
 
-                                    <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-3'>How many years of experience do you have in Java ? ( in years)</p>
+                                    {/* <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-3'>How many years of experience do you have in Java ? ( in years)</p>
                                     <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>4 years</p>
                                     <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-5'>Can you able to Relocate the Job Location ?</p>
                                     <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>Yes</p>
 
                                     <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-5'>Immediate Joiner ?</p>
-                                    <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>Yes</p>
+                                    <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>Yes</p> */}
+
+
+                                    {jobsList?.jobs.map((details: any, id: number) => {
+                if (jobDataId === id) {
+                    return (
+                        <div key={id}>
+                            {details.jobassociatedquestionnaires.map((item: any) => (
+                                <div key={item.ID} className="mt-5">
+                                    {/* <label htmlFor={`question-${item.ID}`} className="text-[14px] font-medium">
+                                         <span className="text-red-600">*</span>
+                                    </label> */}
+                                    <p className='text-[#8F90A6] text-[12px] md:text-[14px] font-normal mt-3'>{item.question}</p>
+                                    <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>{responses[item.ID] || ""}</p>
+
+                                    {/* <input
+                                        id={`question-${item.ID}`}
+                                        type="text"
+                                        className="w-full h-[40px] mt-2 border-[1px] rounded-lg"
+                                        value={responses[item.ID] || ""}
+                                        onChange={(e) => handleInputChange(item.ID, e.target.value)}
+                                    /> */}
+                                </div>
+                            ))}
+                        </div>
+                    );
+                }
+                return null;
+            })}
 
                                 </div>
                             </div>
@@ -1216,35 +1363,43 @@ workAuthorizationAccepting)} </p>
                             <div className='w-full flex gap-4 mt-3'>
                                 <div className='w-full '>
                                     <p className='text-[14px] font-medium'>First name <span className='text-red-600'>*</span></p>
-                                    <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                                    <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' value={profileDetails.firstName} onChange={handleProfileInputChange} />
                                 </div>
                                 <div className='w-full '>
                                     <p className='text-[14px] font-medium'>Last name <span className='text-red-600'>*</span></p>
-                                    <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                                    <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  '  value={profileDetails.lastName}  onChange={handleProfileInputChange} />
                                 </div>
                             </div>
                             <div className='w-full flex gap-4 mt-3'>
-                                <div className='w-full '>
-                                    <p className='text-[14px] font-medium'>Email<span className='text-red-600'>*</span></p>
-                                    <input type="email" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
-                                </div>
+                                
                                 <div className='w-full '>
                                     <p className='text-[14px] font-medium'>Phone number <span className='text-red-600'>*</span></p>
-                                    <input type="number" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' />
+                                    <input type="number" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' value={profileDetails.phoneNumber} onChange={handleProfileInputChange}  />
                                 </div>
                             </div>
                             <div className='w-full flex gap-4 mt-3'>
                                 <div className='w-full '>
                                     <p className='text-[14px] font-medium'>Visa Sponsership <span className='text-red-600'>*</span></p>
                                     {/* <input type="text" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2  ' /> */}
-                                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2'>
+                                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2'   >
                                     <option value="">Select an option</option>
-                                    <option value="">Yes</option>
-                                    <option value="">No</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
                                 </select>
                                 </div>
 
                             </div>
+                            {/* <div className='w-full flex gap-4 mt-3'>
+                                <div className='w-full '>
+                                    <p className='text-[14px] font-medium'>Visa Sponsership <span className='text-red-600'>*</span></p>
+                                    <select name="" id="" className='w-full h-[48px] rounded-xl border-[1px] border-[#E1E1E2] mt-2' value={profileDetails.needVisaSponsorship===true? "Yes":"No"} onChange={handleProfileInputChange} >
+                                    <option value="">Select an option</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
+                                </select>
+                                </div>
+
+                            </div> */}
 
 
                         </div>
