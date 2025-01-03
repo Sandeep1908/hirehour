@@ -255,8 +255,8 @@ const router = createBrowserRouter(
       <Route path="/dashboard-rtr/company-profile-info" element={<RTRCompanyProfile />} />
       <Route path="/dashboard-rtr/privacy-setting" element={<RTRPrivacySetting />} />
 
-      {/* Email Templates  */}
 
+      {/* Email Templates  */}
       <Route path="/email/job-preference" element={<JobPreferenceTemplate />} />
       <Route path="/email/job-posted" element={<JobPostedTemplates />} />
       <Route path="/email/messages" element={<MessageTemplate />} />
@@ -266,7 +266,6 @@ const router = createBrowserRouter(
       <Route path="/email/verification-status" element={<VerificationMainTemp />} />
 
       {/* Admin Pannel  */}
-
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/signin" element={<AdminSignin />} />
     </Route>,

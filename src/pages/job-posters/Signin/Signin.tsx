@@ -13,6 +13,7 @@ import { jwtDecode } from 'jwt-decode';
 import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
 import { fetchGeoLocation } from '../../../utils/getGeolocation';
 import axiosInstance from '../../../axios/axiosInstance';
+import Spinner from '../../../components/Spinner';
 
 interface UserCredentials {
   email: string;
@@ -86,15 +87,15 @@ const Signin: React.FC = () => {
       toast.success('Logged In Successfull');
       localStorage.setItem('topequatorrecruitertoken', data?.token);
       const redirectTo = location.state?.from?.pathname || '/job-poster';
+      const redirectToRTR = location.state?.from?.pathname || '/dashboard-rtr';
+
       const decodedToken = jwtDecode<JwtPayload>(data?.token);
 
-      if (decodedToken && decodedToken.permissions) {
-        const permissions = decodedToken.permissions;
-
-        if (permissions.length === 1) {
-          navigate('/dashboard-rtr');
-        } else if (permissions.length > 1) {
-          navigate(redirectTo);
+      if (decodedToken) {
+        if (decodedToken.permissions.includes("advanced_recruiter_perms")) {
+          navigate(redirectTo); 
+        } else {
+          navigate(redirectToRTR); 
         }
       }
       geoLocationMutation.mutate(geoLocation);
@@ -215,7 +216,7 @@ const Signin: React.FC = () => {
                 type="submit"
                 className="w-full h-[40px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4"
               >
-                <p className="text-base font-semibold">{mutation?.isPending?'Loggin in.....':'Log In'}</p>
+                <p className="text-base font-semibold">{mutation?.isPending?<Spinner size={20} color='#000000' loading={mutation.isPending}/>:'Log In'}</p>
               </button>
 
               <div className="flex mt-2 items-center justify-center ">

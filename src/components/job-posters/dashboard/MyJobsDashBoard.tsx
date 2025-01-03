@@ -436,6 +436,7 @@ const MyJobsDashBoard: React.FC = () => {
           {jobFilters?.map((item, i) => {
             return (
               <li
+              key={i}
                 className={`text-[10px] rounded-full   w-full p-1   cursor-pointer  flex justify-center items-center space-x-4 transition-all duration-300 ${jobFilterIdx === i ? 'bg-[#104B53] text-white' : ''}`}
                 onClick={() => setJobFilterIdx(i)}
               >

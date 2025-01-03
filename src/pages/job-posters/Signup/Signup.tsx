@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { z } from 'zod';
 import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
+import Spinner from '../../../components/Spinner';
 
 // Zod schema for validation
 const signupSchema = z.object({
@@ -77,6 +78,7 @@ const Signup: React.FC = () => {
   });
 
   const handleSubmit = (e: React.FormEvent) => {
+   
     e.preventDefault();
     if (password !== confirmPassword) {
       setValidateErrors(false);
@@ -279,7 +281,10 @@ const Signup: React.FC = () => {
                 onClick={handleSubmit}
                 className="w-full h-[48px] flex justify-center cursor-pointer items-center bg-[#E9F358] rounded-3xl mt-4"
               >
-                <p className="text-base font-semibold">Sign up</p>
+                <p className="text-base font-semibold">
+                  {mutation?.isPending ?  <Spinner loading={mutation.isPending} size={20} />:'Sign up'}
+                 
+                </p>
               </div>
 
               <div className="flex mt-4 mb-4 items-center justify-center ">
