@@ -77,7 +77,7 @@ const Candidate: React.FC<userProps> = ({users}) => {
               </thead>
 
 
-              {users.map((user,id)=>{
+              {users?.map((user,id)=>{
                 if( user.userProfileReference === "candidate"  ){
                   return(
                     <tbody key={id}  className='mt-2'>
@@ -245,8 +245,7 @@ const LookingforCandidate: React.FC<userProps> = ({users}) => {
         (item) => item.permTagName === "advanced_recruiter_perms"
       )
     );
-  })
-  .map((user:any, id:number) => (
+  })?.map((user:any, id:number) => (
     
     <tbody key={id} className="mt-2">
       <tr className="border-[1px] border-[#D6DBDE] mt-2">
@@ -431,8 +430,7 @@ const RepresentingCandidate: React.FC<userProps> = ({users})=> {
         (item) => item.permTagName === "advanced_recruiter_perms"
       )
     );
-  })
-  .map((user:any, id:number) => (
+  })?.map((user:any, id:number) => (
     <tbody key={id} className="mt-2">
       <tr className="border-[1px] border-[#D6DBDE] mt-2">
         <td onClick={() => handleInfoPopup(user.id)}  className="px-4 align-top py-3">
@@ -668,7 +666,7 @@ const Users: React.FC = () => {
                 <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                   {[
                     "Today", "Yesterday", "Last 3 days", "Last week", "Last 2 week"
-                  ].map((option) => (
+                  ]?.map((option) => (
                     <div key={option} onClick={() => handleOptionDate(option)} className='w-full px-4 py-2 flex gap-2'>
                       <input
                         type="radio"
@@ -771,7 +769,7 @@ const Users: React.FC = () => {
                 <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                   {[
                     "Required", "Not required",
-                  ].map((option) => (
+                  ]?.map((option) => (
                     <div key={option} onClick={() => handleOptionVisa(option)} className='w-full px-4 py-2 flex gap-2'>
                       <input
                         type="radio"

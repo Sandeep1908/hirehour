@@ -128,7 +128,7 @@ const handleAction = (type: string,id:number) => {
               </thead>
 
 
-              {users.map((user:any,id:number)=>{
+              {users?.map((user:any,id:number)=>{
                 if( user.userProfileReference === "recruiter" && user?.recruiterdetail?.isVerifiedByUs === false ){
                   return(
                     <tbody key={id}  className='mt-2'>
@@ -318,7 +318,7 @@ const handleAction = (type: string,id:number) => {
                   </tr>
                 </thead>
   
-                {users.map((user:any,id:number)=>{
+                {users?.map((user:any,id:number)=>{
                 if( user.userProfileReference === "recruiter" && user?.recruiterdetail?.isVerifiedByUs === true ){
                   return(
                     <tbody key={id}  className='mt-2'>
@@ -584,7 +584,7 @@ const Verification: React.FC = () => {
                 <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                   {[
                     "Today", "Yesterday", "Last 3 days", "Last week", "Last 2 week"
-                  ].map((option) => (
+                  ]?.map((option) => (
                     <div key={option} onClick={() => handleOptionDate(option)} className='w-full px-4 py-2 flex gap-2'>
                       <input
                         type="radio"
@@ -687,7 +687,7 @@ const Verification: React.FC = () => {
                 <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                   {[
                     "Required", "Not required",
-                  ].map((option) => (
+                  ]?.map((option) => (
                     <div key={option} onClick={() => handleOptionVisa(option)} className='w-full px-4 py-2 flex gap-2'>
                       <input
                         type="radio"
