@@ -60,32 +60,6 @@ interface Users {
 const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) => {
 
 
-    // const [users, setUsers] = useState<User[]>([]); 
-    // useEffect(() => {
-    //   const fetchUsers = async () => {
-    //     const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
-
-    //     if (!token) {
-    //       console.error("No token found in localStorage");
-    //       return;
-    //     }
-
-    //     try {
-    //       const response = await axiosInstance.get("/api/admin/user-management/users", {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`, 
-    //         },
-    //       });
-    //       setUsers(response.data.users);
-    //       console.log(response.data.users)
-    //     } catch (error) {
-    //     }
-    //   };
-
-    //   fetchUsers();
-    // }, []);
-
-
   const [moreOption, setMoreOption] = useState<boolean>(false);
 
   
@@ -120,7 +94,7 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) =>
 
                
              
-                {users.map((user:any, index:number) => {
+                {users?.map((user:any, index:number) => {
                   if(user.userProfileReference === "admin"){
                     return(  <tr
                       key={index}
@@ -149,7 +123,7 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) =>
                           <div className=" justify-between pr-7 flex gap-2">
                           <p className="text-[12px] font-medium">
                           {/* {user.role || "N/A"} */}
-                          {user.userpermlabelsacrossapplications.map((permTag:any,i:number)=>{
+                          {user.userpermlabelsacrossapplications?.map((permTag:any,i:number)=>{
                             return(<span key={i}>
                               {permTag.permTag.permName} , 
                             </span>)
@@ -204,164 +178,6 @@ const AccessComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) =>
                                 <p className="text-xs font-semibold">Delete</p>
                               </div>
                             </div>
-
-
-              {/* <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Arla</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Arlasuperadmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Superhero</p>
-                    </td>
-
-    
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative justify-between pr-7 flex gap-2'>
-                     
-                        
-                       <p  className='text-[12px] cursor-pointer' >All Access</p>
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={20} />
-                         
-                        </div>
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Arla</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Arlasuperadmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Superhero</p>
-                    </td>
-
-    
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative justify-between pr-7 flex gap-2'>
-                     
-                        
-                       <p  className='text-[12px] cursor-pointer' >All Access</p>
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={20} />
-                         
-                        </div>
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Arla</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Arlasuperadmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Superhero</p>
-                    </td>
-
-    
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative justify-between pr-7 flex gap-2'>
-                     
-                        
-                       <p  className='text-[12px] cursor-pointer' >All Access</p>
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={20} />
-                         
-                        </div>
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody>
-              <tbody className='mt-2'>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2 '>
-                  <td className='px-4 align-top py-3'>
-                     <div className='flex gap-4 '>
-                    <div className='text-[12px] cursor-pointer'  >
-                      <p>Arla</p>
-                     
-                    </div>
-                  </div> </td>
-                  <td className='align-top py-3'>
-                    <p className='text-[12px] cursor-pointer'>Arlasuperadmin@xyz.com</p>
-                  </td>
-                  <td className='align-top py-3'><p className='text-[12px] font-medium'>Superhero</p>
-                    </td>
-
-    
-
-                  <td className='py-3'>
-                   <div className='flex flex-col gap-2'>
-                   <div className='relative justify-between pr-7 flex gap-2'>
-                     
-                        
-                       <p  className='text-[12px] cursor-pointer' >All Access</p>
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={20} />
-                         
-                        </div>
-
-                    </div>
-
-                   </div>
-                  </td>
-                </tr>
-                
-
-
-
-              </tbody> */}
              
             </table>
           
@@ -719,7 +535,7 @@ const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) => 
                   <th className='text-[12px] text-start w-[15%]'  >Assign To</th>
                 </tr>
               </thead>
-              {users.map((user,i)=>{
+              {users?.map((user,i)=>{
                 if(user.userpermlabelsacrossapplications[0].role.roleName !=="recruiter" && user.userpermlabelsacrossapplications[0].role.roleName !=="candidate" ){
                   return(
                     <tbody key={i} className='mt-2'>
@@ -739,7 +555,7 @@ const TeamsComponent: React.FC<accessProps> = ({setAddAdmin,setAsign,users}) => 
                         </td>
     
     
-                      <td className='align-top py-3'><p className='text-[12px] font-medium'> {user.userpermlabelsacrossapplications.map((permTag,i)=>{
+                      <td className='align-top py-3'><p className='text-[12px] font-medium'> {user.userpermlabelsacrossapplications?.map((permTag,i)=>{
                           return(<span key={i}>
                             {permTag.permTag.permName} , 
                           </span>)
@@ -1143,7 +959,7 @@ const PendingComponent: React.FC<accessProps> = ({users}) => {
                 </tr>
               </thead>
               
-              {users.map((user:any,id:number)=>{
+              {users?.map((user:any,id:number)=>{
                if(user.userProfileReference === "admin"){
                 return( 
                     <tbody key={id} className='mt-2'>
@@ -1169,7 +985,7 @@ const PendingComponent: React.FC<accessProps> = ({users}) => {
   
   
                     <td className='align-top py-3'><p className='text-[12px] font-medium'>
-                    {user.userpermlabelsacrossapplications.map((permTag:any,i:number)=>{
+                    {user.userpermlabelsacrossapplications?.map((permTag:any,i:number)=>{
                             return(<span key={i}>
                               {permTag.permTag.permName} , 
                             </span>)

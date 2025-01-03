@@ -488,7 +488,7 @@ const JobDescription: React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -523,7 +523,7 @@ const JobDescription: React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Any distance", "Less than 5 miles", "Less than 10 miles", "Less than 25 miles", "Less than 50 miles","Less than 100 miles"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionDistance(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -607,7 +607,7 @@ const JobDescription: React.FC = () => {
                             {dropdown === 4 && (
                                 <div className='absolute top-12 left-0 w-[269px]'>
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-                                        {employmentTypes.map((type) => (
+                                        {employmentTypes?.map((type) => (
                                             <div key={type} onClick={() => handleCheckboxChange(type)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="checkbox"
@@ -655,7 +655,7 @@ const JobDescription: React.FC = () => {
                                             "$ 160,000 +/ per year",
                                             "$ 180,000 +/ per year",
                                             "$ 200,000 +/ per year"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionSalary(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -757,7 +757,7 @@ const JobDescription: React.FC = () => {
                             <p className='text-[12px] mt-2 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
                             <div className='mt-4 flex flex-col gap-4 justify-center'>
 
-                                {jobsList?.jobs.map((details:any,id:number)=>{
+                                {jobsList?.jobs?.map((details:any,id:number)=>{
                                     return(<div key={id} onClick={()=>{updateId(id,details.id)}}>
                                     <JobCard setIsOpen={setQuickApply} details={details} jobDataId={jobDataId}  />
                                     </div>)
@@ -792,7 +792,7 @@ const JobDescription: React.FC = () => {
                     {/*Description  */}
 
                <div className='hidden md:block max-w-[845px] w-full'  >
-               {jobsList?.jobs.map((details:any,id:number)=>{
+               {jobsList?.jobs?.map((details:any,id:number)=>{
             
                 if(jobDataId === id){
                         return(
@@ -1046,11 +1046,11 @@ workAuthorizationAccepting)} </p>
                                 return null; 
                             })} */}
 
-           {jobsList?.jobs.map((details: any, id: number) => {
+           {jobsList?.jobs?.map((details: any, id: number) => {
                 if (jobDataId === id) {
                     return (
                         <div key={id}>
-                            {details.jobassociatedquestionnaires.map((item: any) => (
+                            {details.jobassociatedquestionnaires?.map((item: any) => (
                                 <div key={item.ID} className="mt-5">
                                     <label htmlFor={`question-${item.ID}`} className="text-[14px] font-medium">
                                         {item.question} <span className="text-red-600">*</span>
@@ -1239,11 +1239,11 @@ workAuthorizationAccepting)} </p>
                                     <p className='text-[#000000] text-[12px] md:text-[14px] font-normal mt-2'>Yes</p> */}
 
 
-                                    {jobsList?.jobs.map((details: any, id: number) => {
+                                    {jobsList?.jobs?.map((details: any, id: number) => {
                 if (jobDataId === id) {
                     return (
                         <div key={id}>
-                            {details.jobassociatedquestionnaires.map((item: any) => (
+                            {details.jobassociatedquestionnaires?.map((item: any) => (
                                 <div key={item.ID} className="mt-5">
                                     {/* <label htmlFor={`question-${item.ID}`} className="text-[14px] font-medium">
                                          <span className="text-red-600">*</span>

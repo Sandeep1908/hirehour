@@ -35,7 +35,7 @@ const ViewProfilePopup:React.FC<ViewProfileProps> = ({setViewPrfilePopup,users,i
            
   
 
-   {users.map((user:any, id:number )=>{
+   {users?.map((user:any, id:number )=>{
     if(user.id === infoPopupId){
       return(
         <div key={id} className='relative w-full h-auto flex gap-5 justify-center md:justify-between p-9 rounded-lg  bg-white'>

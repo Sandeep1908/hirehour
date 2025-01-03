@@ -403,7 +403,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -438,7 +438,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Any distance", "Less than 5 miles", "Less than 10 miles", "Less than 25 miles", "Less than 50 miles","Less than 100 miles"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionDistance(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -522,7 +522,7 @@ const Home:React.FC = () => {
                             {dropdown === 4 && (
                                 <div className='absolute top-12 left-0 w-[269px]'>
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-                                        {employmentTypes.map((type) => (
+                                        {employmentTypes?.map((type) => (
                                             <div key={type} onClick={() => handleCheckboxChange(type)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="checkbox"
@@ -570,7 +570,7 @@ const Home:React.FC = () => {
                                             "$ 160,000 +/ per year",
                                             "$ 180,000 +/ per year",
                                             "$ 200,000 +/ per year"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionSalary(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -666,7 +666,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -701,7 +701,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -743,7 +743,7 @@ const Home:React.FC = () => {
                             <p className='text-[12px] '><span className='font-extrabold'>Upload Your Resume -</span> Let employers find you.</p>
                             <p className='text-[12px] mt-2 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
                             <div className='mt-4 flex flex-col gap-4 justify-center'>
-                                {jobData.map((details, id) => (
+                                {jobData?.map((details, id) => (
                                     <JobCard key={id} setIsOpen={setQuickApply} data={details} setId={setJobDataId} jobDataId={jobDataId} />
                                 ))}
 
@@ -774,7 +774,7 @@ const Home:React.FC = () => {
                     {/*Description  */}
 
                <div className='hidden md:block max-w-[830px] w-full'  >
-               {jobFilterData.map((details,id)=>{
+               {jobFilterData?.map((details,id)=>{
                         return(
                             <div key={id} className=' max-w-[845px]   w-full rounded-lg  border'>
                                 <div className='w-full min-h-[100vh]'>
@@ -1009,7 +1009,7 @@ const Home:React.FC = () => {
                                                         <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
 
                                                         <div className='flex gap-2 mt-3'>
-                                                            {details.workAuthorization.map((value, id) => (
+                                                            {details.workAuthorization?.map((value, id) => (
                                                                 <div key={id} className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
                                                                     <p className='text-[12px] text-[#3A3A3C] font-medium'>{value} </p>
                                                                 </div>
@@ -1030,7 +1030,7 @@ const Home:React.FC = () => {
                                                 <p className='text-[14px] font-semibold'>Tech Stacks</p>
 
                                                 <div className='flex gap-2 mt-1'>
-                                                    {details.techStacks.map((value, id) => (
+                                                    {details.techStacks?.map((value, id) => (
                                                         <div key={id} className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
                                                             <p className='text-[12px] font-semibold'>{value} </p>
                                                         </div>
