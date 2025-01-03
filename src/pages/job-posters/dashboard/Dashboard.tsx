@@ -154,7 +154,7 @@ const DashBoard: React.FC = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (location.pathname === '/job-poster/dashboard') {
-      navigate('/job-poster/dashboard?key=myjobs');
+      navigate(`/job-poster/dashboard?key=${queryString}`);
     }
   }, []);
 
@@ -213,9 +213,9 @@ const DashBoard: React.FC = () => {
         <div className="w-[98%] m-auto h-full  md:h-[98%] mt-2  overflow-y-auto   bg-white rounded-lg ">
           {/* Rendering all components */}
 
-          {sideBarItems?.map((item) => {
+          {sideBarItems?.map((item,i) => {
             if (item.queryString === queryString) {
-              return <div className="w-full">{item.components}</div>;
+              return <div key={i}  className="w-full">{item.components}</div>;
             }
           })}
         </div>

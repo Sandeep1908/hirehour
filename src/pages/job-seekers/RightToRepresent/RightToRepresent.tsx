@@ -5,16 +5,271 @@ import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Logo from '../../../assets/logo/hirehour.png';
 import ViewRTR from '../../../components/common/ViewRTR';
-import { BsInfoCircleFill } from "react-icons/bs";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchRTRs } from '../../../utils/jobseekers/getRTR';
+import axiosInstance from '../../../axios/axiosInstance';
+import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
+import Spinner from '../../../components/Spinner';
 
+const SignRTR: React.FC<{
+  setSignRTR: (e: boolean) => void;
+  isSignRTR: boolean;
+  rtrId: number | null;
+}> = ({ setSignRTR, isSignRTR, rtrId }) => {
+  const [signature, setSignature] = useState('');
+  const queryClient = useQueryClient();
 
- 
+  const { data: rtr } = useQuery({
+    queryKey: ['all-rtr'],
+    queryFn: fetchRTRs,
+  });
+  const viewRTR = rtr?.data?.filter((i: ALLRTRTYPES) => i.ID === rtrId)?.[0];
+
+  //mutation
+
+  const signMutation = useMutation({
+    mutationFn: async (signRTR: { rtrId: number; candidateSignatureLink: string }) => {
+      const response = await axiosInstance.post('/api/candidate/rtr/sign-rtr', signRTR);
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success('RTR Signed Successfully');
+      queryClient.invalidateQueries({ queryKey: ['all-rtr'] });
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
+
+  const handleSign = () => {
+    if (rtrId) {
+      signMutation.mutate({ rtrId, candidateSignatureLink: `https://${signature}.png` });
+    }
+  };
+
+  return (
+    <div
+      className={`w-full h-full p-3  flex justify-center items-center   fixed inset-0 transition-all ease-in-out duration-300  ${isSignRTR ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'} `}
+    >
+      <div className="w-full h-full hidden md:block absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black "></div>
+
+      <div
+        className="   z-[10] w-full max-w-[670px] overflow-auto   shadow-xl
+          h-[95%]  md:h-[99%]  bg-[#F2F2F5] rounded-lg"
+      >
+        <div className="flex justify-between items-start p-2  bg-[#F2F2F5]">
+          <div className="w-full flex justify-center items-center">
+            <img src={Logo} className="w-10 h-10" alt="img-logo" />
+          </div>
+          <IoMdClose size={30} color="#585858" onClick={() => setSignRTR(false)} />
+        </div>
+
+        <div className="w-full max-w-[975px]  h-auto m-auto border border-[#E1E1E2] rounded-lg">
+          <div className="w-full bg-white flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-5   rounded-t-lg">
+            <div className="flex items-center space-x-4">
+              <span className="text-xs text-[#6B7588]">Job Title: </span>
+              <p className="text-xs font-semibold">{viewRTR?.job?.jobRoleName}</p>
+              <span className="text-xs text-[#7B8496]">- {viewRTR?.job?.jobLocation}</span>
+            </div>
+
+            <div>
+              <p className="text-xs">Rate : $60 / HR</p>
+            </div>
+          </div>
+
+          <div className="w-full bg-white mt-3 flex flex-col space-y-10 md:space-y-0 md:flex-row md:justify-between md:items-start p-5">
+            <div className="flex flex-col space-y-2">
+              <h1 className="text-xs">From</h1>
+              <p className="text-xs">
+                <strong>Send by</strong>: Erika Less
+              </p>
+              <p className="text-xs">
+                <strong>Sender email</strong>: Erika@insightGlobal.com
+              </p>
+              <p className="text-xs">
+                <strong>Company</strong>:Insight Global
+              </p>
+            </div>
+
+            <div className="flex flex-col items-start space-y-2">
+              <h1 className="text-xs">To</h1>
+              <p className="text-xs">
+                <strong>Employer Name</strong>: Mathew
+              </p>
+              <p className="text-xs">
+                <strong>Employer Email</strong>: Mathew@xyz.com
+              </p>
+              <p className="text-xs">
+                <strong>Employer Company</strong>: AA Tech
+              </p>
+              <p className="text-xs">
+                <strong>Applicant Name</strong>: Johnson
+              </p>
+              <p className="text-xs">
+                <strong>Applicant Email</strong>: Johnson@zys.com
+              </p>
+            </div>
+
+            <div className="flex flex-col space-y-3 ">
+              <div className="flex  items-center">
+                <MdOutlineFileDownload size={20} color="#104B53" />
+                <p className="text-[#104B53] text-xs font-[600]">Export</p>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div className="w-full flex flex-col space-y-3 bg-white md:flex-row  items-start md:justify-between md:items-end p-5">
+            <div className="flex flex-col space-y-1">
+              <p className="text-xs">
+                <strong>Client</strong>: AT & T
+              </p>
+              <p className="text-xs">
+                <strong>Prime Vendor </strong>: Insight Global
+              </p>
+
+              <p className="text-xs">
+                <strong>Implementation</strong>: TCS
+              </p>
+              <p className="text-xs">
+                <strong>Vendor </strong>: AA Tech
+              </p>
+            </div>
+
+            <p className="text-xs">
+              <strong>Valid Till</strong>:30 days (08/26/2024)
+            </p>
+          </div>
+
+          {/* Acceptance  */}
+
+          <div className="w-full flex flex-col space-y-2 p-5 bg-white mt-2">
+            <p className="text-xs">
+              I, give the exclusive permission to {viewRTR?.candidate?.firstName} (
+              {viewRTR?.job?.jobRoleName}) ({viewRTR?.candidate?.firstName}) resume and
+              qualification to position located in (Location) to represent (Client) for the
+            </p>
+
+            <p className="text-xs">
+              I confirm that neither I have submitted my resume or application for this specific
+              position to any other recruitment agency within the period of the last 30 days, nor I
+              submitted Right to Represent form with any other recruitment agency for this job
+              requisition.
+            </p>
+
+            <p className="text-xs">
+              As a candidate, my handwritten signature, date and requisition number acknowledges my
+              authorization for the above-listed vendor to represent me for this posted requisition
+              from the date on the form till 30 days.
+            </p>
+
+            <p className="text-xs">
+              {' '}
+              <strong>Note:</strong> If RTR is submitted to more than one staffing vendor for the
+              same job requisition, then you will be pulled out of the consideration. You might be
+              no longer eligible for this requisition.
+            </p>
+
+            <div className="flex justify-start items-center space-x-3">
+              <input type="checkbox" className="w-[20px] h-[20px]" />{' '}
+              <p className="text-[#7D8697] text-xs">
+                By accepting this and proceeding further you agreed to the terms & condition
+              </p>
+            </div>
+          </div>
+
+          {/* Signature  */}
+
+          <div className="w-full  p-4 bg-white mt-2 flex justify-between items-end">
+            <div className="flex flex-col justify-start items-start space-y-2">
+              <h1 className="text-xs font-semibold">Employer</h1>
+
+              <div className="flex justify-center items-center space-x-3">
+                <div className="flex flex-col items-center justify-center space-y-2">
+                  {viewRTR?.isSignedByEmployer ? (
+                    <>
+                      <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
+                        {signature}
+                      </p>
+
+                      <p className="text-xs">Mathew - 08/16/2024</p>
+
+                      <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
+                        Signed
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-[#FFB51F] text-[10px] font-bold w-[100px] p-2 rounded-full text-center bg-[#FFF1C6]">
+                      Pending
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-start items-start space-y-3">
+              <h1 className="text-xs font-semibold">Applicant</h1>
+
+              <div className="flex justify-center items-center space-x-3">
+                {viewRTR?.isSignedByCandidate ? (
+                  <>
+                    <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
+                      {viewRTR?.candidateSignatureImgLink}
+                    </p>
+
+                    <p className="text-xs">Mathew - 08/16/2024</p>
+
+                    <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
+                      Signed
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <div className="flex flex-col items-center justify-center space-y-2">
+                      <input
+                        type="text"
+                        placeholder="Type you name and sign"
+                        value={signature}
+                        onChange={(e) => setSignature(e.target.value)}
+                        className="max-w-[240px] w-full outline-none rounded-lg  text-xs p-2 border border-[#7D8697]"
+                      />
+                    </div>
+
+                    <p
+                      onClick={() => handleSign()}
+                      className="text-white text-[10px] w-[100px] p-2 cursor-pointer rounded-full text-center bg-[#07A561]"
+                    >
+                      {signMutation.isPending ? (
+                        <Spinner loading={signMutation.isPending} color={'#000000'} size={15} />
+                      ) : (
+                        'Sign'
+                      )}
+                    </p>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const RightToRepresent: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
   const [isSignRTR, setIsSignRTR] = useState<boolean>(false);
   const [isPreviewRTR, isSetPreviewRTR] = useState<boolean>(false);
-  const [isViewRTROpen,setIsViewRTROpen] =useState<boolean>(false)
- 
+  const [isViewRTROpen, setIsViewRTROpen] = useState<boolean>(false);
+  const [rtrId, setRTRId] = useState<number | null>(null);
+  const { data: rtr } = useQuery({
+    queryKey: ['all-rtr'],
+    queryFn: fetchRTRs,
+  });
+
   useEffect(() => {
     if (isRTROpen || isSignRTR || isPreviewRTR) {
       document.body.style.overflow = 'hidden';
@@ -47,6 +302,11 @@ const RightToRepresent: React.FC = () => {
     { label: 'Decline (2)', link: '/rtr-decline' },
     { label: 'Expire (2)', link: '/rtr-expired' },
   ];
+
+  const handleViewSign = (Id: number) => {
+    setRTRId(Id);
+    setIsSignRTR(true);
+  };
 
   const handlePreview = () => {
     isSetPreviewRTR(true);
@@ -187,285 +447,104 @@ const RightToRepresent: React.FC = () => {
           {/*RTR */}
 
           <div className="flex flex-col space-y-4">
-            <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-              <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-                <div className="flex items-center space-x-4">
-                  <span className="text-sm text-[#6B7588]">Job Title: </span>
-                  <p className="text-sm font-semibold">Full Stack Java Developer</p>
-                  <div className='flex items-center space-x-2'>
-                  <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
-                  <p className='w-8 h-4 bg-[#E9F358] text-[#104B53] rounded-full text-[10px] font-semibold flex justify-center items-center'>RTR</p>
-                  <BsInfoCircleFill   fill='#104B53'   />
+            {rtr?.data?.map((item: ALLRTRTYPES, i: number) => {
+              return (
+                <div
+                  key={i}
+                  className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg"
+                >
+                  <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+                    <div className="flex items-center space-x-4">
+                      <span className="text-xs text-[#6B7588]">Job Title: </span>
+                      <p className="text-xs font-semibold">{item?.job?.jobRoleName}</p>
+                      <span className="text-xs text-[#7B8496]">- {item?.job?.jobLocation}</span>
+                    </div>
 
-                  </div>
-                 
-                </div>
-
-                <div>
-                  <p className="text-sm">Rate : $60 / HR</p>
-                </div>
-              </div>
-
-              <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-                <div className="flex flex-col space-y-1">
-                  <h1 className="text-sm">From</h1>
-                  <p className="text-sm">
-                    <strong>Send by</strong>: Erika Less
-                  </p>
-                  <p className="text-sm">
-                    <strong>Company</strong>:Insight Global
-                  </p>
-                </div>
-
-                <div className="flex flex-col space-y-1">
-                  <h1 className="text-sm">To</h1>
-                  <p className="text-sm">
-                    <strong>Employer name</strong>: Mathew
-                  </p>
-                  <p className="text-sm">
-                    <strong>Employer Company</strong>: AA Tech
-                  </p>
-                  <p className="text-sm">
-                    <strong>Applicant Name</strong>: Johnson
-                  </p>
-                </div>
-
-                <div className="flex flex-col space-y-3  ">
-                  <div className="flex justify- space-x-3 items-center">
-                    <MdOutlineFileDownload size={20} color="#104B53" />
-                    <p className="text-[#104B53] text-sm font-[600]">Export</p>
-                    <p onClick={()=>setIsViewRTROpen(true)} className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-                      View
-                    </p>
+                    <div>
+                      <p className="text-xs">Rate : $60 / HR</p>
+                    </div>
                   </div>
 
-                  <p className="text-sm">
-                    <strong>Valid Till</strong>: 30 days (08/26/2024)
-                  </p>
-                </div>
-              </div>
+                  <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
+                    <div className="flex flex-col space-y-1">
+                      <h1 className="text-xs">From</h1>
+                      <p className="text-xs">
+                        <strong>Send by</strong>: {item?.employer?.user?.firstName}
+                      </p>
+                      <p className="text-xs">
+                        <strong>Company</strong>:Insight Global
+                      </p>
+                    </div>
 
-              <hr />
+                    <div className="flex flex-col space-y-1">
+                      <h1 className="text-xs">To</h1>
+                      <p className="text-xs">
+                        <strong>Employer name</strong>: {item?.employer?.user?.firstName}
+                      </p>
+                      <p className="text-xs">
+                        <strong>Employer Company</strong>: AA Tech
+                      </p>
+                      <p className="text-xs">
+                        <strong>Applicant Name</strong>: {item?.candidate?.firstName}
+                      </p>
+                    </div>
 
-              <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-                <div className="flex justify-center items-center space-x-5">
-                  <div className="flex flex-col space-y-3">
-                    <p className="text-sm">
-                      <strong>Client</strong>: AT & T
-                    </p>
-                    <p className="text-sm">
-                      <strong>Prime Vendor </strong>: Insight Global
-                    </p>
+                    <div className="flex flex-col space-y-3  ">
+                      <div className="flex justify- space-x-3 items-center">
+                        <MdOutlineFileDownload size={20} color="#104B53" />
+                        <p className="text-[#104B53] text-sm font-[600]">Export</p>
+                        <p
+                          onClick={() => setIsViewRTROpen(true)}
+                          className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full"
+                        >
+                          View
+                        </p>
+                      </div>
+
+                      <p className="text-sm">
+                        <strong>Valid Till</strong>: 30 days (08/26/2024)
+                      </p>
+                    </div>
                   </div>
 
-                  <div className="flex flex-col space-y-3">
-                    <p className="text-sm">
-                      <strong>Implementation</strong>: TCS
-                    </p>
-                    <p className="text-sm">
-                      <strong>Vendor </strong>: AA Tech
-                    </p>
+                  <hr />
+
+                  <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
+                    <div className="flex justify-center items-center space-x-5">
+                      <div className="flex flex-col space-y-3">
+                        <p className="text-sm">
+                          <strong>Client</strong>: AT & T
+                        </p>
+                        <p className="text-sm">
+                          <strong>Prime Vendor </strong>: Insight Global
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col space-y-3">
+                        <p className="text-sm">
+                          <strong>Implementation</strong>: TCS
+                        </p>
+                        <p className="text-sm">
+                          <strong>Vendor </strong>: AA Tech
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex w-full md:w-auto items-center justify-center space-x-5">
+                      <p className="w-full sm:w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
+                        Decline
+                      </p>
+                      <p
+                        onClick={() => handleViewSign(item?.ID)}
+                        className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full"
+                      >
+                        View & Sign
+                      </p>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-                  <p className="w-full sm:w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
-                    Decline
-                  </p>
-                  <p
-                    onClick={() => setIsSignRTR(true)}
-                    className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full"
-                  >
-                    View & Sign
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-              <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-                <div className="flex items-center space-x-4">
-                  <span className="text-sm text-[#6B7588]">Job Title: </span>
-                  <p className="text-sm font-semibold">Full Stack Java Developer</p>
-                  <div className='flex items-center space-x-2'>
-                  <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
-                  
-                  <BsInfoCircleFill   fill='#104B53'   />
-
-                  </div>
-                 
-                </div>
-
-                <div>
-                  <p className="text-sm">Rate : $60 / HR</p>
-                </div>
-              </div>
-
-              <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-                <div className="flex flex-col space-y-1">
-                  <h1 className="text-sm">From</h1>
-                  <p className="text-sm">
-                    <strong>Send by</strong>: Erika Less
-                  </p>
-                  <p className="text-sm">
-                    <strong>Company</strong>:Insight Global
-                  </p>
-                </div>
-
-                <div className="flex flex-col space-y-1">
-                  <h1 className="text-sm">To</h1>
-                  <p className="text-sm">
-                    <strong>Employer name</strong>: Mathew
-                  </p>
-                  <p className="text-sm">
-                    <strong>Employer Company</strong>: AA Tech
-                  </p>
-                  <p className="text-sm">
-                    <strong>Applicant Name</strong>: Johnson
-                  </p>
-                </div>
-
-                <div className="flex flex-col space-y-3  ">
-                  <div className="flex justify- space-x-3 items-center">
-                    <MdOutlineFileDownload size={20} color="#104B53" />
-                    <p className="text-[#104B53] text-sm font-[600]">Export</p>
-                    <p onClick={()=>setIsViewRTROpen(true)} className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-                      View
-                    </p>
-                  </div>
-
-                  <p className="text-sm">
-                    <strong>Valid Till</strong>: 30 days (08/26/2024)
-                  </p>
-                </div>
-              </div>
-
-              <hr />
-
-              <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-                <div className="flex justify-center items-center space-x-5">
-                  <div className="flex flex-col space-y-3">
-                    <p className="text-sm">
-                      <strong>Client</strong>: AT & T
-                    </p>
-                    <p className="text-sm">
-                      <strong>Prime Vendor </strong>: Insight Global
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col space-y-3">
-                    <p className="text-sm">
-                      <strong>Implementation</strong>: TCS
-                    </p>
-                    <p className="text-sm">
-                      <strong>Vendor </strong>: AA Tech
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-                  <p className="w-full sm:w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
-                    Decline
-                  </p>
-                  <p
-                    onClick={() => setIsSignRTR(true)}
-                    className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full"
-                  >
-                    View & Sign
-                  </p>
-                </div>
-              </div>
-            </div>
-            
-
-            <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-              <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-                <div className="flex items-center space-x-4">
-                  <span className="text-sm text-[#6B7588]">Job Title: </span>
-                  <p className="text-sm font-semibold">Full Stack Java Developer</p>
-                  <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
-                </div>
-
-                <div>
-                  <p className="text-sm">Rate : $60 / HR</p>
-                </div>
-              </div>
-
-              <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-                <div className="flex flex-col space-y-1">
-                  <h1 className="text-sm">From</h1>
-                  <p className="text-sm">
-                    <strong>Send by</strong>: Erika Less
-                  </p>
-                  <p className="text-sm">
-                    <strong>Company</strong>:Insight Global
-                  </p>
-                </div>
-
-                <div className="flex flex-col space-y-1">
-                  <h1 className="text-sm">To</h1>
-                  <p className="text-sm">
-                    <strong>Employer name</strong>: Mathew
-                  </p>
-                  <p className="text-sm">
-                    <strong>Employer Company</strong>: AA Tech
-                  </p>
-                  <p className="text-sm">
-                    <strong>Applicant Name</strong>: Johnson
-                  </p>
-                </div>
-
-                <div className="flex flex-col space-y-3  ">
-                  <div className="flex justify- space-x-3 items-center">
-                    <MdOutlineFileDownload size={20} color="#104B53" />
-                    <p className="text-[#104B53] text-sm font-[600]">Export</p>
-                    <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-                      View
-                    </p>
-                  </div>
-
-                  <p className="text-sm">
-                    <strong>Valid Till</strong>: 30 days (08/26/2024)
-                  </p>
-                </div>
-              </div>
-
-              <hr />
-
-              <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-                <div className="flex justify-center items-center space-x-5">
-                  <div className="flex flex-col space-y-3">
-                    <p className="text-sm">
-                      <strong>Client</strong>: AT & T
-                    </p>
-                    <p className="text-sm">
-                      <strong>Prime Vendor </strong>: Insight Global
-                    </p>
-                  </div>
-
-                  <div className="flex flex-col space-y-3">
-                    <p className="text-sm">
-                      <strong>Implementation</strong>: TCS
-                    </p>
-                    <p className="text-sm">
-                      <strong>Vendor </strong>: AA Tech
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-                  <p className="w-full sm:w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
-                    Decline
-                  </p>
-                  <p
-                    onClick={() => setIsSignRTR(true)}
-                    className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full"
-                  >
-                    View & Sign
-                  </p>
-                </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -758,28 +837,26 @@ const RightToRepresent: React.FC = () => {
               </div>
             </div>
 
-          
             <div className="flex flex-col w-full  border ">
-                  <div className="flex justify-end items-center p-1 bg-[#F2F2F5]">
-                    <p className="w-32  h-7 bg-[#104B53] text-white text-[10px] flex justify-center items-center rounded-full font-[500]">
-                      Ask AI to generate
-                    </p>
-                  </div>
+              <div className="flex justify-end items-center p-1 bg-[#F2F2F5]">
+                <p className="w-32  h-7 bg-[#104B53] text-white text-[10px] flex justify-center items-center rounded-full font-[500]">
+                  Ask AI to generate
+                </p>
+              </div>
 
-                  <textarea className="w-full  text-[10px] p-2 min-h-44 text-[#3A3A3C] tracking-wide">
-                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots
-                    in a piece of classical Latin literature from 45 BC, making it over 2000 years
-                    old. Richard McClintock, a Latin professor at Hampden-Sydney College in
-                    Virginia, looked up one of the more obscure Latin words, consectetur, from a
-                    Lorem Ipsum passage, and going through the cites of the word in classical
-                    literature, discovered the undoubtable source. Lorem Ipsum comes from sections
-                    1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and
-                    Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of
-                    ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
-                    "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                  </textarea>
-                </div>
-
+              <textarea className="w-full  text-[10px] p-2 min-h-44 text-[#3A3A3C] tracking-wide">
+                Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                piece of classical Latin literature from 45 BC, making it over 2000 years old.
+                Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked
+                up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and
+                going through the cites of the word in classical literature, discovered the
+                undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de
+                Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45
+                BC. This book is a treatise on the theory of ethics, very popular during the
+                Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes
+                from a line in section 1.10.32.
+              </textarea>
+            </div>
           </div>
 
           {/* Button submit  */}
@@ -929,186 +1006,9 @@ const RightToRepresent: React.FC = () => {
 
       {/* View Sign RTR  */}
 
-      <div
-        className={`w-full h-full p-3  flex justify-center items-center   fixed inset-0 transition-all ease-in-out duration-300  ${isSignRTR ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'} `}
-      >
-        <div className="w-full h-full hidden md:block absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black "></div>
+      <SignRTR setSignRTR={setIsSignRTR} isSignRTR={isSignRTR} rtrId={rtrId} />
 
-        <div
-          className="   z-[10] w-full max-w-[670px] overflow-auto   shadow-xl
-              h-[95%]  md:h-[99%]  bg-[#F2F2F5] rounded-lg"
-        >
-          <div className="flex justify-between items-start p-2  bg-[#F2F2F5]">
-            <div className="w-full flex justify-center items-center">
-              <img src={Logo} className="w-10 h-10" alt="img-logo" />
-            </div>
-            <IoMdClose size={30} color="#585858" onClick={() => setIsSignRTR(false)} />
-          </div>
-
-          <div className="w-full max-w-[975px]  h-auto m-auto border border-[#E1E1E2] rounded-lg">
-            <div className="w-full bg-white flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-5   rounded-t-lg">
-              <div className="flex items-center space-x-4">
-                <span className="text-xs text-[#6B7588]">Job Title: </span>
-                <p className="text-xs font-semibold">Full Stack Java Developer</p>
-                <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
-              </div>
-
-              <div>
-                <p className="text-xs">Rate : $60 / HR</p>
-              </div>
-            </div>
-
-            <div className="w-full bg-white mt-3 flex flex-col space-y-10 md:space-y-0 md:flex-row md:justify-between md:items-start p-5">
-              <div className="flex flex-col space-y-2">
-                <h1 className="text-xs">From</h1>
-                <p className="text-xs">
-                  <strong>Send by</strong>: Erika Less
-                </p>
-                <p className="text-xs">
-                  <strong>Sender email</strong>: Erika@insightGlobal.com
-                </p>
-                <p className="text-xs">
-                  <strong>Company</strong>:Insight Global
-                </p>
-              </div>
-
-              <div className="flex flex-col items-start space-y-2">
-                <h1 className="text-xs">To</h1>
-                <p className="text-xs">
-                  <strong>Employer Name</strong>: Mathew
-                </p>
-                <p className="text-xs">
-                  <strong>Employer Email</strong>: Mathew@xyz.com
-                </p>
-                <p className="text-xs">
-                  <strong>Employer Company</strong>: AA Tech
-                </p>
-                <p className="text-xs">
-                  <strong>Applicant Name</strong>: Johnson
-                </p>
-                <p className="text-xs">
-                  <strong>Applicant Email</strong>: Johnson@zys.com
-                </p>
-              </div>
-
-              <div className="flex flex-col space-y-3 ">
-                <div className="flex  items-center">
-                  <MdOutlineFileDownload size={20} color="#104B53" />
-                  <p className="text-[#104B53] text-xs font-[600]">Export</p>
-                </div>
-              </div>
-            </div>
-
-            <hr />
-
-            <div className="w-full flex flex-col space-y-3 bg-white md:flex-row  items-start md:justify-between md:items-end p-5">
-              <div className="flex flex-col space-y-1">
-                <p className="text-xs">
-                  <strong>Client</strong>: AT & T
-                </p>
-                <p className="text-xs">
-                  <strong>Prime Vendor </strong>: Insight Global
-                </p>
-
-                <p className="text-xs">
-                  <strong>Implementation</strong>: TCS
-                </p>
-                <p className="text-xs">
-                  <strong>Vendor </strong>: AA Tech
-                </p>
-              </div>
-
-              <p className="text-xs">
-                <strong>Valid Till</strong>:30 days (08/26/2024)
-              </p>
-            </div>
-
-            {/* Acceptance  */}
-
-            <div className="w-full flex flex-col space-y-2 p-5 bg-white mt-2">
-              <p className="text-xs">
-                I, give the exclusive permission to (Candidates name) (Job Title) (Recruitment
-                agency) resume and qualification to position located in (Location) to represent
-                (Client) for the
-              </p>
-
-              <p className="text-xs">
-                I confirm that neither I have submitted my resume or application for this specific
-                position to any other recruitment agency within the period of the last 30 days, nor
-                I submitted Right to Represent form with any other recruitment agency for this job
-                requisition.
-              </p>
-
-              <p className="text-xs">
-                As a candidate, my handwritten signature, date and requisition number acknowledges
-                my authorization for the above-listed vendor to represent me for this posted
-                requisition from the date on the form till 30 days.
-              </p>
-
-              <p className="text-xs">
-                {' '}
-                <strong>Note:</strong> If RTR is submitted to more than one staffing vendor for the
-                same job requisition, then you will be pulled out of the consideration. You might be
-                no longer eligible for this requisition.
-              </p>
-
-              <div className="flex justify-start items-center space-x-3">
-                <input type="checkbox" className="w-[20px] h-[20px]" />{' '}
-                <p className="text-[#7D8697] text-xs">
-                  By accepting this and proceeding further you agreed to the terms & condition
-                </p>
-              </div>
-            </div>
-
-            {/* Signature  */}
-
-            <div className="w-full  p-4 bg-white mt-2 flex justify-between items-end">
-              <div className="flex flex-col justify-start items-start space-y-2">
-                <h1 className="text-xs font-semibold">Employer</h1>
-
-                <div className="flex justify-center items-center space-x-3">
-                  <div className="flex flex-col items-center justify-center space-y-2">
-                    <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
-                      Mathew
-                    </p>
-
-                    <p className="text-xs">Mathew - 08/16/2024</p>
-                  </div>
-
-                  <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
-                    Signed
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex flex-col justify-start items-start space-y-3">
-                <h1 className="text-xs font-semibold">Applicant</h1>
-
-                <div className="flex justify-center items-center space-x-3">
-                  <div className="flex flex-col items-center justify-center space-y-2">
-                    <input
-                      type="text"
-                      placeholder="Type you name and sign"
-                      className="max-w-[240px] w-full outline-none rounded-lg  text-xs p-2 border border-[#7D8697]"
-                    />
-                  </div>
-
-                  <p className="text-white text-[10px] w-[100px] p-2 rounded-full text-center bg-[#07A561]">
-                    Sign
-                  </p>
-                </div>
-              </div>
-
-               
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-
-      <ViewRTR  isViewRTROpen={isViewRTROpen} setIsViewRTROpen={setIsViewRTROpen}/>
-    
+      <ViewRTR isViewRTROpen={isViewRTROpen} setIsViewRTROpen={setIsViewRTROpen} />
     </div>
   );
 };
