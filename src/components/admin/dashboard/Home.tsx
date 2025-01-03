@@ -20,12 +20,12 @@ import { IoCallOutline } from 'react-icons/io5'
 import { JobDescriptionDetails } from '../../../config/jobdescription'
 import JobCard from './JobCard'
 import axiosInstance from '../../../axios/axiosInstance'
-import { useQuery } from '@tanstack/react-query'
-import { fetchJobsList } from '../../../utils/jobseekers/getUserDetails'
+// import { useQuery } from '@tanstack/react-query'
+// import { fetchJobsList } from '../../../utils/jobseekers/getUserDetails'
 
 const Home:React.FC = () => {
 
-    const { data: jobsList } = useQuery({ queryKey: ['jobsList'], queryFn: fetchJobsList });
+    // const { data: jobsList } = useQuery({ queryKey: ['jobsList'], queryFn: fetchJobsList });
 
 
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
