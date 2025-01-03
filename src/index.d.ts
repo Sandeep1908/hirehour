@@ -120,3 +120,97 @@ type JobTypes = {
   createdAt: string;
   jobassociatedquestionnaires: any[]; // Assuming this is an array, adjust as needed
 };
+
+ type RTRAgreement = {
+  jobID: number;
+  vendorID: number;
+  candidateID: number;
+  employerID: number;
+  agreedUponRateForCandidate: number;
+  agreedUponRateForVendor: number;
+  clientCompany: string;
+  implementationCompany: string;
+  primeVendorCompany: string;
+  vendorCompany: string;
+  typeOfRTR: string;
+  sentToCandidate: boolean;
+  sentToRecruiter: boolean;
+  rtrContents: string;
+  validityPeriod: string; // ISO date format
+  employerSignatureImgLink?: string;
+  isSignedByEmployer: boolean;
+  candidateSignatureImgLink?: string;
+  isSignedByCandidate: boolean;
+  isActive: boolean;
+  location?:string
+};
+ 
+
+
+type User = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+type RecruiterVendorEmployer = {
+  userID: number;
+  profilePictureLink: string;
+  companyWorkingFor: number;
+  designation: string;
+  isOwnerOfSaidCompany: boolean;
+  reportsTo: number;
+  isVerifiedByUs: boolean;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+};
+
+type Job = {
+  id: number;
+  jobRoleName: string;
+  jobLocation: string;
+  jobDescription: string;
+};
+
+type Candidate = {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
+type ALLRTRTYPES = {
+  ID: number;
+  recruiterID: number;
+  jobID: number;
+  vendorID: number;
+  candidateID: number;
+  employerID: number;
+  agreedUponRateForCandidate: number;
+  agreedUponRateForVendor: number;
+  clientCompany: string;
+  implementationCompany: string;
+  primeVendorCompany: string;
+  vendorCompany: string;
+  typeOfRTR: string;
+  sentToCandidate: boolean;
+  sentToRecruiter: boolean;
+  rtrContents: string;
+  validityPeriod: string;
+  employerSignatureImgLink: string | null;
+  isSignedByEmployer: boolean;
+  candidateSignatureImgLink: string | null;
+  isSignedByCandidate: boolean;
+  isActive: boolean;
+  isDeleted: boolean;
+  createdAt: string;
+  updatedAt: string;
+  recruiter: RecruiterVendorEmployer;
+  vendor: RecruiterVendorEmployer;
+  employer: RecruiterVendorEmployer;
+  candidate: Candidate;
+  job: Job;
+};
