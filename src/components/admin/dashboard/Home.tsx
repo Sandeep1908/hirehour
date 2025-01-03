@@ -19,8 +19,13 @@ import { IoCallOutline } from 'react-icons/io5'
 // import Footer from '../../../components/Footer'
 import { JobDescriptionDetails } from '../../../config/jobdescription'
 import JobCard from './JobCard'
+import axiosInstance from '../../../axios/axiosInstance'
+// import { useQuery } from '@tanstack/react-query'
+// import { fetchJobsList } from '../../../utils/jobseekers/getUserDetails'
 
 const Home:React.FC = () => {
+
+    // const { data: jobsList } = useQuery({ queryKey: ['jobsList'], queryFn: fetchJobsList });
 
 
     const [isQuickApply, setQuickApply] = useState<boolean>(false);
@@ -30,32 +35,32 @@ const Home:React.FC = () => {
     const [dropdown, setDropdown] = useState<number>(0);
    
 
-    const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
-    const [jobDataId, setJobDataId] = useState<number>(1);
-    const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
+    // const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
+    // const [jobDataId, setJobDataId] = useState<number>(1);
+    // const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
 
 
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-     setJobData(JobDescriptionDetails)
+    //  setJobData(JobDescriptionDetails)
     
-     if(!jobFilterData){
-        setFilterData([jobData[0]])
-     }
+    //  if(!jobFilterData){
+    //     setFilterData([jobData[0]])
+    //  }
        
    
-    if(jobData && jobDataId){
-        const filterData=jobData.filter(item=>item.id===jobDataId)
-        setFilterData(filterData)
-    }
+    // if(jobData && jobDataId){
+    //     const filterData=jobData.filter(item=>item.id===jobDataId)
+    //     setFilterData(filterData)
+    // }
 
 
     
 
 
-    }, [jobDataId,jobData,setJobData]);
+    // }, [jobDataId,jobData,setJobData]);
 
 
 
@@ -165,6 +170,68 @@ const Home:React.FC = () => {
     const handleResetEmployee = () => {
         setSelectedOptionEmployee([]);
     };
+
+
+
+
+    
+    const [jobData, setJobData] = useState<jobDescriptionTypes[]>([]);
+    const [jobDataId, setJobDataId] = useState<number>(0);
+    const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
+
+
+    const [jobsListAll, setJobsListAll] = useState<any>([]); 
+    useEffect(() => {
+      const fetchUsers = async () => {
+        const token = localStorage.getItem('topequatorTokenAdmin'); // Fetch the token
+  
+        if (!token) {
+          console.error("No token found in localStorage");
+          return;
+        }
+  
+        try {
+          const response = await axiosInstance.get("/api/candidate/jobs/jobs", {
+            headers: {
+              Authorization: `Bearer ${token}`, // Include the token
+            },
+          });
+          setJobsListAll(response.data); // Assuming response.data contains the user array
+           
+          console.log("jobsList",jobsListAll)  
+          console.log(response.data)
+
+        } catch (error) {
+          // console.error("Error fetching users:", error.response?.data || error.message);
+        }
+      };
+  
+      fetchUsers();
+    }, []);
+
+    useEffect(() => {
+
+     console.log("jobsList",jobsListAll)  
+
+
+     setJobData(JobDescriptionDetails)
+    
+     if(!jobFilterData){
+        setFilterData([jobData[0]])
+     }
+       
+   
+    if(jobData && jobDataId){
+        const filterData=jobData.filter(item=>item.id===jobDataId)
+        setFilterData(filterData)
+    }
+
+  
+    
+    
+
+
+    }, [jobDataId,jobData,setJobData,]);
 
 
     // const [isOpen, setIsOpen] = useState(true); 
@@ -336,7 +403,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -371,7 +438,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Any distance", "Less than 5 miles", "Less than 10 miles", "Less than 25 miles", "Less than 50 miles","Less than 100 miles"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionDistance(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -455,7 +522,7 @@ const Home:React.FC = () => {
                             {dropdown === 4 && (
                                 <div className='absolute top-12 left-0 w-[269px]'>
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-                                        {employmentTypes.map((type) => (
+                                        {employmentTypes?.map((type) => (
                                             <div key={type} onClick={() => handleCheckboxChange(type)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="checkbox"
@@ -503,7 +570,7 @@ const Home:React.FC = () => {
                                             "$ 160,000 +/ per year",
                                             "$ 180,000 +/ per year",
                                             "$ 200,000 +/ per year"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionSalary(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -599,7 +666,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -634,7 +701,7 @@ const Home:React.FC = () => {
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
                                         {[
                                             "Entry level", "Associate level", "Mid-Senior level", "Lead level", "Manager/ Director Level"
-                                        ].map((option) => (
+                                        ]?.map((option) => (
                                             <div key={option} onClick={() => handleOptionEx(option)} className='w-full px-4 py-2 flex gap-2'>
                                                 <input
                                                     type="radio"
@@ -666,7 +733,7 @@ const Home:React.FC = () => {
                 {/* Job Cards And Job Description */}
 
 
-                <div className='w-fullh-full sticky top-[10px]'>
+                <div className='w-full h-full sticky top-[10px]'>
                 <div id='mainJobDescription' className='w-full max-w-[1280px] m-auto   h-full flex gap-3  justify-center md:justify-between pt-7  md:px-3'>
 
                     {/* Job Card Component */}
@@ -676,7 +743,7 @@ const Home:React.FC = () => {
                             <p className='text-[12px] '><span className='font-extrabold'>Upload Your Resume -</span> Let employers find you.</p>
                             <p className='text-[12px] mt-2 '><span className='font-extrabold'> 400+ Jobs</span> showing result for UI/UX Jobs , Allen, TX, US</p>
                             <div className='mt-4 flex flex-col gap-4 justify-center'>
-                                {jobData.map((details, id) => (
+                                {jobData?.map((details, id) => (
                                     <JobCard key={id} setIsOpen={setQuickApply} data={details} setId={setJobDataId} jobDataId={jobDataId} />
                                 ))}
 
@@ -707,7 +774,7 @@ const Home:React.FC = () => {
                     {/*Description  */}
 
                <div className='hidden md:block max-w-[830px] w-full'  >
-               {jobFilterData.map((details,id)=>{
+               {jobFilterData?.map((details,id)=>{
                         return(
                             <div key={id} className=' max-w-[845px]   w-full rounded-lg  border'>
                                 <div className='w-full min-h-[100vh]'>
@@ -942,7 +1009,7 @@ const Home:React.FC = () => {
                                                         <p className='text-[14px] text-[#3A3A3C] font-semibold'>Accepting Work Authorization    </p>
 
                                                         <div className='flex gap-2 mt-3'>
-                                                            {details.workAuthorization.map((value, id) => (
+                                                            {details.workAuthorization?.map((value, id) => (
                                                                 <div key={id} className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
                                                                     <p className='text-[12px] text-[#3A3A3C] font-medium'>{value} </p>
                                                                 </div>
@@ -963,7 +1030,7 @@ const Home:React.FC = () => {
                                                 <p className='text-[14px] font-semibold'>Tech Stacks</p>
 
                                                 <div className='flex gap-2 mt-1'>
-                                                    {details.techStacks.map((value, id) => (
+                                                    {details.techStacks?.map((value, id) => (
                                                         <div key={id} className='px-4 py-1 bg-[#CAFDFC] rounded-full'>
                                                             <p className='text-[12px] font-semibold'>{value} </p>
                                                         </div>

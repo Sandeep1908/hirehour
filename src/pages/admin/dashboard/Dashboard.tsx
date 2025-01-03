@@ -28,6 +28,7 @@ import Verification from '../../../components/admin/dashboard/Verification';
  import Access from '../../../components/admin/dashboard/Access';
  import ResumeScouring from '../../../components/admin/dashboard/ResumeScouring';
 import CompanyTab from '../../../components/admin/dashboard/Companies';
+import Users from '../../../components/admin/dashboard/Users';
 
 
 const Sidebar: React.FC = () => {
@@ -58,9 +59,14 @@ const Sidebar: React.FC = () => {
     },
 
     {
+      label: 'Users',
+      icon: applicantIcon,
+      queryString: 'users',
+    },
+    {
       label: 'Verification',
       icon: applicantIcon,
-      queryString: 'verification',
+      queryString: 'job-verification',
     },
 
     {
@@ -190,9 +196,14 @@ const AdminDashboard: React.FC = () => {
     },
 
     {
-      label: 'Verification',
+      label: 'Users',
+      component: <Users/>,
+      queryString: 'users',
+    },
+    {
+      label: 'Job Verification',
       component: <Verification/>,
-      queryString: 'verification',
+      queryString: 'job-verification',
     },
 
     {
