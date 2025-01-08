@@ -87,7 +87,7 @@ const Signin: React.FC = () => {
       toast.success('Logged In Successfull');
       localStorage.setItem('topequatorrecruitertoken', data?.token);
       const redirectTo = location.state?.from?.pathname || '/job-poster';
-      const redirectToRTR = location.state?.from?.pathname || '/dashboard-rtr';
+      const redirectToRTR = location.state?.from?.pathname || '/dashboard-rtr?key=right-to-represent';
 
       const decodedToken = jwtDecode<JwtPayload>(data?.token);
 

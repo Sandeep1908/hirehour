@@ -13,7 +13,10 @@ import { fetchPostedJob } from '../../../utils/jobposters/jobboards/getJobs';
 import JobsList from '../../../utils/jobposters/Jobs';
 
 import AllApplicants from '../../../utils/jobposters/AllApplicants';
-import { fetchOneApplicants, fetchOneEmployers } from '../../../utils/jobposters/jobboards/miscellaneous';
+import {
+  fetchOneApplicants,
+  fetchOneEmployers,
+} from '../../../utils/jobposters/jobboards/miscellaneous';
 import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
@@ -76,6 +79,8 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
     enabled: !!recruiterId,
   });
 
+  console.log('employer', employer);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
@@ -119,16 +124,16 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
     mutationFn: async (rtrdetails: RTRAgreement) => {
       const response = await axiosrecruiterinstance.post(
         '/api/recruiter/rtr/create-rtr',
-        rtrdetails
+        rtrdetails,
       );
       return response.data;
     },
     onSuccess: (data) => {
       console.log(data);
-      toast.success("RTR Sent Succeccfully");
+      toast.success('RTR Sent Succeccfully');
     },
     onError: (error) => {
-      console.log("error",error);
+      console.log('error', error);
       const axiosError = error as AxiosError<{ errors: string[] }>;
       toast.error(axiosError.response?.data.errors[0]);
     },
@@ -150,9 +155,8 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
         ...rtrDetails,
         jobID: job?.id,
         candidateID: applicant?.[0]?.id,
-        employerID:employer?.[0]?.id,
-        vendorID:employer?.[0]?.id
-        
+        employerID: employer?.[0]?.id,
+        vendorID: employer?.[0]?.id,
       });
 
       setJobDetails({
@@ -163,15 +167,10 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
     }
   }, [jobId, candidateId, applicant]);
 
-
-
   const handleSendRTR = () => {
-    setIsRTROpen(false)
-    rtrmutation.mutate(rtrDetails)
+    setIsRTROpen(false);
+    rtrmutation.mutate(rtrDetails);
   };
-
-  
-
 
   return (
     <div
@@ -183,7 +182,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
         className="   z-[10] w-full h-[98%] max-w-[500px]  relative shadow-xl
                           overflow-auto  bg-white rounded-lg"
       >
-        <div className="flex justify-between items-center p-5 sticky top-0 bg-white">
+        <div className="flex justify-between items-center p-5 sticky top-0 bg-white z-10">
           <div className="flex flex-col space-y-3">
             <h1 className="text-sm font-[500]">Send RTR</h1>
           </div>
@@ -313,7 +312,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
                 <label htmlFor="">Employer name</label>
               </div>
 
-              <AllEmployer setEmployerId={setRecruiterId}/>
+              <AllEmployer setEmployerId={setRecruiterId} />
 
               {/* <input
                 type="text"
@@ -371,8 +370,6 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
 
               <input
                 type="text"
-                 
-            
                 placeholder="Applicant Company"
                 className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
               />
@@ -408,10 +405,9 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
               <input
                 type="date"
                 placeholder="Submission (in Days)"
-                name='validityPeriod'
-                
+                name="validityPeriod"
                 onChange={handleChange}
-                className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
+                className="p-2 text-xs border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
               />
             </div>
           </div>
@@ -440,7 +436,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
               <input
                 type="number"
                 placeholder="Amount"
-                name='agreedUponRateForCandidate'
+                name="agreedUponRateForCandidate"
                 value={rtrDetails.agreedUponRateForCandidate}
                 onChange={handleChange}
                 className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
@@ -474,7 +470,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
                 type="text"
                 placeholder="Client"
                 value={rtrDetails.clientCompany}
-                name='clientCompany'
+                name="clientCompany"
                 onChange={handleChange}
                 className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
               />
@@ -491,7 +487,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
                 type="email"
                 placeholder="Implementation"
                 value={rtrDetails.implementationCompany}
-                name='implementationCompany'
+                name="implementationCompany"
                 onChange={handleChange}
                 className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
               />
@@ -509,7 +505,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
                 type="text"
                 placeholder="Prime Vendor"
                 value={rtrDetails.primeVendorCompany}
-                name='primeVendorCompany'
+                name="primeVendorCompany"
                 onChange={handleChange}
                 className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
               />
@@ -526,9 +522,8 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
                 type="email"
                 placeholder="Vendor"
                 value={rtrDetails.vendorCompany}
-                name='vendorCompany'
+                name="vendorCompany"
                 onChange={handleChange}
-
                 className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
               />
             </div>
@@ -541,9 +536,12 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
               </p>
             </div>
 
-            <textarea value={rtrDetails.rtrContents} name='rtrContents' onChange={handleChange} className="w-full  text-[10px] p-2 min-h-44 text-[#3A3A3C] tracking-wide">
-               
-            </textarea>
+            <textarea
+              value={rtrDetails.rtrContents}
+              name="rtrContents"
+              onChange={handleChange}
+              className="w-full  text-[10px] p-2 min-h-44 text-[#3A3A3C] tracking-wide"
+            ></textarea>
           </div>
         </div>
 

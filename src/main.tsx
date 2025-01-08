@@ -93,6 +93,7 @@ import VerificationMainTemp from './pages/emails/Verification.tsx';
 import { CandidateProtectedRoute, RecruiterProtectedRoute } from './components/ProtectedRoute.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PaymentStatus from './pages/job-posters/payment-status/PaymentStatus.tsx';
+import AdminSignIn from './pages/admin/Auth/Signin/Signin.tsx'
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -265,6 +266,7 @@ const router = createBrowserRouter(
       <Route path="/email/verification-status" element={<VerificationMainTemp />} />
 
       {/* Admin Pannel  */}
+      <Route path='/admin/login' element={<AdminSignIn/>} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
     </Route>,
   ),

@@ -5,11 +5,22 @@ import { Link } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
 import Logo from '../../../../assets/logo/hirehour.png';
 import { BsInfoCircleFill } from 'react-icons/bs';
+import { useQuery } from '@tanstack/react-query';
+import { fetchRTRs } from '../../../../utils/jobseekers/getRTR';
 
 const Accepted: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
    
   const [isPreviewRTR, isSetPreviewRTR] = useState<boolean>(false);
+  const { data: rtr } = useQuery({
+    queryKey: ['all-rtr'],
+    queryFn: fetchRTRs,
+  });
+
+    
+  const acceptedRtrCount=rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate)
+  const newRTRCount=rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate)
+
 
   useEffect(() => {
     if (isRTROpen  || isPreviewRTR) {
@@ -38,10 +49,10 @@ const Accepted: React.FC = () => {
     },
   ];
   const tags = [
-    { label: 'New (2)', link: '/right-to-represent' },
-    { label: 'Accepted (2)', link: '/rtr-accepted' },
-    { label: 'Decline (2)', link: '/rtr-decline' },
-    { label: 'Expire (2)', link: '/rtr-expired' },
+    { label: 'New', count:newRTRCount?.length ,link: '/right-to-represent' },
+    { label: 'Accepted',count:acceptedRtrCount?.length ,link: '/rtr-accepted' },
+    { label: 'Decline', count:'',link: '/rtr-decline' },
+    { label: 'Expire', count:'', link: '/rtr-expired' },
   ];
 
   const handlePreview = () => {
@@ -96,7 +107,7 @@ const Accepted: React.FC = () => {
     {tags?.map((item, id) => {
       return (
         <Link to={item.link}  className={` text-xs   font-[600] cursor-pointer  ${id===1?'text-[#104B53]':''}`} key={id}>
-        {item.label}
+        {item.label}({item.count})
       </Link>
       );
     })}
@@ -188,13 +199,16 @@ const Accepted: React.FC = () => {
 
 
 <div className='flex flex-col space-y-4'>
-    <div className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
+  {rtr?.data?.map((item:ALLRTRTYPES,i:number)=>{
+    if(item?.isSignedByCandidate){
+return(
+  <div  key={i}className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
   <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
     <div className="flex items-center space-x-4">
       <span className="text-sm text-[#6B7588]">Job Title: </span>
-      <p className="text-sm font-semibold">Full Stack Java Developer</p>
+      <p className="text-sm font-semibold">{item?.job?.jobRoleName}</p>
       <div className='flex items-center space-x-2'>
-                  <span className="text-xs text-[#7B8496]">- Allen, Texas, US</span>
+                  <span className="text-xs text-[#7B8496]">- {item?.job?.jobLocation}</span>
                   <p className='w-8 h-4 bg-[#E9F358] text-[#104B53] rounded-full text-[10px] font-semibold flex justify-center items-center'>RTR</p>
                   <BsInfoCircleFill   fill='#104B53'   />
 
@@ -202,7 +216,7 @@ const Accepted: React.FC = () => {
     </div>
 
     <div>
-      <p className='text-sm'>Rate : $60 / HR</p>
+      <p className='text-sm'>Rate : ${item?.agreedUponRateForCandidate} / HR</p>
     </div>
   </div>
 
@@ -210,7 +224,7 @@ const Accepted: React.FC = () => {
     <div className="flex flex-col space-y-1">
       <h1 className="text-sm">From</h1>
       <p className='text-sm'>
-        <strong >Send by</strong>: Erika Less
+        <strong >Send by</strong>: {item?.recruiter?.user?.firstName}
       </p>
       <p className='text-sm'>
         <strong>Company</strong>:Insight Global
@@ -220,13 +234,13 @@ const Accepted: React.FC = () => {
     <div className="flex flex-col space-y-1">
       <h1 className="text-sm">To</h1>
       <p className='text-sm'>
-        <strong>Employer name</strong>: Mathew
+        <strong>Employer name</strong>: {item?.employer?.user?.firstName}
       </p>
       <p className='text-sm'>
         <strong>Employer Company</strong>: AA Tech
       </p>
       <p className='text-sm'>
-        <strong>Applicant Name</strong>: Johnson
+        <strong>Applicant Name</strong>: {item?.candidate?.firstName}
       </p>
     </div>
 
@@ -240,7 +254,7 @@ const Accepted: React.FC = () => {
       </div>
 
       <p className='text-sm'>
-        <strong>Valid Till</strong>: 30 days (08/26/2024)
+        <strong>Valid Till</strong>: {item?.validityPeriod}
       </p>
     </div>
   </div>
@@ -251,19 +265,19 @@ const Accepted: React.FC = () => {
     <div className="flex justify-center items-center space-x-5">
       <div className="flex flex-col space-y-3">
         <p className='text-sm'>
-          <strong>Client</strong>: AT & T
+          <strong>Client</strong>: {item?.clientCompany}
         </p>
         <p className='text-sm'>
-          <strong>Prime Vendor </strong>: Insight Global
+          <strong>Prime Vendor </strong>: {item?.primeVendorCompany}
         </p>
       </div>
 
       <div className="flex flex-col space-y-3">
         <p className='text-sm'>
-          <strong>Implementation</strong>: TCS
+          <strong>Implementation</strong>: {item?.implementationCompany}
         </p>
         <p className='text-sm'>
-          <strong>Vendor </strong>: AA Tech
+          <strong>Vendor </strong>: {item?.vendorCompany}
         </p>
       </div>
     </div>
@@ -276,6 +290,10 @@ const Accepted: React.FC = () => {
     </div>
   </div>
 </div>
+)
+    }
+  })}
+  
 
 
  

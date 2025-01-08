@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { IoMdClose } from 'react-icons/io';
 
- 
 import ReceiveRTR from './RTR/ReceivedRtr';
 import AcceptedRTR from './RTR/AcceptedRTR';
 import DeclineRTR from './RTR/DeclineRTR';
@@ -379,7 +378,6 @@ const RTR: React.FC = () => {
     { label: 'News (2)', count: 2, components: <ReceiveRTR /> },
     { label: 'Accepted (3)', count: 3, components: <AcceptedRTR /> },
     { label: 'Decline (3)', count: 3, components: <DeclineRTR /> },
-
     { label: 'Expire (1)', count: 1, components: <ExpireRTR /> },
   ];
 

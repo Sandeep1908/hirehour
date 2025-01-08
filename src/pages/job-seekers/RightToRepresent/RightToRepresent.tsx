@@ -24,9 +24,11 @@ const SignRTR: React.FC<{
     queryKey: ['all-rtr'],
     queryFn: fetchRTRs,
   });
-  const viewRTR = rtr?.data?.filter((i: ALLRTRTYPES) => i.ID === rtrId)?.[0];
 
-  //mutation
+  const viewRTR = rtr?.data?.filter((i: ALLRTRTYPES) => i.ID === rtrId)?.[0];
+ 
+
+ 
 
   const signMutation = useMutation({
     mutationFn: async (signRTR: { rtrId: number; candidateSignatureLink: string }) => {
@@ -45,7 +47,7 @@ const SignRTR: React.FC<{
 
   const handleSign = () => {
     if (rtrId) {
-      signMutation.mutate({ rtrId, candidateSignatureLink: `https://${signature}.png` });
+      signMutation.mutate({ rtrId, candidateSignatureLink: signature });
     }
   };
 
@@ -192,10 +194,10 @@ const SignRTR: React.FC<{
                   {viewRTR?.isSignedByEmployer ? (
                     <>
                       <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
-                        {signature}
+                      {viewRTR?.employerSignatureImgLink}
                       </p>
 
-                      <p className="text-xs">Mathew - 08/16/2024</p>
+                      <p className="text-xs">{viewRTR?.employerSignatureImgLink} - 08/16/2024</p>
 
                       <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
                         Signed
@@ -220,7 +222,7 @@ const SignRTR: React.FC<{
                       {viewRTR?.candidateSignatureImgLink}
                     </p>
 
-                    <p className="text-xs">Mathew - 08/16/2024</p>
+                    <p className="text-xs">{viewRTR?.candidateSignatureImgLink} - 08/16/2024</p>
 
                     <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
                       Signed
@@ -270,6 +272,12 @@ const RightToRepresent: React.FC = () => {
     queryFn: fetchRTRs,
   });
 
+    
+  const acceptedRtrCount=rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate)
+  const newRTRCount=rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate)
+
+
+
   useEffect(() => {
     if (isRTROpen || isSignRTR || isPreviewRTR) {
       document.body.style.overflow = 'hidden';
@@ -297,10 +305,10 @@ const RightToRepresent: React.FC = () => {
     },
   ];
   const tags = [
-    { label: 'New (2)', link: '/right-to-represent' },
-    { label: 'Accepted (2)', link: '/rtr-accepted' },
-    { label: 'Decline (2)', link: '/rtr-decline' },
-    { label: 'Expire (2)', link: '/rtr-expired' },
+    { label: 'New', count:newRTRCount?.length ,link: '/right-to-represent' },
+    { label: 'Accepted',count:acceptedRtrCount?.length ,link: '/rtr-accepted' },
+    { label: 'Decline', count:'',link: '/rtr-decline' },
+    { label: 'Expire', count:'', link: '/rtr-expired' },
   ];
 
   const handleViewSign = (Id: number) => {
@@ -357,7 +365,7 @@ const RightToRepresent: React.FC = () => {
                     className={` text-xs  font-[600] cursor-pointer  ${id === 0 ? 'text-[#104B53]' : ''}`}
                     key={id}
                   >
-                    {item.label}
+                    {item.label}({item.count})
                   </Link>
                 );
               })}
@@ -448,102 +456,105 @@ const RightToRepresent: React.FC = () => {
 
           <div className="flex flex-col space-y-4">
             {rtr?.data?.map((item: ALLRTRTYPES, i: number) => {
-              return (
-                <div
-                  key={i}
-                  className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg"
-                >
-                  <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-                    <div className="flex items-center space-x-4">
-                      <span className="text-xs text-[#6B7588]">Job Title: </span>
-                      <p className="text-xs font-semibold">{item?.job?.jobRoleName}</p>
-                      <span className="text-xs text-[#7B8496]">- {item?.job?.jobLocation}</span>
+              if(!item?.isSignedByCandidate){
+                return (
+                  <div
+                    key={i}
+                    className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg"
+                  >
+                    <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+                      <div className="flex items-center space-x-4">
+                        <span className="text-xs text-[#6B7588]">Job Title: </span>
+                        <p className="text-xs font-semibold">{item?.job?.jobRoleName}</p>
+                        <span className="text-xs text-[#7B8496]">- {item?.job?.jobLocation}</span>
+                      </div>
+  
+                      <div>
+                        <p className="text-xs">Rate : $60 / HR</p>
+                      </div>
                     </div>
-
-                    <div>
-                      <p className="text-xs">Rate : $60 / HR</p>
+  
+                    <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
+                      <div className="flex flex-col space-y-1">
+                        <h1 className="text-xs">From</h1>
+                        <p className="text-xs">
+                          <strong>Send by</strong>: {item?.employer?.user?.firstName}
+                        </p>
+                        <p className="text-xs">
+                          <strong>Company</strong>:Insight Global
+                        </p>
+                      </div>
+  
+                      <div className="flex flex-col space-y-1">
+                        <h1 className="text-xs">To</h1>
+                        <p className="text-xs">
+                          <strong>Employer name</strong>: {item?.employer?.user?.firstName}
+                        </p>
+                        <p className="text-xs">
+                          <strong>Employer Company</strong>: AA Tech
+                        </p>
+                        <p className="text-xs">
+                          <strong>Applicant Name</strong>: {item?.candidate?.firstName}
+                        </p>
+                      </div>
+  
+                      <div className="flex flex-col space-y-3  ">
+                        <div className="flex justify- space-x-3 items-center">
+                          <MdOutlineFileDownload size={20} color="#104B53" />
+                          <p className="text-[#104B53] text-sm font-[600]">Export</p>
+                          <p
+                            onClick={() => setIsViewRTROpen(true)}
+                            className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full"
+                          >
+                            View
+                          </p>
+                        </div>
+  
+                        <p className="text-sm">
+                          <strong>Valid Till</strong>: 30 days (08/26/2024)
+                        </p>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-                    <div className="flex flex-col space-y-1">
-                      <h1 className="text-xs">From</h1>
-                      <p className="text-xs">
-                        <strong>Send by</strong>: {item?.employer?.user?.firstName}
-                      </p>
-                      <p className="text-xs">
-                        <strong>Company</strong>:Insight Global
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col space-y-1">
-                      <h1 className="text-xs">To</h1>
-                      <p className="text-xs">
-                        <strong>Employer name</strong>: {item?.employer?.user?.firstName}
-                      </p>
-                      <p className="text-xs">
-                        <strong>Employer Company</strong>: AA Tech
-                      </p>
-                      <p className="text-xs">
-                        <strong>Applicant Name</strong>: {item?.candidate?.firstName}
-                      </p>
-                    </div>
-
-                    <div className="flex flex-col space-y-3  ">
-                      <div className="flex justify- space-x-3 items-center">
-                        <MdOutlineFileDownload size={20} color="#104B53" />
-                        <p className="text-[#104B53] text-sm font-[600]">Export</p>
+  
+                    <hr />
+  
+                    <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
+                      <div className="flex justify-center items-center space-x-5">
+                        <div className="flex flex-col space-y-3">
+                          <p className="text-sm">
+                            <strong>Client</strong>: AT & T
+                          </p>
+                          <p className="text-sm">
+                            <strong>Prime Vendor </strong>: Insight Global
+                          </p>
+                        </div>
+  
+                        <div className="flex flex-col space-y-3">
+                          <p className="text-sm">
+                            <strong>Implementation</strong>: TCS
+                          </p>
+                          <p className="text-sm">
+                            <strong>Vendor </strong>: AA Tech
+                          </p>
+                        </div>
+                      </div>
+  
+                      <div className="flex w-full md:w-auto items-center justify-center space-x-5">
+                        <p className="w-full sm:w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
+                          Decline
+                        </p>
                         <p
-                          onClick={() => setIsViewRTROpen(true)}
-                          className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full"
+                          onClick={() => handleViewSign(item?.ID)}
+                          className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full"
                         >
-                          View
+                          View & Sign
                         </p>
                       </div>
-
-                      <p className="text-sm">
-                        <strong>Valid Till</strong>: 30 days (08/26/2024)
-                      </p>
                     </div>
                   </div>
-
-                  <hr />
-
-                  <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-                    <div className="flex justify-center items-center space-x-5">
-                      <div className="flex flex-col space-y-3">
-                        <p className="text-sm">
-                          <strong>Client</strong>: AT & T
-                        </p>
-                        <p className="text-sm">
-                          <strong>Prime Vendor </strong>: Insight Global
-                        </p>
-                      </div>
-
-                      <div className="flex flex-col space-y-3">
-                        <p className="text-sm">
-                          <strong>Implementation</strong>: TCS
-                        </p>
-                        <p className="text-sm">
-                          <strong>Vendor </strong>: AA Tech
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-                      <p className="w-full sm:w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
-                        Decline
-                      </p>
-                      <p
-                        onClick={() => handleViewSign(item?.ID)}
-                        className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#07A560] text-white p-2 text-center rounded-full"
-                      >
-                        View & Sign
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
+                );
+              }
+              
             })}
           </div>
         </div>

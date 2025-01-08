@@ -105,9 +105,11 @@ const AdditionalInfo: React.FC = () => {
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ message: string }>;
+      console.log("eduerror",error);
       toast.error(axiosError?.response?.data?.message);
     },
   });
+
 
   //summery
 
@@ -209,12 +211,12 @@ const AdditionalInfo: React.FC = () => {
       <div className="max-w-[1080px] h-full rounded-lg   bg-white m-auto p-4 pb-4 mt-3">
         <div className="w-full max-w-[1064px] m-auto pt-10 flex flex-col space-y-5">
           <div className=" flex flex-col space-y-3">
-            <h1 className="text-lg font-semibold">Summery</h1>
+            <h1 className="text-lg font-semibold">Summary</h1>
             <div className="  border-[#EBEBF0] rounded-lg">
               <textarea
                 name="descriptionOfExperience"
                 className="text-[#535354] border p-2 text-sm min-h-32 w-full"
-                placeholder="Write you profile Summery"
+                placeholder="Write you profile Summary"
                 onChange={(e) => setSummery({ summary: e.target.value })}
               ></textarea>
             </div>
@@ -518,6 +520,7 @@ const AdditionalInfo: React.FC = () => {
                         : education.durationEnd
                     }
                     onChange={handleEducationChange}
+                    name="durationEnd"
                     placeholder="Date Ended"
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />

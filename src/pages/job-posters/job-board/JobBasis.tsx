@@ -54,6 +54,8 @@ const JobBasis: React.FC = () => {
     accommodationType: '',
   });
 
+
+  console.log("jobBoard",jobBoard);
   const { data: role } = useQuery({
     queryKey: ['roles'],
     queryFn: fetchRoles,
@@ -477,6 +479,7 @@ const JobBasis: React.FC = () => {
 
                   <input
                     type="number"
+                    name='yearsOfExpNeeded'
                     placeholder="Year of experience"
                     className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                     value={jobBoard.yearsOfExpNeeded}

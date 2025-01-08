@@ -214,3 +214,29 @@ type ALLRTRTYPES = {
   candidate: Candidate;
   job: Job;
 };
+
+
+type CohiringTypes = {
+  userID: number;
+  profilePictureLink: string | null;
+  companyWorkingFor: number;
+  designation: string;
+  isOwnerOfSaidCompany: boolean;
+  reportsTo: number;
+  isVerifiedByUs: boolean;
+  isDeleted: boolean;
+  createdAt: string; // ISO timestamp format
+  updatedAt: string; // ISO timestamp format
+  user: {
+      id: number;
+      firstName: string;
+      lastName: string;
+      email: string;
+  };
+  reportsTo_user: {
+      id: number;
+      firstName: string;
+      lastName: string;
+      email: string;
+  };
+};

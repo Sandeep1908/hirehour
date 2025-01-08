@@ -153,8 +153,9 @@ const DashBoard: React.FC = () => {
   const queryString = queryParams.get('key');
   const navigate = useNavigate();
   useEffect(() => {
+    const qString = queryParams.get('key');
     if (location.pathname === '/job-poster/dashboard') {
-      navigate(`/job-poster/dashboard?key=${queryString}`);
+      navigate(`/job-poster/dashboard?key=${qString}`);
     }
   }, []);
 

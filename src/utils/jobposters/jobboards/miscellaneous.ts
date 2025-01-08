@@ -23,6 +23,7 @@ export const fetchEmployers = async () => {
 
   export const fetchOneEmployers = async (searcn:string) => {
     const response = await axiosrecruiterinstance.get(`/api/misc/dropdown/recruiters?search=${searcn}`);
+    console.log("search",searcn,response.data);
     return response.data;
   };
 

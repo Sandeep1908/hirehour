@@ -17,17 +17,21 @@ const Pricing: React.FC = () => {
     enabled: isPaymentOn && selector
   });
 
+  
 
   const handlePayment=()=>{
       if(selector){
         setIsPaymentOn(true)
-        toast.success('You are being redirect to the payment page.')
         if(response?.paymentLink){
+          toast.success('You are being redirect to the payment page.')
           window.location.href=response?.paymentLink
+        }
+        else{
+          toast.error("You are not a owner")
         }
       }
       else{
-        navigate('/job-poster/dashboard')
+        navigate('/job-poster/dashboard?key=myjobs')
       }
   }
   
