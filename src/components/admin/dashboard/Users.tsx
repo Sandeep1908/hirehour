@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import {  FaCaretDown } from 'react-icons/fa'
 import {  IoMdMore } from 'react-icons/io'
 
 import ViewJob from './ViewJob'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { fetchAllUserDetails } from '../../../utils/admin/getAllUserDetails'
-import { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
+import { AxiosError } from 'axios'
+import ViewProfilePopup from './ViewProfilePopup'
 import axiosAdmin from '../../../axios/axiosadmin'
 
 
 
-type verifyProps={
+type userProps={
   
   users: Users[];
   
@@ -20,6 +20,8 @@ type verifyProps={
 
 type recruiterdetail = {
   isVerifiedByUs: boolean;
+  permTagName: string; 
+
 };
 
 interface Users {
@@ -29,74 +31,21 @@ interface Users {
   email: string;
   role: string; // Adjust fields as per your API response
   createdAt: string; // Adjust fields as per your API response
+  updatedAt: string; // Adjust fields as per your API response
   userProfileReference: string; 
+  // userpermlabelsacrossapplications: []; 
   isUserVerified:boolean;
   recruiterdetail:recruiterdetail[];
+  userpermlabelsacrossapplications:recruiterdetail[];
   // userpermlabelsacrossapplications: UserPermLabelsAcrossApplications[];
 
 }
 
 
-const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
+const Candidate: React.FC<userProps> = ({users}) => {
 
  
-  const [actionID, setActionID] = useState<number>(0);
-  const [isVerifiedByUs, setIsVerifiedByUs] = useState<string>(""); 
-  // const [actionTake, setActionTake] = useState<string>(""); 
-  const [moreOption, setMoreOption] = useState<boolean>(false);
-  const [selectPermId, setSelectPermId] = useState<number|null>();
-  
   const [viewJobPopup, setViewJobPopup] = useState<boolean>(false);
-
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // Extract only the YYYY-MM-DD part
-  };
-
-  const handleMoreOption = (id:number) => {
-    setMoreOption(!moreOption)
-    setSelectPermId(id)
-
-  };
-
- 
-
-const actionMutation = useMutation({
-  mutationFn: async (action: {userId:number;updateData:{isVerifiedByUs:any}}) => {
-    const response = await axiosAdmin.post("/api/admin/user-management/update-user-details", action);
-    return response.data;
-  },
-  onSuccess: (success) => {
-    const axiosError = success as AxiosError<{ message: string }>;
-    toast.success(axiosError?.response?.data?.message);
-    toast.success("Action updated successfully");
-
-  },
-  onError: (error) => {
-    const axiosError = error as AxiosError<{ message: string }>;
-    toast.error(axiosError?.response?.data?.message)
-   
-  },
-});
-
-const handleAction = (type: string,id:number) => {
-  setIsVerifiedByUs(type);
-  setActionID(id)
-  const actionTaken = {
-    userId: id, // Pass the user ID directly
-    updateData: 
-      {
-        isVerifiedByUs: type, 
-       
-      },
-    
-  };
-  actionMutation.mutate(actionTaken)
-
-};
-
-
-
 
 
   
@@ -119,17 +68,17 @@ const handleAction = (type: string,id:number) => {
                   <th className=' px-4  py-2 w-[20%]'> <div className='flex items-center gap-4'> 
                      <p className='text-[12px]' >Full name</p> </div></th>
 
-                  <th className='text-[12px] text-start w-[15%]'>Email Address</th>
-                  <th className='text-[12px] text-start w-[10%]'> Date</th>
-                  <th className='text-[12px] text-start' >Position</th>
-                  <th className='text-[12px] text-start ' >Account Verified</th>
-                  <th className='text-[12px] text-start' >Action</th>
+                  <th className='text-[12px] text-start w-[18%]'>Email Address</th>
+                  <th className='text-[12px] text-start w-[17%]'> Role</th>
+                  <th className='text-[12px] text-start' >Company</th>
+                  <th className='text-[12px] text-start ' >Last Activity</th>
+                  {/* <th className='text-[12px] text-start' >Action</th> */}
                 </tr>
               </thead>
 
 
-              {users?.map((user:any,id:number)=>{
-                if( user.userProfileReference === "recruiter" && user?.recruiterdetail?.isVerifiedByUs === false ){
+              {users?.map((user,id)=>{
+                if( user.userProfileReference === "candidate"  ){
                   return(
                     <tbody key={id}  className='mt-2'>
                     <tr   className='border-[1px] border-[#D6DBDE] mt-2 '>
@@ -137,76 +86,33 @@ const handleAction = (type: string,id:number) => {
                          <div className='flex gap-4 '>
                         <div  className='text-[12px] cursor-pointer'  >
                           <p >{user.firstName || "N/A"}</p>
+                          {/* <p >Johnson</p> */}
                           <p></p>
                          
                         </div>
                       </div> </td>
                       <td className='align-top py-3'>
                         <p className='text-[12px] cursor-pointer'>{user.email || "N/A"}</p>
+                        {/* <p className='text-[12px] cursor-pointer'>Peter@xyz.com</p> */}
                       </td>
-                      <td className='align-top py-3'><p className='text-[12px] font-medium'><span className='font-normal'>{user.createdAt ? formatDate(user.createdAt) : "N/A"}</span></p>
+                      <td className='align-top py-3'>
+                        {/* <p className='text-[12px] font-medium'><span className='font-normal'>{user.createdAt ? formatDate(user.createdAt) : "N/A"}</span></p> */}
+                        <p className='text-[12px] font-medium'><span className='font-normal'>Java Developer</span></p>
                         </td>
     
                         <td onClick={()=>{setViewJobPopup(true)}} className='align-top py-3'>
-                          <div>
-                          <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                          <div className='flex gap-2 text-[12px] '>
-                            <p>Figma</p>
-                            <p>Hybrid</p>
-                            <p>Allen, Texas, US</p>
-                          </div>
-                          </div>
+                        
+                          <p className='text-[12px] font-semibold' >TCS <br />
+                          From : 04/10/2024</p>
+                         
                         </td>
                         <td className='align-top py-3'>
-                          <div>
-                          <p className='text-[12px] font-semibold' >Yes</p>
-                          
-                          </div>
-                        </td>
+                         <p className='text-[12px] font-semibold'>
+                          {user?.updatedAt.split("T")[0]}
+                         
+                         </p>                         </td>
     
-                      <td className='py-3'>
-                       <div className='flex flex-col gap-2'>
-                       <div className='relative flex gap-2'>
-                          <div className='flex gap-2'>
-                           
-
-                            <div onClick={() => { handleAction("true",user.id) }} className={`${isVerifiedByUs==="true" && actionID===user.id ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                              <AiOutlineLike size={20} />
-    
-                            </div>
-                            <div onClick={() => { handleAction("false",user.id) }} className={`${isVerifiedByUs==="false" && actionID===user.id ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                              <AiOutlineLike  size={20} className='rotate-90 ' />
-    
-                            </div>
-                            <div onClick={() => { handleAction("false",user.id) }} className={`${isVerifiedByUs==="false" && actionID===user.id ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                              <AiOutlineDislike  size={20} />
-    
-                            </div>
-                          </div>
-                          <div className='flex gap-10 items-center'>
-                           
-                           
-    
-                            <div className='relative' onClick={()=>{handleMoreOption(user.id)}}>
-                              <IoMdMore size={25} />
-                              <div className={`absolute w-36 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-5 transition-all duration-500 bg-white ${selectPermId===user.id&&moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                                  <div className='px-3 py-2'>
-                                    <p className='text-sm font-semibold'>Undo</p>
-                                  </div>
-                                  <hr />
-                                  <div className='px-3 py-2'>
-                                    <p className='text-sm font-semibold'> Delete</p>
-                                  </div>
-                            </div>
-                            </div>
-    
-                          </div>
-    
-                        </div>
-                        <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-    
-                       </div>
-                      </td>
+                     
                     </tr>
                     
     
@@ -235,62 +141,258 @@ const handleAction = (type: string,id:number) => {
     </div>
   )
 }
-const VerifiedAccount: React.FC<verifyProps> = ({users}) => {
 
-  const [actionID, setActionID] = useState<number>(0);
-  const [isVerifiedByUs, setIsVerifiedByUs] = useState<string>(""); 
-  // const [actionTake, setActionTake] = useState<string>(""); 
+const LookingforCandidate: React.FC<userProps> = ({users}) => {
+
+  const [viewPrfilePopup, setViewPrfilePopup] = useState<boolean>(false);
+  const [infoPopupId, setInfoPopupId] = useState<number| undefined>();
   const [moreOption, setMoreOption] = useState<boolean>(false);
   const [selectPermId, setSelectPermId] = useState<number|null>();
-  
-  const [viewJobPopup, setViewJobPopup] = useState<boolean>(false);
 
-  const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // Extract only the YYYY-MM-DD part
-  };
 
-  const handleMoreOption = (id:number) => {
-    setMoreOption(!moreOption)
-    setSelectPermId(id)
+  const [userId, setUserId] = useState<number | null >();
+  const [roleID, setRoleID] = useState<number | null | undefined>();
+  const [permissions, setPermissions] = useState<number | null | undefined>();
 
-  };
+  const mutation = useMutation({
+    mutationFn: async (userPermission: {userId:number;rolePermissionsToAdd:{roleID:number;permissions:any}[]}) => {
+      console.log("userPermission",userPermission)
+      const response = await axiosAdmin.post("/api/admin/user-management/update-user-permissions", userPermission);
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Upgrade to Owner");
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message)
+     
+    },
+  });
 
- 
-
-const actionMutation = useMutation({
-  mutationFn: async (action: {userId:number;updateData:{isVerifiedByUs:any}}) => {
-    const response = await axiosAdmin.post("/api/admin/user-management/update-user-details", action);
-    return response.data;
-  },
-  onSuccess: (success) => {
-    const axiosError = success as AxiosError<{ message: string }>;
-    toast.success(axiosError?.response?.data?.message);
-    toast.success("Action updated successfully");
-
-  },
-  onError: (error) => {
-    const axiosError = error as AxiosError<{ message: string }>;
-    toast.error(axiosError?.response?.data?.message)
-   
-  },
-});
-
-const handleAction = (type: string,id:number) => {
-  setIsVerifiedByUs(type);
-  setActionID(id)
-  const actionTaken = {
-    userId: id, // Pass the user ID directly
-    updateData: 
-      {
-        isVerifiedByUs: type, 
-       
-      },
+    // const handleSubmit = () => {
     
-  };
-  actionMutation.mutate(actionTaken)
+    //   mutation.mutate({ userId, roleID,permissions });
+  
+    // };
+    const handleMoreOption = (id:number) => {
+      setMoreOption(!moreOption)
+      setSelectPermId(id)
+  
+    };
 
-};
+    const handleUpgradeToOwner = (id:number) => {
+      setUserId(id)
+      setRoleID(5)
+      setPermissions(5)
+      const userPermission = {
+        userId: id, // Pass the user ID directly
+        rolePermissionsToAdd: [
+          {
+            roleID: 5, // Assuming roleID is 5
+            permissions: [5], // Assuming permissions array contains 5
+          },
+        ],
+      };
+      console.log("userId",userId)
+      console.log("roleID",roleID)
+      console.log("permissions",permissions)
+      mutation.mutate( userPermission );
+    };
+
+    const handleInfoPopup = (id:number) => {
+      setViewPrfilePopup(true)
+      setInfoPopupId(id)
+    }
+ 
+  return (
+    <div className=''>
+    
+  <div className='w-full h-auto'>
+      <div className='w-full h-auto'>
+
+     
+
+        <div className='w-full h-auto px-3 '>
+
+          <div className='w-full  mt-2'>
+
+
+            <table className=" w-full  table-auto">
+              <thead className=''>
+                <tr className='bg-[#F2F2F5] border-[1px] border-[#D6DBDE] mt-2  rounded-full'>
+                  <th className=' px-4  py-2 w-[20%]'> <div className='flex items-center gap-4'> 
+                     <p className='text-[12px]' >Full name</p> </div></th>
+
+                  <th className='text-[12px] text-start w-[18%]'>Email Address</th>
+                  <th className='text-[12px] text-start w-[17%]'> Company</th>
+                  <th className='text-[12px] text-start w-[15%]' >Role</th>
+                  <th className='text-[12px] text-start w-[15%]' >Verified</th>
+                  <th className='text-[12px] text-start' >Last Activity</th>
+                  <th className='text-[12px] text-start' ></th>
+                </tr>
+              </thead>
+
+
+    {users
+  .filter((user) => {
+    // Check if the user has 'advanced_recruiter_perms' in their permissions
+    
+    return (
+    
+      user.userProfileReference === "recruiter" &&
+      user.userpermlabelsacrossapplications?.some(
+        (item) => item.permTagName === "advanced_recruiter_perms"
+      )
+    );
+  })?.map((user:any, id:number) => (
+    
+    <tbody key={id} className="mt-2">
+      <tr className="border-[1px] border-[#D6DBDE] mt-2">
+        <td onClick={() => handleInfoPopup(user.id)} className="px-4 align-top py-3">
+          <div className="flex gap-4">
+            <div className="text-[12px] cursor-pointer">
+              <p>{user.firstName || "N/A"}</p>
+            </div>
+          </div>
+        </td>
+        <td className="align-top py-3">
+          <p className="text-[12px] cursor-pointer">{user.email || "N/A"}</p>
+        </td>
+        <td className="align-top py-3">
+          <p className="text-[12px] font-medium">
+            <span className="font-normal">{user.recruiterdetail?.companyWorkingFor || "N/A"}</span>
+          </p>
+        </td>
+        <td  className="align-top py-3">
+          <p className="text-[12px] font-semibold">
+          {user.userpermlabelsacrossapplications?.some(
+              (user:any) => user.permTagName === "advanced_owner_recruiter_perms"
+            )
+              ? "Owner"
+              : "Hiring Partner"}
+          </p>
+        </td>
+        <td className="align-top py-3">
+          <p className="text-[12px] font-semibold">
+            {user.isUserVerified === true ? "Yes" : "No"}
+          </p>
+        </td>
+        <td className="align-top py-3 flex gap-5">
+          <p className="text-[12px] font-semibold">{user?.updatedAt.split("T")[0]}</p>
+        </td>
+        <td className="relative py-3">
+          <IoMdMore onClick={() => handleMoreOption(user.id)} />
+          <div
+            className={`absolute w-60 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[40px] top-[10px] transition-all duration-500 bg-white ${
+              selectPermId === user.id && moreOption
+                ? "opacity-1 scale-[1.01] z-[40]"
+                : "opacity-0 z-[-10]"
+            }`}
+          >
+            <div onClick={() => handleUpgradeToOwner(user.id)} className="px-3 py-2">
+              <p className="text-xs font-semibold">Upgrade to Owner</p>
+            </div>
+            <hr />
+            <div className="px-3 py-2">
+              <p className="text-xs font-semibold">Downgrade to Hiring Partner</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  ))}
+
+         
+
+             
+            </table>
+
+
+          
+          </div>
+        </div>
+
+      </div>
+    
+    </div>
+
+
+  
+         
+         {viewPrfilePopup &&  <ViewProfilePopup setViewPrfilePopup ={setViewPrfilePopup} users={users} infoPopupId={infoPopupId}/>}
+ 
+    </div>
+  )
+}
+
+const RepresentingCandidate: React.FC<userProps> = ({users})=> {
+ 
+  const [infoPopupId, setInfoPopupId] = useState<number| undefined>();
+  const [viewPrfilePopup, setViewPrfilePopup] = useState<boolean>(false);
+  const [moreOption, setMoreOption] = useState<boolean>(false);
+  const [selectPermId, setSelectPermId] = useState<number|null>();
+
+
+  const [userId, setUserId] = useState<number | null >();
+  const [roleID, setRoleID] = useState<number | null | undefined>();
+  const [permissions, setPermissions] = useState<number | null | undefined>();
+
+  const mutation = useMutation({
+    mutationFn: async (userPermission: {userId:number;rolePermissionsToAdd:{roleID:number;permissions:any}[]}) => {
+      console.log("userPermission",userPermission)
+      const response = await axiosAdmin.post("/api/admin/user-management/update-user-permissions", userPermission);
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Upgrade to Owner");
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message)
+     
+    },
+  });
+
+    const handleMoreOption = (id:number) => {
+      setMoreOption(!moreOption)
+      setSelectPermId(id)
+  
+    };
+
+    const handleUpgradeToOwner = async(id:number) => {
+      setUserId(id)
+      setRoleID(5)
+      setPermissions(5)
+
+      // const userPermission: UserPermission = {
+      //   userId: id, // Pass the user ID directly
+      //   rolePermissionsToAdd: [
+      //     {
+      //       roleID: 5, // Assuming roleID is 5
+      //       permissions: [5], // Assuming permissions array contains 5
+      //     },
+      //   ],
+      // };
+      const userPermission = {
+        userId: id, // Pass the user ID directly
+        rolePermissionsToAdd: [
+          {
+            roleID: 5, // Assuming roleID is 5
+            permissions: [5], // Assuming permissions array contains 5
+          },
+        ],
+      };
+      console.log("userId",userId)
+      console.log("roleID",roleID)
+      console.log("permissions",permissions)
+      mutation.mutate( userPermission );
+    };
+
+    const handleInfoPopup = (id:number) => {
+      setViewPrfilePopup(true)
+      setInfoPopupId(id)
+    }
   return (
     <div className=''>
     
@@ -310,106 +412,85 @@ const handleAction = (type: string,id:number) => {
                     <th className=' px-4  py-2 w-[20%]'> <div className='flex items-center gap-4'> 
                        <p className='text-[12px]' >Full name</p> </div></th>
   
-                    <th className='text-[12px] text-start w-[15%]'>Email Address</th>
-                    <th className='text-[12px] text-start'> Date</th>
-                    <th className='text-[12px] text-start' >Position</th>
-                    <th className='text-[12px] text-start' >Account Verified</th>
-                    <th className='text-[12px] text-start' >Action</th>
+                    <th className='text-[12px] text-start w-[18%]'>Email Address</th>
+                    <th className='text-[12px] text-start w-[17%]'> Company</th>
+                    <th className='text-[12px] text-start w-[15%]' >Role</th>
+                    <th className='text-[12px] text-start w-[15%]' >Verified</th>
+                    <th className='text-[12px] text-start' >Last Activity</th>
+                    <th className='text-[12px] text-start' ></th>
                   </tr>
                 </thead>
   
-                {users?.map((user:any,id:number)=>{
-                if( user.userProfileReference === "recruiter" && user?.recruiterdetail?.isVerifiedByUs === true ){
-                  return(
-                    <tbody key={id}  className='mt-2'>
-                    <tr   className='border-[1px] border-[#D6DBDE] mt-2 '>
-                      <td className='px-4 align-top py-3'>
-                         <div className='flex gap-4 '>
-                        <div  className='text-[12px] cursor-pointer'  >
-                          <p >{user.firstName || "N/A"}</p>
-                          <p></p>
-                         
-                        </div>
-                      </div> </td>
-                      <td className='align-top py-3'>
-                        <p className='text-[12px] cursor-pointer'>{user.email || "N/A"}</p>
-                      </td>
-                      <td className='align-top py-3'><p className='text-[12px] font-medium'><span className='font-normal'>{user.createdAt ? formatDate(user.createdAt) : "N/A"}</span></p>
-                        </td>
-    
-                        <td onClick={()=>{setViewJobPopup(true)}} className='align-top py-3'>
-                          <div>
-                          <p className='text-[12px] font-semibold' >Java Full stack developer</p>
-                          <div className='flex gap-2 text-[12px] '>
-                            <p>Figma</p>
-                            <p>Hybrid</p>
-                            <p>Allen, Texas, US</p>
-                          </div>
-                          </div>
-                        </td>
-                        <td className='align-top py-3'>
-                          <div>
-                          <p className='text-[12px] font-semibold' >Yes</p>
-                          
-                          </div>
-                        </td>
-    
-                      <td className='py-3'>
-                       <div className='flex flex-col gap-2'>
-                       <div className='relative flex gap-2'>
-                          <div className='flex gap-2'>
-                           
+                {users
+  .filter((user) => {
+    // Check if the user does NOT have 'advanced_recruiter_perms' in their permissions
+    return (
+      user.userProfileReference === "recruiter" &&
+      !user.userpermlabelsacrossapplications?.some(
+        (item) => item.permTagName === "advanced_recruiter_perms"
+      )
+    );
+  })?.map((user:any, id:number) => (
+    <tbody key={id} className="mt-2">
+      <tr className="border-[1px] border-[#D6DBDE] mt-2">
+        <td onClick={() => handleInfoPopup(user.id)}  className="px-4 align-top py-3">
+          <div className="flex gap-4">
+            <div className="text-[12px] cursor-pointer">
+              <p>{user.firstName || "N/A"}</p>
+            </div>
+          </div>
+        </td>
+        <td className="align-top py-3">
+          <p className="text-[12px] cursor-pointer">{user.email || "N/A"}</p>
+        </td>
+        <td className="align-top py-3">
+          <p className="text-[12px] font-medium">
+            <span className="font-normal">{user.recruiterdetail?.companyWorkingFor || "N/A"}</span>
+          </p>
+        </td>
+        <td className="align-top py-3">
+          <p className="text-[12px] font-semibold"> {user.userpermlabelsacrossapplications?.some(
+              (user:any) => user.permTagName === "advanced_owner_recruiter_perms"
+            )
+              ? "Owner"
+              : "Hiring Partner"} </p>
+        </td>
+        <td className="align-top py-3">
+          <p className="text-[12px] font-semibold">
+            {user.isUserVerified === true ? "Yes" : "No"}
+          </p>
+        </td>
+        <td className="align-top py-3 flex gap-5">
+          <p className="text-[12px] font-semibold">{user?.updatedAt.split("T")[0]}</p>
+        </td>
+        <td className="relative py-3">
+          <IoMdMore onClick={() => handleMoreOption(user.id)} />
+          <div
+            className={`absolute w-60 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[40px] top-[10px] transition-all duration-500 bg-white ${
+              selectPermId === user.id && moreOption
+                ? "opacity-1 scale-[1.01] z-[40]"
+                : "opacity-0 z-[-10]"
+            }`}
+          >
+            <div onClick={() => handleUpgradeToOwner(user.id)} className="px-3 py-2">
+              <p className="text-xs font-semibold">Upgrade to Owner</p>
+            </div>
+            <hr />
+            <div className="px-3 py-2">
+              <p className="text-xs font-semibold">Downgrade to Hiring Partner</p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  ))}
 
-                            <div onClick={() => { handleAction("true",user.id) }} className={`${isVerifiedByUs==="true" && actionID===user.id ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                              <AiOutlineLike size={20} />
-    
-                            </div>
-                            <div onClick={() => { handleAction("false",user.id) }} className={`${isVerifiedByUs==="false" && actionID===user.id ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                              <AiOutlineLike  size={20} className='rotate-90 ' />
-    
-                            </div>
-                            <div onClick={() => { handleAction("false",user.id) }} className={`${isVerifiedByUs==="false" && actionID===user.id ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                              <AiOutlineDislike  size={20} />
-    
-                            </div>
-                          </div>
-                          <div className='flex gap-10 items-center'>
-                           
-                           
-    
-                            <div className='relative' onClick={()=>{handleMoreOption(user.id)}}>
-                              <IoMdMore size={25} />
-                              <div className={`absolute w-36 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[20px] top-5 transition-all duration-500 bg-white ${selectPermId===user.id&&moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                                  <div className='px-3 py-2'>
-                                    <p className='text-sm font-semibold'>Undo</p>
-                                  </div>
-                                  <hr />
-                                  <div className='px-3 py-2'>
-                                    <p className='text-sm font-semibold'> Delete</p>
-                                  </div>
-                            </div>
-                            </div>
-    
-                          </div>
-    
-                        </div>
-                        <p className='text-[12px] font-medium' >Action done by : <span className='font-normal'>Arla</span></p>
-    
-                       </div>
-                      </td>
-                    </tr>
-                    
-    
-    
-    
-                  </tbody>
-                  )
-                }
-              })}
-             
+           
   
                
               </table>
+  
+  
             
             </div>
           </div>
@@ -421,13 +502,13 @@ const handleAction = (type: string,id:number) => {
   
     
          
-           {viewJobPopup &&  <ViewJob setViewJobPopup ={setViewJobPopup}/>}
+           {viewPrfilePopup &&  <ViewProfilePopup setViewPrfilePopup ={setViewPrfilePopup} users={users} infoPopupId={infoPopupId}/>}
    
       </div>
   )
 }
 
-const Verification: React.FC = () => {
+const Users: React.FC = () => {
 
 
 
@@ -439,6 +520,7 @@ const Verification: React.FC = () => {
     if(allUserDetail){
       
       setUsersDetail(allUserDetail.users);
+      console.log("object",usersDetail)
     }
 
   }, [allUserDetail]);
@@ -446,12 +528,16 @@ const Verification: React.FC = () => {
 
   const jobFilters = [
     {
-      label: 'Awaiting Verification',
-      component: <AwaitingVerification users={usersDetail} />,
+      label: 'Candidate',
+      component: <Candidate users={usersDetail} />,
     },
     {
-      label: 'Verified Account',
-      component: <VerifiedAccount users={usersDetail}/>,
+      label: 'Looking for Candidate ',
+      component: <LookingforCandidate users={usersDetail} />,
+    },
+    {
+      label: 'Representing Candidate ',
+      component: <RepresentingCandidate users={usersDetail} />,
     },
   ];
 
@@ -502,14 +588,14 @@ const Verification: React.FC = () => {
 
       <div className='  w-full h-auto'>
         <div className="flex flex-col md:flex-row justify-between md:items-center p-3">
-          <h1 className="text-sm font-semibold">Verification </h1>
+          <h1 className="text-sm font-semibold">Users </h1>
           <hr className='mb-2' />
          
          
         </div>
         <hr />
         <div className="p-2 mt-1  flex justify-between">
-          <ul className="max-w-[350px]  w-full rounded-full px-1 flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
+          <ul className="max-w-[450px]  w-full rounded-full px-1 flex text-xs justify-around items-center space-x-6 bg-[#F2F2F5]">
             {jobFilters?.map((item, i) => {
               return (
                 <li key={i}
@@ -517,11 +603,7 @@ const Verification: React.FC = () => {
                   onClick={() => setJobFilterIdx(i)}
                 >
                   <span>{item.label}</span>{' '}
-                  <span
-                    className={`bg-[#104B53]  w-6   text-center rounded-lg ${jobFilterIdx === i ? 'bg-white text-[#104B53] ' : 'text-white'} `}
-                  >
-                    {i}
-                  </span>
+                 
                 </li>
               );
             })}
@@ -742,4 +824,4 @@ const Verification: React.FC = () => {
   )
 }
 
-export default Verification
+export default Users

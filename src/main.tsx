@@ -82,6 +82,7 @@ import MessageJP from './pages/job-posters/Messages/MessageJP.tsx';
 import DashBoardRTR from './pages/job-posters/dashboard/dashboardRTR/DashboardRTR.tsx';
 import JobPreview from './pages/job-posters/jobPreveiw/JobPreveiw.tsx';
 import AdminDashboard from './pages/admin/dashboard/Dashboard.tsx';
+import AdminSignin from './pages/admin/Auth/Signin/Signin.tsx';
 import PrivacySetting from './pages/job-seekers/AccountSettings/PrivacySetting/PrivacySetting.tsx';
 import ReceivedNewRTR from './pages/emails/ReceivedNewRTR.tsx';
 import PrivacySettingJP from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
@@ -268,6 +269,7 @@ const router = createBrowserRouter(
       {/* Admin Pannel  */}
       <Route path='/admin/login' element={<AdminSignIn/>} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
+      <Route path="/admin/signin" element={<AdminSignin />} />
     </Route>,
   ),
 );
