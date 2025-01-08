@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { HtmlHTMLAttributes, useState } from 'react';
+import {  useState } from 'react';
 
 import { FaEdit } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
