@@ -169,12 +169,23 @@ const LookingforCandidate: React.FC<userProps> = ({users}) => {
      
     },
   });
+  const mutationDownToHire = useMutation({
+    mutationFn: async (userPermission: {userId:number;rolePermissionsToRemove:{roleID:number;permissions:any}[]}) => {
+      console.log("userPermission",userPermission)
+      const response = await axiosAdmin.post("/api/admin/user-management/update-user-permissions", userPermission);
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Downgrade to Hiring Partner");
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message)
+     
+    },
+  });
 
-    // const handleSubmit = () => {
-    
-    //   mutation.mutate({ userId, roleID,permissions });
-  
-    // };
+ 
     const handleMoreOption = (id:number) => {
       setMoreOption(!moreOption)
       setSelectPermId(id)
@@ -198,6 +209,25 @@ const LookingforCandidate: React.FC<userProps> = ({users}) => {
       console.log("roleID",roleID)
       console.log("permissions",permissions)
       mutation.mutate( userPermission );
+    };
+
+    const handleDownToHire = (id:number) => {
+      setUserId(id)
+      setRoleID(5)
+      setPermissions(5)
+      const userPermission = {
+        userId: id, // Pass the user ID directly
+        rolePermissionsToRemove: [
+          {
+            roleID: 5, // Assuming roleID is 5
+            permissions: [5], // Assuming permissions array contains 5
+          },
+        ],
+      };
+      console.log("userId",userId)
+      console.log("roleID",roleID)
+      console.log("permissions",permissions)
+      mutationDownToHire.mutate( userPermission );
     };
 
     const handleInfoPopup = (id:number) => {
@@ -294,7 +324,7 @@ const LookingforCandidate: React.FC<userProps> = ({users}) => {
               <p className="text-xs font-semibold">Upgrade to Owner</p>
             </div>
             <hr />
-            <div className="px-3 py-2">
+            <div className="px-3 py-2" onClick={() => handleDownToHire(user.id)}  >
               <p className="text-xs font-semibold">Downgrade to Hiring Partner</p>
             </div>
           </div>
@@ -354,6 +384,22 @@ const RepresentingCandidate: React.FC<userProps> = ({users})=> {
     },
   });
 
+  const mutationDownToHire = useMutation({
+    mutationFn: async (userPermission: {userId:number;rolePermissionsToRemove:{roleID:number;permissions:any}[]}) => {
+      console.log("userPermission",userPermission)
+      const response = await axiosAdmin.post("/api/admin/user-management/update-user-permissions", userPermission);
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success("Downgrade to Hiring Partner");
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message)
+     
+    },
+  });
+
     const handleMoreOption = (id:number) => {
       setMoreOption(!moreOption)
       setSelectPermId(id)
@@ -388,6 +434,26 @@ const RepresentingCandidate: React.FC<userProps> = ({users})=> {
       console.log("permissions",permissions)
       mutation.mutate( userPermission );
     };
+
+    const handleDownToHire = (id:number) => {
+      setUserId(id)
+      setRoleID(5)
+      setPermissions(5)
+      const userPermission = {
+        userId: id, // Pass the user ID directly
+        rolePermissionsToRemove: [
+          {
+            roleID: 5, // Assuming roleID is 5
+            permissions: [5], // Assuming permissions array contains 5
+          },
+        ],
+      };
+      console.log("userId",userId)
+      console.log("roleID",roleID)
+      console.log("permissions",permissions)
+      mutationDownToHire.mutate( userPermission );
+    };
+
 
     const handleInfoPopup = (id:number) => {
       setViewPrfilePopup(true)
@@ -476,7 +542,7 @@ const RepresentingCandidate: React.FC<userProps> = ({users})=> {
               <p className="text-xs font-semibold">Upgrade to Owner</p>
             </div>
             <hr />
-            <div className="px-3 py-2">
+            <div onClick={() => handleDownToHire(user.id)} className="px-3 py-2">
               <p className="text-xs font-semibold">Downgrade to Hiring Partner</p>
             </div>
           </div>

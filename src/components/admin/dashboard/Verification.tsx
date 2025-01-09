@@ -41,7 +41,7 @@ const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
 
  
   const [actionID, setActionID] = useState<number>(0);
-  const [isVerifiedByUs, setIsVerifiedByUs] = useState<string>(""); 
+  const [isVerifiedByUs, setIsVerifiedByUs] = useState<boolean>(false); 
   // const [actionTake, setActionTake] = useState<string>(""); 
   const [moreOption, setMoreOption] = useState<boolean>(false);
   const [selectPermId, setSelectPermId] = useState<number|null>();
@@ -79,7 +79,7 @@ const actionMutation = useMutation({
   },
 });
 
-const handleAction = (type: string,id:number) => {
+const handleAction = (type: boolean,id:number) => {
   setIsVerifiedByUs(type);
   setActionID(id)
   const actionTaken = {
@@ -170,15 +170,15 @@ const handleAction = (type: string,id:number) => {
                           <div className='flex gap-2'>
                            
 
-                            <div onClick={() => { handleAction("true",user.id) }} className={`${isVerifiedByUs==="true" && actionID===user.id ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                            <div onClick={() => { handleAction(true,user.id) }} className={`${isVerifiedByUs===true && actionID===user.id ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
                               <AiOutlineLike size={20} />
     
                             </div>
-                            <div onClick={() => { handleAction("false",user.id) }} className={`${isVerifiedByUs==="false" && actionID===user.id ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                            <div onClick={() => { handleAction(false,user.id) }} className={`${isVerifiedByUs===false && actionID===user.id ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
                               <AiOutlineLike  size={20} className='rotate-90 ' />
     
                             </div>
-                            <div onClick={() => { handleAction("false",user.id) }} className={`${isVerifiedByUs==="false" && actionID===user.id ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                            <div onClick={() => { handleAction(false,user.id) }} className={`${isVerifiedByUs===false && actionID===user.id ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
                               <AiOutlineDislike  size={20} />
     
                             </div>
@@ -280,7 +280,7 @@ const handleAction = (type: string,id:number) => {
   setIsVerifiedByUs(type);
   setActionID(id)
   const actionTaken = {
-    userId: id, // Pass the user ID directly
+    userId: id, 
     updateData: 
       {
         isVerifiedByUs: type, 
@@ -291,6 +291,7 @@ const handleAction = (type: string,id:number) => {
   actionMutation.mutate(actionTaken)
 
 };
+
   return (
     <div className=''>
     

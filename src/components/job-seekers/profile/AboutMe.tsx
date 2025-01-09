@@ -278,7 +278,7 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
             <div className="flex flex-col md:flex-row items-center gap-5 mt-3 ">
               <div className="w-[100px] h-[100px] rounded-full bg-[#CBFFFC] flex justify-center items-center ">
                 {/* <p className="text-[40px] font-extrabold">J</p> */}
-                <img src={userDetails?.profilePictureLink} alt="" />
+                <img className='rounded-full' src={userDetails?.profilePictureLink} alt="" />
               </div>
               <div className="flex gap-2 items-center">
                 <div className="border-[1px] border-[#114B53] rounded-full px-5 py-2 h-[42px] ">

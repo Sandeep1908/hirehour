@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import { BiMessageDetail } from 'react-icons/bi'
 import { CiFilter, CiSearch } from 'react-icons/ci'
@@ -14,15 +14,48 @@ import resume from '../../../assets/resume.svg'
 // import job from '../../../assets/dashboard/Applicants/Job.png'
 import { RxCross2 } from 'react-icons/rx'
 import ShortListed from './ShortListed'
-import { PiArrowsLeftRightBold } from 'react-icons/pi'
 import { BsInfoCircleFill } from 'react-icons/bs'
+import { fetchAllAppliedJobs } from '../../../utils/jobposters/jobboards/getAllAppliedJobs'
+import { useQuery } from '@tanstack/react-query'
 // import ShortListed from './ShortListed'
 // import { PiArrowsLeftRightBold } from 'react-icons/pi'
 
 
+// interface Job {
+//   jobID: number;
+//   jobTitle: string;
+//   jobLocation: string;
+// }
+
+// interface Candidate {
+//   candidateID: number;
+//   resumeLink: string | null;
+//   profilePictureLink: string | null;
+//   summary: string | null;
+//   experienceYears: number | null;
+//   experienceLevel: string | null;
+//   location: string | null;
+//   highestEducationLevel: string | null;
+// }
+
+// interface Application {
+//   job: Job;
+//   candidate: Candidate;
+//   applicationStatus: string;
+//   isShortlisted: boolean;
+//   appliedOn: string;
+// }
+
+// interface AllAppliedJobs {
+//   applications: Application[];
+// }
+
+type AppliedJobProps = {
+  allAppliedJobs: any;
+};
 
 
-const AllApplications: React.FC = () => {
+const AllApplications: React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
 
   const [like, setLike] = useState<boolean>(false);
   const [midLike, setMidLike] = useState<boolean>(false);
@@ -34,7 +67,10 @@ const AllApplications: React.FC = () => {
   const [showProfile, setShowProfile] = useState<boolean>(false);
   const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
 
-
+   useEffect(()=>{
+      
+      console.log("allAppliedJobs",allAppliedJobs)
+    },[])
   return (
     <div className='w-full h-auto'>
       <div className='w-full h-auto'>
@@ -242,7 +278,7 @@ const AllApplications: React.FC = () => {
           <div className='w-full h-[59vh] overflow-auto  mt-2'>
 
 
-            <table className="w-full h-full  ">
+            <table className="w-full  ">
               <thead className=''>
                 <tr className='bg-[#F2F2F5] rounded-tl-lg rounded-tr-lg '>
                   <th className=' px-4  py-2 w-[35%]'> <div className='flex items-center gap-4'> <input className='border-[#D6DBDE] w-[18px] h-[18px]' type="checkbox" name="" id="" /> <p className='text-[12px]'>Candidate Name</p> </div></th>
@@ -254,334 +290,74 @@ const AllApplications: React.FC = () => {
               </thead>
 
               <tbody className='mt-2'>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px] cursor-pointer' onMouseEnter={() => { setShowProfile(!showProfile) }}  >
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
 
-                  <td>
-                    <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
+              {allAppliedJobs?.applications?.map((appliedJob:any, id:number)=>{
+                console.log("appliedJob",appliedJob)
+               return(
+                <>
+              
+                <div key={id} className='h-1'></div>
+               <tr className='border-[1px] border-[#D6DBDE] mt-2'>
+                 <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
+                   <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
+                   <div className='text-[12px] cursor-pointer' onMouseEnter={() => { setShowProfile(!showProfile) }}  >
+                     <p>{appliedJob.candidate.user.firstName}</p>
+                     <p>{appliedJob?.job?.jobRoleName} <br />
+                       {appliedJob?.job?.jobLocation} - Date Applied :</p>
+                   </div>
+                 </div> </td>
+                 <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
+                   <p className='text-[10px] font-semibold'>100%</p>
+                 </div></td>
+                 <td><p className='text-[12px] font-medium'>{appliedJob?.job?.jobRoleName}</p>
+                   <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
 
-                        </div>
-                        <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
+                 <td>
+                   <div className='relative flex gap-2'>
+                     <div className='flex gap-2'>
+                       <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                         <AiOutlineLike size={20} />
 
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
+                       </div>
+                       <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                         <AiOutlineLike size={20} className='rotate-90 ' />
 
-                        </div>
-                        <div className=' cursor-pointer rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center' onClick={() => { setMessage(!message) }}>
-                          <BiMessageDetail size={20} />
+                       </div>
+                     </div>
+                     <div className='flex gap-10 items-center'>
+                       <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                         <AiOutlineDislike size={20} />
 
-                        </div>
+                       </div>
+                       <div className=' cursor-pointer rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center' onClick={() => { setMessage(!message) }}>
+                         <BiMessageDetail size={20} />
 
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <IoMdMore size={25} />
-                          <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-0 transition-all duration-500 bg-white ${moreOption ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                            <div className='px-3 py-2'>
-                              <p className='text-sm font-semibold'>Sent RTR</p>
-                            </div>
-                            <hr />
-                            <div className='px-3 py-2 flex gap-2 items-center' >
-                              <FaRegTrashAlt className='text-red-500' />
-                              <p className='text-sm font-semibold text-red-500'>Delete</p>
-                            </div>
-                          </div>
-                        </div>
+                       </div>
 
-                      </div>
+                       <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
+                         <IoMdMore size={25} />
+                         <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-0 transition-all duration-500 bg-white ${moreOption ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+                           <div className='px-3 py-2'>
+                             <p className='text-sm font-semibold'>Sent RTR</p>
+                           </div>
+                           <hr />
+                           <div className='px-3 py-2 flex gap-2 items-center' >
+                             <FaRegTrashAlt className='text-red-500' />
+                             <p className='text-sm font-semibold text-red-500'>Delete</p>
+                           </div>
+                         </div>
+                       </div>
 
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] '>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
+                     </div>
 
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
+                   </div>
+                 </td>
+               </tr>
+               </>
+               )
+              })}
 
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <IoMdMore size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className=' rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <IoMdMore size={25} />
-
-                      </div>
-
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <IoMdMore size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <IoMdMore size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <IoMdMore size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <div>
-
-                          <IoMdMore size={25} />
-                        </div>
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-
-
-
+             
               </tbody>
             </table>
 
@@ -906,7 +682,7 @@ const AllApplications: React.FC = () => {
 }
 
 
-const ShortListedComponent: React.FC = () => {
+const ShortListedComponent: React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
 
   const [like, setLike] = useState<boolean>(false);
   const [midLike, setMidLike] = useState<boolean>(false);
@@ -1125,366 +901,87 @@ const ShortListedComponent: React.FC = () => {
           <div className='w-full  mt-2'>
 
 
-            <table className="hidded w-full  table-auto">
+          <table className="w-full  ">
               <thead className=''>
                 <tr className='bg-[#F2F2F5] rounded-tl-lg rounded-tr-lg '>
                   <th className=' px-4  py-2 w-[35%]'> <div className='flex items-center gap-4'> <input className='border-[#D6DBDE] w-[18px] h-[18px]' type="checkbox" name="" id="" /> <p className='text-[12px]'>Candidate Name</p> </div></th>
 
-                  <th className='text-[12px] text-start w-[15%]'>    <div className='flex items-center gap-2'><BsInfoCircleFill   fill='#104B53'   /> AI Score</div></th>
+                  <th className='text-[12px] text-start w-[15%]'>  <div className='flex items-center gap-2'><BsInfoCircleFill   fill='#104B53'   /> AI Score</div></th>
                   <th className='text-[12px] text-start'> Job Applied</th>
                   <th className='text-[12px] text-start' >Action</th>
                 </tr>
               </thead>
 
               <tbody className='mt-2'>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] mt-2'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px] cursor-pointer' onMouseEnter={() => { setShowProfile(!showProfile) }}  >
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
 
-                  <td>
-                    <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} />
+              {allAppliedJobs?.applications?.map((appliedJob:any, id:number)=>{
+                if(appliedJob.isShortlisted=== true){
+                  return(
+                    <>
+                    <div key={id} className='h-1'></div>
+                   <tr className='border-[1px] border-[#D6DBDE] mt-2'>
+                     <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
+                       <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
+                       <div className='text-[12px] cursor-pointer' onMouseEnter={() => { setShowProfile(!showProfile) }}  >
+                         <p>Johnson</p>
+                         <p>{appliedJob?.job?.jobTitle} <br />
+                           {appliedJob?.job?.jobLocation} - Date Applied : {appliedJob.appliedOn.split("T")[0]}</p>
+                       </div>
+                     </div> </td>
+                     <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
+                       <p className='text-[10px] font-semibold'>100%</p>
+                     </div></td>
+                     <td><p className='text-[12px] font-medium'>{appliedJob?.job?.jobTitle}</p>
+                       <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
+   
+                     <td>
+                       <div className='relative flex gap-2'>
+                         <div className='flex gap-2'>
+                           <div onClick={() => { setLike(!like) }} className={`${like ? "border-[#06A560] bg-green-100 text-[#06A560]" : "border-[#D6DBDE] hover:bg-green-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                             <AiOutlineLike size={20} />
+   
+                           </div>
+                           <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                             <AiOutlineLike size={20} className='rotate-90 ' />
+   
+                           </div>
+                         </div>
+                         <div className='flex gap-10 items-center'>
+                           <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
+                             <AiOutlineDislike size={20} />
+   
+                           </div>
+                           <div className=' cursor-pointer rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center' onClick={() => { setMessage(!message) }}>
+                             <BiMessageDetail size={20} />
+   
+                           </div>
+   
+                           <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
+                             <IoMdMore size={25} />
+                             <div className={`absolute w-32 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-0 transition-all duration-500 bg-white ${moreOption ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
+                               <div className='px-3 py-2'>
+                                 <p className='text-sm font-semibold'>Sent RTR</p>
+                               </div>
+                               <hr />
+                               <div className='px-3 py-2 flex gap-2 items-center' >
+                                 <FaRegTrashAlt className='text-red-500' />
+                                 <p className='text-sm font-semibold text-red-500'>Delete</p>
+                               </div>
+                             </div>
+                           </div>
+   
+                         </div>
+   
+                       </div>
+                     </td>
+                   </tr>
+                   </>
+                  )
+                }
+              
+})}
 
-                        </div>
-                        <div onClick={() => { setMidLike(!midLike) }} className={`${midLike ? "border-yellow-500 bg-yellow-100 text-yellow-500" : "border-[#D6DBDE] hover:bg-yellow-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineLike size={20} className='rotate-90 ' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div onClick={() => { setDisLike(!disLike) }} className={`${disLike ? "border-red-500 bg-red-100 text-red-500" : "border-[#D6DBDE] hover:bg-red-100"}  rounded-full border-[1px]  w-[40px] h-[40px] flex justify-center items-center`}>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className=' cursor-pointer rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center' onClick={() => { setMessage(!message) }}>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <div className='relative' onClick={() => { setMoreOption(!moreOption) }}>
-                          <PiArrowsLeftRightBold size={25} />
-                          <div className={`absolute w-44 h-auto border-[1px] border-[#C7C9D9] rounded-lg right-[30px] top-[-20px] transition-all duration-500 bg-white ${moreOption ?  "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`}>
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'>Sent RTR</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'> RTR</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'>Recruiter Screening</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'>Offer</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'>Background Check</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2'>
-                                <p className='text-sm font-semibold'>Hired</p>
-                              </div>
-                              <hr />
-                              <div className='px-3 py-2 flex gap-2 items-center' >
-                              <FaRegTrashAlt  className='text-red-500'/>
-                              <p className='text-sm font-semibold text-red-500'>Delete</p>
-                              </div>
-                        </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] '>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <PiArrowsLeftRightBold size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='relative flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className=' rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <PiArrowsLeftRightBold size={25} />
-
-                      </div>
-
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <PiArrowsLeftRightBold size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <PiArrowsLeftRightBold size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <PiArrowsLeftRightBold size={25} />
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <div className='h-1'></div>
-                <tr className='border-[1px] border-[#D6DBDE] pt-4 mt-4'>
-                  <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
-                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
-                    <div className='text-[12px]'>
-                      <p>Johnson</p>
-                      <p>Senior Full Stack Develoer <br />
-                        Allen, TX - Date Applied : 05/06/2024</p>
-                    </div>
-                  </div> </td>
-                  <td> <div className='w-[39px] h-[39px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[10px] font-semibold'>100%</p>
-                  </div></td>
-                  <td><p className='text-[12px] font-medium'>Java Full Stack Developer</p>
-                    <p className='text-[12px] font-normal'>Qualification met 3/3</p></td>
-
-                  <td>
-                    <div className='flex gap-2'>
-                      <div className='flex gap-2'>
-                        <div className='hover:bg-green-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} />
-
-                        </div>
-                        <div className='hover:bg-yellow-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineLike size={20} className='rotate-90' />
-
-                        </div>
-                      </div>
-                      <div className='flex gap-10 items-center'>
-                        <div className='hover:bg-red-100 rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <AiOutlineDislike size={20} />
-
-                        </div>
-                        <div className='rounded-full border-[1px] border-[#D6DBDE] w-[40px] h-[40px] flex justify-center items-center'>
-                          <BiMessageDetail size={20} />
-
-                        </div>
-
-                        <div>
-
-                          <PiArrowsLeftRightBold size={25} />
-                        </div>
-
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-
-
-
+             
               </tbody>
             </table>
           </div>
@@ -1816,10 +1313,12 @@ const Matched: React.FC = () => {
 
 const Applicants: React.FC = () => {
 
+  const { data: allAppliedJobs } = useQuery({ queryKey: ['allAppliedJobs'], queryFn: fetchAllAppliedJobs });
+
   const jobFilters = [
     {
       label: 'All Applicants',
-      component: <AllApplications />,
+      component: <AllApplications allAppliedJobs={allAppliedJobs}/>,
     },
     {
       label: 'Matched Applicants',
@@ -2192,7 +1691,7 @@ const Applicants: React.FC = () => {
        }
     <div className='h-[46vh] overflow-auto'>
 
-    <ShortListedComponent/>
+    <ShortListedComponent allAppliedJobs={allAppliedJobs}/>
     </div>
 </div> :
 
