@@ -4,13 +4,14 @@ import { FaBehanceSquare, FaCaretDown, FaEdit, FaGithub, FaLinkedin } from 'reac
 import { GiRingingBell } from 'react-icons/gi';
 import { GrLocation } from 'react-icons/gr';
 import { HiOutlineShoppingBag } from 'react-icons/hi';
-import { IoIosArrowDown, IoIosMail, IoMdClose } from 'react-icons/io';
+import {  IoIosMail, IoMdClose } from 'react-icons/io';
 import { IoCallOutline, IoLocationOutline, IoMail } from 'react-icons/io5';
 import { MdDeleteOutline, MdOutlineMail } from 'react-icons/md';
 import resume from '../../../assets/resume.svg'
 import CandidateCard from './CandidateCard';
-
-// import { Link } from 'react-router-dom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { fetchListResumeSoucing } from '../../../utils/jobposters/jobboards/listResumeSourcing';
+import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
 
 
 
@@ -18,8 +19,23 @@ type SendRTRModalProps = {
     isRTROpen: boolean;
     setIsRTROpen: (e: boolean) => void;
   };
+  
+  interface ResumeSourcingProps {
+    sourcedRecord: {
+      sourcedRecords:[]
+    };
+   
+  }
+  
 
-const SearchCandidate: React.FC = () => {
+const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
+
+
+    
+
+    const [viewResumeId, setViewResumeId] = useState<number>(4);
+
+    const [viewResumedata, setViewResumeData] = useState<any>();
 
     const [isRTROpen, setIsRTROpen] = useState(false);
 
@@ -28,15 +44,26 @@ const SearchCandidate: React.FC = () => {
 
 
     const [selectedOptionDistance, setSelectedOptionDistance] = useState<string>("");
-    // const [selectedOptionSkills, setSelectedOptionSkills] = useState<string>("");
     const [selectedOptionResumeUpdate, setSelectedOptionResumeUpdate] = useState<string>("");
     const [selectedOptionVisa, setSelectedOptionVisa] = useState<string>("");
-
-    // const [isSelected, setIsSelected] = useState(0);
     const [dropdown, setDropdown] = useState<number>(0);
 
 
+    const mutation = useMutation({
+      mutationFn: async () => {
+        const response = await axiosrecruiterinstance.get(`/api/recruiter/resume-sourcing/resume/${viewResumeId}`);
+        setViewResumeData(response.data.sourcingRecord); 
+        return response.data;
+      },
+    });
 
+
+    const handleResumeClick = (id:number) => {
+      // console.log("id",id)
+      setViewResumeId(id);
+      mutation.mutate();
+      console.log("setViewResumeData",viewResumedata)
+    };
 
     const handleOptionDistance = (value: string) => {
         setSelectedOptionDistance(value);
@@ -232,10 +259,15 @@ const SearchCandidate: React.FC = () => {
                
                 <div className='w-full h-[520px] overflow-x-hidden overflow-y-auto flex gap-5 mt-1'>
                     <div className='w-[28%] h-full flex flex-col overflow-x-hidden overflow-y-auto gap-5'>
-                        <CandidateCard />
-                        <CandidateCard />
-                        <CandidateCard />
-                        <CandidateCard />
+                      {sourcedRecord?.sourcedRecords?.map((details:any, i:number)=>{
+                       
+                        return(
+                          <div key={i} onClick={()=>{handleResumeClick(details.id)}} >
+                            <CandidateCard details={details}  /> 
+                          </div>
+                        )
+                      })}
+                       
 
                     </div>
 
@@ -246,18 +278,18 @@ const SearchCandidate: React.FC = () => {
 
                             <div className=''>
                                 <div className='w-20 h-20 bg-[#95FAF9] rounded-full flex justify-center items-center'>
-                                    <p className='text-lg font-bold text-[#3A3A3C]'>J</p>
+                                    <p className='text-lg font-bold text-[#3A3A3C]'>{viewResumedata?.candidate?.firstName.charAt(0)}</p>
                                 </div>
                             </div>
 
                             <div className='w-full h-auto'>
                                 <div className='flex w-full justify-between'>
                                     <div>
-                                        <p className='text-base font-semibold text-[#3A3A3C]'>John S</p>
+                                        <p className='text-base font-semibold text-[#3A3A3C]'>{viewResumedata?.candidate?.firstName}</p>
                                         <div className='flex gap-2 mt-2'>
                                             <GrLocation />
 
-                                            <p className='text-[14px] font-semibold text-[#3A3A3C]'>Allen, Texas, US</p>
+                                            <p className='text-[14px] font-semibold text-[#3A3A3C]'>{viewResumedata?.candidate?.candidatedetail?.location}</p>
 
                                         </div>
                                     </div>
@@ -267,12 +299,20 @@ const SearchCandidate: React.FC = () => {
 
                                 </div>
                                 <div className='mt-3'>
-                                    <p className='text-[14px] font-semibold text-[#3A3A3C] ' >Experience (Total 4 Years)</p>
-                                    <p className='text-[14px] font-semibold text-[#6B7588] mt-1'>Sr. Java Full Stack </p>
-                                    <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>xyz company 12/2020 - Present   Domain : Health Care</p>
+                                    <p className='text-base font-bold text-[#3A3A3C] ' >Experience ({viewResumedata?.candidate?.candidatedetail?.experienceYears})</p>
+
+                                    {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences.length === 0 ?
+
+                                        <p>-</p>
+
+                                        :
+
+                                        <>
+                                         <p className='text-[14px] font-semibold text-[#6B7588] mt-1'>Sr. Java Full Stack </p>
+                                    <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.companydetails} {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.durationStart.split('T')[0]} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.durationEnd.split('T')[0]}   Domain : Health Care</p>
                                     <div className='flex gap-2 items-center mt-3'>
                                         <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[12px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
+                                            <p className='text-[12px] text-[#6B7588] font-semibold'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.durationStart.split('T')[0]} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.durationEnd.split('T')[0]}</p>
                                         </div>
                                         <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
                                             <p className='text-[12px] text-[#6B7588] font-semibold'>Job Domain</p>
@@ -283,116 +323,102 @@ const SearchCandidate: React.FC = () => {
 
 
                                     </div>
+                                        </>
+                                        }
+
+                                  
                                 </div>
-                                <div className='mt-3'>
-                                    <p className='text-[14px] font-semibold text-[#3A3A3C]'>Associate Java Full stack</p>
-                                    <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>xyz Company - Texas, United States</p>
-                                    <div className='flex gap-2 items-center mt-3'>
-                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[12px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
-                                        </div>
-                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[12px] text-[#6B7588] font-semibold'>Job Domain</p>
-                                        </div>
-                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[12px] text-[#6B7588] font-semibold'>Full-Time   </p>
-                                        </div>
+                             
 
-
-                                    </div>
-                                </div>
-
-                                <p className='text-[#6B7588] text-[10px] mt-4'>+1 more experience</p>
+                                {/* <p className='text-[#6B7588] text-[10px] mt-4'>+1 more experience</p> */}
 
                                 <hr className='mt-5' />
                                 <div className='mt-5'>
                                     <p className='text-base font-bold'>Education</p>
-                                    <p className='text-sm font-bold mt-3'>BE Computer Science  </p>
-                                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Collage- Texas, United States  </p>
+                                    {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails.length === 0 ?
+
+                                    <p>-</p>
+
+                                    :
+                                    
+                                    <>
+                                     <p className='text-sm font-bold mt-3'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.degree} {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.major} </p>
+                                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.schoolName} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.schoolLocation}  </p>
                                     <div className='flex gap-2 mt-2'>
                                         <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[10px] text-[#6B7588] font-semibold'>07/2016 - 06/2020</p>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.durationStart.split('T')[0]} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.durationEnd.split('T')[0]}</p>
                                         </div>
 
                                     </div>
+                                    </>
+                                    }
+                                   
                                 </div>
 
                                 <hr className='mt-5' />
-
-                                <div className='mt-5'>
-                                    <p className='text-base font-bold'>Skills </p>
-                                    <div className='mt-3'>
-                                        <div className='flex gap-4'>
-                                            <p className='text-[#114B53] text-sm'>Overall Skills</p>
-                                            <p className='text-black text-sm'> Current Skills</p>
+                              
+                              
+                              <div className='mt-5'>
+                              <p className='text-base font-bold'>Skills </p>
+                              {viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills.length === 0 ? 
+                               <p>-</p>
+                              :
+                                <div className='mt-3'>
+                                <div className='flex gap-4'>
+                                    <p className='text-[#114B53] text-sm'>Overall Skills</p>
+                                    <p className='text-black text-sm'> Current Skills</p>
+                                </div>
+                                <hr className='mt-2' />
+                                <div className='flex gap-4 mt-3'>
+                                    <div className='w-[50%]'>
+                                        <div className='w-full flex justify-between'>
+                                            <p className='text-[#3A3A3C] text-[12px]'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills[0]?.skillName}</p>
+                                            <p className='text-[#3A3A3C] text-[12px]'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills[0]?.yearsOfExperience} Years</p>
                                         </div>
-                                        <hr className='mt-2' />
-                                        <div className='flex gap-4 mt-3'>
-                                            <div className='w-full'>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
+                                        <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
+                                            <div className={`w-[${Math.round((viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills[0]?.yearsOfExperience/ 30) * 100)}%] h-1 bg-[#114B53] rounded-full`}>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='w-full '>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
-
-                                        <div className='flex gap-4 mt-3'>
-                                            <div className='w-full'>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='w-full '>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='flex gap-2 mt-4 items-center justify-center'>
-                                            <IoIosArrowDown />
-                                            <p className='text-sm font-bold'>View all 20</p>
-                                        </div>
-
-                                        <hr className='mt-4' />
-
-
                                     </div>
+                                  
                                 </div>
 
-                                <div className='mt-3 pb-5'>
-                                    <p className='text-base font-bold text-[#3A3A3C]'>Licence & Certificate</p>
-                                    <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>Web Development Certificate</p>
+                  
 
-                                </div>
+                                {/* <div className='flex gap-2 mt-4 items-center justify-center'>
+                                    <IoIosArrowDown />
+                                    <p className='text-sm font-bold'>View all 20</p>
+                                </div> */}
+
+                                <hr className='mt-4' />
+
+
+                            </div>
+                              }
+                            
+                          </div>
+                              
+
+
+
+                               
+                            
+
+                               <div className='mt-3 pb-5'>
+                               <p className='text-base font-bold text-[#3A3A3C]'>Licence & Certificate</p>
+
+                               {viewResumedata?.candidate?.candidatedetail?.candidatedetailslicensescerts.length === 0 ?
+                               
+                               <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>-</p>
+                               :
+                                <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailslicensescerts[0]?.certName}</p>
+                               }
+                              
+
+                           </div>
+                              
+                               
                             </div>
                         </div>
                     </div>
@@ -420,13 +446,13 @@ const SearchCandidate: React.FC = () => {
 
                                 <div className='flex flex-col justify-center items-center mt-3'>
                                     <div className='w-[80px] h-[80px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
-                                        <p className='text-[30px] font-extrabold'>J</p>
+                                        <p className='text-[30px] font-extrabold'>{viewResumedata?.candidate?.firstName.charAt(0)}</p>
                                     </div>
-                                    <p className='text-sm font-semibold mt-3'>John S Mathew</p>
+                                    <p className='text-sm font-semibold mt-3'>{viewResumedata?.candidate?.firstName}</p>
                                     <div className='flex gap-2 mt-2'>
                                         <GrLocation />
 
-                                        <p className='text-[12px] font-semibold text-[#3A3A3C]'>Allen, Texas, US</p>
+                                        <p className='text-[12px] font-semibold text-[#3A3A3C]'>{viewResumedata?.candidate?.candidatedetail?.location}</p>
 
                                     </div>
                                 </div>
@@ -443,7 +469,7 @@ const SearchCandidate: React.FC = () => {
                                     <div className='flex items-center gap-2 '>
                                         <MdOutlineMail size={20} />
 
-                                        <p className='text-[12px] font-medium text-[#3A3A3C] '>John@xyz.com</p>
+                                        <p className='text-[12px] font-medium text-[#3A3A3C] '>{viewResumedata?.candidate?.email}</p>
                                     </div>
 
                                 </div>
@@ -459,7 +485,7 @@ const SearchCandidate: React.FC = () => {
                                     <div className='flex items-center gap-2 '>
                                         <HiOutlineShoppingBag size={20} />
 
-                                        <p className='text-[12px] font-medium text-[#3A3A3C] '>Exp: 4 Year 5 Months</p>
+                                        <p className='text-[12px] font-medium text-[#3A3A3C] '>Exp: {viewResumedata?.candidate?.candidatedetail?.experienceYears} Year</p>
                                     </div>
 
                                 </div>
@@ -468,11 +494,11 @@ const SearchCandidate: React.FC = () => {
 
                                     <div className='mt-3'>
                                         <p className='text-[12px] text-[#8F90A6]'>Willing to work / Looking for job change</p>
-                                        <p className='text-[12px] font-medium mt-1'>Yes</p>
+                                        <p className='text-[12px] font-medium mt-1'>{viewResumedata?.candidate?.candidatedetail?.isVisibleToRecruiters === true ?"Yes":"No"}</p>
                                     </div>
                                     <div className='mt-2'>
                                         <p className='text-[12px] text-[#8F90A6]'>Visa Sponsorship</p>
-                                        <p className='text-[12px] font-medium mt-1'>Yes</p>
+                                        <p className='text-[12px] font-medium mt-1'>{viewResumedata?.candidate?.candidatedetail?.needVisaSponsorship === true ?"Yes":"No"}</p>
                                     </div>
                                 </div>
 
@@ -489,7 +515,7 @@ const SearchCandidate: React.FC = () => {
                                     <p className='text-[12px] font-semibold text-[#114B53]'> Message</p>
                                 </div>
                                 <div className='bg-[#E9F358] py-2 px-4 rounded-full '>
-                                    <p className='text-[12px] font-semibold text-[#114B53]'>Download Resume</p>
+                                    <a href={viewResumedata?.candidate?.candidatedetail?.selectedResume} download className='text-[12px] font-semibold text-[#114B53] cursor-pointer'>Download Resume</a>
                                 </div>
                                 <IoMdClose size={30} onClick={() => { setShowFullProfile(!showFullProfile) }} className="cursor-pointer" />
 
@@ -498,140 +524,108 @@ const SearchCandidate: React.FC = () => {
                             <div className='w-full mt-5 p-4'>
                                 <div>
                                     <p className='text-base font-bold'>Summary</p>
-                                    <p className='text-[12px] mt-3'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                    <p className='text-[12px] mt-3'>{viewResumedata?.candidate?.candidatedetail?.summary}</p>
                                 </div>
                                 <hr className='w-[95%] m-auto mt-5' />
                                 <div className='mt-5'>
                                     <p className='text-base font-bold'>Work experience</p>
+
+
+                                    {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences.length === 0 ?
+                                    <p>-</p>
+                                    :
                                     <div>
-                                        <p className='text-sm font-bold mt-1'>Java Fullstack  </p>
-                                        <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Company - Texas, United States  </p>
-                                        <div className='flex gap-2 mt-2'>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
-                                            </div>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'> Health Care</p>
-                                            </div>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'>Full-Time</p>
-                                            </div>
+                                    <p className='text-sm font-bold mt-1'>Java Fullstack  </p>
+                                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.companydetails} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.place}  </p>
+                                    <div className='flex gap-2 mt-2'>
+                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.durationStart.split('T')[0]} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.durationEnd.split('T')[0]}</p>
                                         </div>
-                                        <p className='text-sm font-bold mt-3'>Summary</p>
-                                        <ul className='list-disc text-[12px] ml-6 mt-2'>
-                                            <li> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
-                                            <li className='mt-2'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
-                                        </ul>
-                                    </div>
-                                    <div className=''>
-                                        <p className='text-sm font-bold mt-1'>Java Fullstack  </p>
-                                        <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Company - Texas, United States  </p>
-                                        <div className='flex gap-2 mt-2'>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
-                                            </div>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'> Health Care</p>
-                                            </div>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'>Full-Time</p>
-                                            </div>
+                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'> Health Care</p>
                                         </div>
-                                        <p className='text-sm font-bold mt-3'>Summary</p>
-                                        <ul className='list-disc text-[12px] ml-6 mt-2'>
-                                            <li> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
-                                            <li className='mt-2'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
-                                        </ul>
+                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'>Full-Time</p>
+                                        </div>
                                     </div>
+                                    <p className='text-sm font-bold mt-3'>Summary</p>
+                                    <ul className='list-disc text-[12px] ml-6 mt-2'>
+                                        <li> {viewResumedata?.candidate?.candidatedetail?.candidatedetailsexperiences[0]?.descriptionOfExperience} </li>
+                                        
+                                    </ul>
+                                </div>
+                                    }
+
 
                                 </div>
 
 
                                 <div className='mt-5'>
                                     <p className='text-base font-bold'>Education</p>
-                                    <p className='text-sm font-bold mt-3'>BE Computer Science  </p>
-                                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Collage- Texas, United States  </p>
+                                    {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails.length === 0 ?
+
+                                    <p>-</p>
+
+                                    :
+                                    
+                                    <>
+                                     <p className='text-sm font-bold mt-3'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.degree} {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.major}  </p>
+                                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.schoolName} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.schoolLocation}  </p>
                                     <div className='flex gap-2 mt-2'>
                                         <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[10px] text-[#6B7588] font-semibold'>07/2016 - 06/2020</p>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.schoolName} - {viewResumedata?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.schoolLocation}</p>
                                         </div>
 
                                     </div>
+                                    </>
+                                    }
+                                   
                                 </div>
 
 
 
                                 <div className='mt-5'>
                                     <p className='text-base font-bold'>Skills </p>
-                                    <div className='mt-3'>
-                                        <div className='flex gap-4'>
-                                            <p className='text-[#114B53] text-sm'>Overall Skills</p>
-                                            <p className='text-black text-sm'> Current Skills</p>
-                                        </div>
-                                        <hr className='mt-2' />
-                                        <div className='flex gap-4 mt-3'>
-                                            <div className='w-full'>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='w-full '>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
+                                    {viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills.length === 0 ? 
+                               <p>-</p>
+                              :
+                              <div className='mt-3'>
+                              <div className='flex gap-4'>
+                                  <p className='text-[#114B53] text-sm'>Overall Skills</p>
+                                  <p className='text-black text-sm'> Current Skills</p>
+                              </div>
+                              <hr className='mt-2' />
+                              <div className='flex gap-4 mt-3'>
+                                  <div className='w-[50%]'>
+                                      <div className='w-full flex justify-between'>
+                                          <p className='text-[#3A3A3C] text-[12px]'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills[0]?.skillName}</p>
+                                          <p className='text-[#3A3A3C] text-[12px]'>{viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills[0]?.yearsOfExperience} Years</p>
+                                      </div>
+                                      <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
+                                          <div className={`w-[${Math.round((viewResumedata?.candidate?.candidatedetail?.candidatedetailsskills[0]?.yearsOfExperience/ 30) * 100)}%] h-1 bg-[#114B53] rounded-full`}>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                               
+                              </div>
 
-                                        <div className='flex gap-4 mt-3'>
-                                            <div className='w-full'>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
+                              <hr className='mt-4' />
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className='w-full '>
-                                                <div className='w-full flex justify-between'>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                                    <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                                </div>
-                                                <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                                    <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
+                             
+                          </div>
+                              }
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className='flex gap-2 mt-4 items-center justify-center'>
-                                            <IoIosArrowDown />
-                                            <p className='text-sm font-bold'>View all 20</p>
-                                        </div>
-
-                                        <hr className='mt-4' />
-
-                                        <div className='mt-5'>
-                                            <p className='text-base font-bold'>Resume </p>
-                                            <img src={resume} alt="" className='mt-3' />
-                                        </div>
-                                    </div>
+                                  
                                 </div>
+
+                                <div className='mt-5'>
+                                  <p className='text-base font-bold'>Resume </p>
+                                  <img src={resume} alt="" className='mt-3' />
+                              </div>
+
+                          
                             </div>
                         </div>
                       
@@ -1088,13 +1082,13 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({  setIsRTROpen }) => {
 
 const ResumeScouring: React.FC = () => {
 
-
-
+  const { data: sourcedRecord } = useQuery({ queryKey: ['listResumeSourcing'], queryFn: fetchListResumeSoucing });
+  // const [favData, setFavdata] = useState<any[]>();
     const jobFilters = [
 
         {
             label: 'Search for Candidate',
-            component: <SearchCandidate />,
+            component: <SearchCandidate sourcedRecord={sourcedRecord} />,
         },
         {
             label: 'Favourite',
