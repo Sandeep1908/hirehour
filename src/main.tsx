@@ -94,7 +94,10 @@ import VerificationMainTemp from './pages/emails/Verification.tsx';
 import { CandidateProtectedRoute, RecruiterProtectedRoute } from './components/ProtectedRoute.tsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import PaymentStatus from './pages/job-posters/payment-status/PaymentStatus.tsx';
-import AdminSignIn from './pages/admin/Auth/Signin/Signin.tsx'
+import AdminSignIn from './pages/admin/Auth/Signin/Signin.tsx';
+import ForgetPassword from './components/job-seekers/modals/authModals/ForgetPassword.tsx';
+import NewPassword from './components/job-seekers/modals/authModals/NewPassword.tsx';
+import EmailVerification from './components/job-seekers/modals/authModals/EmailVerification.tsx';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -187,6 +190,9 @@ const router = createBrowserRouter(
       <Route path="/job-preference" element={<JobPreference />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
+      <Route path="/forget-password" element={<ForgetPassword/>}/>
+      <Route path="/reset-password" element={<NewPassword/>} />
+      <Route path="/verify-email" element={<EmailVerification/>} />
 
       {/*  *****************************job posters routes *************************************  */}
       <Route path="/job-poster" element={<JobPosterHome />} />
@@ -214,28 +220,33 @@ const router = createBrowserRouter(
           </RecruiterProtectedRoute>
         }
       />
-      <Route path="/job-poster/review" element={
-           <RecruiterProtectedRoute>
-          <Review />
-         </RecruiterProtectedRoute>
-      
-        
-        } />
-      <Route path="/job-poster/job-review" element={
-         <RecruiterProtectedRoute>
-        <JobPreview />
-        </RecruiterProtectedRoute>
-       
-        } />
+      <Route
+        path="/job-poster/review"
+        element={
+          <RecruiterProtectedRoute>
+            <Review />
+          </RecruiterProtectedRoute>
+        }
+      />
+      <Route
+        path="/job-poster/job-review"
+        element={
+          <RecruiterProtectedRoute>
+            <JobPreview />
+          </RecruiterProtectedRoute>
+        }
+      />
       <Route path="/job-poster/messages" element={<MessageJP />} />
       <Route path="/job-poster/job-preview" element={<JobPreview />} />
 
-      <Route path="/job-poster/dashboard" element={
-           <RecruiterProtectedRoute>
-                <DashBoard />
-           </RecruiterProtectedRoute>
- 
-        } />
+      <Route
+        path="/job-poster/dashboard"
+        element={
+          <RecruiterProtectedRoute>
+            <DashBoard />
+          </RecruiterProtectedRoute>
+        }
+      />
       <Route path="/job-poster/payment" element={<Payment />} />
       <Route path="/job-poster/pricing" element={<Pricing />} />
       <Route path="/payment-status" element={<PaymentStatus />} />
@@ -256,7 +267,6 @@ const router = createBrowserRouter(
       <Route path="/dashboard-rtr/company-profile-info" element={<RTRCompanyProfile />} />
       <Route path="/dashboard-rtr/privacy-setting" element={<RTRPrivacySetting />} />
 
-
       {/* Email Templates  */}
       <Route path="/email/job-preference" element={<JobPreferenceTemplate />} />
       <Route path="/email/job-posted" element={<JobPostedTemplates />} />
@@ -267,7 +277,7 @@ const router = createBrowserRouter(
       <Route path="/email/verification-status" element={<VerificationMainTemp />} />
 
       {/* Admin Pannel  */}
-      <Route path='/admin/login' element={<AdminSignIn/>} />
+      <Route path="/admin/login" element={<AdminSignIn />} />
       <Route path="/admin/dashboard" element={<AdminDashboard />} />
       <Route path="/admin/signin" element={<AdminSignin />} />
     </Route>,
