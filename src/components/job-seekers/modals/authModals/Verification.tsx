@@ -1,14 +1,36 @@
-import React from 'react'
-import Timer from './Timer';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom';
+import axiosInstance from '../../../../axios/axiosInstance';
+import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 
-// type NewPasswordProps={
-//     setNewPassword: (e:boolean)=>void,
-//     newPassword:Boolean
-//   }
 
 const Verification: React.FC = () => {
-// const Verification: React.FC<NewPasswordProps> = ({setNewPassword, newPassword}) => {
+
+       const [token, setToken] = useState<string | null>('');
+       const [localStorageToken, setLocalStorageToken] = useState<string | null>('');
+
+
+      const location = useLocation();
+      useEffect(()=>{
+      // const location = useLocation();
+       const searchParams = new URLSearchParams(location.search);
+       setToken(searchParams.get('token'));
+       setLocalStorageToken(localStorage.getItem('topequatortoken')); 
+       console.log("setLocalStorageToken",localStorageToken)   
+       console.log("setLocalStorageToken",token) 
+       
+       const verifyEmail = async () => {
+        try {
+          const respose= await axiosInstance.get(`/api/candidate/signup/verify-email?token=${localStorageToken}`)
+          console.log("object",respose)
+        } catch (error) {
+          console.error('Error fetching resume sourcing data:', error);
+        }
+      };
+  console.log("object")
+      verifyEmail();
+         },[localStorageToken])
+   
 
     return (
         <div className='absolute top-0 w-full h-[100vh]'>
@@ -18,28 +40,25 @@ const Verification: React.FC = () => {
        <div className='w-full h-full flex justify-center items-center'>
            <div className='relative z-20 w-[617px] h-[407px] bg-white rounded-lg p-10 flex flex-col gap-3'>
                 <p className='font-bold text-2xl text-[#114B53]'>Verification</p>
-                <p className='text-base font-normal text-[#C7C9D9] '>Enter your 4 digits code that you received on your email.</p>
-                <form action="" className='h-full flex flex-col justify-around'>
+                <form action="" className='h-full flex flex-col  items-center'>
                     
-                    <div className='flex justify-around'>
-                    <input type="text" className='w-[60px] h-[60px] border-2 rounded-lg border-[#EBEBF0]' />
-                    <input type="text" className='w-[60px] h-[60px] border-2 rounded-lg border-[#EBEBF0]' />
-                    <input type="text" className='w-[60px] h-[60px] border-2 rounded-lg border-[#EBEBF0]' />
-                    <input type="text" className='w-[60px] h-[60px] border-2 rounded-lg border-[#EBEBF0]' />
-                    <input type="text" className='w-[60px] h-[60px] border-2 rounded-lg border-[#EBEBF0]' />
+                    <div className='w-[150px] h-[150px]'>
+                    {token === localStorageToken ?  
+                    <IoCheckmarkCircleOutline className='text-green-500 w-full h-full' />:
+                    <IoCheckmarkCircleOutline className='text-red-500 w-full h-full' />}
 
                     </div>
-                    <Timer/>
-                    {/* <div onClick={()=>{setNewPassword(!newPassword)}} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
-                      Continue
-                    </div> */}
-                    <Link to={"/reset-password"} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
-                      Continue
+                    {token === localStorageToken ?
+                   <p className='mb-5'> Your email address was successfully verified</p>:
+                   <p className='mb-5'>Email verification failed. Please try again</p>}
+                  
+                    <Link to={"/signin"} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
+                      Back to login
                     </Link>
                     
 
                 </form>
-                    <p className='text-base font-normal text-[#C7C9D9] text-center mt-4'>If you didn’t receive a code! Resend.</p>
+                 
            </div>
        </div>
     </div>
