@@ -132,13 +132,7 @@ const handelProfileComplition = () => {
     setAddAboutMe(false);
   }
 
-  // if (userDetails.profilePictureLink) {
-  //   setJobPreference(true);
-  //   count++;
-  // } else {
-  //   setJobPreference(false);
-  // }
-
+ 
   if (userDetails.candidatedetailsskills?.length > 0) {
     setAddSkillSet(true);
     count++;
@@ -314,7 +308,7 @@ useEffect(() => {
 
               <div className="w-full flex flex-col  space-y-3 justify-center items-center p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:mb-3 before:bg-[#EFF1F3]">
                 <div className="w-16 h-16 bg-[#CBFFFC] rounded-full flex justify-center items-center">
-                  {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.charAt(0)}
+                  {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full rounded-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.charAt(0)}
                 
                 </div>
 
@@ -416,23 +410,18 @@ useEffect(() => {
                 </div>
               </div>
               <div className="flex gap-1 ">
-                {skillSection.map((item,id)=>{
+                {skillSection?.map((item,id)=>{
                   return(
                   <div key={id} onClick={()=>{setSkillSectionId(id)}} className={` ${item.id === skillSectionId ?"bg-[#114B53]":""} pt-1  rounded-tl-lg rounded-tr-lg`}>
                   <p className="text-[#114B53] text-sm px-3 py-1 bg-white">{item.label}</p>
                 </div>
                   )
                 })}
-                {/* <div className="pt-1 bg-[#114B53] rounded-tl-lg rounded-tr-lg">
-                  <p className="text-[#114B53] text-sm px-3 py-1 bg-white">Overall Skills</p>
-                </div>
-                <div className="pt-1 ">
-                  <p className="text-[#3A3A3C] text-sm px-3 py-1">Current Skills</p>
-                </div> */}
+               
               </div>
               <hr className="mt-2" />
 
-              {skillSection.map((item,id)=>{
+              {skillSection?.map((item,id)=>{
                 if(item.id === skillSectionId){
                   return(
                     <div key={id}>

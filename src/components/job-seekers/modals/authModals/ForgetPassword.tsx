@@ -3,25 +3,17 @@ import React, { useState } from 'react'
 import axiosInstance from '../../../../axios/axiosInstance';
 import {  useNavigate } from 'react-router-dom';
 import {  z } from 'zod';
-
-
-// type VerifyProps={
-//   setVerification: (e:boolean)=>void,
-//   setForgetPassword: (e:boolean)=>void,
-//   verification:Boolean
-// }
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
 
 
 interface FormErrors {
   email?: { _errors: string[] };
 }
 
-// const ForgetPassword:React.FC<VerifyProps> = ({setVerification,verification}) => {
 const ForgetPassword:React.FC = () => {
-// const ForgetPassword:React.FC<VerifyProps> = ({setForgetPassword}) => {
 
   const [email, setEmail] = useState<string>('');
-  // const [message, setMessage] = useState<string>('');
   const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   const signinSchema = z.object({
@@ -32,11 +24,7 @@ const ForgetPassword:React.FC = () => {
     email: string;
     
   }
-  // interface AuthResponse {
-  //   message: {
-  //     accessToken: string;
-  //   };
-  // }
+
 
   const navigate = useNavigate();
   const mutation = useMutation({
@@ -45,16 +33,14 @@ const ForgetPassword:React.FC = () => {
       console.log("response.data",response.data)
       return response.data;    },
       onSuccess: () => {
-        // localStorage.setItem("authToken", message.accessToken);
-        alert("Send successfully");
+        toast.success('Send successfully');
         setEmail("")
-        navigate("/signin");
-        // setForgetPassword(false)
-
-        
+        navigate("/signin");  
       },
-      onError: () => {
-        // alert("Invalid credentials or server error");
+      onError: (error) => {
+       const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
+             
       },
   })
 
