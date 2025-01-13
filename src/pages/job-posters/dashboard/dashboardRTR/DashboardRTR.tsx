@@ -1,69 +1,44 @@
-import React, { useState, useEffect } from 'react';
-
+import React from 'react';
+import { FiPlus } from 'react-icons/fi';
+import { IoIosArrowForward } from 'react-icons/io';
 import useHeaderContext from '../../../../context/HeaderContext';
+import { Link, useSearchParams } from 'react-router-dom';
 
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-
-// dashboard icons
-
-import righttorepresentIcon from '../../../../assets/dashboard/icons/righttorepresent.png';
-
-import helpIcon from '../../../../assets/dashboard/icons/help.png';
+// Components
 import CreateNewJob from '../../../../components/job-posters/dashboardRTR/CreateNewJob';
 import RTR from '../../../../components/job-posters/dashboardRTR/RTR';
 import Help from '../../../../components/job-posters/dashboardRTR/Help';
-import { FiPlus } from 'react-icons/fi';
-import { IoIosArrowForward } from 'react-icons/io';
+
+// Dashboard icons 
+import righttorepresentIcon from '../../../../assets/dashboard/icons/righttorepresent.png';
+import helpIcon from '../../../../assets/dashboard/icons/help.png';
+
+const sidebarItems = [
+  { label: 'Right to Represent', icon: righttorepresentIcon, path: 'right-to-represent', component: <RTR /> },
+  { label: 'Help', icon: helpIcon, path: 'help', component: <Help /> },
+];
 
 const Sidebar: React.FC = () => {
-  const [currentQueryString, setCurrentQueryString] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
   const { isDashboardOpen, isDashboardMobileNav, setIsDashboardMobileNav } = useHeaderContext();
-  const navigate = useNavigate();
-  const sideBarItems = [
-    {
-      label: 'Right to Represent',
-      icon: righttorepresentIcon,
-      queryString: 'right-to-represent',
-    },
+  const currentPath = searchParams.get('key') || 'right-to-represent'; 
 
-    {
-      label: 'Help',
-      icon: helpIcon,
-      queryString: 'help',
-    },
-  ];
+ 
 
-  useEffect(() => {
-    if (isDashboardOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-
-    return () => {
-      document.body.style.overflow = 'auto';
-    };
-  }, [isDashboardOpen]);
-
-  const setQueryString = (qstring: string) => {
-    const params = new URLSearchParams();
-    params.set('key', qstring);
-    navigate(`?${params.toString()}`, { replace: true });
-  };
-
-  const handleIdx = (queryString: string) => {
-    setQueryString(queryString);
-    setCurrentQueryString(queryString);
+  const handleItemClick = (path: string) => {
+    setSearchParams({ key: path }); 
     setIsDashboardMobileNav(false);
   };
 
   return (
     <div
-      className={` h-full transition-all duration-1000   bg-white ${isDashboardOpen ? ' absolute h-screen left-[0%] z-30   md:w-48 md:h-full md:static ' : 'left-[-100%]  md:w-14  '} ${isDashboardMobileNav ? 'absolute h-screen left-[0%] z-30' : 'left-[-200%] w-0  '} `}
+      className={`h-full transition-all duration-1000 bg-white 
+                 ${isDashboardOpen ? 'absolute h-screen left-0 z-30 md:w-48 md:h-full md:static' : 'left-[-100%] md:w-14'} 
+                 ${isDashboardMobileNav ? 'absolute h-screen left-0 z-30' : 'left-[-200%] w-0'}`} 
     >
       <div className="w-full h-full ">
         <Link
-          to={'/dashboard-rtr?key=create-new-job'}
+          to="/dashboard-rtr?key=create-new-job" // Link to Create New Job
           className="flex justify-center items-center space-x-2 w-full p-4 "
         >
           <FiPlus size={16} className="font-[700]" />
@@ -76,22 +51,21 @@ const Sidebar: React.FC = () => {
         </Link>
 
         <ul className="w-full flex flex-col justify-center items-center ">
-          {sideBarItems?.map((item, i) => {
-            return (
-              <li
-                className={`flex justify-center items-center space-x-4 cursor-pointer transition-all duration-300  p-4 w-full ${currentQueryString === item.queryString ? 'bg-[#EFFDFD] text-[#104B53] font-[600]' : ''}`}
-                key={i}
-                onClick={() => handleIdx(item.queryString)}
+          {sidebarItems.map((item, i) => (
+            <li
+              key={i}
+              onClick={() => handleItemClick(item.path)}
+              className={`flex justify-center items-center space-x-4 cursor-pointer transition-all duration-300 p-4 w-full 
+                         ${currentPath === item.path ? 'bg-[#EFFDFD] text-[#104B53] font-[600]' : ''}`} 
+            >
+              <img src={item.icon} alt={`dashboardIcon-${i} `} className="w-4 h-4" />
+              <span
+                className={`text-xs font-[500] transition-all md:delay-1000 w-full ${isDashboardOpen ? 'block' : 'hidden'}`}
               >
-                <img src={item.icon} alt={`dashboardIcon-${i} `} className="w-4 h-4" />
-                <span
-                  className={`text-xs font-[500] transition-all md:delay-1000 w-full ${isDashboardOpen ? 'block' : 'hidden'}`}
-                >
-                  {item.label}
-                </span>
-              </li>
-            );
-          })}
+                {item.label}
+              </span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
@@ -99,47 +73,22 @@ const Sidebar: React.FC = () => {
 };
 
 const DashBoardRTR: React.FC = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const queryString = queryParams.get('key');
-
-  const sideBarItems = [
-    {
-      label: ' Create New Job',
-      components: <CreateNewJob />,
-      queryString: 'create-new-job',
-    },
-
-    {
-      label: 'Right to Represent',
-      components: <RTR />,
-      queryString: 'right-to-represent',
-    },
-
-    {
-      label: 'Help',
-      components: <Help />,
-      queryString: 'help',
-    },
-  ];
+  const [searchParams] = useSearchParams();
+  const currentPath = searchParams.get('key') || 'right-to-represent'; 
 
   return (
     <div className="w-full h-[89vh] relative flex">
-      {/* Sidebar on the Left */}
-      <div className="h-full">
-        <Sidebar />
+      <div className="h-full"> 
+        <Sidebar /> 
       </div>
 
-      {/* Main Content on the Right */}
-      <div className="w-full md:flex-1 h-full    ">
-        <div className="w-[98%] m-auto h-full  md:h-[98%] mt-2  overflow-y-auto   bg-white rounded-lg ">
-          {/* Rendering all components */}
-
-          {sideBarItems?.map((item) => {
-            if (item.queryString === queryString) {
-              return <div className="w-full h-full">{item.components}</div>;
-            }
-          })}
+      <div className="w-full md:flex-1 h-full">
+        <div className="w-[98%] m-auto h-full md:h-[98%] mt-2 overflow-y-auto bg-white rounded-lg">
+          {/* Conditional rendering based on currentPath */}
+          {currentPath === 'create-new-job' && <CreateNewJob />} 
+          {sidebarItems.map((item) => 
+            item.path === currentPath && <div key={item.path}>{item.component}</div>
+          )}
         </div>
       </div>
     </div>

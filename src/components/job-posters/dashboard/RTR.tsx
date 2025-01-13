@@ -74,12 +74,12 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
   });
 
   const { data: employer } = useQuery({
-    queryKey: ['employer'],
+    queryKey: ['oneemployer'],
     queryFn: () => fetchOneEmployers(recruiterId),
     enabled: !!recruiterId,
   });
 
-  console.log('employer', employer);
+ 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -151,6 +151,8 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
         }) => item.id === jobId,
       )?.[0];
 
+    console.log(viewjobs);
+
       setRtrDetails({
         ...rtrDetails,
         jobID: job?.id,
@@ -165,12 +167,16 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
         jobLocation: job?.jobLocation,
       });
     }
-  }, [jobId, candidateId, applicant]);
+  }, [jobId, candidateId, recruiterId, applicant]);
+
+ 
 
   const handleSendRTR = () => {
     setIsRTROpen(false);
     rtrmutation.mutate(rtrDetails);
   };
+
+
 
   return (
     <div
@@ -314,15 +320,7 @@ const SendRTRModal: React.FC<SendRTRModalProps> = ({ isRTROpen, setIsRTROpen }) 
 
               <AllEmployer setEmployerId={setRecruiterId} />
 
-              {/* <input
-                type="text"
-                placeholder="Employer name "
-                disabled={
-                  !(rtrDetails.sentToCandidate && rtrDetails.sentToRecruiter) &&
-                  !rtrDetails.sentToRecruiter
-                }
-                className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
-              /> */}
+            
             </div>
           </div>
 
@@ -690,13 +688,13 @@ const RTR: React.FC = () => {
       </div>
 
       {jobFilterIdx === 1 ? (
-        <div className="w-full   px-3 space-y-3 overflow-auto h-[60vh]">
+        <div className="w-full   px-3 space-y-3 overflow-auto h-full">
           {tags?.map((item, i) => {
             if (receivedRTRIdx === i) return <div key={i}>{item.components}</div>;
           })}
         </div>
       ) : (
-        <div className="w-full   px-3 space-y-3 overflow-auto h-[60vh]">
+        <div className="w-full   px-3 space-y-3 overflow-auto h-full py-5">
           {rtrFilters?.map((item, i) => {
             if (jobFilterIdx === i) {
               return <div key={i}>{item.component}</div>;

@@ -5,12 +5,13 @@ import { IoMdClose } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 import LocationSearch from '../../../../utils/LocationSearch.tsx';
+import { useDropzone } from 'react-dropzone';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axiosInstance from '../../../../axios/axiosInstance';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation.ts';
 import { toast } from 'react-toastify';
-import  { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { fetchResumes, fetchUserDetails } from '../../../../utils/jobseekers/getUserDetails.ts';
 
 type ResumeType = {
@@ -26,20 +27,16 @@ type ModalUserDetails = {
   needVisaSponsorship: boolean;
 };
 
- 
- 
-
 const UploadResume: React.FC = () => {
   const [isContinue, setIsContinue] = useState<boolean>(false);
   const description = 'resume';
-   
+
   const [fileSize, setFileSize] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const queryClient = useQueryClient();
 
   const [selectedLocation, setSelectedLocation] = useState<LocationValue | null>(null);
   const [isVisaSponsored, setIsVisaSponsored] = useState<boolean>(false);
-   
 
   const navigate = useNavigate();
 
@@ -91,39 +88,67 @@ const UploadResume: React.FC = () => {
     onSuccess: () => {
       setUploadProgress(null);
       queryClient.invalidateQueries({ queryKey: ['resumes'] });
-      toast.success('Resume uploaded successfully!')
+      toast.success('Resume uploaded successfully!');
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<{message:string}>
+      const axiosError = error as AxiosError<{ message: string }>;
       setUploadProgress(null);
       localStorage.removeItem('filesizeres');
       toast.error(axiosError?.response?.data?.message);
-    
+    },
+  });
+
+  const { getRootProps, getInputProps,isDragActive } = useDropzone({
+    onDrop: (acceptedFiles) => {
+      const file = acceptedFiles[0];
+      if (!file) return;
+
+      const validFileTypes = [
+        'application/pdf',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      ];
+      if (!validFileTypes.includes(file.type)) {
+        toast.warning('Only PDF and DOCX files are allowed');
+        return;
+      }
+
+      if (file.size > 2 * 1024 * 1024) {
+        toast.warning('File size must be less than 2MB');
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('description', description);
+      localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
+      uploadResumeMutation.mutate(formData);
     },
   });
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
-  
-    const validFileTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+
+    const validFileTypes = [
+      'application/pdf',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    ];
     if (!validFileTypes.includes(file.type)) {
       toast.warning('Only PDF and DOCX files are allowed');
       return;
     }
-  
+
     if (file.size > 2 * 1024 * 1024) {
       toast.warning('File size must be less than 2MB');
       return;
     }
-  
+
     const formData = new FormData();
     formData.append('file', file);
     formData.append('description', description);
     localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
     uploadResumeMutation.mutate(formData);
   };
-  
 
   //modal user form submit
   const handleFormSubmit = (e: React.FormEvent) => {
@@ -137,8 +162,6 @@ const UploadResume: React.FC = () => {
     };
 
     submitContactInfoMutation.mutate(formData);
-
-   
 
     const locationData = {
       location: formatLocation(selectedLocation),
@@ -158,12 +181,12 @@ const UploadResume: React.FC = () => {
     },
     onSuccess: () => {
       toast.success('Contact information saved successfully!');
-      queryClient.invalidateQueries({ queryKey: ['userDetails'] });  
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
       setIsContinue(false);
       navigate('/additional-information');
     },
     onError: (error) => {
-      const axiosError=error as AxiosError<{message:string}>
+      const axiosError = error as AxiosError<{ message: string }>;
       toast.error(axiosError?.response?.data?.message);
     },
   });
@@ -175,22 +198,18 @@ const UploadResume: React.FC = () => {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['location'] });  
+      queryClient.invalidateQueries({ queryKey: ['location'] });
       setIsContinue(false);
     },
     onError: (error) => {
-      const axiosError=error as AxiosError<{message:string}>
+      const axiosError = error as AxiosError<{ message: string }>;
       toast.error(axiosError?.response?.data?.message);
     },
   });
 
-
-  
-
   useEffect(() => {
-    
     const fileSize = localStorage.getItem('filesizeres');
- 
+
     setFileSize(fileSize);
   }, [resumes]);
 
@@ -250,8 +269,11 @@ const UploadResume: React.FC = () => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center p-4 md:p-5 space-x-5">
-          <div className="w-full sm:w-[588px] h-[300px] border border-black border-dashed flex flex-col justify-center items-center">
-            <div className="flex flex-col space-y-3 justify-center items-center">
+          <div className={`w-full sm:w-[588px] h-[300px] border border-black border-dashed flex flex-col justify-center items-center ${isDragActive?'opacity-40':''}`}>
+            <div className={`flex flex-col space-y-3 justify-center items-center  `}>
+              <div {...getRootProps()} className="w-full h-20">
+                <input {...getInputProps()} />
+              </div>
               <p className="font-semibold text-sm"> Drap & Drop files Here</p>
               <p className="text-xs text-[#6B7588]">or</p>
 
@@ -260,6 +282,7 @@ const UploadResume: React.FC = () => {
               >
                 <FaCirclePlus size={13} color="#104B53" className="" />
                 <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>Upload Here</span>
+
                 <input type="file" className="hidden" onChange={handleFileChange} />
               </label>
 
@@ -277,35 +300,37 @@ const UploadResume: React.FC = () => {
               {latestResume?.resumeLink ? (
                 <>
                   <h1 className="text-sm font-semibold">
-                    {uploadProgress == 100 ? 'Uploading...' : 'Uploaded'}
+                    {uploadProgress === 100 ? 'Uploaded' : 'Uploading...'}
                   </h1>
                   <div className="w-full flex justify-center items-center space-x-5">
                     <GrDocumentPdf size={30} />
 
                     <div className="flex flex-col space-y-3 w-full">
                       <p className="text-xs">
-                        <a download="User"  
-  target="_blank"
-  href={latestResume?.resumeLink || ""}
-  rel="noopener noreferrer">
+                        <a
+                          download="User"
+                          target="_blank"
+                          href={latestResume?.resumeLink || ''}
+                          rel="noopener noreferrer"
+                        >
                           {' '}
                           {latestResume?.resumeLink.split('@@')[1]} {fileSize} MB
                         </a>
                       </p>
 
-                      <div className="w-full max-w-60 bg-[#FFF1C6] rounded-full  ">
+                      <div className="w-full max-w-60 bg-[#FFF1C6] rounded-full">
                         <div
-                          className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
-                          style={{ width: `${uploadProgress !== 100 ? uploadProgress : 100}` }}
+                          className="bg-[#FFD05B] text-xs text-black text-center leading-none rounded-full"
+                          style={{ width: `${uploadProgress}%` }}
                         >
-                          {uploadProgress == 100 ? uploadProgress : '100'}%
+                          {uploadProgress}%
                         </div>
                       </div>
                     </div>
                   </div>
                 </>
               ) : (
-                <h1 className="text-sm text-center  font-semibold">No Resume Uploaded</h1>
+                <h1 className="text-sm text-center font-semibold">No Resume Uploaded</h1>
               )}
             </div>
 
@@ -379,7 +404,6 @@ const UploadResume: React.FC = () => {
                   placeholder="Enter your last name"
                   value={userDetails?.user?.lastName}
                   disabled
-                   
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
@@ -399,7 +423,6 @@ const UploadResume: React.FC = () => {
                   type="text"
                   value={userDetails?.user?.phoneNumber}
                   disabled
-                   
                   placeholder="Enter your phone no"
                   className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />

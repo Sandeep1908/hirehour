@@ -12,6 +12,10 @@ const ReceiveRTR: React.FC = () => {
     queryFn: fetchAllRTR,
   });
 
+
+ 
+ 
+
   const handleViewSign = (Id: number) => {
     setRTRId(Id);
     setIsSignRTR(true);

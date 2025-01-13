@@ -10,6 +10,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation';
 import Companies from '../../../../utils/jobposters/Companies';
 import { fetchOneCompany } from '../../../../utils/jobposters/jobboards/getCompanyDetails';
+// import { FileUploader } from '../../../../utils/jobposters/jobboards/fileuploader';
 
 type CompanyDetailsRequest = {
   companyName: string;
@@ -30,10 +31,8 @@ const CompanyProfile: React.FC = () => {
 
   const [formData, setFormData] = useState<CompanyDetailsRequest>({
     companyName: '',
-    companyLogo:
-      'https://dynamic.brandcrowd.com/asset/logo/189954ad-c0f4-4cd9-a5bb-a8e03970b056/logo-search-grid-1x?logoTemplateVersion=3&v=638644179405900000',
-    companyCoverImage:
-      'https://www.shutterstock.com/image-vector/abstract-corporate-business-digital-agency-600nw-2095258798.jpg',
+    companyLogo: '',
+    companyCoverImage: '',
     aboutCompany: '',
 
     companySizeInTermsOfEmpCount: 0,
@@ -64,16 +63,21 @@ const CompanyProfile: React.FC = () => {
     }
   }, [companyDetail, company]);
 
-  // Handle file input for cover image
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    const name = e.target.name;
-    if (file) {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: file.name,
-      }));
+
+const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+ 
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast.warning('File size must be less than 2MB');
+      return;
     }
+
+
+   
+      
+ 
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -117,7 +121,9 @@ const CompanyProfile: React.FC = () => {
     },
     onSuccess: (data) => {
       toast.success('Company Associated with Job Successfully');
-      navigate('/job-poster/review', { state: { userDetails: data?.job, message: data?.message,jobId:jobId } });
+      navigate('/job-poster/review', {
+        state: { userDetails: data?.job, message: data?.message, jobId: jobId },
+      });
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ errors: string[] }>;

@@ -8,10 +8,13 @@ import { Link } from 'react-router-dom';
 import axiosInstance from '../../../../axios/axiosInstance';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { fetchUserDetails, fetchDomains,fetchRoleTypes,fetchRoles } from '../../../../utils/jobseekers/getUserDetails';
+import {
+  fetchUserDetails,
+  fetchDomains,
+  fetchRoleTypes,
+  fetchRoles,
+} from '../../../../utils/jobseekers/getUserDetails';
 import { toast } from 'react-toastify';
- 
-
 
 const ReviewInfo: React.FC = () => {
   const navigate = useNavigate();
@@ -191,9 +194,7 @@ const ReviewInfo: React.FC = () => {
                 <FaEdit size={14} color="#104B53" />
                 <p className="text-[#104B53] text-xs">Edit</p>
               </div>
-              <p className="text-[#535354] text-justify text-sm">
-                {userDetails?.summary}
-              </p>
+              <p className="text-[#535354] text-justify text-sm">{userDetails?.summary}</p>
             </div>
           </div>
 
@@ -211,54 +212,58 @@ const ReviewInfo: React.FC = () => {
               </div>
             </div>
 
-            {userDetails?.candidatedetailsexperiences?.map((item:WorkExperienceDetail , i: number) => {
-              return (
-                <div key={i} className="border p-7 border-[#EBEBF0] rounded-lg">
-                  <div className="flex justify-end items-center space-x-4">
-                    <div className="flex items-center  ">
-                      <FaEdit size={14} color="#104B53" />
-                      <p className="text-[#104B53] text-xs">Edit</p>
-                    </div>
+            {userDetails?.candidatedetailsexperiences?.map(
+              (item: WorkExperienceDetail, i: number) => {
+                return (
+                  <div key={i} className="border p-7 border-[#EBEBF0] rounded-lg">
+                    <div className="flex justify-end items-center space-x-4">
+                      <div className="flex items-center  ">
+                        <FaEdit size={14} color="#104B53" />
+                        <p className="text-[#104B53] text-xs">Edit</p>
+                      </div>
 
-                    <div
-                      className="flex items-center cursor-pointer  "
-                      onClick={() => handleDeleteExperience(item?.ID)}
-                    >
-                      <MdDeleteOutline color="#104B53" />
-                      <p className="text-[#104B53] text-xs">Delete</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col space-y-5 ">
-                    <div className="flex flex-col space-y-4">
-                      <h1 className="text-sm font-semibold">{getRoleNameById(item?.role)}</h1>
-                      <p className="text-[#6B7588] text-xs">
-                        {item?.companydetails} - {item?.place}
-                      </p>
-                      <div className="flex space-x-3 flex-wrap  items-center w-full">
-                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
-                          {getDomainNameById(item?.domain)}
-                        </p>
-                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
-                          {getJobTypeById(item?.jobType)}
-                        </p>
-                        <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
-                          {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
-                          {item?.presentEmployer ? 'Present' : item?.durationEnd}
-                        </p>
+                      <div
+                        className="flex items-center cursor-pointer  "
+                        onClick={() => handleDeleteExperience(item?.ID)}
+                      >
+                        <MdDeleteOutline color="#104B53" />
+                        <p className="text-[#104B53] text-xs">Delete</p>
                       </div>
                     </div>
 
-                    <div className="flex flex-col space-y-4 ">
-                      <h1 className="text-sm ">Job summery</h1>
-                      <ul className="flex flex-col space-y-3">
-                        <li className="text-[#3A3A3C] text-xs">{item?.descriptionOfExperience}</li>
-                      </ul>
+                    <div className="flex flex-col space-y-5 ">
+                      <div className="flex flex-col space-y-4">
+                        <h1 className="text-sm font-semibold">{getRoleNameById(item?.role)}</h1>
+                        <p className="text-[#6B7588] text-xs">
+                          {item?.companydetails} - {item?.place}
+                        </p>
+                        <div className="flex space-x-3 flex-wrap  items-center w-full">
+                          <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
+                            {getDomainNameById(item?.domain)}
+                          </p>
+                          <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
+                            {getJobTypeById(item?.jobType)}
+                          </p>
+                          <p className="flex justify-center items-center text-[#7C8596] bg-[#F2F2F5] p-[6px] md:p-2 rounded-full font-semibold text-xs">
+                            {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
+                            {item?.presentEmployer ? 'Present' : item?.durationEnd}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-col space-y-4 ">
+                        <h1 className="text-sm ">Job summery</h1>
+                        <ul className="flex flex-col space-y-3">
+                          <li className="text-[#3A3A3C] text-xs">
+                            {item?.descriptionOfExperience}
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              },
+            )}
           </div>
 
           {/* Education  */}
@@ -273,43 +278,45 @@ const ReviewInfo: React.FC = () => {
               </div>
             </div>
 
-            {userDetails?.candidatedetailseducationdetails?.map((item:EducationDetail, i: number) => {
-              return (
-                <div className="border p-7 border-[#EBEBF0] rounded-lg" key={i}>
-                  <div className="flex justify-end items-center space-x-4">
-                    <div className="flex items-center  ">
-                      <FaEdit size={14} color="#104B53" />
-                      <p className="text-[#104B53] text-xs">Edit</p>
-                    </div>
+            {userDetails?.candidatedetailseducationdetails?.map(
+              (item: EducationDetail, i: number) => {
+                return (
+                  <div className="border p-7 border-[#EBEBF0] rounded-lg" key={i}>
+                    <div className="flex justify-end items-center space-x-4">
+                      <div className="flex items-center  ">
+                        <FaEdit size={14} color="#104B53" />
+                        <p className="text-[#104B53] text-xs">Edit</p>
+                      </div>
 
-                    <div
-                      className="flex items-center cursor-pointer "
-                      onClick={() => handleDeleteEducation(item?.id)}
-                    >
-                      <MdDeleteOutline color="#104B53" size={14} />
-                      <p className="text-[#104B53] text-xs">Delete</p>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col">
-                    <div className="flex flex-col space-y-4">
-                      <h1 className="text-sm font-semibold">{item?.degree}</h1>
-                      <p className="text-[#6B7588] text-xs">
-                        {item?.schoolName} - {item?.schoolLocation}
-                      </p>
-                      <div className="flex space-x-3 items-center">
-                        <p className="text-[#7C8596] bg-[#F2F2F5] p-2 rounded-full font-semibold text-xs">
-                          {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
-                          {item?.isCurrentlyAttending ? 'Present' : item?.durationEnd}
-                        </p>
+                      <div
+                        className="flex items-center cursor-pointer "
+                        onClick={() => handleDeleteEducation(item?.id)}
+                      >
+                        <MdDeleteOutline color="#104B53" size={14} />
+                        <p className="text-[#104B53] text-xs">Delete</p>
                       </div>
                     </div>
-                  </div>
 
-                  <div></div>
-                </div>
-              );
-            })}
+                    <div className="flex flex-col">
+                      <div className="flex flex-col space-y-4">
+                        <h1 className="text-sm font-semibold">{item?.degree}</h1>
+                        <p className="text-[#6B7588] text-xs">
+                          {item?.schoolName} - {item?.schoolLocation}
+                        </p>
+                        <div className="flex space-x-3 items-center">
+                          <p className="text-[#7C8596] bg-[#F2F2F5] p-2 rounded-full font-semibold text-xs">
+                            {new Date(item?.durationStart).toISOString().split('T')[0]} -{' '}
+                            {item?.isCurrentlyAttending ? 'Present' : item?.durationEnd}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div></div>
+                  </div>
+                );
+              },
+            )}
           </div>
 
           {/* Certification  */}
