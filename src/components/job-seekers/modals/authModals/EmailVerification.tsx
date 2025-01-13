@@ -4,7 +4,7 @@ import axiosInstance from '../../../../axios/axiosInstance';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 
 
-const Verification: React.FC = () => {
+const EmailVerification: React.FC = () => {
 
        const [token, setToken] = useState<string | null>('');
        const [localStorageToken, setLocalStorageToken] = useState<string | null>('');
@@ -29,7 +29,7 @@ const Verification: React.FC = () => {
       };
   console.log("object")
       verifyEmail();
-         },[localStorageToken])
+         },[location.search])
    
 
     return (
@@ -65,4 +65,4 @@ const Verification: React.FC = () => {
     )
 }
 
-export default Verification
+export default EmailVerification
