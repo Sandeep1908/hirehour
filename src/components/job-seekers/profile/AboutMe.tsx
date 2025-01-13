@@ -31,12 +31,6 @@ const AboutMe: React.FC<AboutMeProps> = ({ setAboutPop }) => {
   const { data: userDetails } = useQuery({ queryKey: ['userDetails'], queryFn: fetchUserDetails });
   
   const { data: socialDetails } = useQuery({ queryKey: ['socialDetail'], queryFn: fetchSocialDetail });
-  // const [workDetails, setWorkDetails] = useState({
-  //   WorkPlatformName: socialDetails?.[0]?.WorkPlatformName,
-  //   WorkLink: socialDetails?.[0]?.WorkLink,
-  // });
-
-
 
   const queryClient = useQueryClient();
 

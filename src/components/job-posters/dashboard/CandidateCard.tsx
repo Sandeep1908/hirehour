@@ -4,12 +4,39 @@ import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance'
 
 
 
-type ResumeSourceProps={
-    details:any
-    // setFavdata:any
-   
-    
-  }
+
+
+interface CandidateDetails {
+  id: string;
+  firstName: string;
+  candidatedetail: {
+    location: string;
+    candidatedetailsexperiences: {
+      companydetails: string;
+      durationStart: string;
+      durationEnd: string;
+    }[];
+    candidatedetailseducationdetails: {
+      degree: string;
+      schoolName: string;
+    }[];
+    candidatedetailsskills: {
+      skillName: string;
+    }[];
+    candidatedetailslicensescerts: {
+      certName: string;
+    }[];
+  };
+}
+
+interface ResumeSourceProps {
+  details: {
+    id: string;
+    candidate: CandidateDetails;
+  };
+}
+
+
 
 const CandidateCard:React.FC<ResumeSourceProps> = (details) => {
 
@@ -30,7 +57,7 @@ const CandidateCard:React.FC<ResumeSourceProps> = (details) => {
             
                 getData();
               }
-        //   console.log("sourcedRecord22222",details.details)
+
         },[])
 
     const [star,setStar] = useState<boolean>(false)
@@ -75,13 +102,7 @@ const CandidateCard:React.FC<ResumeSourceProps> = (details) => {
             <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
                 <p className='text-[10px] text-[#6B7588] font-semibold'>{viewResumedata?.sourcingRecord?.candidate?.candidatedetail?.candidatedetailsskills[0]?.skillName}</p>
             </div>
-            {/* <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                <p className='text-[10px] text-[#6B7588] font-semibold'>React Js</p>
-            </div>
-            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                <p className='text-[10px] text-[#6B7588] font-semibold'>Angular</p>
-            </div> */}
-            {/* <p className='text-[10px] text-[#6B7588] font-semibold'>+20 More</p> */}
+        
 
         </div>
     </div >

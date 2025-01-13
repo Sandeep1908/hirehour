@@ -29,16 +29,14 @@ interface Users {
   firstName: string;
   lastName: string;
   email: string;
-  role: string; // Adjust fields as per your API response
-  createdAt: string; // Adjust fields as per your API response
-  updatedAt: string; // Adjust fields as per your API response
+  role: string; 
+  createdAt: string; 
+  updatedAt: string; 
   userProfileReference: string; 
-  // userpermlabelsacrossapplications: []; 
+ 
   isUserVerified:boolean;
   recruiterdetail:recruiterdetail[];
   userpermlabelsacrossapplications:recruiterdetail[];
-  // userpermlabelsacrossapplications: UserPermLabelsAcrossApplications[];
-
 }
 
 
@@ -72,7 +70,7 @@ const Candidate: React.FC<userProps> = ({users}) => {
                   <th className='text-[12px] text-start w-[17%]'> Role</th>
                   <th className='text-[12px] text-start' >Company</th>
                   <th className='text-[12px] text-start ' >Last Activity</th>
-                  {/* <th className='text-[12px] text-start' >Action</th> */}
+                
                 </tr>
               </thead>
 
@@ -86,17 +84,16 @@ const Candidate: React.FC<userProps> = ({users}) => {
                          <div className='flex gap-4 '>
                         <div  className='text-[12px] cursor-pointer'  >
                           <p >{user.firstName || "N/A"}</p>
-                          {/* <p >Johnson</p> */}
+                    
                           <p></p>
                          
                         </div>
                       </div> </td>
                       <td className='align-top py-3'>
                         <p className='text-[12px] cursor-pointer'>{user.email || "N/A"}</p>
-                        {/* <p className='text-[12px] cursor-pointer'>Peter@xyz.com</p> */}
+                   
                       </td>
                       <td className='align-top py-3'>
-                        {/* <p className='text-[12px] font-medium'><span className='font-normal'>{user.createdAt ? formatDate(user.createdAt) : "N/A"}</span></p> */}
                         <p className='text-[12px] font-medium'><span className='font-normal'>Java Developer</span></p>
                         </td>
     
@@ -197,11 +194,11 @@ const LookingforCandidate: React.FC<userProps> = ({users}) => {
       setRoleID(5)
       setPermissions(5)
       const userPermission = {
-        userId: id, // Pass the user ID directly
+        userId: id, 
         rolePermissionsToAdd: [
           {
-            roleID: 5, // Assuming roleID is 5
-            permissions: [5], // Assuming permissions array contains 5
+            roleID: 5, 
+            permissions: [5],
           },
         ],
       };
@@ -216,11 +213,11 @@ const LookingforCandidate: React.FC<userProps> = ({users}) => {
       setRoleID(5)
       setPermissions(5)
       const userPermission = {
-        userId: id, // Pass the user ID directly
+        userId: id,
         rolePermissionsToRemove: [
           {
-            roleID: 5, // Assuming roleID is 5
-            permissions: [5], // Assuming permissions array contains 5
+            roleID: 5, 
+            permissions: [5],
           },
         ],
       };
@@ -410,22 +407,12 @@ const RepresentingCandidate: React.FC<userProps> = ({users})=> {
       setUserId(id)
       setRoleID(5)
       setPermissions(5)
-
-      // const userPermission: UserPermission = {
-      //   userId: id, // Pass the user ID directly
-      //   rolePermissionsToAdd: [
-      //     {
-      //       roleID: 5, // Assuming roleID is 5
-      //       permissions: [5], // Assuming permissions array contains 5
-      //     },
-      //   ],
-      // };
       const userPermission = {
-        userId: id, // Pass the user ID directly
+        userId: id, 
         rolePermissionsToAdd: [
           {
-            roleID: 5, // Assuming roleID is 5
-            permissions: [5], // Assuming permissions array contains 5
+            roleID: 5, 
+            permissions: [5], 
           },
         ],
       };
@@ -440,11 +427,11 @@ const RepresentingCandidate: React.FC<userProps> = ({users})=> {
       setRoleID(5)
       setPermissions(5)
       const userPermission = {
-        userId: id, // Pass the user ID directly
+        userId: id,
         rolePermissionsToRemove: [
           {
-            roleID: 5, // Assuming roleID is 5
-            permissions: [5], // Assuming permissions array contains 5
+            roleID: 5, 
+            permissions: [5], 
           },
         ],
       };
@@ -710,13 +697,6 @@ const Users: React.FC = () => {
             )}
           </div>
 
-
-          {/* <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-            <p className="text-[12px] font-semibold text-[#114B53]">Date Applied</p>
-            <FaCaretDown className='text-[#114B53]' />
-
-          </div> */}
-
           <div className='relative z-[20]'>
             <div
               onClick={() => setDropdown(2)}
@@ -752,54 +732,6 @@ const Users: React.FC = () => {
               </div>
             )}
           </div>
-
-          {/* <div className='relative z-[20]'>
-                            <div
-                                onClick={() => setDropdown(3)}
-                                className={`${selectedOptionLocation.length > 0 && "bg-[#effefd]"}  flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full`}
-                            >
-                                <div className="text-[14px] font-normal items-center text-[#114B53] flex gap-1">
-                                    <p className='text-[12px] font-semibold text-[#114B53]'>Location</p>
-                                    {selectedOptionLocation.length > 0 && (
-                                        <div className='bg-[#114B53]  w-[15px] h-[15px] text-[10px] rounded-full text-white flex justify-center items-center'>
-                                            {selectedOptionLocation.length}
-                                        </div>
-                                    )}
-                                </div>
-                                <FaCaretDown  className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
-                            </div>
-
-                            {dropdown === 3 && (
-                                <div className='absolute top-12 left-0 w-[269px]'>
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-                                      <div className='px-3'>
-                                        <input className='text-xs p-1 w-full border-[1px] border-[#C7C9D9] rounded-lg' type="text"  placeholder='Type Location'/>
-                                      </div>
-                                        {allLocation.map((type) => (
-                                            <div key={type} onClick={() => handleCheckboxLocation(type)} className='w-full px-4 py-2 flex gap-2'>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedOptionLocation.includes(type)}
-                                                //   onChange={() => handleCheckboxChange(type)}
-                                                />
-                                                <label className='text-[#333333] text-[10px] font-medium'>{type}</label>
-                                            </div>
-                                        ))}
-                                        <div className='w-full  flex gap-2 px-4 py-2 justify-end'>
-                                            <div className='px-3 py-1 bg-[#E9F358] rounded-full cursor-pointer' onClick={() => setDropdown(0)}>
-                                                <p className='text-xs text-[#114B53] font-semibold'> Apply</p>
-                                            </div>
-                                            <button onClick={handleResetLocation} className='text-[12px] text-[#114B53] font-semibold cursor-pointer'>
-                                                <p onClick={() => setDropdown(0)}>Reset</p>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div> */}
-
-
-
 
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
             <p className="text-[12px] font-semibold text-[#114B53]"> Date</p>
@@ -855,16 +787,6 @@ const Users: React.FC = () => {
               </div>
             )}
           </div>
-
-
-
-
-
-          {/* <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
-            <p className="text-[12px] font-semibold text-[#114B53]">All Filters</p>
-            <CiFilter className='text-[#114B53]' />
-
-          </div> */}
 
 
         </div>

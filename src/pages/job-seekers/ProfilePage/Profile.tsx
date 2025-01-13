@@ -132,13 +132,7 @@ const handelProfileComplition = () => {
     setAddAboutMe(false);
   }
 
-  // if (userDetails.profilePictureLink) {
-  //   setJobPreference(true);
-  //   count++;
-  // } else {
-  //   setJobPreference(false);
-  // }
-
+ 
   if (userDetails.candidatedetailsskills?.length > 0) {
     setAddSkillSet(true);
     count++;
@@ -416,23 +410,18 @@ useEffect(() => {
                 </div>
               </div>
               <div className="flex gap-1 ">
-                {skillSection.map((item,id)=>{
+                {skillSection?.map((item,id)=>{
                   return(
                   <div key={id} onClick={()=>{setSkillSectionId(id)}} className={` ${item.id === skillSectionId ?"bg-[#114B53]":""} pt-1  rounded-tl-lg rounded-tr-lg`}>
                   <p className="text-[#114B53] text-sm px-3 py-1 bg-white">{item.label}</p>
                 </div>
                   )
                 })}
-                {/* <div className="pt-1 bg-[#114B53] rounded-tl-lg rounded-tr-lg">
-                  <p className="text-[#114B53] text-sm px-3 py-1 bg-white">Overall Skills</p>
-                </div>
-                <div className="pt-1 ">
-                  <p className="text-[#3A3A3C] text-sm px-3 py-1">Current Skills</p>
-                </div> */}
+               
               </div>
               <hr className="mt-2" />
 
-              {skillSection.map((item,id)=>{
+              {skillSection?.map((item,id)=>{
                 if(item.id === skillSectionId){
                   return(
                     <div key={id}>

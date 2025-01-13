@@ -13,20 +13,20 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchListResumeSoucing } from '../../../utils/jobposters/jobboards/listResumeSourcing';
 import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
 
-// import { Link } from 'react-router-dom';
-
 
 
 type SendRTRModalProps = {
     isRTROpen: boolean;
     setIsRTROpen: (e: boolean) => void;
   };
-
-
-  type ResumeSourcingProps = {
-    sourcedRecord: any;
-    // setFavdata:any;
-  }; 
+  
+  interface ResumeSourcingProps {
+    sourcedRecord: {
+      sourcedRecords:[]
+    };
+   
+  }
+  
 
 const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
@@ -44,11 +44,8 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
 
     const [selectedOptionDistance, setSelectedOptionDistance] = useState<string>("");
-    // const [selectedOptionSkills, setSelectedOptionSkills] = useState<string>("");
     const [selectedOptionResumeUpdate, setSelectedOptionResumeUpdate] = useState<string>("");
     const [selectedOptionVisa, setSelectedOptionVisa] = useState<string>("");
-
-    // const [isSelected, setIsSelected] = useState(0);
     const [dropdown, setDropdown] = useState<number>(0);
 
 
@@ -58,14 +55,6 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
         setViewResumeData(response.data.sourcingRecord); 
         return response.data;
       },
-
-      onSuccess: () => {
-          //  console.log("setViewResumeData",viewResumedata)
-            
-          },
-          onError: () => {
-          
-          },
     });
 
 
@@ -339,23 +328,7 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
                                   
                                 </div>
-                                {/* <div className='mt-3'>
-                                    <p className='text-[14px] font-semibold text-[#3A3A3C]'>Associate Java Full stack</p>
-                                    <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>xyz Company - Texas, United States</p>
-                                    <div className='flex gap-2 items-center mt-3'>
-                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[12px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
-                                        </div>
-                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[12px] text-[#6B7588] font-semibold'>Job Domain</p>
-                                        </div>
-                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                            <p className='text-[12px] text-[#6B7588] font-semibold'>Full-Time   </p>
-                                        </div>
-
-
-                                    </div>
-                                </div> */}
+                             
 
                                 {/* <p className='text-[#6B7588] text-[10px] mt-4'>+1 more experience</p> */}
 
@@ -408,17 +381,7 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
                                             </div>
                                         </div>
                                     </div>
-                                    {/* <div className='w-full '>
-                                        <div className='w-full flex justify-between'>
-                                            <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                            <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                        </div>
-                                        <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                            <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                                            </div>
-                                        </div>
-                                    </div> */}
+                                  
                                 </div>
 
                   
@@ -594,28 +557,6 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
                                     }
 
 
-{/*                                    
-                                    <div className=''>
-                                        <p className='text-sm font-bold mt-1'>Java Fullstack  </p>
-                                        <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Company - Texas, United States  </p>
-                                        <div className='flex gap-2 mt-2'>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
-                                            </div>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'> Health Care</p>
-                                            </div>
-                                            <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                                                <p className='text-[10px] text-[#6B7588] font-semibold'>Full-Time</p>
-                                            </div>
-                                        </div>
-                                        <p className='text-sm font-bold mt-3'>Summary</p>
-                                        <ul className='list-disc text-[12px] ml-6 mt-2'>
-                                            <li> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
-                                            <li className='mt-2'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
-                                        </ul>
-                                    </div> */}
-
                                 </div>
 
 
@@ -667,25 +608,8 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
                                           </div>
                                       </div>
                                   </div>
-                                  {/* <div className='w-full '>
-                                      <div className='w-full flex justify-between'>
-                                          <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                                          <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                                      </div>
-                                      <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                                          <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                                          </div>
-                                      </div>
-                                  </div> */}
+                               
                               </div>
-
-                              
-
-                              {/* <div className='flex gap-2 mt-4 items-center justify-center'>
-                                  <IoIosArrowDown />
-                                  <p className='text-sm font-bold'>View all 20</p>
-                              </div> */}
 
                               <hr className='mt-4' />
 

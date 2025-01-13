@@ -11,44 +11,12 @@ import { GrLocation } from 'react-icons/gr'
 import { GoArrowLeft, GoArrowRight } from 'react-icons/go'
 import { HiOutlineShoppingBag } from 'react-icons/hi'
 import resume from '../../../assets/resume.svg'
-// import job from '../../../assets/dashboard/Applicants/Job.png'
+
 import { RxCross2 } from 'react-icons/rx'
 import ShortListed from './ShortListed'
 import { BsInfoCircleFill } from 'react-icons/bs'
 import { fetchAllAppliedJobs } from '../../../utils/jobposters/jobboards/getAllAppliedJobs'
 import { useQuery } from '@tanstack/react-query'
-// import ShortListed from './ShortListed'
-// import { PiArrowsLeftRightBold } from 'react-icons/pi'
-
-
-// interface Job {
-//   jobID: number;
-//   jobTitle: string;
-//   jobLocation: string;
-// }
-
-// interface Candidate {
-//   candidateID: number;
-//   resumeLink: string | null;
-//   profilePictureLink: string | null;
-//   summary: string | null;
-//   experienceYears: number | null;
-//   experienceLevel: string | null;
-//   location: string | null;
-//   highestEducationLevel: string | null;
-// }
-
-// interface Application {
-//   job: Job;
-//   candidate: Candidate;
-//   applicationStatus: string;
-//   isShortlisted: boolean;
-//   appliedOn: string;
-// }
-
-// interface AllAppliedJobs {
-//   applications: Application[];
-// }
 
 type AppliedJobProps = {
   allAppliedJobs: any;
@@ -1328,44 +1296,18 @@ const Applicants: React.FC = () => {
 
   const [jobFilterIdx, setJobFilterIdx] = useState<number>(0);
   const [addCandidate, setAddCandidate] = useState<boolean>(false);
-  // const [showShortList, setShowShortList] = useState<boolean>(false);
+  
 
 
 
   const [selectedOptionVisa, setSelectedOptionVisa] = useState<string>("");
   const [selectedOptionDate, setSelectedOptionDate] = useState<string>("");
   const [selectedOptionAllJob, setSelectedOptionAllJob] = useState<string>("");
-  // const [selectedOptionLocation, setSelectedOptionLocation] = useState<string>("");
 
   const [itemId, setItemId] = useState(0)
 
   const [isSelected, setIsSelected] = useState(0);
   const [dropdown, setDropdown] = useState<number>(0);
-
-
-  //   const allLocation = [
-  //     "Allen, Tx",
-  //     "Allen, Tx",
-  //     "Allen, Tx",
-  //     "Allen, Tx",
-  //     "Allen, Tx",
-  //     "Allen, Tx",
-  //     "Allen, Tx",
-  //     "Allen, Tx"
-  // ];
-  // const handleCheckboxLocation = (value:string) => {
-
-  //   setSelectedOptionLocation((prevSelected) => prevSelected.includes(value) 
-  //        ? prevSelected.filter((item:string) => item !== value)
-  //           : [...prevSelected, value]
-  //         );
-
-
-  // };
-  // const handleResetLocation = () => {
-  //   setSelectedOptionLocation([]);
-  // };
-
 
   const handleOptionAllJob = (value: string) => {
     setSelectedOptionAllJob(value);
@@ -1471,7 +1413,7 @@ const Applicants: React.FC = () => {
 
         <div>
         <div className='flex px-4 overflow-auto'>
-          {filterItems.map((items, id) => {
+          {filterItems?.map((items, id) => {
             return (
               <div key={id} onClick={() => { setItemId(id) }} className={`flex items-center gap-2 py-2 px-4 border-b-[1px] ${itemId === id ? "border-b-[#114B53]" : "border-b-white"}`}>
                 <p className='text-[12px] text-[#114B53] w-max'>{items.label} </p>
@@ -1504,7 +1446,7 @@ const Applicants: React.FC = () => {
                         type="radio"
                         name="value1"
                         checked={selectedOptionAllJob === option}
-                      //   onChange={() => handleOptionClick(option)}
+                  
                       />
                       <label className='text-[#333333] text-[10px] font-medium'>{option}</label>
                     </div>
@@ -1513,13 +1455,6 @@ const Applicants: React.FC = () => {
               </div>
             )}
           </div>
-
-
-          {/* <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-            <p className="text-[12px] font-semibold text-[#114B53]">Date Applied</p>
-            <FaCaretDown className='text-[#114B53]' />
-
-          </div> */}
 
           <div className='relative z-[20]'>
             <div
@@ -1557,53 +1492,7 @@ const Applicants: React.FC = () => {
             )}
           </div>
 
-          {/* <div className='relative z-[20]'>
-                            <div
-                                onClick={() => setDropdown(3)}
-                                className={`${selectedOptionLocation.length > 0 && "bg-[#effefd]"}  flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full`}
-                            >
-                                <div className="text-[14px] font-normal items-center text-[#114B53] flex gap-1">
-                                    <p className='text-[12px] font-semibold text-[#114B53]'>Location</p>
-                                    {selectedOptionLocation.length > 0 && (
-                                        <div className='bg-[#114B53]  w-[15px] h-[15px] text-[10px] rounded-full text-white flex justify-center items-center'>
-                                            {selectedOptionLocation.length}
-                                        </div>
-                                    )}
-                                </div>
-                                <FaCaretDown  className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
-                            </div>
-
-                            {dropdown === 3 && (
-                                <div className='absolute top-12 left-0 w-[269px]'>
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-                                      <div className='px-3'>
-                                        <input className='text-xs p-1 w-full border-[1px] border-[#C7C9D9] rounded-lg' type="text"  placeholder='Type Location'/>
-                                      </div>
-                                        {allLocation.map((type) => (
-                                            <div key={type} onClick={() => handleCheckboxLocation(type)} className='w-full px-4 py-2 flex gap-2'>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedOptionLocation.includes(type)}
-                                                //   onChange={() => handleCheckboxChange(type)}
-                                                />
-                                                <label className='text-[#333333] text-[10px] font-medium'>{type}</label>
-                                            </div>
-                                        ))}
-                                        <div className='w-full  flex gap-2 px-4 py-2 justify-end'>
-                                            <div className='px-3 py-1 bg-[#E9F358] rounded-full cursor-pointer' onClick={() => setDropdown(0)}>
-                                                <p className='text-xs text-[#114B53] font-semibold'> Apply</p>
-                                            </div>
-                                            <button onClick={handleResetLocation} className='text-[12px] text-[#114B53] font-semibold cursor-pointer'>
-                                                <p onClick={() => setDropdown(0)}>Reset</p>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div> */}
-
-
-
+      
 
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
             <p className="text-[12px] font-semibold text-[#114B53]">Location</p>
@@ -1672,9 +1561,7 @@ const Applicants: React.FC = () => {
 
 
         </div>
-         {/* {
-            <div className={` transition-all duration-500 ${itemId===3 ?"opacity-1 scale-[1.01] z-[40] h-[75px]" : "opacity-0 z-[-10] h-0"}`}> <ShortListed/></div>
-         } */}
+      
         
         
         </div>
@@ -1706,18 +1593,6 @@ const Applicants: React.FC = () => {
         }
 
 
-
-        {/* <div className='w-full h-full flex flex-col  items-center   '>
-    
-
-        <img className='w-96 mt-5' src={job} alt="" />
-       <p className='text-base font-bold text-center mt-5'>No Applicants available </p>
-       <p className='text-sm text-center mt-3'>ones someone apply for the job. all the applicants whoever apply has shown in all applicants </p>
-
-        </div> */}
-
-       
-       
 
 
       </div>

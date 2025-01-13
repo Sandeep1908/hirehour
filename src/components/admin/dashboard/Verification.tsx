@@ -27,12 +27,12 @@ interface Users {
   firstName: string;
   lastName: string;
   email: string;
-  role: string; // Adjust fields as per your API response
-  createdAt: string; // Adjust fields as per your API response
+  role: string; 
+  createdAt: string; 
   userProfileReference: string; 
   isUserVerified:boolean;
   recruiterdetail:recruiterdetail[];
-  // userpermlabelsacrossapplications: UserPermLabelsAcrossApplications[];
+
 
 }
 
@@ -42,7 +42,6 @@ const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
  
   const [actionID, setActionID] = useState<number>(0);
   const [isVerifiedByUs, setIsVerifiedByUs] = useState<boolean>(false); 
-  // const [actionTake, setActionTake] = useState<string>(""); 
   const [moreOption, setMoreOption] = useState<boolean>(false);
   const [selectPermId, setSelectPermId] = useState<number|null>();
   
@@ -50,7 +49,7 @@ const AwaitingVerification: React.FC<verifyProps> = ({users}) => {
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // Extract only the YYYY-MM-DD part
+    return date.toISOString().split("T")[0]; 
   };
 
   const handleMoreOption = (id:number) => {
@@ -239,7 +238,6 @@ const VerifiedAccount: React.FC<verifyProps> = ({users}) => {
 
   const [actionID, setActionID] = useState<number>(0);
   const [isVerifiedByUs, setIsVerifiedByUs] = useState<string>(""); 
-  // const [actionTake, setActionTake] = useState<string>(""); 
   const [moreOption, setMoreOption] = useState<boolean>(false);
   const [selectPermId, setSelectPermId] = useState<number|null>();
   
@@ -247,7 +245,7 @@ const VerifiedAccount: React.FC<verifyProps> = ({users}) => {
 
   const formatDate = (dateString: string): string => {
     const date = new Date(dateString);
-    return date.toISOString().split("T")[0]; // Extract only the YYYY-MM-DD part
+    return date.toISOString().split("T")[0]; 
   };
 
   const handleMoreOption = (id:number) => {
@@ -547,7 +545,7 @@ const Verification: React.FC = () => {
             {dropdown === 1 && (
               <div className='absolute top-12 left-0 w-[120px]'>
                 <div className='w-full  bg-[#FFFFFF] rounded-lg shadow-lg' >
-                  {["All", " Active", "Paused", "Closed", "Co - Hiring"].map(option => (
+                  {["All", " Active", "Paused", "Closed", "Co - Hiring"]?.map(option => (
                     <div key={option} className='w-full px-4 py-2 flex gap-2' onClick={() => handleOptionAllJob(option)}>
                       <input
                         type="radio"
@@ -562,13 +560,6 @@ const Verification: React.FC = () => {
               </div>
             )}
           </div>
-
-
-          {/* <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full">
-            <p className="text-[12px] font-semibold text-[#114B53]">Date Applied</p>
-            <FaCaretDown className='text-[#114B53]' />
-
-          </div> */}
 
           <div className='relative z-[20]'>
             <div
@@ -605,53 +596,6 @@ const Verification: React.FC = () => {
               </div>
             )}
           </div>
-
-          {/* <div className='relative z-[20]'>
-                            <div
-                                onClick={() => setDropdown(3)}
-                                className={`${selectedOptionLocation.length > 0 && "bg-[#effefd]"}  flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full`}
-                            >
-                                <div className="text-[14px] font-normal items-center text-[#114B53] flex gap-1">
-                                    <p className='text-[12px] font-semibold text-[#114B53]'>Location</p>
-                                    {selectedOptionLocation.length > 0 && (
-                                        <div className='bg-[#114B53]  w-[15px] h-[15px] text-[10px] rounded-full text-white flex justify-center items-center'>
-                                            {selectedOptionLocation.length}
-                                        </div>
-                                    )}
-                                </div>
-                                <FaCaretDown  className={`${dropdown === 3 ? 'rotate-180 transition-all duration-500' : ''}`} />
-                            </div>
-
-                            {dropdown === 3 && (
-                                <div className='absolute top-12 left-0 w-[269px]'>
-                                    <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg'>
-                                      <div className='px-3'>
-                                        <input className='text-xs p-1 w-full border-[1px] border-[#C7C9D9] rounded-lg' type="text"  placeholder='Type Location'/>
-                                      </div>
-                                        {allLocation.map((type) => (
-                                            <div key={type} onClick={() => handleCheckboxLocation(type)} className='w-full px-4 py-2 flex gap-2'>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={selectedOptionLocation.includes(type)}
-                                                //   onChange={() => handleCheckboxChange(type)}
-                                                />
-                                                <label className='text-[#333333] text-[10px] font-medium'>{type}</label>
-                                            </div>
-                                        ))}
-                                        <div className='w-full  flex gap-2 px-4 py-2 justify-end'>
-                                            <div className='px-3 py-1 bg-[#E9F358] rounded-full cursor-pointer' onClick={() => setDropdown(0)}>
-                                                <p className='text-xs text-[#114B53] font-semibold'> Apply</p>
-                                            </div>
-                                            <button onClick={handleResetLocation} className='text-[12px] text-[#114B53] font-semibold cursor-pointer'>
-                                                <p onClick={() => setDropdown(0)}>Reset</p>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            )}
-                        </div> */}
-
-
 
 
           <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
@@ -708,16 +652,6 @@ const Verification: React.FC = () => {
               </div>
             )}
           </div>
-
-
-
-
-
-          {/* <div className="flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53]  rounded-full">
-            <p className="text-[12px] font-semibold text-[#114B53]">All Filters</p>
-            <CiFilter className='text-[#114B53]' />
-
-          </div> */}
 
 
         </div>
