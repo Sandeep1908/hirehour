@@ -46,7 +46,11 @@ const PaymentStatus: React.FC = () => {
 
     if (countdown === 0) {
       clearInterval(timer);
-      navigate('/job-poster/dashboard/?key=myjobs');
+      if(checkStatus === true){
+        navigate('/job-poster/dashboard/?key=myjobs');
+      }else{
+        navigate('/job-poster/pricing');
+      }
     }
 
     return () => clearInterval(timer);
@@ -80,7 +84,7 @@ const PaymentStatus: React.FC = () => {
             <p className='text-base text-black pt-1 text-center font-medium'>Please pay again</p>
           </>
         }
-        <p className='text-base text-gray-500 pt-6 text-center'>You will be redirected to the dashboard shortly {countdown}s</p>
+        <p className='text-base text-gray-500 pt-6 text-center'>You will be redirected to the {checkStatus ? "dashboard":"pricing"} shortly {countdown}s</p>
       </div>
     </div>
   )
