@@ -81,7 +81,7 @@ const Pricing: React.FC = () => {
   ];
 
   return (
-    <div className="relative w-full h-auto md:h-[94vh]">
+    <div className="relative w-full h-auto md:min-h-[calc(100vh-76px)]">
       <div className="max-w-[1280px] md:mt-5 m-auto pb-20">
         <div className="w-full px-5 py-4 md:bg-white rounded-lg">
           <p className="text-base font-semibold">Please Select the plan to Post your Job Live</p>
@@ -91,12 +91,12 @@ const Pricing: React.FC = () => {
             <div
               key={plan.id}
               onClick={() => handlePlanSelect(plan.id)}
-              className={`border ${selectedPlan === plan.id ? 'border-[1px] border-black' : ''} max-w-[260px] h-96 w-full rounded-lg p-3 bg-white flex justify-between flex-col cursor-pointer`} // Added cursor-pointer
+              className={`border ${selectedPlan === plan.id ? 'border-[1px] border-black' : ''} max-w-[300px] h-96 w-full rounded-lg p-5 bg-white flex justify-between flex-col cursor-pointer`} // Added cursor-pointer
             >
               <div>
                 <p className="text-lg font-semibold">{plan.title}</p>
-                <p className="text-sm font-semibold">
-                  {plan.price} / <span className="text-xs">Month</span>
+                <p className="text-3xl font-bold mt-5">
+                  {plan.price} / <span className="text-sm">Month</span>
                 </p>
                 <p className="text-xs font-normal text-[#6B7588] mt-1">{plan.description}</p>
                 {plan.features.length > 0 && (
@@ -110,7 +110,7 @@ const Pricing: React.FC = () => {
                   </div>
                 )}
                 {plan.credits && (
-                  <p className="text-lg font-semibold text-black mt-[150px]">
+                  <p className="text-lg font-semibold text-black mt-[120px]">
                     Credits : {plan.credits}
                   </p>
                 )}
