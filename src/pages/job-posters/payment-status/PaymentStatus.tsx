@@ -46,7 +46,7 @@ const PaymentStatus: React.FC = () => {
 
     if (countdown === 0) {
       clearInterval(timer);
-      navigate('/job-poster/dashboard');
+      navigate('/job-poster/dashboard/?key=myjobs');
     }
 
     return () => clearInterval(timer);
