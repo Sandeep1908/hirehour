@@ -29,7 +29,8 @@ const AllApplications: React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
   const [midLike, setMidLike] = useState<boolean>(false);
   const [disLike, setDisLike] = useState<boolean>(false);
   const [moreOption, setMoreOption] = useState<boolean>(false);
-
+  
+  const[profileId,setProfileId] = useState<number>()
 
   const [message, setMessage] = useState<boolean>(false);
   const [showProfile, setShowProfile] = useState<boolean>(false);
@@ -181,67 +182,71 @@ const AllApplications: React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
           </div>
 
 
+        
+         
 
-          <div className={`absolute left-16 z-20 max-w-[400px] top-5 p-6 w-full h-auto bg-white shadow-lg rounded-lg transition-all duration-500 ${showProfile ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`} onMouseLeave={() => { setShowProfile(!showProfile) }}>
-            <div className='w-full h-full flex gap-4'>
-              {/* <RxCross2 onClick={() => { setShowProfile(!showProfile) }} className='absolute top-2 right-2 cursor-pointer' size={15} /> */}
-              <div className='w-[20%]'>
-                <div className='w-16 h-16 bg-[#95FAF9] rounded-full flex justify-center items-center'>
-                  <p className='text-lg font-semibold text-[#3A3A3C]'>J</p>
+           {allAppliedJobs?.applications?.map((appliedJob:any, id:number)=>{
+            // console.log("allAppliedJobs1111111",appliedJob)
+            if(profileId === appliedJob.id){
+              return(
+                <div key={id} className={`absolute left-16 z-20 max-w-[440px] top-5 py-6 px-3 w-full h-auto bg-white shadow-lg rounded-lg transition-all duration-500 ${showProfile ? "opacity-1 scale-[1.01] z-[40]" : "opacity-0 z-[-10]"}`} onMouseLeave={() => { setShowProfile(!showProfile) }}>
+                <div className='w-full h-full flex gap-4'>
+                  {/* <RxCross2 onClick={() => { setShowProfile(!showProfile) }} className='absolute top-2 right-2 cursor-pointer' size={15} /> */}
+                  <div className='w-[20%]'>
+                    <div className='w-16 h-16 bg-[#95FAF9] rounded-full flex justify-center items-center'>
+                      <p className='text-lg font-semibold text-[#3A3A3C]'>{appliedJob.candidate.user.firstName.charAt[0]}</p>
+                    </div>
+                  </div>
+    
+                  <div className='w-full'>
+                    <div className='flex w-full justify-between'>
+                      <div>
+                        <p className='text-[14px] font-semibold text-[#3A3A3C]'>{appliedJob.candidate.user.firstName}</p>
+                        <div className='flex gap-2 mt-2'>
+                          <GrLocation />
+    
+                          <p className='text-[12px] font-semibold text-[#3A3A3C]'>{appliedJob?.candidate?.location}</p>
+    
+                        </div>
+                      </div>
+                      <div className='cursor-pointer border-[1px] h-8 border-[#114B53] rounded-full px-3 flex items-center' onClick={() => { setShowFullProfile(!showFullProfile) }}>
+                        <p className='text-[#114B53] text-[12px] font-semibold'>View Full Profile</p>
+                      </div>
+    
+                    </div>
+                    <div className='mt-3'>
+                      <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Experience (Total 4 Years)</p>
+                      <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>Sr. Java Full Stack </p>
+                      <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>{appliedJob?.candidate?.candidatedetailsexperiences[0]?.companydetails} {appliedJob?.candidate?.candidatedetailsexperiences[0]?.durationStart.split('T')[0]} - {appliedJob?.candidate?.candidatedetailsexperiences[0]?.durationEnd.split('T')[0]}   Domain : Health Care</p>
+    
+                    </div>
+                    <div className='mt-3'>
+                      <p className='text-[12px] font-semibold text-[#3A3A3C]'>Education</p>
+                      <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>{appliedJob?.candidate?.candidatedetailseducationdetails[0]?.degree}, {appliedJob?.candidate?.candidatedetailseducationdetails[0]?.schoolName}</p>
+    
+                    </div>
+                    <div className='mt-3'>
+                      <p className='text-[12px] font-semibold text-[#3A3A3C]'>Skills</p>
+                      <div className='flex gap-2'>
+                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                          <p className='text-[10px] text-[#6B7588] font-semibold'>{appliedJob?.candidate?.candidatedetailsskills[0]?.skillName}</p>
+                        </div>
+                       
+                        {/* <p className='text-[10px] text-[#6B7588] font-semibold'>+20 More</p> */}
+    
+                      </div>
+                    </div >
+                    <div className='mt-3'>
+                      <p className='text-[12px] font-semibold text-[#3A3A3C]'>Licence & Certificate</p>
+                      <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>{appliedJob?.candidate?.candidatedetailslicensescerts[0]?.certName}</p>
+    
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div className='w-full'>
-                <div className='flex w-full justify-between'>
-                  <div>
-                    <p className='text-[14px] font-semibold text-[#3A3A3C]'>John S</p>
-                    <div className='flex gap-2 mt-2'>
-                      <GrLocation />
-
-                      <p className='text-[12px] font-semibold text-[#3A3A3C]'>Allen, Texas, US</p>
-
-                    </div>
-                  </div>
-                  <div className='cursor-pointer border-[1px] h-8 border-[#114B53] rounded-full px-3 flex items-center' onClick={() => { setShowFullProfile(!showFullProfile) }}>
-                    <p className='text-[#114B53] text-[12px] font-semibold'>View Full Profile</p>
-                  </div>
-
-                </div>
-                <div className='mt-3'>
-                  <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Experience (Total 4 Years)</p>
-                  <p className='text-[12px] font-semibold text-[#6B7588] mt-1'>Sr. Java Full Stack </p>
-                  <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>xyz company 12/2020 - Present   Domain : Health Care</p>
-
-                </div>
-                <div className='mt-3'>
-                  <p className='text-[12px] font-semibold text-[#3A3A3C]'>Education</p>
-                  <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Masters, xyz university</p>
-
-                </div>
-                <div className='mt-3'>
-                  <p className='text-[12px] font-semibold text-[#3A3A3C]'>Skills</p>
-                  <div className='flex gap-2'>
-                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                      <p className='text-[10px] text-[#6B7588] font-semibold'>Java</p>
-                    </div>
-                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                      <p className='text-[10px] text-[#6B7588] font-semibold'>React Js</p>
-                    </div>
-                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                      <p className='text-[10px] text-[#6B7588] font-semibold'>Angular</p>
-                    </div>
-                    <p className='text-[10px] text-[#6B7588] font-semibold'>+20 More</p>
-
-                  </div>
-                </div >
-                <div className='mt-3'>
-                  <p className='text-[12px] font-semibold text-[#3A3A3C]'>Licence & Certificate</p>
-                  <p className='text-[10px] font-semibold text-[#6B7588] mt-1'>Web Development Certificate</p>
-
-                </div>
-              </div>
-            </div>
-          </div>
+              )
+            }
+           })}
 
           <div className='w-full h-[59vh] overflow-auto  mt-2'>
 
@@ -260,13 +265,13 @@ const AllApplications: React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
               <tbody className='mt-2'>
 
               {allAppliedJobs?.applications?.map((appliedJob:any, id:number)=>{
-                console.log("appliedJob",appliedJob)
+                console.log("setProfile",profileId)
                return(
                 <>
               
                 <div key={id} className='h-1'></div>
                <tr className='border-[1px] border-[#D6DBDE] mt-2'>
-                 <td className='px-4 py-3'> <div className='flex gap-4 items-center'>
+                 <td className='px-4 py-3'> <div className='flex gap-4 items-center'onMouseEnter={() => { setProfileId(appliedJob.id) }} >
                    <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
                    <div className='text-[12px] cursor-pointer' onMouseEnter={() => { setShowProfile(!showProfile) }}  >
                      <p>{appliedJob.candidate.user.firstName}</p>
@@ -338,312 +343,284 @@ const AllApplications: React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
 
       {/* Show Full Profile */}
 
-      <div
-        className={`w-full h-full flex p-3 md:p-3 overflow-scroll justify-center items-center fixed inset-0 transition-all duration-100 ${showFullProfile ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
-      >
-        <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
-
-        <div className='z-[30] max-w-[1000px] w-full h-full bg-white rounded-lg overflow-auto relative top-[0px] p-5'>
-
-
-
-          <div className='w-full flex justify-between'>
-            <div className='border-[1px] border-[#D6DBDE] p-4 rounded-lg '>
-              <div className='w-full flex gap-6 justify-between'>
-                <div>
-                  <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Johnson</p>
-                  <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Senior Full Stack Develoer</p>
-                  <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Allen, TX - Date Applied : 05/06/2024</p>
-                </div>
-
-                <div className='w-[33px] h-[33px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                  <p className='text-[8px] font-semibold'>100%</p>
-                </div>
-
-              </div>
-              <div className='flex gap-2 items-center mt-6'>
-                <GoArrowLeft />
-                <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Previous</p>
-              </div>
-            </div>
-
-            <div className='flex gap-5'>
-
-
-              <div className='border-[1px] border-[#D6DBDE] p-4 rounded-lg '>
-                <div className='w-full flex gap-6 justify-between'>
-                  <div>
-                    <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Johnson</p>
-                    <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Senior Full Stack Develoer</p>
-                    <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Allen, TX - Date Applied : 05/06/2024</p>
+      {allAppliedJobs?.applications?.map((appliedJob:any, id:number)=>{
+        if(profileId === appliedJob.id){
+          return(
+            <div key={id}
+            className={`w-full h-full flex p-3 md:p-3 overflow-scroll justify-center items-center fixed inset-0 transition-all duration-100 ${showFullProfile ? 'opacity-1 scale-[1.01] z-[40]' : 'opacity-0 z-[-10]'} `}
+          >
+            <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
+    
+            <div className='z-[30] max-w-[1000px] w-full h-full bg-white rounded-lg overflow-auto relative top-[0px] p-5'>
+    
+    
+    
+              <div className='w-full flex justify-between'>
+                <div className='border-[1px] border-[#D6DBDE] p-4 rounded-lg '>
+                  <div className='w-full flex gap-6 justify-between'>
+                    <div>
+                      <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Johnson</p>
+                      <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Senior Full Stack Develoer</p>
+                      <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Allen, TX - Date Applied : 05/06/2024</p>
+                    </div>
+    
+                    <div className='w-[33px] h-[33px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
+                      <p className='text-[8px] font-semibold'>100%</p>
+                    </div>
+    
                   </div>
-
-                  <div className='w-[33px] h-[33px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
-                    <p className='text-[8px] font-semibold'>100%</p>
-                  </div>
-
-                </div>
-                <div className='flex gap-2 items-center mt-6 justify-end'>
-                  <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Next</p>
-                  <GoArrowRight />
-                </div>
-              </div>
-
-              <IoMdClose size={30} onClick={() => { setShowFullProfile(!showFullProfile) }} className="cursor-pointer" />
-
-            </div>
-
-
-          </div>
-
-
-          <div className='w-full flex gap-5   mt-6'>
-            <div className='w-[25%] flex flex-col gap-5 '>
-              <div className=' w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
-
-                <div className='flex flex-col justify-center items-center mt-3'>
-                  <div className='w-[80px] h-[80px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
-                    <p className='text-[30px] font-extrabold'>J</p>
-                  </div>
-                  <p className='text-sm font-semibold mt-3'>John S Mathew</p>
-                  <div className='flex gap-2 mt-2'>
-                    <GrLocation />
-
-                    <p className='text-[12px] font-semibold text-[#3A3A3C]'>Allen, Texas, US</p>
-
+                  <div className='flex gap-2 items-center mt-6'>
+                    <GoArrowLeft />
+                    <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Previous</p>
                   </div>
                 </div>
-                <div className='flex justify-center gap-2 mt-5'>
-                  <FaLinkedin />
-                  <FaGithub />
-                  <FaBehanceSquare />
-
-
-
-                </div>
-                <hr className='mt-3' />
-                <div className='mt-3 flex items-center justify-between'>
-                  <div className='flex items-center gap-2 '>
-                    <MdOutlineMail size={20} />
-
-                    <p className='text-[12px] font-medium text-[#3A3A3C] '>John@xyz.com</p>
-                  </div>
-
-                </div>
-                <div className='mt-3 flex items-center justify-between'>
-                  <div className='flex items-center gap-2 '>
-                    <IoCallOutline size={20} />
-
-                    <p className='text-[12px] font-medium text-[#3A3A3C] '>+1 xxx-xxx-xxxx</p>
-                  </div>
-
-                </div>
-                <div className='mt-3 flex items-center justify-between'>
-                  <div className='flex items-center gap-2 '>
-                    <HiOutlineShoppingBag size={20} />
-
-                    <p className='text-[12px] font-medium text-[#3A3A3C] '>Exp: 4 Year 5 Months</p>
-                  </div>
-
-                </div>
-                <hr className='mt-3' />
-                <div>
-
-                  <div className='mt-3'>
-                    <p className='text-[12px] text-[#8F90A6]'>Willing to work / Looking for job change</p>
-                    <p className='text-[12px] font-medium mt-1'>Yes</p>
-                  </div>
-                  <div className='mt-2'>
-                    <p className='text-[12px] text-[#8F90A6]'>Visa Sponsorship</p>
-                    <p className='text-[12px] font-medium mt-1'>Yes</p>
-                  </div>
-                </div>
-
-              </div>
-
-              <div className='w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
-                <p className='text-sm font-semibold mt-2'>Qualification met 2/3</p>
-                <hr className='mt-2' />
-                <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> How many years of experience do you have in Java ? ( in years)</p>
-                <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : 3 (Required)</p>
-                <div className='mt-2 w-fit border-[1px] border-[#06A560] rounded-full px-2 py-1 flex gap-2 items-center'>
-                  <IoCheckmark size={13} className='text-[#06A560]' />
-                  <p className='text-[10px]'>4</p>
-                </div>
-
-                <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> Can you able to relocate the job location</p>
-                <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : Yes (Required)</p>
-                <div className='mt-2 w-fit border-[1px] border-[#06A560] rounded-full px-2 py-1 flex gap-2 items-center'>
-                  <IoCheckmark size={13} className='text-[#06A560]' />
-                  <p className='text-[10px]'>Yes</p>
-                </div>
-                <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> Immediate Joiner ?</p>
-                <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : Yes (Required)</p>
-                <div className='mt-2 w-fit border-[1px] border-[#FF3737] rounded-full px-2 py-1 flex gap-2 items-center'>
-                  <IoCheckmark size={13} className='text-[#FF3737]' />
-                  <p className='text-[10px]'>No</p>
-                </div>
-              </div>
-            </div>
-            <div className='w-[75%] '>
-              <div className='flex  gap-3 justify-end'>
-                <div className='bg-[#114B53] py-2 px-4 rounded-full'>
-                  <p className='text-[12px] font-semibold text-white'>Send RTR</p>
-                </div>
-                <div className='border-[1px] border-[#114B53] py-2 px-4 rounded-full flex gap-2 items-center'>
-                  <IoMail className='text-[#114B53]' />
-
-                  <p className='text-[12px] font-semibold text-[#114B53]'> Message</p>
-                </div>
-                <div className='bg-[#E9F358] py-2 px-4 rounded-full '>
-                  <p className='text-[12px] font-semibold text-[#114B53]'>Download Resume</p>
-                </div>
-              </div>
-
-              <div className='w-full mt-5 p-4'>
-                <div>
-                  <p className='text-base font-bold'>Summary</p>
-                  <p className='text-[12px] mt-3'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                </div>
-                <hr className='w-[95%] m-auto mt-5' />
-                <div className='mt-5'>
-                  <p className='text-base font-bold'>Work experience</p>
-                  <div>
-                    <p className='text-sm font-bold mt-1'>Java Fullstack  </p>
-                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Company - Texas, United States  </p>
-                    <div className='flex gap-2 mt-2'>
-                      <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                        <p className='text-[10px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
+    
+                <div className='flex gap-5'>
+    
+    
+                  <div className='border-[1px] border-[#D6DBDE] p-4 rounded-lg '>
+                    <div className='w-full flex gap-6 justify-between'>
+                      <div>
+                        <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Johnson</p>
+                        <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Senior Full Stack Develoer</p>
+                        <p className='text-[10px] font-semibold text-[#6B7588] mt-'>Allen, TX - Date Applied : 05/06/2024</p>
                       </div>
-                      <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                        <p className='text-[10px] text-[#6B7588] font-semibold'> Health Care</p>
+    
+                      <div className='w-[33px] h-[33px] border-4 boreder-[80%] border-[#06A560] rounded-full flex justify-center items-center'>
+                        <p className='text-[8px] font-semibold'>100%</p>
                       </div>
-                      <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                        <p className='text-[10px] text-[#6B7588] font-semibold'>Full-Time</p>
+    
+                    </div>
+                    <div className='flex gap-2 items-center mt-6 justify-end'>
+                      <p className='text-[12px] font-semibold text-[#3A3A3C] ' >Next</p>
+                      <GoArrowRight />
+                    </div>
+                  </div>
+    
+                  <IoMdClose size={30} onClick={() => { setShowFullProfile(!showFullProfile) }} className="cursor-pointer" />
+    
+                </div>
+    
+    
+              </div>
+    
+    
+              <div className='w-full flex gap-5   mt-6'>
+                <div className='w-[25%] flex flex-col gap-5 '>
+                  <div className=' w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
+    
+                    <div className='flex flex-col justify-center items-center mt-3'>
+                      <div className='w-[80px] h-[80px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
+                        <p className='text-[30px] font-extrabold'>{appliedJob.candidate.user.firstName.charAt(0)}</p>
+                      </div>
+                      <p className='text-sm font-semibold mt-3'>{appliedJob.candidate.user.firstName}</p>
+                      <div className='flex gap-2 mt-2'>
+                        <GrLocation />
+    
+                        <p className='text-[12px] font-semibold text-[#3A3A3C]'>{appliedJob?.candidate?.location}</p>
+    
                       </div>
                     </div>
-                    <p className='text-sm font-bold mt-3'>Summary</p>
-                    <ul className='list-disc text-[12px] ml-6 mt-2'>
-                      <li> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
-                      <li className='mt-2'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
-                    </ul>
-                  </div>
-                  <div className=''>
-                    <p className='text-sm font-bold mt-1'>Java Fullstack  </p>
-                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Company - Texas, United States  </p>
-                    <div className='flex gap-2 mt-2'>
-                      <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                        <p className='text-[10px] text-[#6B7588] font-semibold'>12/2020 - Present</p>
+                    <div className='flex justify-center gap-2 mt-5'>
+                      <FaLinkedin />
+                      <FaGithub />
+                      <FaBehanceSquare />
+    
+    
+    
+                    </div>
+                    <hr className='mt-3' />
+                    <div className='mt-3 flex items-center justify-between'>
+                      <div className='flex items-center gap-2 '>
+                        <MdOutlineMail size={20} />
+    
+                        <p className='text-[12px] font-medium text-[#3A3A3C] '>{appliedJob.candidate.user.email}</p>
                       </div>
-                      <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                        <p className='text-[10px] text-[#6B7588] font-semibold'> Health Care</p>
+    
+                    </div>
+                    <div className='mt-3 flex items-center justify-between'>
+                      <div className='flex items-center gap-2 '>
+                        <IoCallOutline size={20} />
+    
+                        <p className='text-[12px] font-medium text-[#3A3A3C] '>{appliedJob.candidate.user.phoneNumber}</p>
                       </div>
-                      <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                        <p className='text-[10px] text-[#6B7588] font-semibold'>Full-Time</p>
+    
+                    </div>
+                    <div className='mt-3 flex items-center justify-between'>
+                      <div className='flex items-center gap-2 '>
+                        <HiOutlineShoppingBag size={20} />
+    
+                        <p className='text-[12px] font-medium text-[#3A3A3C] '>Exp: 4 Year 5 Months</p>
+                      </div>
+    
+                    </div>
+                    <hr className='mt-3' />
+                    <div>
+    
+                      <div className='mt-3'>
+                        <p className='text-[12px] text-[#8F90A6]'>Willing to work / Looking for job change</p>
+                        <p className='text-[12px] font-medium mt-1'>Yes</p>
+                      </div>
+                      <div className='mt-2'>
+                        <p className='text-[12px] text-[#8F90A6]'>Visa Sponsorship</p>
+                        <p className='text-[12px] font-medium mt-1'>Yes</p>
                       </div>
                     </div>
-                    <p className='text-sm font-bold mt-3'>Summary</p>
-                    <ul className='list-disc text-[12px] ml-6 mt-2'>
-                      <li> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. </li>
-                      <li className='mt-2'>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</li>
-                    </ul>
+    
                   </div>
-
-                </div>
-
-
-                <div className='mt-5'>
-                  <p className='text-base font-bold'>Education</p>
-                  <p className='text-sm font-bold mt-3'>BE Computer Science  </p>
-                  <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>xyz Collage- Texas, United States  </p>
-                  <div className='flex gap-2 mt-2'>
-                    <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
-                      <p className='text-[10px] text-[#6B7588] font-semibold'>07/2016 - 06/2020</p>
-                    </div>
-
-                  </div>
-                </div>
-
-
-
-                <div className='mt-5'>
-                  <p className='text-base font-bold'>Skills </p>
-                  <div className='mt-3'>
-                    <div className='flex gap-4'>
-                      <p className='text-[#114B53] text-sm'>Overall Skills</p>
-                      <p className='text-black text-sm'> Current Skills</p>
-                    </div>
+    
+                  <div className='w-full border-[1px] border-[#D6DBDE] rounded-lg px-3 py-2 md:px-3 md:py-2 '>
+                    <p className='text-sm font-semibold mt-2'>Qualification met 2/3</p>
                     <hr className='mt-2' />
-                    <div className='flex gap-4 mt-3'>
-                      <div className='w-full'>
-                        <div className='w-full flex justify-between'>
-                          <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                          <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                        </div>
-                        <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                          <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                          </div>
-                        </div>
-                      </div>
-                      <div className='w-full '>
-                        <div className='w-full flex justify-between'>
-                          <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                          <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                        </div>
-                        <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                          <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                          </div>
-                        </div>
-                      </div>
+                    <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> How many years of experience do you have in Java ? ( in years)</p>
+                    <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : 3 (Required)</p>
+                    <div className='mt-2 w-fit border-[1px] border-[#06A560] rounded-full px-2 py-1 flex gap-2 items-center'>
+                      <IoCheckmark size={13} className='text-[#06A560]' />
+                      <p className='text-[10px]'>4</p>
                     </div>
-
-                    <div className='flex gap-4 mt-3'>
-                      <div className='w-full'>
-                        <div className='w-full flex justify-between'>
-                          <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                          <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                        </div>
-                        <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                          <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                          </div>
-                        </div>
-                      </div>
-                      <div className='w-full '>
-                        <div className='w-full flex justify-between'>
-                          <p className='text-[#3A3A3C] text-[12px]'>Java</p>
-                          <p className='text-[#3A3A3C] text-[12px]'>4 Years</p>
-                        </div>
-                        <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
-                          <div className='w-[40%] h-1 bg-[#114B53] rounded-full'>
-
-                          </div>
-                        </div>
-                      </div>
+    
+                    <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> Can you able to relocate the job location</p>
+                    <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : Yes (Required)</p>
+                    <div className='mt-2 w-fit border-[1px] border-[#06A560] rounded-full px-2 py-1 flex gap-2 items-center'>
+                      <IoCheckmark size={13} className='text-[#06A560]' />
+                      <p className='text-[10px]'>Yes</p>
                     </div>
-
-                    <div className='flex gap-2 mt-4 items-center justify-center'>
-                      <IoIosArrowDown />
-                      <p className='text-sm font-bold'>View all 20</p>
-                    </div>
-
-                    <hr className='mt-4' />
-
-                    <div className='mt-5'>
-                      <p className='text-base font-bold'>Resume </p>
-                      <img src={resume} alt="" className='mt-3' />
+                    <p className='text-[12px] font-semibold mt-2 text-[#6B7588]'> Immediate Joiner ?</p>
+                    <p className='text-[10px] font-semibold mt-1 text-[#6B7588]'> Your requirement : Yes (Required)</p>
+                    <div className='mt-2 w-fit border-[1px] border-[#FF3737] rounded-full px-2 py-1 flex gap-2 items-center'>
+                      <IoCheckmark size={13} className='text-[#FF3737]' />
+                      <p className='text-[10px]'>No</p>
                     </div>
                   </div>
                 </div>
+                <div className='w-[75%] '>
+                  <div className='flex  gap-3 justify-end'>
+                    <div className='bg-[#114B53] py-2 px-4 rounded-full'>
+                      <p className='text-[12px] font-semibold text-white'>Send RTR</p>
+                    </div>
+                    <div className='border-[1px] border-[#114B53] py-2 px-4 rounded-full flex gap-2 items-center'>
+                      <IoMail className='text-[#114B53]' />
+    
+                      <p className='text-[12px] font-semibold text-[#114B53]'> Message</p>
+                    </div>
+                    <div className='bg-[#E9F358] py-2 px-4 rounded-full '>
+                      <p className='text-[12px] font-semibold text-[#114B53]'>Download Resume</p>
+                    </div>
+                  </div>
+    
+                  <div className='w-full mt-5 p-4'>
+                    <div>
+                      <p className='text-base font-bold'>Summary</p>
+                      <p className='text-[12px] mt-3'>{appliedJob?.candidate?.summary}</p>
+                    </div>
+                    <hr className='w-[95%] m-auto mt-5' />
+                    <div className='mt-5'>
+                                    <p className='text-base font-bold'>Work experience</p>
+
+
+                                    {appliedJob?.candidate?.candidatedetailsexperiences.length === 0 ?
+                                    <p>-</p>
+                                    :
+                                    <div>
+                                    <p className='text-sm font-bold mt-1'>Java Fullstack  </p>
+                                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>{appliedJob?.candidate?.candidatedetailsexperiences[0]?.companydetails} - {appliedJob?.candidate?.candidatedetailsexperiences[0]?.place}  </p>
+                                    <div className='flex gap-2 mt-2'>
+                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'>{appliedJob?.candidate?.candidatedetailsexperiences[0]?.durationStart.split('T')[0]} - {appliedJob?.candidate?.candidatedetailsexperiences[0]?.durationEnd.split('T')[0]}</p>
+                                        </div>
+                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'> Health Care</p>
+                                        </div>
+                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'>Full-Time</p>
+                                        </div>
+                                    </div>
+                                    <p className='text-sm font-bold mt-3'>Summary</p>
+                                    <ul className='list-disc text-[12px] ml-6 mt-2'>
+                                        <li> {appliedJob?.candidate?.candidatedetailsexperiences[0]?.descriptionOfExperience} </li>
+                                        
+                                    </ul>
+                                </div>
+                                    }
+
+
+                                </div>
+    
+    
+                                <div className='mt-5'>
+                                    <p className='text-base font-bold'>Education</p>
+                                    {appliedJob?.candidate?.candidatedetail?.candidatedetailseducationdetails.length === 0 ?
+
+                                    <p>-</p>
+
+                                    :
+                                    
+                                    <>
+                                     <p className='text-sm font-bold mt-3'>{appliedJob?.candidate?.candidatedetail?.candidatedetailseducationdetails[0]?.degree} {appliedJob?.candidate?.candidatedetailseducationdetails[0]?.major}  </p>
+                                    <p className='text-[12px] font-bold text-[#8F90A6] mt-2'>{appliedJob?.candidate?.candidatedetailseducationdetails[0]?.schoolName} - {appliedJob?.candidate?.candidatedetailseducationdetails[0]?.schoolLocation}  </p>
+                                    <div className='flex gap-2 mt-2'>
+                                        <div className='px-2 py-1 rounded-full bg-[#F2F2F5] '>
+                                            <p className='text-[10px] text-[#6B7588] font-semibold'>{appliedJob?.candidate?.candidatedetailseducationdetails[0]?.schoolName} - {appliedJob?.candidate?.candidatedetailseducationdetails[0]?.schoolLocation}</p>
+                                        </div>
+
+                                    </div>
+                                    </>
+                                    }
+                                   
+                                </div>
+    
+    
+    
+                                <div className='mt-5'>
+                                    <p className='text-base font-bold'>Skills </p>
+
+                                    {appliedJob?.candidate?.candidatedetailsskills.length === 0 ? 
+                               <p>-</p>
+                              :
+                              <div className='mt-3'>
+                              <div className='flex gap-4'>
+                                  <p className='text-[#114B53] text-sm'>Overall Skills</p>
+                                  <p className='text-black text-sm'> Current Skills</p>
+                              </div>
+                              <hr className='mt-2' />
+                              <div className='flex gap-4 mt-3'>
+                                  <div className='w-[50%]'>
+                                      <div className='w-full flex justify-between'>
+                                          <p className='text-[#3A3A3C] text-[12px]'>{appliedJob?.candidate?.candidatedetailsskills[0]?.skillName}</p>
+                                          <p className='text-[#3A3A3C] text-[12px]'>{appliedJob?.candidate?.candidatedetailsskills[0]?.yearsOfExperience} Years</p>
+                                      </div>
+                                      <div className='w-full h-1 bg-[#EBEBF0] rounded-full mt-2'>
+                                          <div className={`w-[${Math.round((appliedJob?.candidate?.candidatedetailsskills[0]?.yearsOfExperience/ 30) * 100)}%] h-1 bg-[#114B53] rounded-full`}>
+
+                                          </div>
+                                      </div>
+                                  </div>
+                               
+                              </div>
+
+                              <hr className='mt-4' />
+
+                             
+                          </div>
+                              }
+
+                                  
+                                </div>
+                                <div className='mt-5'>
+                                  <p className='text-base font-bold'>Resume </p>
+                                  <img src={resume} alt="" className='mt-3' />
+                              </div>
+                  </div>
+                </div>
               </div>
+    
+    
             </div>
           </div>
-
-
-        </div>
-      </div>
+          )
+        }
+      })}
+     
     
     </div>
   )
@@ -1430,7 +1407,7 @@ const Applicants: React.FC = () => {
 
         <div className='hidden md:flex  gap-2 mt-3 px-4  overflow-auto'>
 
-          <div className='relative z-[60] '>
+          <div className='relative z-[20] '>
             <div onClick={() => setDropdown(1)} className={`w-fi cursor-pointer flex justify-center items-center gap-2 px-4 py-2 border border-[#114B53] rounded-full 
                 ${isSelected === 1 ? 'bg-[#effefd]' : 'bg-white'} transition-colors duration-500`}>
               <p className="w-fit text-[12px] font-semibold text-[#114B53]"> {selectedOptionAllJob ? selectedOptionAllJob : "All Filters"} </p>

@@ -4,33 +4,38 @@ import axiosInstance from '../../../../axios/axiosInstance';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 
 
+
 const EmailVerification: React.FC = () => {
 
-       const [token, setToken] = useState<string | null>('');
-       const [localStorageToken, setLocalStorageToken] = useState<string | null>('');
-
-
+      const [token, setToken] = useState<boolean>(false);
+      const [errorMessage, setErrorMessage] = useState<string>("");
       const location = useLocation();
-      useEffect(()=>{
-      // const location = useLocation();
-       const searchParams = new URLSearchParams(location.search);
-       setToken(searchParams.get('token'));
-       setLocalStorageToken(localStorage.getItem('topequatortoken')); 
-       console.log("setLocalStorageToken",localStorageToken)   
-       console.log("setLocalStorageToken",token) 
-       
-       const verifyEmail = async () => {
-        try {
-          const respose= await axiosInstance.get(`/api/candidate/signup/verify-email?token=${localStorageToken}`)
-          console.log("object",respose)
-        } catch (error) {
-          console.error('Error fetching resume sourcing data:', error);
-        }
-      };
-  console.log("object")
-      verifyEmail();
-         },[location.search])
-   
+      useEffect(() => {
+      
+        const searchParams = new URLSearchParams(location.search);
+        const extractedToken = searchParams.get('token');
+     
+
+        const verifyEmail = async () => {
+          if (extractedToken) {
+            try {
+              const response = await axiosInstance.get(
+                `/api/candidate/signup/verify-email?token=${extractedToken}`
+              );
+              setToken(true)
+              console.log('Response:', response.data);
+            } catch (error:any) {
+              setErrorMessage(error.response.data.message)
+              console.error('Error verifying email:', error.response.data.message);
+            }
+          } else {
+            
+            console.error('Token is missing in the URL');
+          }
+        };
+    
+        verifyEmail();
+      }, [location.search]);   
 
     return (
         <div className='absolute top-0 w-full h-[100vh]'>
@@ -43,14 +48,14 @@ const EmailVerification: React.FC = () => {
                 <form action="" className='h-full flex flex-col  items-center'>
                     
                     <div className='w-[150px] h-[150px]'>
-                    {token === localStorageToken ?  
+                    {token ?  
                     <IoCheckmarkCircleOutline className='text-green-500 w-full h-full' />:
                     <IoCheckmarkCircleOutline className='text-red-500 w-full h-full' />}
 
                     </div>
-                    {token === localStorageToken ?
+                    {token ?
                    <p className='mb-5'> Your email address was successfully verified</p>:
-                   <p className='mb-5'>Email verification failed. Please try again</p>}
+                   <p className='mb-5'> {errorMessage}</p>}
                   
                     <Link to={"/signin"} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
                       Back to login
