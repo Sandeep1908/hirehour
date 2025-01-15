@@ -190,9 +190,9 @@ const router = createBrowserRouter(
       <Route path="/job-preference" element={<JobPreference />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/signin" element={<Signin />} />
-      <Route path="/forget-password" element={<ForgetPassword/>}/>
-      <Route path="/reset-password" element={<NewPassword/>} />
-      <Route path="/verify-email" element={<EmailVerification/>} />
+      <Route path="/forget-password" element={<ForgetPassword />} />
+      <Route path="/reset-password" element={<NewPassword />} />
+      <Route path="/verify-email" element={<EmailVerification />} />
 
       {/*  *****************************job posters routes *************************************  */}
       <Route path="/job-poster" element={<JobPosterHome />} />

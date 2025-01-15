@@ -22,7 +22,7 @@ import msgLogo from '../assets/header/message.svg';
 import jobLogo from '../assets/header/jobs.svg';
 
 import { useLocation } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserDetails } from '../utils/jobseekers/getUserDetails';
 import {isCandidateAuthenticated} from './isAuthenicated';
 
@@ -36,14 +36,21 @@ const Header: React.FC = () => {
   const { data: userDetails } = useQuery({
     queryKey: ['userDetails'],
     queryFn: fetchUserDetails,
-    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    retry: 1, // Retry once on failure
+    enabled:isCandidateAuthenticated()
   });
+  const queryClient=useQueryClient()
 
   const handlNavBar = () => {
     setIsAccountOpen(false);
     setIsNavOpen(false);
   };
+
+  useEffect(() => {
+    if (isCandidateAuthenticated()) {
+      queryClient.invalidateQueries({queryKey:['userDetails']}); 
+    }
+  }, [isCandidateAuthenticated(), queryClient]);
+
   useEffect(() => {
     if (isNavOpen) {
       document.body.style.overflow = 'hidden';

@@ -77,74 +77,68 @@ const HeaderJP: React.FC = () => {
                 </Link>
 
                 <p className="text-xs tracking-wide hidden md:block ">
-                  <Link to={'/'}> Candidate </Link>/
-                  <Link to={'/'}> Job Seeker</Link>
+                  <Link to={'/'}> Candidate </Link>/<Link to={'/'}> Job Seeker</Link>
                 </p>
-                
               </div>
             </div>
           </div>
         )}
 
-{
-  isRecruiterAuthenticated() &&
-  <div className="  flex justify-center items-center space-x-7   ">
-  <div className="hidden md:flex justify-center items-center space-x-7">
-    <Link to={'/job-poster/messages'}>
-      <div className=" relative flex flex-col  space-y-1 justify-center items-center cursor-pointer">
-        <p className="w-3 h-3 bg-[#FF3837] rounded-full absolute  top-[-1px]  right-3 text-[7px] text-white flex justify-center items-center">
-          2
-        </p>
-        <img src={msgLogo} alt="rtr-header" className="w-5" />
-        <p
-          className={`font-[300] text-xs ${params === '/messages' ? 'font-[500] text-[#104B53]' : ''}`}
-        >
-          {' '}
-          Message
-        </p>
-      </div>
-    </Link>
+        {isRecruiterAuthenticated() && (
+          <div className="  flex justify-center items-center space-x-7   ">
+            <div className="hidden md:flex justify-center items-center space-x-7">
+              <Link to={'/job-poster/messages'}>
+                <div className=" relative flex flex-col  space-y-1 justify-center items-center cursor-pointer">
+                  <p className="w-3 h-3 bg-[#FF3837] rounded-full absolute  top-[-1px]  right-3 text-[7px] text-white flex justify-center items-center">
+                    2
+                  </p>
+                  <img src={msgLogo} alt="rtr-header" className="w-5" />
+                  <p
+                    className={`font-[300] text-xs ${params === '/messages' ? 'font-[500] text-[#104B53]' : ''}`}
+                  >
+                    {' '}
+                    Message
+                  </p>
+                </div>
+              </Link>
 
-    <div className=" relative flex flex-col justify-center items-center cursor-pointer">
-      <IoNotificationsOutline size={22} onClick={() => setIsNotificationOpen(true)} />
+              <div className=" relative flex flex-col justify-center items-center cursor-pointer">
+                <IoNotificationsOutline size={22} onClick={() => setIsNotificationOpen(true)} />
 
-      <p className="w-2 h-2 bg-[#FF3837] rounded-full absolute  top-[-1px] right-[1px]"></p>
+                <p className="w-2 h-2 bg-[#FF3837] rounded-full absolute  top-[-1px] right-[1px]"></p>
 
-      {/* Nofiticaiton modal  */}
+                {/* Nofiticaiton modal  */}
 
-      <NotificationModal
-        setIsNotification={setIsNotificationOpen}
-        isNotification={isNotification}
-      />
-    </div>
-  </div>
+                <NotificationModal
+                  setIsNotification={setIsNotificationOpen}
+                  isNotification={isNotification}
+                />
+              </div>
+            </div>
 
-  {/* Account  */}
+            {/* Account  */}
 
-  <div
-    className="flex justify-center items-center space-x-1 relative cursor-pointer"
-    onClick={() => setIsAccountOpen(!isAccountOpen)}
-  >
-    <div className="flex justify-center items-center space-x-2">
-      <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
-        M
-      </p>
-      <p className="text-sm">Mathew</p>
-    </div>
+            <div
+              className="flex justify-center items-center space-x-1 relative cursor-pointer"
+              onClick={() => setIsAccountOpen(!isAccountOpen)}
+            >
+              <div className="flex justify-center items-center space-x-2">
+                <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
+                  M
+                </p>
+                <p className="text-sm">Mathew</p>
+              </div>
 
-    <MdOutlineKeyboardArrowDown
-      className={`${isAccountOpen ? 'rotate-180 transition-all duration-500' : ''}`}
-    />
+              <MdOutlineKeyboardArrowDown
+                className={`${isAccountOpen ? 'rotate-180 transition-all duration-500' : ''}`}
+              />
 
-    {/* Account Modal  */}
+              {/* Account Modal  */}
 
-    <AccountModal isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} />
-  </div>
-</div>
-}
-         
-
-      
+              <AccountModal isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

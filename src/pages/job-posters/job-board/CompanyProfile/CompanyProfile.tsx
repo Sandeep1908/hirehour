@@ -10,6 +10,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation';
 import Companies from '../../../../utils/jobposters/Companies';
 import { fetchOneCompany } from '../../../../utils/jobposters/jobboards/getCompanyDetails';
+import { FileUploader } from '../../../../utils/jobposters/jobboards/fileuploader';
 // import { FileUploader } from '../../../../utils/jobposters/jobboards/fileuploader';
 
 type CompanyDetailsRequest = {
@@ -63,11 +64,9 @@ const CompanyProfile: React.FC = () => {
     }
   }, [companyDetail, company]);
 
-
-const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
- 
 
     if (file.size > 2 * 1024 * 1024) {
       toast.warning('File size must be less than 2MB');
@@ -75,9 +74,10 @@ const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     }
 
 
-   
-      
- 
+    const uploadFormData = new FormData()
+    uploadFormData.append('file',file)
+    FileUploader(uploadFormData)
+  
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
