@@ -4,28 +4,32 @@ import axiosInstance from '../../../../axios/axiosInstance';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 
 
+
 const EmailVerification: React.FC = () => {
 
-      const [token, setToken] = useState<string | null>('');
+      const [token, setToken] = useState<boolean>(false);
+      const [errorMessage, setErrorMessage] = useState<string>("");
       const location = useLocation();
       useEffect(() => {
       
         const searchParams = new URLSearchParams(location.search);
         const extractedToken = searchParams.get('token');
-        setToken(extractedToken);
-    
-   
+     
+
         const verifyEmail = async () => {
           if (extractedToken) {
             try {
               const response = await axiosInstance.get(
                 `/api/candidate/signup/verify-email?token=${extractedToken}`
               );
+              setToken(true)
               console.log('Response:', response.data);
-            } catch (error) {
-              console.error('Error verifying email:', error);
+            } catch (error:any) {
+              setErrorMessage(error.response.data.message)
+              console.error('Error verifying email:', error.response.data.message);
             }
           } else {
+            
             console.error('Token is missing in the URL');
           }
         };
@@ -51,7 +55,7 @@ const EmailVerification: React.FC = () => {
                     </div>
                     {token ?
                    <p className='mb-5'> Your email address was successfully verified</p>:
-                   <p className='mb-5'>Email verification failed. Please try again</p>}
+                   <p className='mb-5'> {errorMessage}</p>}
                   
                     <Link to={"/signin"} className='w-full flex justify-center items-center h-[58px] font-semibold text-base text-white rounded-lg bg-[#114B53]'>
                       Back to login
