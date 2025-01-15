@@ -1,36 +1,88 @@
-import React, { useState } from 'react'
-import { IoMdClose } from 'react-icons/io'
-import { RxCross2 } from 'react-icons/rx'
-import { SlArrowDown, SlArrowUp } from 'react-icons/sl'
+import React, { useEffect, useState } from 'react'
+import { IoMdClose } from 'react-icons/io' 
+import JobRoles from '../../utils/JobRoles'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { fetchRoles } from '../../utils/jobseekers/getUserDetails'
+import axiosInstance from '../../axios/axiosInstance'
+import { toast } from 'react-toastify'
 
 type JobAlertProps = {
     setJobAlertPopup:(agr:boolean) => void
  }
 
+ type AddPreferences= {
+  jobRoleName: string,
+  jobRoleType: string,
+  experienceLevel: string,
+  salaryRange: string;
+  TypesOfAuthorizationToHave: string;
+  location: string;
+
+}
+
 const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
 
-
-   const employmentTypes = ['Full-time', 'Part-time'];
-   type EmploymentType = typeof employmentTypes[number];
+  const { data: jobRoles } = useQuery({queryKey: ['jobroles'],queryFn: fetchRoles,});
+  //  const employmentTypes = ['Full-time', 'Part-time'];
+  //  type EmploymentType = typeof employmentTypes[number];
    
-     const [selectedTypes, setSelectedTypes] = useState<EmploymentType[]>([]);
-     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    //  const [selectedTypes, setSelectedTypes] = useState<EmploymentType[]>([]);
+    //  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
      const [isJobAlertChecked, setIsJobAlertChecked] = useState<boolean>(false);
 
-   
-     const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-   
-     const handleSelect = (type: EmploymentType) => {
-       if (!selectedTypes.includes(type)) {
-         setSelectedTypes([...selectedTypes, type]);
-       }
-     };
-   
-     const handleDeselect = (type: EmploymentType) => {
-       setSelectedTypes(selectedTypes.filter((selectedType) => selectedType !== type));
-     };
-   
+     
+     const [jobRoleSelect, setJobRoleSelect] = useState<number>();
+     const [jobRoleName, setJobRoleName] = useState<string>("");
+     const [jobRoleType, setJobRoleType] = useState<string>("");
+     const [experienceLevel, setExperienceLevel] = useState<string>("");
+     const [salaryRange, setSalaryRange] = useState<string>("");
+     const [salaryRangeType, setSalaryRangeType] = useState<string>("");
+     const [TypesOfAuthorizationToHave, setTypesOfAuthorizationToHave] = useState<string>("");
+     const [location, setLocation] = useState<string>("");
 
+useEffect(() => {
+   if(jobRoles){
+    jobRoles.jobRoles.map((data:any)=>{
+      if(jobRoleSelect && jobRoleSelect === data.id){
+        setJobRoleName(data.roleName)
+        console.log("jobRoleName",jobRoleName)
+      }
+    })
+   }
+},[jobRoleSelect]);
+
+useEffect(() => {
+
+  console.log("Updated jobRoleName:", jobRoleName);
+}, [jobRoleName]);
+
+
+
+const mutation = useMutation({
+        
+  mutationFn: async (addPreferences: AddPreferences) => {
+    const response = await axiosInstance.post("/api/candidate/details/create-job-preference", addPreferences);
+    console.log("response.data",response.data)
+    return response.data;
+  
+  },
+  onSuccess: () => {
+      
+    toast.success('Job Preferences added successfully');
+  },
+  onError: () => {
+      toast.error('Failed to add. Please try again.');
+
+   },
+});
+
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        const formData = { jobRoleName, jobRoleType, experienceLevel, salaryRange,salaryRangeType, TypesOfAuthorizationToHave,location };
+        console.log("formData",formData)
+        mutation.mutate(formData);
+      };  
 
   return (
     <div className='w-full h-full flex p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
@@ -62,11 +114,13 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
               <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
                 <div className='w-full '>
                    <p className='text-sm font-medium'>Job Tittle</p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      <option value=""> Java Full stack </option>
-                      <option value=""> Web Developer </option>
-                   </select>                </div>
-                <div className='w-full '>
+                   <div className='mt-2'>
+
+                   <JobRoles setRole={setJobRoleSelect} />
+                   </div>
+
+                                  </div>
+                {/* <div className='w-full '>
                    <p className='text-sm font-medium'>Employment type </p>
                    <div className="relative inline-block w-full mt-2">
       <div
@@ -91,15 +145,6 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
                 }}
                  />
 
-                {/* <span
-                  className="ml-1 text-red-500 hover:text-red-700 cursor-pointer"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDeselect(type);
-                  }}
-                >
-                  &#10005;
-                </span> */}
               </span>
             ))
           )}
@@ -127,6 +172,13 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
         </div>
       )}
     </div>        
+                </div> */}
+                 <div className='w-full '>
+                   <p className='text-sm font-medium'>Employment type</p>
+                   <select name="" id="" onChange={(e) => setJobRoleType(e.target.value)}  className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value="Full-time"> Full-time </option>
+                      <option value="Part-time"> Part-time </option>
+                   </select>
                 </div>
              </div>
 
@@ -135,15 +187,17 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
               <div className='w-full flex gap-4 mt-5 flex-col md:flex-row'>
                 <div className='w-full '>
                    <p className='text-sm font-medium'>Work mode </p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                   <select name="" id="" className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
                       <option value=""> On Site  </option>
                       <option value=""> Remote </option>
+                      <option value=""> Hybrid </option>
                    </select>                </div>
                 <div className='w-full '>
                    <p className='text-sm font-medium'>Experience level </p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      <option value=""> Associate Level </option>
-                      <option value=""> Senior </option>
+                   <select name="" id="" onChange={(e) => setExperienceLevel(e.target.value)} className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value="Associate Level"> Associate Level </option>
+                      <option value="Mid"> Mid </option>
+                      <option value="Senior"> Senior </option>
                    </select>
                                    </div>
              </div>
@@ -152,22 +206,26 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
 
             <div className='w-full flex gap-4 mt-1'>
                 <div className='w-full '>
-                   <p className='text-[12px] font-medium'>Min</p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      <option value=""> $80.00 </option>
-                      <option value=""> $90.00 </option>
+                   <p className='text-[12px] font-medium'>Min - Max</p>
+                   <select name="" id="" onChange={(e) => setSalaryRange(e.target.value)} className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value="80k - 90k"> 80k - 90k </option>
+                      <option value="90k - 100k"> 90k - 100k </option>
+                      <option value="100k - 110k"> 100k - 110k </option>
+                      <option value="110k - 120k"> 110k - 120k </option>
                    </select>
                 </div>
                 <div className='w-full '>
-                   <p className='text-[12px] font-medium'>Max </p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      <option value=""> $100.00</option>
-                      <option value=""> $200.00</option>
+                   <p className='text-[12px] font-medium'>Type</p>
+                   <select name="" id="" onChange={(e) => setSalaryRangeType(e.target.value)} className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value="USD"> USD </option>
+                      <option value="INR"> INR </option>
+                      <option value="UAE"> UAE</option>
                    </select>
                 </div>
+               
                 <div className='w-full '>
                    <p className='text-[12px] font-medium'>Rate </p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                   <select name="" id="" className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
                       <option value=""> Per Year</option>
                       <option value=""> 2 Year</option>
                    </select>
@@ -178,16 +236,16 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
              <div className='w-full flex gap-4 mt-5'>
                 <div className='w-full '>
                    <p className='text-sm font-medium'>Work authorization</p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      <option value=""> H1 Visa </option>
-                      <option value=""> H2 Visa </option>
+                   <select name="" id="" onChange={(e) => setTypesOfAuthorizationToHave(e.target.value)}  className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value="H1 Visa"> H1 Visa </option>
+                      <option value="H2 Visa"> H2 Visa </option>
                    </select>
                 </div>
                 <div className='w-full '>
                    <p className='text-sm font-medium'>Location </p>
-                   <select name="" id="" className='w-full h-[40px] text-xs rounded-xl border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
-                      <option value=""> Texas, US</option>
-                      <option value=""> Londan, Uk</option>
+                   <select name="" id="" onChange={(e) => setLocation(e.target.value)}  className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                      <option value="Texas, US"> Texas, US</option>
+                      <option value="Londan, Uk"> Londan, Uk</option>
                    </select>
                 </div>
              </div>
@@ -197,7 +255,7 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
 
             <hr />
             <div className='w-full flex justify-end p-4'>
-                <div  className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full '>
+                <div onClick={handleSubmit} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full '>
                     <p className='text-sm font-semibold text-[#114B53]'>Add</p>
                 </div>
             </div>

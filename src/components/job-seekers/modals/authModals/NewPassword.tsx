@@ -53,11 +53,11 @@ const NewPassword:React.FC = () => {
    const handleSubmit = (e: React.FormEvent) => {
        e.preventDefault();
 
-
     const searchParams = new URLSearchParams(location.search);
-    setToken(searchParams.get('token'));
+    const extractedToken = searchParams.get('token');
+    setToken(extractedToken);
 
-    const formData = {  newPassword };
+    const formData = { newPassword };
       const result = newPassSchema.safeParse(formData);
       console.log("result",result)
       if (!result.success) {
