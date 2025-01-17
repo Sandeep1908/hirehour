@@ -207,9 +207,9 @@ const Signin: React.FC = () => {
                   <p className="text-[14px] ">Remember me</p>
                 </div>
 
-                <div className="font-medium text-[14px] md:text-base underline">
+                <Link to={"/job-poster/forget-password"} className="font-medium text-[14px] md:text-base underline">
                   Forgot Password?
-                </div>
+                </Link>
               </div>
 
               <button

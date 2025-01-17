@@ -39,6 +39,7 @@ import CertificationEdit from '../../../components/job-seekers/profile/Certifica
 import OverallSkill from './components/OverallSkill';
 import CurrentSkill from './components/CurrentSkill';
 import { AiOutlinePlus } from 'react-icons/ai';
+import EditCertification from '../../../components/job-seekers/profile/edit/EditCertification';
 
 
 
@@ -68,6 +69,10 @@ const Profile: React.FC = () => {
   const [achievementPopup, setAchievementPopup] = useState<boolean>(false);
   const [isPublic, setIsPublic] = useState<boolean>(true);
   const [isUploadResumeOpen, setIsUploadResumeOpen] = useState(false);
+  
+  const [editCertData,setEditCertData] = useState<any>()
+  const [editCertPopup,setEditCertPopup] = useState<boolean>(false)
+
 
 // Checek Profile Complition
 
@@ -80,6 +85,7 @@ const [addSociallinks, setAddSociallinks] = useState<boolean>(false);
 const [addDomain, setAddDomain] = useState<boolean>(false);
 const [completionPercentage, setCompletionPercentage] = useState<number>(0);
 const [counttotal, setCountTotal] = useState<number>(0);
+
 
 
 
@@ -98,10 +104,6 @@ const skillSection =[
       component : <CurrentSkill/>
   }
 ]
-
-
-
-
 
 let count = 0; 
 
@@ -495,7 +497,7 @@ useEffect(() => {
 
             {/* Certification  */}
 
-            <Certification setCertificationPopup={setCertificationPopup} setAddCertificationPopup={setAddCertificationPopup}/>
+            <Certification setCertificationPopup={setCertificationPopup} setAddCertificationPopup={setAddCertificationPopup} setEditCertData={setEditCertData} setEditCertPopup={setEditCertPopup}/>
 
 
             {/* Acheivment  */}
@@ -572,6 +574,11 @@ useEffect(() => {
        {addEducationPopup && <AddEducation setAddEducationPopup={setAddEducationPopup} />}
        {addExperiencePopup && <AddExperience setAddExperiencePopup={setAddExperiencePopup} />}
        {addCertificationPopup && <AddCertification setAddCertificationPopup={setAddCertificationPopup} />}
+
+
+       {/* edit popups */}
+
+       {editCertPopup && <EditCertification setEditCertPopup={setEditCertPopup} editCertData={editCertData} />}
 
 
 

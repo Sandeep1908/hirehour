@@ -2,10 +2,10 @@ import { useMutation } from '@tanstack/react-query';
 import React, { useState } from 'react'
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useLocation, useNavigate } from 'react-router-dom';
-import axiosInstance from '../../../../axios/axiosInstance';
 import { z } from 'zod';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
+import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
 
 
 
@@ -37,12 +37,11 @@ const NewPassword:React.FC = () => {
     const location = useLocation();
      const mutation = useMutation({
     mutationFn: async (NewPassword: NewPassword )=>{
-      const response = await axiosInstance.post("/api/candidate/signup/reset-pass", NewPassword);
-      console.log("response.data",response.data)
+      const response = await axiosrecruiterinstance.post("/api/recruiter/signup/reset-pass", NewPassword);
       return response.data;    },
       onSuccess: () => {
         toast.success('New Password set successfully');
-        navigate("/signin"); 
+        navigate("job-poster/signin"); 
       },
       onError: (error) => {
         const axiosError = error as AxiosError<{ message: string }>;
@@ -61,7 +60,6 @@ const NewPassword:React.FC = () => {
     
     if (password !== confirmPassword) {
       setValidateErrors(true);
-      console.log(validateErrors)
       return;
     }
     const formData = { password };
