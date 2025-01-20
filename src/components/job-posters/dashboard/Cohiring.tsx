@@ -124,6 +124,7 @@ const AddUserModal: React.FC<AddUseModalProps> = ({ isOpen, setIsOpen }) => {
     queryFn: fetchAllTeamMembers,
   });
 
+  console.log("allTeams",);
   const inviteMutation = useMutation({
     mutationFn: async (teamMemberID: {teamMemberID:number}) => {
       const response = await axiosrecruiterinstance.post(

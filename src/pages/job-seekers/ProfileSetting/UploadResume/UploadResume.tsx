@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FaCirclePlus } from 'react-icons/fa6';
 import { GrDocumentPdf } from 'react-icons/gr';
 import { IoMdClose } from 'react-icons/io';
@@ -30,17 +30,12 @@ type ModalUserDetails = {
 const UploadResume: React.FC = () => {
   const [isContinue, setIsContinue] = useState<boolean>(false);
   const description = 'resume';
-
-  const [fileSize, setFileSize] = useState<string | null>(null);
   const [uploadProgress, setUploadProgress] = useState<number | null>(null);
   const queryClient = useQueryClient();
-
   const [selectedLocation, setSelectedLocation] = useState<LocationValue | null>(null);
   const [isVisaSponsored, setIsVisaSponsored] = useState<boolean>(false);
-
   const navigate = useNavigate();
 
-  //option of sponsorship
   const visaSponsorshipOptions = [
     { value: true, label: 'Required' },
     { value: false, label: 'Not Required' },
@@ -56,27 +51,18 @@ const UploadResume: React.FC = () => {
     queryFn: fetchUserDetails,
   });
 
-  let latestResume = [];
-  if (resumes?.resumes) {
-    const sortedResumes = resumes?.resumes?.sort(
-      (a: ResumeType, b: ResumeType) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
-    );
-    latestResume = sortedResumes?.[0];
-  }
+  const latestResume = resumes?.resumes?.sort(
+    (a: ResumeType, b: ResumeType) =>
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+  )?.[0];
 
-  //upload resume mutation
   const uploadResumeMutation = useMutation({
     mutationFn: async (formData: FormData) => {
       const response = await axiosInstance.post(`/api/candidate/details/resumes`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-
+        headers: { 'Content-Type': 'multipart/form-data' },
         onUploadProgress: ({ loaded, total }) => {
           if (total) {
-            const progress = Math.round((loaded * 100) / total);
-            setUploadProgress(progress);
+            setUploadProgress(Math.round((loaded * 100) / total));
           } else {
             console.warn('Upload total size is undefined');
           }
@@ -84,21 +70,18 @@ const UploadResume: React.FC = () => {
       });
       return response.data;
     },
-
     onSuccess: () => {
       setUploadProgress(null);
       queryClient.invalidateQueries({ queryKey: ['resumes'] });
       toast.success('Resume uploaded successfully!');
     },
-    onError: (error) => {
-      const axiosError = error as AxiosError<{ message: string }>;
+    onError: (error: AxiosError<{ message: string }>) => {
       setUploadProgress(null);
-      localStorage.removeItem('filesizeres');
-      toast.error(axiosError?.response?.data?.message);
+      toast.error(error?.response?.data?.message);
     },
   });
 
-  const { getRootProps, getInputProps,isDragActive } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (acceptedFiles) => {
       const file = acceptedFiles[0];
       if (!file) return;
@@ -120,7 +103,6 @@ const UploadResume: React.FC = () => {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('description', description);
-      localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
       uploadResumeMutation.mutate(formData);
     },
   });
@@ -146,11 +128,9 @@ const UploadResume: React.FC = () => {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('description', description);
-    localStorage.setItem('filesizeres', (file.size / (1024 * 1024)).toFixed(2));
     uploadResumeMutation.mutate(formData);
   };
 
-  //modal user form submit
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -163,14 +143,10 @@ const UploadResume: React.FC = () => {
 
     submitContactInfoMutation.mutate(formData);
 
-    const locationData = {
-      location: formatLocation(selectedLocation),
-    };
-
+    const locationData = { location: formatLocation(selectedLocation) };
     submitLocation.mutate(locationData);
   };
 
-  // Mutation for submitting form data
   const submitContactInfoMutation = useMutation({
     mutationFn: async (formData: ModalUserDetails) => {
       const response = await axiosInstance.post(
@@ -185,13 +161,11 @@ const UploadResume: React.FC = () => {
       setIsContinue(false);
       navigate('/additional-information');
     },
-    onError: (error) => {
-      const axiosError = error as AxiosError<{ message: string }>;
-      toast.error(axiosError?.response?.data?.message);
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error?.response?.data?.message);
     },
   });
 
-  // Mutation for Location
   const submitLocation = useMutation({
     mutationFn: async (formData: { location: string }) => {
       const response = await axiosInstance.post('/api/candidate/details/update-details', formData);
@@ -201,20 +175,14 @@ const UploadResume: React.FC = () => {
       queryClient.invalidateQueries({ queryKey: ['location'] });
       setIsContinue(false);
     },
-    onError: (error) => {
-      const axiosError = error as AxiosError<{ message: string }>;
-      toast.error(axiosError?.response?.data?.message);
+    onError: (error: AxiosError<{ message: string }>) => {
+      toast.error(error?.response?.data?.message);
     },
   });
-
-  useEffect(() => {
-    const fileSize = localStorage.getItem('filesizeres');
-
-    setFileSize(fileSize);
-  }, [resumes]);
-
+ 
+ 
   return (
-    <div className="w-full h-[calc(100vh-50px)] pb-20 bg-[#F6F6F8]">
+    <div className="w-full min-h-screen pb-20 bg-[#F6F6F8]">
       <div className="max-w-[1200px] h-48  m-auto">
         <div className="">
           <div className="flex  flex-col  space-y-4 md:flex-row  md:justify-between md:items-center p-4">
@@ -258,9 +226,7 @@ const UploadResume: React.FC = () => {
         </div>
       </div>
 
-      {/* Upload Resume  */}
-
-      <div className="max-w-[1200px] h-full md:h-[476px] bg-white m-auto p-4 mt-2">
+      <div className="max-w-[1200px]  md:h-[476px] bg-white m-auto p-4 mt-2">
         <div className="flex flex-col space-y-2">
           <h1 className="text-sm">Upload Your Resume</h1>
           <p className="text-xs text-[#6B7588]">
@@ -269,20 +235,19 @@ const UploadResume: React.FC = () => {
         </div>
 
         <div className="flex flex-col md:flex-row justify-center items-center p-4 md:p-5 space-x-5">
-          <div className={`w-full sm:w-[588px] h-[300px] border border-black border-dashed flex flex-col justify-center items-center ${isDragActive?'opacity-40':''}`}>
-            <div className={`flex flex-col space-y-3 justify-center items-center  `}>
+          <div
+            className={`w-full sm:w-[588px] h-[300px] border border-black border-dashed flex flex-col justify-center items-center ${isDragActive ? 'opacity-40' : ''}`}
+          >
+            <div className="flex flex-col space-y-3 justify-center items-center">
               <div {...getRootProps()} className="w-full h-20">
                 <input {...getInputProps()} />
               </div>
               <p className="font-semibold text-sm"> Drap & Drop files Here</p>
               <p className="text-xs text-[#6B7588]">or</p>
 
-              <label
-                className={`flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#E9F358]   `}
-              >
+              <label className="flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#E9F358]">
                 <FaCirclePlus size={13} color="#104B53" className="" />
-                <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>Upload Here</span>
-
+                <span className="text-xs text-[#104B53] font-[500] pl-2">Upload Here</span>
                 <input type="file" className="hidden" onChange={handleFileChange} />
               </label>
 
@@ -293,18 +258,15 @@ const UploadResume: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Side */}
-
           <div className="w-full sm:w-[588px] h-[300px] p-4 flex flex-col justify-around md:justify-between items-center">
             <div className="flex flex-col space-y-5 w-full">
               {latestResume?.resumeLink ? (
                 <>
                   <h1 className="text-sm font-semibold">
-                    {uploadProgress === 100 ? 'Uploaded' : 'Uploading...'}
+                    {uploadProgress !== null ? 'Uploading' : 'Uploaded'}
                   </h1>
                   <div className="w-full flex justify-center items-center space-x-5">
                     <GrDocumentPdf size={30} />
-
                     <div className="flex flex-col space-y-3 w-full">
                       <p className="text-xs">
                         <a
@@ -313,17 +275,16 @@ const UploadResume: React.FC = () => {
                           href={latestResume?.resumeLink || ''}
                           rel="noopener noreferrer"
                         >
-                          {' '}
-                          {latestResume?.resumeLink.split('@@')[1]} {fileSize} MB
+                          {latestResume?.resumeLink.split('@@')[1]}{' '}
+                          {(latestResume?.resumeLink.split('@@')[2] / (1024 * 1024)).toFixed(2)} MB
                         </a>
                       </p>
-
                       <div className="w-full max-w-60 bg-[#FFF1C6] rounded-full">
                         <div
                           className="bg-[#FFD05B] text-xs text-black text-center leading-none rounded-full"
                           style={{ width: `${uploadProgress}%` }}
                         >
-                          {uploadProgress}%
+                          {uploadProgress || 100}% 
                         </div>
                       </div>
                     </div>
@@ -336,12 +297,11 @@ const UploadResume: React.FC = () => {
 
             <div className="w-full ">
               <hr />
-
               <div
                 className="w-full flex justify-center md:justify-end md:mt-2 "
                 onClick={() => setIsContinue(true)}
               >
-                <p className="flex justify-center items-center w-full md:w-36 h-8 text-sm  rounded-full cursor-pointer bg-[#E9F358] ">
+                <p className="flex justify-center items-center w-full md:w-24 h-8 text-xs  rounded-md cursor-pointer bg-[#E9F358] ">
                   Continue
                 </p>
               </div>
@@ -350,28 +310,21 @@ const UploadResume: React.FC = () => {
         </div>
       </div>
 
-      {/* Contact Information Modal  */}
       <div
-        className={`w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isContinue ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'} `}
+        className={`w-full h-full flex justify-center items-center fixed inset-0 transition-all duration-500 ${isContinue ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}`}
       >
-        <div
-          className="   z-[10] w-full max-w-[600px] shadow-xl
-                        h-[80%] bg-white rounded-lg"
-        >
+        <div className="z-[10] w-full max-w-md shadow-xl min-h-96  bg-white rounded-lg">
           <div className="flex justify-between items-center p-5">
             <div className="flex flex-col space-y-3">
               <h1 className="text-lg font-semibold">Verify your contact information</h1>
               <p className="text-sm text-[#6B7588]">Verify your contact information</p>
             </div>
-
             <IoMdClose size={20} onClick={() => setIsContinue(false)} className="cursor-pointer" />
           </div>
-
           <hr />
 
-          <div className="w-full flex flex-col space-y-4  p-4">
+          <form onSubmit={handleFormSubmit} className="w-full flex flex-col space-y-4 p-4">
             <div className="w-full grid grid-cols-2 gap-3">
-              {/* first name  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
                   <label htmlFor="" className="text-sm">
@@ -379,17 +332,14 @@ const UploadResume: React.FC = () => {
                   </label>
                   <span className="text-red-500">*</span>
                 </div>
-
                 <input
                   type="text"
                   placeholder="Enter your first name"
                   value={userDetails?.user?.firstName}
                   disabled
-                  className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
-
-              {/* last name  */}
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
@@ -398,19 +348,17 @@ const UploadResume: React.FC = () => {
                   </label>
                   <span className="text-red-500">*</span>
                 </div>
-
                 <input
                   type="text"
                   placeholder="Enter your last name"
                   value={userDetails?.user?.lastName}
                   disabled
-                  className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
             </div>
 
             <div className="w-full grid grid-cols-2 gap-3">
-              {/* Phone No  */}
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
                   <label htmlFor="" className="text-sm">
@@ -424,11 +372,9 @@ const UploadResume: React.FC = () => {
                   value={userDetails?.user?.phoneNumber}
                   disabled
                   placeholder="Enter your phone no"
-                  className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
-
-              {/* Email  */}
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
@@ -443,12 +389,11 @@ const UploadResume: React.FC = () => {
                   placeholder="Enter your email"
                   value={userDetails?.user?.email}
                   disabled
-                  className="p-4 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
             </div>
 
-            {/* sponsership  */}
             <div className="flex flex-col space-y-2">
               <div className="flex ">
                 <label htmlFor="" className="text-sm">
@@ -466,8 +411,6 @@ const UploadResume: React.FC = () => {
               />
             </div>
 
-            {/* Location  */}
-
             <div className="w-full">
               <div className="flex ">
                 <label htmlFor="" className="text-sm">
@@ -481,20 +424,13 @@ const UploadResume: React.FC = () => {
             <p className="text-[#6B7588] text-xs">
               Recruiters may search by location for candidates to hire better
             </p>
-          </div>
 
-          {/* Button submit  */}
-
-          <div className="p-4">
             <div className="w-full flex justify-center md:justify-end md:mt-4">
-              <button
-                onClick={(e) => handleFormSubmit(e)}
-                className="px-4 py-2 bg-[#E9F358] text-[#104B53] rounded-md"
-              >
+              <button type="submit" className="px-4 py-2 text-xs bg-[#E9F358] text-[#104B53] rounded-md">
                 Continue
               </button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

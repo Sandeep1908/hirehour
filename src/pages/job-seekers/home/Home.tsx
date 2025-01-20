@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from 'react';
-
 import { IoSearchOutline } from 'react-icons/io5';
 import { SlLocationPin } from 'react-icons/sl';
-
 import { ResourseCard } from '../../../config/home';
 import { BsUpload } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Footer from '../../../components/Footer';
+
+// Assuming you have a type definition for HomeCardTypes
+type HomeCardTypes = {
+  imgUrl: string;
+  title: string;
+  description: string;
+}; 
 
 const Home: React.FC = () => {
   const [homeCards, setHomeCards] = useState<HomeCardTypes[]>();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [locationTerm, setLocationTerm] = useState('');
+  const [workType, setWorkType] = useState('');
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     setHomeCards(ResourseCard);
   }, []);
+
+  const handleSearch = () => {
+    const queryParams = new URLSearchParams({
+      q: searchTerm,
+      location: locationTerm,
+      type: workType,
+    });
+    navigate(`/searchjob?${queryParams.toString()}`);
+  };
 
   return (
     <>
       <div className="w-full mb-10 ">
         <div className="bg-[#104B53]">
           <div className="w-full max-w-[1200px]  m-auto p-2 md:p-10 ">
-            {/* Top Heading  */}
-
             <div className="w-full max-w-3xl flex flex-col space-y-4">
               <h1 className=" relative text-4xl text-white font-bold">
                 Find Your Perfect
@@ -34,10 +50,7 @@ const Home: React.FC = () => {
               </p>
             </div>
 
-            {/* Search Job Area  */}
-
             <div className="w-full mt-10 grid  md:grid-cols-4  gap-5  ">
-              {/* Left Search  */}
               <div className="w-full  bg-white  md:col-span-3  p-3 rounded-lg  ">
                 <div className="flex space-x-2 ">
                   <span className="text-[#146085] text-xl font-[500]">1000 + Jobs </span>
@@ -53,6 +66,8 @@ const Home: React.FC = () => {
                         type="text"
                         className="p-4 ml-1 w-72 text-xs text-black outline-none  placeholder:text-xs"
                         placeholder="Company name, job Tittle or keywords"
+                        value={searchTerm} 
+                        onChange={(e) => setSearchTerm(e.target.value)} 
                       />
 
                       <IoSearchOutline
@@ -67,6 +82,8 @@ const Home: React.FC = () => {
                         type="text"
                         className="p-4 ml-1 w-64 text-xs text-black outline-none  placeholder:text-xs"
                         placeholder="City, state, zip code or remote"
+                        value={locationTerm} 
+                        onChange={(e) => setLocationTerm(e.target.value)}
                       />
                       <SlLocationPin
                         color="#8D8D8D"
@@ -80,33 +97,34 @@ const Home: React.FC = () => {
                         name=""
                         id=""
                         className="text-xs text-[#C6C6C6] border-[#C6C6C6] w-20 text-center h-8  rounded-full border-[1px] outline-none"
+                        value={workType}
+                        onChange={(e) => setWorkType(e.target.value)}
                       >
-                        <option>Remote</option>
-                        <option>Hybrid</option>
-
-                        <option>On-Site</option>
+                        <option value="">All</option> 
+                        <option value="remote">Remote</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="on-site">On-Site</option>
                       </select>
                     </div>
 
                     <div className="mr-2">
-                      <Link to={'/searchjob'}>
-                        <button className=" bg-[#E9F358] flex justify-center text-xs items-center text-[#104B53] w-28 h-8 rounded-full text-sm font-[500] cursor-pointer">
-                          Search
-                        </button>
-                      </Link>
+                      <button 
+                        className=" bg-[#E9F358] flex justify-center text-xs items-center text-[#104B53] w-28 h-8 rounded-full text-sm font-[500] cursor-pointer"
+                        onClick={handleSearch}
+                      >
+                        Search
+                      </button> 
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Right Upload  */}
               <div className="bg-white w-full    space-y-4 p-3  flex justify-center items-center flex-col rounded-lg ">
                 <div className="flex flex-col  space-x-2 text-center ">
                   <span className="text-[#146085] text-lg font-[500]">Upload Your Resume - </span>
                   <span className="text-sm ">Let employers find you</span>
                 </div>
 
-                {/* upload button  */}
                 <Link
                   to="/upload-resume"
                   className={`flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#E9F358]   `}
@@ -126,7 +144,6 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        {/* Resouces section */}
 
         <div className="w-full max-w-[1150px] mt-10 m-auto bg-white p-4 rounded-lg">
           <div className="w-full">

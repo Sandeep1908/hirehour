@@ -28,7 +28,11 @@ const SignRTR: React.FC<{
   const viewRTR = rtr?.data?.filter((i: ALLRTRTYPES) => i.ID === rtrId)?.[0];
 
   const signMutation = useMutation({
-    mutationFn: async (signRTR: { rtrId: number; employerSignatureLink: string }) => {
+    mutationFn: async (signRTR: {
+      rtrId: number;
+      employerSignatureName: string;
+      status: boolean;
+    }) => {
       const response = await axiosrecruiterinstance.post('/api/recruiter/rtr/sign-rtr', signRTR);
       return response.data;
     },
@@ -44,7 +48,7 @@ const SignRTR: React.FC<{
 
   const handleSign = () => {
     if (rtrId) {
-      signMutation.mutate({ rtrId, employerSignatureLink: signature });
+      signMutation.mutate({ rtrId, employerSignatureName: signature, status: true });
     }
   };
 
@@ -52,8 +56,6 @@ const SignRTR: React.FC<{
     <div
       className={`w-full h-full p-3  flex justify-center items-center   fixed inset-0 transition-all ease-in-out duration-300  ${isSignRTR ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'} `}
     >
-
-
       <div
         className="   z-[10] w-full max-w-[670px] overflow-auto   shadow-xl
           h-[95%]  md:h-[99%]  bg-[#F2F2F5] rounded-lg"
@@ -190,10 +192,10 @@ const SignRTR: React.FC<{
                 {viewRTR?.isSignedByEmployer ? (
                   <>
                     <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
-                      {viewRTR?.employerSignatureImgLink}
+                      {viewRTR?.employerSignatureName}
                     </p>
 
-                    <p className="text-xs">{viewRTR?.employerSignatureImgLink} - 08/16/2024</p>
+                    <p className="text-xs">{viewRTR?.employerSignatureName} - 08/16/2024</p>
 
                     <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
                       Signed
@@ -213,19 +215,18 @@ const SignRTR: React.FC<{
 
                     <p
                       onClick={() => handleSign()}
-                      className="text-white text-[10px] w-[100px] p-2 cursor-pointer rounded-full text-center bg-[#07A561]"
+                      className="text-white text-[10px] w-24 p-2 cursor-pointer flex justify-center items-center rounded-full text-center bg-[#07A561]"
                     >
                       {signMutation.isPending ? (
-                        <Spinner loading={signMutation.isPending} color={'#000000'} size={15} />
+                        <Spinner  color={'white'} size={5} />
                       ) : (
                         'Sign'
                       )}
+                     
                     </p>
                   </>
                 )}
               </div>
-
-              
             </div>
 
             <div className="flex flex-col justify-start items-start space-y-3">
@@ -236,10 +237,10 @@ const SignRTR: React.FC<{
                   {viewRTR?.isSignedByCandidate ? (
                     <>
                       <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
-                        {viewRTR?.candidateSignatureImgLink}
+                        {viewRTR?.candidateSignatureName}
                       </p>
 
-                      <p className="text-xs">{viewRTR?.candidateSignatureImgLink} - 08/16/2024</p>
+                      <p className="text-xs">{viewRTR?.candidateSignatureName} - 08/16/2024</p>
 
                       <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
                         Signed

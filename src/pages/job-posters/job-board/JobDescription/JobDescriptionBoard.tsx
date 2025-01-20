@@ -186,7 +186,7 @@ const JobDescriptionBoard: React.FC = () => {
                       value={formData.salaryOfferedRangeStart}
                       onChange={handleChange}
                       placeholder="Per hour"
-                      className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
+                      className="p-2 text-sm border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
                     />
                   </div>
 
@@ -203,7 +203,7 @@ const JobDescriptionBoard: React.FC = () => {
                       name="salaryOfferedRangeEnd"
                       value={formData.salaryOfferedRangeEnd}
                       onChange={handleChange}
-                      className="p-2 border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
+                      className="p-2 text-sm border border-[#EBEBF0] rounded-md  placeholder:text-[10px]"
                     />
                   </div>
 
@@ -228,9 +228,9 @@ const JobDescriptionBoard: React.FC = () => {
               </div>
 
               {/* Job Description  */}
-              <div className="w-full flex flex-col space-y-1 ">
+              <div className="w-full flex flex-col  ">
                 <div className="flex ">
-                  <label htmlFor="" className="text-xs">
+                  <label htmlFor="" className="text-sm">
                     Job description
                   </label>
                   <span className="text-red-500">*</span>
@@ -247,7 +247,7 @@ const JobDescriptionBoard: React.FC = () => {
                   </div>
 
                   <textarea
-                    className="w-full  text-[10px] p-2 min-h-60 text-[#3A3A3C] tracking-wide"
+                    className="w-full  text-sm p-2 min-h-60 text-[#3A3A3C] tracking-wide"
                     name="jobDescription"
                     value={formData.jobDescription}
                     onChange={handleChange}

@@ -1,34 +1,32 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
 
-import { Link,  useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import {  z } from 'zod';
+import { z } from 'zod';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import { fetchGeoLocation } from '../../../utils/getGeolocation';
 import axiosInstance from '../../../axios/axiosInstance';
-
-
-
+import Spinner from '../../../components/Spinner';
 
 interface UserCredentials {
   email: string;
   password: string;
 }
 
-type geoData={
-  ip: string
-  city: string
-  region: string
-  country: string
-  loc: string
-  org:string
-  postal: string
-}
+type geoData = {
+  ip: string;
+  city: string;
+  region: string;
+  country: string;
+  loc: string;
+  org: string;
+  postal: string;
+};
 
 // Zod schema for validation
 const signinSchema = z.object({
@@ -36,13 +34,11 @@ const signinSchema = z.object({
   password: z.string().min(8, { message: 'Password must be at least 8 characters' }),
 });
 
-
 // Define the shape of form errors
 interface FormErrors {
   email?: { _errors: string[] };
   password?: { _errors: string[] };
 }
-
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -51,55 +47,50 @@ const Signin: React.FC = () => {
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const [validateErrors, setValidateErrors] = useState<boolean>(false);
 
-  const location =useLocation()
+  const location = useLocation();
   const navigate = useNavigate();
 
- 
   const { data: geoLocation } = useQuery({ queryKey: ['geoLocation'], queryFn: fetchGeoLocation });
 
   const geoLocationMutation = useMutation({
     mutationFn: async (geoData: geoData) => {
-      const response = await axiosInstance.post("/api/misc/logger/geolocation", geoData);
-       
+      const response = await axiosInstance.post('/api/misc/logger/geolocation', geoData);
+
       return response.data;
     },
 
     onSuccess: () => {
-     console.log("GeoLocationMutation success")
-
+      console.log('GeoLocationMutation success');
     },
     onError: () => {
-      console.log("GeoLocationMutation error")
+      console.log('GeoLocationMutation error');
     },
   });
 
   const mutation = useMutation({
     mutationFn: async (userCredentials: UserCredentials) => {
-      const response = await axiosInstance.post("/api/candidate/login", userCredentials);
-       
+      const response = await axiosInstance.post('/api/candidate/login', userCredentials);
+
       return response.data;
     },
 
     onSuccess: (data) => {
       toast.success('Logged In Successfull');
-      localStorage.setItem('topequatortoken',data?.token)
+      localStorage.setItem('topequatortoken', data?.token);
       const redirectTo = location.state?.from?.pathname || '/';
       navigate(redirectTo);
       geoLocationMutation.mutate(geoLocation);
-      
     },
     onError: (error) => {
-      const axiosError = error as AxiosError<{message:string}>;
-      toast.error(axiosError?.response?.data?.message)
-      localStorage.removeItem("topequatortoken");
-      setValidateErrors(true)
-      setEmail("")
-      setPassword("")
-      navigate("/signin");
+      const axiosError = error as AxiosError<{ message: string }>;
+      toast.error(axiosError?.response?.data?.message);
+      localStorage.removeItem('topequatortoken');
+      setValidateErrors(true);
+      setEmail('');
+      setPassword('');
+      navigate('/signin');
     },
   });
-
-
 
   const handleSubmit = (e: React.FormEvent) => {
     // console.log("geoLocation",geoLocation)
@@ -112,57 +103,61 @@ const Signin: React.FC = () => {
     } else {
       setFormErrors({});
       mutation.mutate({ email, password });
-    
     }
-
   };
 
   const togglePasswordVisibility = () => {
-    console.log("geoLocation",geoLocation)
-    console.log("geoData",geoLocation)
+    console.log('geoLocation', geoLocation);
+    console.log('geoData', geoLocation);
 
     setShowPassword(!showPassword);
   };
 
   return (
-    <div className=' bg-[#114B53] w-full min-h-[calc(100vh-56px)] pt-10 lg:pt-10'>
-      <div className='w-full h-full px-5 lg:px-10 flex gap-20'>
-        <div className='hidden md:flex w-[50%]'>
-          <p className='text-white text-[32px] font-semibold'>TopEquator</p>
+    <div className=" bg-[#114B53] w-full min-h-screen pt-10 lg:pt-10">
+      <div className="w-full h-full px-5 lg:px-10 flex gap-20">
+        <div className="hidden md:flex w-[50%]">
+          <p className="text-white text-[32px] font-semibold">TopEquator</p>
         </div>
 
-        <div className='w-full h-fit md:w-[50%] flex justify-center md:justify-end'>
-          <div className='w-[335px] md:w-[519px] bg-white px-5 md:px-10 py-4 rounded-xl'>
-            <p className='text-black text-[20px] md:text-lg font-bold'>Welcome</p>
-            <p className='text-black text-[14px] md:text-sm font-normal mt-1'>
+        <div className="w-full h-fit md:w-[50%] flex justify-center md:justify-end">
+          <div className="w-[335px] md:w-[419px] bg-white px-5 md:px-10 py-4 rounded-xl">
+            <p className="text-black text-[20px] md:text-lg font-bold">Welcome</p>
+            <p className="text-black text-[14px] md:text-sm font-normal mt-1">
               Log in to your existing account with email
             </p>
             <form onSubmit={handleSubmit}>
-              <div className='w-full mt-4 md:mt-2  relative'>
-                <label htmlFor="email" className='text-[14px]'>
-                  Email <span className='text-[#E71717]'>*</span>
+              <div className="w-full mt-4 md:mt-2  relative">
+                <label htmlFor="email" className="text-[14px]">
+                  Email <span className="text-[#E71717]">*</span>
                 </label>
-                <div className='w-full h-[40px] mt-1 '>
+                <div className="w-full h-[40px] mt-1 ">
                   <input
                     type="email"
-                    className='border-2 px-2 border-[#E1E1E2] w-full h-full rounded-lg'
+                    className="border-2 px-2 border-[#E1E1E2] w-full h-full rounded-lg"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                 {formErrors?.email && <p className="absolute  text-red-500 text-[10px] ">{formErrors.email._errors?.[0]}</p>}
-                 {validateErrors && <p className="absolute  text-red-500 text-[10px] ">Invalid Creadential</p>}
+                  {formErrors?.email && (
+                    <p className="absolute  text-red-500 text-[10px] ">
+                      {formErrors.email._errors?.[0]}
+                    </p>
+                  )}
+                  {validateErrors && (
+                    <p className="absolute  text-red-500 text-[10px] ">Invalid Creadential</p>
+                  )}
                 </div>
               </div>
 
-              <div className='w-full flex gap-5 mt-4'>
-                <div className=' w-full relative'>
-                  <label htmlFor="password" className='text-[14px]'>
-                    Password <span className='text-[#E71717]'>*</span>
+              <div className="w-full flex gap-5 mt-4">
+                <div className=" w-full relative">
+                  <label htmlFor="password" className="text-[14px]">
+                    Password <span className="text-[#E71717]">*</span>
                   </label>
-                  <div className='relative w-full h-[40px] mt-1'>
+                  <div className="relative w-full h-[40px] mt-1">
                     <input
-                      type={showPassword ? "text" : "password"}
-                      className=' px-2 border-2 border-[#E1E1E2] w-full h-full rounded-lg'
+                      type={showPassword ? 'text' : 'password'}
+                      className="px-2 border-2 border-[#E1E1E2] w-full h-full rounded-lg"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -174,30 +169,45 @@ const Signin: React.FC = () => {
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
                   </div>
-                  {formErrors?.password && <span className="absolute bottom-[-15px] text-red-500  text-[10px]">{formErrors.password._errors?.[0]}</span>}
-                  {validateErrors && <p className="absolute  text-red-500 text-[10px] ">Invalid Creadential</p>}
-
+                  {formErrors?.password && (
+                    <span className="absolute bottom-[-15px] text-red-500  text-[10px]">
+                      {formErrors.password._errors?.[0]}
+                    </span>
+                  )}
+                  {validateErrors && (
+                    <p className="absolute  text-red-500 text-[10px] ">Invalid Creadential</p>
+                  )}
                 </div>
               </div>
 
-              <div className='flex justify-between items-end mt-8 md:mt-5'>
-                <div className='flex items-center gap-2'>
-                  <input type="checkbox" className='w-5 h-5 md:w-4 md:h-4 border border-[#E1E1E2]' />
-                  <p className='text-[14px]'>Remember me</p>
+              <div className="flex justify-between items-end mt-8 md:mt-5">
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5 md:w-4 md:h-4 border border-[#E1E1E2]"
+                  />
+                  <p className="text-[14px]">Remember me</p>
                 </div>
-                <Link to={"/forget-password"} className='font-medium text-[14px] md:text-base underline'>
+                <Link
+                  to={'/forget-password'}
+                  className="font-medium text-xs underline"
+                >
                   Forgot Password?
                 </Link>
-               
               </div>
 
-              <button type="submit" className='w-full h-[40px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4'>
-                <p className='text-base font-semibold'>Log in</p>
+              <button
+                type="submit"
+                className="w-full h-[40px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4"
+              >
+                <p className="text-base font-semibold">{mutation?.isPending?<Spinner size={5} color='#104B53'/>:'Log In'}</p>
               </button>
 
               <div className="flex mt-2 items-center justify-center">
                 <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
-                <p className="text-gray-500 text-[14px] md:text-[20px] font-normal mx-[10px]">or continue with</p>
+                <p className="text-gray-500 text-xs   font-normal mx-[10px]">
+                  or continue with
+                </p>
                 <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
               </div>
 
@@ -206,15 +216,19 @@ const Signin: React.FC = () => {
                   <img src={google_logo} alt="Google logo" /> <p>Google</p>
                 </button>
                 <button className="w-[200px] h-[40px] flex text-base items-center rounded-3xl justify-center gap-1 md:gap-2 text-black p-2 box-radius border border-black">
-                  <img src={apple_logo} alt="Apple logo" /><p>Apple</p>
+                  <img src={apple_logo} alt="Apple logo" />
+                  <p>Apple</p>
                 </button>
               </div>
 
-              <p className='text-[14px] font-normal mt-8 md:mt-4 text-center md:text-left'>
+              <p className="text-[14px] font-normal mt-8 md:mt-4 text-center md:text-left">
                 By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
               </p>
-              <div className='flex justify-center'>
-                <Link to={"/signup"} className='text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center'>
+              <div className="flex justify-center">
+                <Link
+                  to={'/signup'}
+                  className="text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center"
+                >
                   New to TopEquator? Sign up
                 </Link>
               </div>
@@ -227,9 +241,6 @@ const Signin: React.FC = () => {
 };
 
 export default Signin;
-
-
-
 
 // Credential
 

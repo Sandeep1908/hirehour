@@ -30,7 +30,7 @@ const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
-  const params = useLocation().pathname;
+ 
   
  
   const { data: userDetails } = useQuery({
@@ -39,6 +39,7 @@ const Header: React.FC = () => {
     enabled:isCandidateAuthenticated()
   });
   const queryClient=useQueryClient()
+  const params=useLocation().pathname
 
   const handlNavBar = () => {
     setIsAccountOpen(false);
@@ -86,8 +87,15 @@ const Header: React.FC = () => {
       link: '',
     },
   ];
+
+  const isParameters = [
+    '/signup',
+    '/signin',
+    '/upload-resume',
+    '/additional-information'
+  ].includes(params);
   return (
-    <div className="w-full h-14 bg-white relative   ">
+    <div className={`w-full h-14 bg-white relative   ${isParameters?'hidden':''}`}>
       <div className="w-full  flex justify-between items-center p-2 px-4">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">

@@ -98,6 +98,7 @@ import AdminSignIn from './pages/admin/Auth/Signin/Signin.tsx';
 import ForgetPassword from './components/job-seekers/modals/authModals/ForgetPassword.tsx';
 import NewPassword from './components/job-seekers/modals/authModals/NewPassword.tsx';
 import EmailVerification from './components/job-seekers/modals/authModals/EmailVerification.tsx';
+ 
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter(
@@ -260,6 +261,7 @@ const router = createBrowserRouter(
 
       <Route path="/job-poster/signup" element={<SignupPoster />} />
       <Route path="/job-poster/signin" element={<SigninPoster />} />
+ 
 
       {/* ****************************** Dashboard rtr ***************************** */}
       <Route path="/dashboard-rtr" element={<DashBoardRTR />} />

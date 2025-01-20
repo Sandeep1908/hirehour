@@ -5,6 +5,7 @@ import { fetchPricing } from '../../../utils/jobposters/jobboards/pricing';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../../components/Spinner';
+import { AxiosError } from 'axios';
 
 // Define types
 interface PricingResponse {
@@ -26,7 +27,12 @@ const Pricing: React.FC = () => {
   const [selectedPlan, setSelectedPlan] = useState<PlanId>('free');
   const navigate = useNavigate();
 
-  const { data: pricingData, isLoading, isError } = useQuery<PricingResponse>({ // Type the data
+  const {
+    data: pricingData,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<PricingResponse>({
     queryKey: ['pricing'],
     queryFn: fetchPricing,
     enabled: selectedPlan === 'premium',
@@ -50,13 +56,13 @@ const Pricing: React.FC = () => {
     }
   }, [selectedPlan, navigate, pricingData]);
 
-  
   if (isError && selectedPlan === 'premium') {
-    toast.error("Error fetching payment information. Please try again later.")
-    return <div>Error loading payment Information</div>
-}
+    const axiosError = error as AxiosError<{ message: string }>;
 
-  const plans: Plan[] = [  
+    toast.error(axiosError.response?.data.message);
+  }
+
+  const plans: Plan[] = [
     {
       id: 'free',
       title: 'Post a Job for Free',
@@ -118,7 +124,13 @@ const Pricing: React.FC = () => {
               <div
                 className={` ${selectedPlan === plan.id ? 'bg-[#114B53]  text-white' : 'border-[1px] text-[#114B53] border-[#114B53]'} w-full h-8 rounded-full flex justify-center items-center mt-10`}
               >
-                <p className=" text-xs">{isLoading && selectedPlan === 'premium' ?<Spinner loading={isLoading} color='white' size={20}/> :'Select package'}</p>
+                <p className=" text-xs">
+                  {isLoading && selectedPlan === 'premium' ? (
+                    <Spinner color="white" size={5} />
+                  ) : (
+                    'Select package'
+                  )}
+                </p>
               </div>
             </div>
           ))}

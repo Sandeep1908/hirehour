@@ -26,12 +26,13 @@ const SignRTR: React.FC<{
   });
 
   const viewRTR = rtr?.data?.filter((i: ALLRTRTYPES) => i.ID === rtrId)?.[0];
- 
-
- 
 
   const signMutation = useMutation({
-    mutationFn: async (signRTR: { rtrId: number; candidateSignatureLink: string }) => {
+    mutationFn: async (signRTR: {
+      rtrId: number;
+      candidateSignatureName: string;
+      status: boolean;
+    }) => {
       const response = await axiosInstance.post('/api/candidate/rtr/sign-rtr', signRTR);
       return response.data;
     },
@@ -47,7 +48,7 @@ const SignRTR: React.FC<{
 
   const handleSign = () => {
     if (rtrId) {
-      signMutation.mutate({ rtrId, candidateSignatureLink: signature });
+      signMutation.mutate({ rtrId, candidateSignatureName: signature, status: true });
     }
   };
 
@@ -77,7 +78,7 @@ const SignRTR: React.FC<{
             </div>
 
             <div>
-              <p className="text-xs">Rate : $60 / HR</p>
+              <p className="text-xs">Rate : {viewRTR?.agreedUponRateForCandidate} / HR</p>
             </div>
           </div>
 
@@ -194,10 +195,10 @@ const SignRTR: React.FC<{
                   {viewRTR?.isSignedByEmployer ? (
                     <>
                       <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
-                      {viewRTR?.employerSignatureImgLink}
+                        {viewRTR?.employerSignatureName}
                       </p>
 
-                      <p className="text-xs">{viewRTR?.employerSignatureImgLink} - 08/16/2024</p>
+                      <p className="text-xs">{new Date(viewRTR?.updatedAt).toISOString().split('T')[0]}</p>
 
                       <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
                         Signed
@@ -215,16 +216,16 @@ const SignRTR: React.FC<{
             <div className="flex flex-col justify-start items-start space-y-3">
               <h1 className="text-xs font-semibold">Applicant</h1>
 
-              <div className="flex justify-center items-center space-x-3">
+              <div className="flex flex-col space-y-1 justify-center items-center space-x-3">
                 {viewRTR?.isSignedByCandidate ? (
                   <>
                     <p className="text-xs font-sans font-[100] tracking-widest border-b-2 w-full text-center">
-                      {viewRTR?.candidateSignatureImgLink}
+                      {viewRTR?.candidateSignatureName}
                     </p>
 
-                    <p className="text-xs">{viewRTR?.candidateSignatureImgLink} - 08/16/2024</p>
+                    <p className="text-xs">{new Date(viewRTR?.updatedAt).toISOString().split('T')[0]}</p>
 
-                    <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
+                    <p className="text-[#104B53] text-[10px] w-24 h-7 flex justify-center items-center   rounded-full text-center bg-[#B4FEDD]">
                       Signed
                     </p>
                   </>
@@ -244,11 +245,7 @@ const SignRTR: React.FC<{
                       onClick={() => handleSign()}
                       className="text-white text-[10px] w-[100px] p-2 cursor-pointer rounded-full text-center bg-[#07A561]"
                     >
-                      {signMutation.isPending ? (
-                        <Spinner loading={signMutation.isPending} color={'#000000'} size={15} />
-                      ) : (
-                        'Sign'
-                      )}
+                      {signMutation.isPending ? <Spinner color={'white'} size={5} /> : 'Sign'}
                     </p>
                   </>
                 )}
@@ -272,11 +269,8 @@ const RightToRepresent: React.FC = () => {
     queryFn: fetchRTRs,
   });
 
-    
-  const acceptedRtrCount=rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate)
-  const newRTRCount=rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate)
-
-
+  const acceptedRtrCount = rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate);
+  const newRTRCount = rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate);
 
   useEffect(() => {
     if (isRTROpen || isSignRTR || isPreviewRTR) {
@@ -305,10 +299,10 @@ const RightToRepresent: React.FC = () => {
     },
   ];
   const tags = [
-    { label: 'New', count:newRTRCount?.length ,link: '/right-to-represent' },
-    { label: 'Accepted',count:acceptedRtrCount?.length ,link: '/rtr-accepted' },
-    { label: 'Decline', count:'',link: '/rtr-decline' },
-    { label: 'Expire', count:'', link: '/rtr-expired' },
+    { label: 'New', count: newRTRCount?.length, link: '/right-to-represent' },
+    { label: 'Accepted', count: acceptedRtrCount?.length, link: '/rtr-accepted' },
+    { label: 'Decline', count: '', link: '/rtr-decline' },
+    { label: 'Expire', count: '', link: '/rtr-expired' },
   ];
 
   const handleViewSign = (Id: number) => {
@@ -456,7 +450,7 @@ const RightToRepresent: React.FC = () => {
 
           <div className="flex flex-col space-y-4">
             {rtr?.data?.map((item: ALLRTRTYPES, i: number) => {
-              if(!item?.isSignedByCandidate){
+              if (!item?.isSignedByCandidate) {
                 return (
                   <div
                     key={i}
@@ -468,12 +462,12 @@ const RightToRepresent: React.FC = () => {
                         <p className="text-xs font-semibold">{item?.job?.jobRoleName}</p>
                         <span className="text-xs text-[#7B8496]">- {item?.job?.jobLocation}</span>
                       </div>
-  
+
                       <div>
                         <p className="text-xs">Rate : $60 / HR</p>
                       </div>
                     </div>
-  
+
                     <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
                       <div className="flex flex-col space-y-1">
                         <h1 className="text-xs">From</h1>
@@ -484,7 +478,7 @@ const RightToRepresent: React.FC = () => {
                           <strong>Company</strong>:Insight Global
                         </p>
                       </div>
-  
+
                       <div className="flex flex-col space-y-1">
                         <h1 className="text-xs">To</h1>
                         <p className="text-xs">
@@ -497,7 +491,7 @@ const RightToRepresent: React.FC = () => {
                           <strong>Applicant Name</strong>: {item?.candidate?.firstName}
                         </p>
                       </div>
-  
+
                       <div className="flex flex-col space-y-3  ">
                         <div className="flex justify- space-x-3 items-center">
                           <MdOutlineFileDownload size={20} color="#104B53" />
@@ -509,15 +503,15 @@ const RightToRepresent: React.FC = () => {
                             View
                           </p>
                         </div>
-  
+
                         <p className="text-sm">
                           <strong>Valid Till</strong>: 30 days (08/26/2024)
                         </p>
                       </div>
                     </div>
-  
+
                     <hr />
-  
+
                     <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
                       <div className="flex justify-center items-center space-x-5">
                         <div className="flex flex-col space-y-3">
@@ -528,7 +522,7 @@ const RightToRepresent: React.FC = () => {
                             <strong>Prime Vendor </strong>: Insight Global
                           </p>
                         </div>
-  
+
                         <div className="flex flex-col space-y-3">
                           <p className="text-sm">
                             <strong>Implementation</strong>: TCS
@@ -538,7 +532,7 @@ const RightToRepresent: React.FC = () => {
                           </p>
                         </div>
                       </div>
-  
+
                       <div className="flex w-full md:w-auto items-center justify-center space-x-5">
                         <p className="w-full sm:w-[80px] text-sm bg-[#FF3837] text-white p-2 text-center rounded-full">
                           Decline
@@ -554,7 +548,6 @@ const RightToRepresent: React.FC = () => {
                   </div>
                 );
               }
-              
             })}
           </div>
         </div>

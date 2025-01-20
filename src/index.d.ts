@@ -136,11 +136,7 @@ type JobTypes = {
   sentToCandidate: boolean;
   sentToRecruiter: boolean;
   rtrContents: string;
-  validityPeriod: string; // ISO date format
-  employerSignatureImgLink?: string;
-  isSignedByEmployer: boolean;
-  candidateSignatureImgLink?: string;
-  isSignedByCandidate: boolean;
+  validityPeriod: string; 
   isActive: boolean;
   location?:string
 };

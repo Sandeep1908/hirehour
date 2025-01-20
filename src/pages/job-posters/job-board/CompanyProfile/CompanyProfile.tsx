@@ -10,8 +10,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation';
 import Companies from '../../../../utils/jobposters/Companies';
 import { fetchOneCompany } from '../../../../utils/jobposters/jobboards/getCompanyDetails';
-import { FileUploader } from '../../../../utils/jobposters/jobboards/fileuploader';
-// import { FileUploader } from '../../../../utils/jobposters/jobboards/fileuploader';
+import { fileUploader } from '../../../../utils/jobposters/jobboards/fileuploader';
+import Spinner from '../../../../components/Spinner';
 
 type CompanyDetailsRequest = {
   companyName: string;
@@ -28,14 +28,20 @@ const CompanyProfile: React.FC = () => {
   const navigate = useNavigate();
   const [company, setCompany] = useState<number | null>(null);
   const [headquaterLocation, setHeadQuaterLocation] = useState<LocationValue | null>(null);
+  const [companyAddress, setCompanyAddress] = useState<LocationValue | null>(null);
+  const [location, setLocation] = useState<LocationValue | null>(null);
   const jobId = useLocation().state?.jobId;
+
+  const [loading, setLoading] = useState({
+    companyCoverImage: false,
+    companyLogo: false,
+  });
 
   const [formData, setFormData] = useState<CompanyDetailsRequest>({
     companyName: '',
     companyLogo: '',
     companyCoverImage: '',
     aboutCompany: '',
-
     companySizeInTermsOfEmpCount: 0,
     domainItWorksIn: 'NA',
     companyWebsiteURL: '',
@@ -66,18 +72,39 @@ const CompanyProfile: React.FC = () => {
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+    const name = event.target.name;
+
+    setLoading((prev) => ({
+      ...prev,
+      [name]: true,
+    }));
     if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
       toast.warning('File size must be less than 2MB');
+      setLoading((prev) => ({
+        ...prev,
+        [name]: false,
+      }));
       return;
     }
-
-
-    const uploadFormData = new FormData()
-    uploadFormData.append('file',file)
-    FileUploader(uploadFormData)
-  
+    const uploadFormData = new FormData();
+    uploadFormData.append('file', file);
+    try {
+      const uploadedfile = await fileUploader(uploadFormData);
+      setFormData((prev) => ({
+        ...prev,
+        [name]: uploadedfile?.fileUrl,
+      }));
+    } catch (e) {
+      toast.error('Error in uploading file.');
+      console.log(e);
+    } finally {
+      setLoading((prev) => ({
+        ...prev,
+        [name]: false,
+      }));
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -101,12 +128,12 @@ const CompanyProfile: React.FC = () => {
     },
     onSuccess: (data) => {
       toast.success(data?.message);
-      const companyId = data?.company?.id; // Assuming the response includes `companyId`
-      associateCompanyWithJob(companyId); // Trigger the next API call
+      const companyId = data?.company?.id;
+      associateCompanyWithJob(companyId);
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ errors: string[] }>;
-      console.log('myaxos', axiosError.response?.data.errors);
+ 
       toast.error(axiosError.response?.data.errors[0]);
     },
   });
@@ -141,6 +168,8 @@ const CompanyProfile: React.FC = () => {
       const newCompanyDescription = {
         ...formData,
         headquartersLocation: formatLocation(headquaterLocation),
+        location: formatLocation(location),
+        companyAddress: formatLocation(companyAddress),
       };
       companyDescritionMutation.mutate(newCompanyDescription);
     } else {
@@ -218,36 +247,54 @@ const CompanyProfile: React.FC = () => {
           <div className="w-full h-40 border  bg-white relative">
             <div className="w-full h-24 bg-[#F2F2F5]">
               <div className="flex justify-center items-center h-full">
-                <label className={`flex justify-center items-center space-x-3`}>
-                  <span className={`text-[10px] text-[#6B7588]  font-[500] pl-2`}>
-                    Company Cover Image
+                {loading.companyCoverImage && <Spinner size={5} />}
+                {formData?.companyCoverImage ? (
+                  <img
+                    className="w-full h-full"
+                    src={formData?.companyCoverImage || ''}
+                    alt="company-cover-image"
+                  />
+                ) : (
+                  <label className={`flex justify-center items-center space-x-3`}>
+                    <span className={`text-[10px] text-[#6B7588]  font-[500] pl-2`}>
+                      Company Cover Image
+                    </span>
+                    <MdOutlineLinkedCamera size={13} color="#6B7588" className="" />
+                    <input
+                      type="file"
+                      className="hidden"
+                      name="companyCoverImage"
+                      onChange={handleFileChange}
+                    />
+                    <p className="text-sm">{formData.companyCoverImage}</p>
+                  </label>
+                )}
+              </div>
+            </div>
+
+            <div className="w-20 h-20 flex justify-center items-center border absolute top-10 left-14 shadow-lg bg-[#F2F2F5]">
+              {loading.companyLogo && <Spinner size={5} />}
+              {formData?.companyLogo ? (
+                <img
+                  className="w-full h-full"
+                  src={formData?.companyLogo || ''}
+                  alt="company-logo-image"
+                />
+              ) : (
+                <label className={`flex flex-col justify-center items-center space-y-1`}>
+                  <span className={`text-[7px] text-[#6B7588] text-center font-[500] pl-2`}>
+                    Company Logo
                   </span>
                   <MdOutlineLinkedCamera size={13} color="#6B7588" className="" />
                   <input
                     type="file"
                     className="hidden"
-                    name="companyCoverImage"
+                    name="companyLogo"
                     onChange={handleFileChange}
                   />
-                  <p className="text-[9px]">{formData.companyCoverImage}</p>
+                  <p className="text-sm">{formData.companyLogo}</p>
                 </label>
-              </div>
-            </div>
-
-            <div className="w-20 h-20 flex justify-center items-center border absolute top-10 left-14 shadow-lg bg-[#F2F2F5]">
-              <label className={`flex flex-col justify-center items-center space-y-1`}>
-                <span className={`text-[7px] text-[#6B7588] text-center font-[500] pl-2`}>
-                  Company Logo
-                </span>
-                <MdOutlineLinkedCamera size={13} color="#6B7588" className="" />
-                <input
-                  type="file"
-                  className="hidden"
-                  name="companyLogo"
-                  onChange={handleFileChange}
-                />
-                <p className="text-[9px]">{formData.companyLogo}</p>
-              </label>
+              )}
             </div>
           </div>
 
@@ -268,7 +315,7 @@ const CompanyProfile: React.FC = () => {
                   name="companyName"
                   onChange={handleChange}
                   placeholder="Search by location"
-                  className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
             ) : (
@@ -294,11 +341,7 @@ const CompanyProfile: React.FC = () => {
                 <span className="text-red-500">*</span>
               </div>
 
-              <input
-                type="text"
-                placeholder="Search by location"
-                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-              />
+              <LocationSearch setSelectedLocation={setCompanyAddress} />
             </div>
           </div>
 
@@ -312,11 +355,7 @@ const CompanyProfile: React.FC = () => {
                 <span className="text-red-500">*</span>
               </div>
 
-              <input
-                type="text"
-                placeholder="Location"
-                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-              />
+              <LocationSearch setSelectedLocation={setLocation} />
             </div>
 
             {/* Headquater  */}
@@ -348,7 +387,7 @@ const CompanyProfile: React.FC = () => {
                 value={formData.companySizeInTermsOfEmpCount}
                 name="companySizeInTermsOfEmpCount"
                 onChange={handleChange}
-                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                className="p-2 border text-sm border-[#EBEBF0] rounded-md placeholder:text-xs"
               />
             </div>
 
@@ -382,7 +421,7 @@ const CompanyProfile: React.FC = () => {
                 value={formData.companyWebsiteURL}
                 name="companyWebsiteURL"
                 onChange={handleChange}
-                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
               />
             </div>
 
@@ -402,7 +441,7 @@ const CompanyProfile: React.FC = () => {
                 value={formData.companyPhoneNumber}
                 name="companyPhoneNumber"
                 onChange={handleChange}
-                className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
               />
             </div>
           </div>
@@ -412,7 +451,7 @@ const CompanyProfile: React.FC = () => {
 
             <div className="flex flex-col space-y-2">
               <div className="flex ">
-                <label htmlFor="" className="text-xs">
+                <label htmlFor="" className="text-sm">
                   Company Description
                 </label>
               </div>
@@ -421,7 +460,7 @@ const CompanyProfile: React.FC = () => {
                 value={formData.aboutCompany}
                 name="aboutCompany"
                 onChange={handleChange}
-                className="p-2 border w-full border-[#EBEBF0] min-h-44 rounded-md placeholder:text-xs"
+                className="p-2 text-sm border w-full border-[#EBEBF0] min-h-44 rounded-md placeholder:text-xs"
               />
             </div>
           </div>

@@ -9,11 +9,6 @@ import { z } from 'zod';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 
-
-
-
-
-
 // Zod schema for validation
 const signupSchema = z.object({
   firstName: z.string().min(1, { message: 'First Name is required' }),
@@ -21,26 +16,20 @@ const signupSchema = z.object({
   phoneNumber: z.string().min(10, { message: 'Phone number must be at least 10 digits' }),
   email: z.string().email({ message: 'Invalid email address' }),
   password: z.string().min(8, { message: 'Password must be at least 8 characters long' }),
-
+ 
 });
 
-
 type SignupData = z.infer<typeof signupSchema>;
-
 
 const Signup: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
   const [formErrors, setFormErrors] = useState<Partial<Record<keyof SignupData, string>>>({});
-  const [validateErrors, setValidateErrors] = useState<boolean>(false);
-
-
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
-
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -49,50 +38,46 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
-
   interface NewUser {
-    firstName: string,
-    lastName: string,
-    phoneNumber: string,
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
     email: string;
     password: string;
+   
   }
-
-
 
   const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: async (newUser: NewUser) => {
-      const response = await axiosInstance.post("/api/candidate/signup", newUser);
+      const response = await axiosInstance.post('/api/candidate/signup', newUser);
       return response.data;
     },
     onSuccess: () => {
-      toast.success('User Regiester Successfully');
-      navigate("/signin");
+      toast.success('User Registered Successfully');
+      navigate('/signin');
     },
     onError: (error) => {
-      alert("Error")
       const axiosError = error as AxiosError<{ message: string }>;
-      console.log("error",axiosError.response)
+      console.log('error', axiosError.response);
       toast.error(axiosError?.response?.data.message);
-      setFirstName("")
-      setLastName("")
-      setPhoneNumber("")
-      setEmail("")
-      setPassword("")
+      setFirstName('');
+      setLastName('');
+      setPhoneNumber('');
+      setEmail('');
+      setPassword('');
       setConfirmPassword('');
-
     },
   });
 
+  console.log(firstName,lastName,email,phoneNumber,password,confirmPassword);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-
     if (password !== confirmPassword) {
-      setValidateErrors(false);
+      setFormErrors({ ...formErrors}); 
       return;
     }
 
@@ -113,182 +98,192 @@ const Signup: React.FC = () => {
     // If valid, submit the form
     setFormErrors({});
     mutation.mutate(result.data);
-
-
-
   };
 
-
   return (
-    <div className="bg-[#114B53]  w-full  min-h-[calc(100vh-56px)] py-10  px-5  lg:px-10">
-      <div className="w-full h-full flex gap-20">
-        <div className=" hidden md:flex w-[50%]">
-          <p className="text-white text-[32px] font-semibold">TopEquator</p>
+    <div className="bg-[#104B53] w-full min-h-screen py-10 px-5 lg:px-20 flex flex-col items-center"> 
+      <div className="max-w-7xl w-full flex flex-col lg:flex-row gap-10"> 
+        <div className="hidden lg:flex w-1/2 "> 
+          <p className="text-white text-3xl font-bold">TopEquator</p> 
         </div>
 
-        <div className='w-full h-fit md:w-[50%] flex justify-center  md:justify-end '>
-          <div className='w-[335px] md:w-[519px] h-auto  bg-white px-5 md:px-8 py-3 rounded-xl'>
-            <p className='text-black text-[20px] md:text-lg font-bold'>Create account</p>
-            <p className='text-black text-[14px] md:text-sm font-normal mt-1' >If you are new user create account to continue</p>
-            <form action="">
-              <div className='flex flex-col md:flex-row gap-3 md:gap-5 mt-4 md:mt-2'>
-                <div className='grow'>
-                  <label htmlFor="firstName" className='text-sm'>
-                    First Name <span className='text-[#E71717]'>*</span>
+        <div className="w-full lg:w-1/2 flex justify-center"> 
+          <div className="bg-white p-5 rounded-lg shadow-md w-full max-w-lg"> 
+            <p className="text-gray-800 text-2xl font-bold mb-2">Create account</p>
+            <p className="text-gray-600 text-sm mb-4">
+              If you are a new user, create an account to continue
+            </p>
+            <form onSubmit={handleSubmit}> 
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+                    First Name <span className="text-red-500">*</span>
                   </label>
-                  <div className='w-full h-[40px] mt-1'>
-
-                    <input type="text" className=' border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)} placeholder="First Name" />
-                    {formErrors.firstName && <p className="absolute  text-red-500 text-[10px]">{formErrors.firstName}</p>}
-
-                  </div>
+                  <input
+                    type="text"
+                    id="firstName"
+                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xs"
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    placeholder="First Name"
+                  />
+                  {formErrors.firstName && (
+                    <span className="text-red-500 text-sm">{formErrors.firstName}</span>
+                  )}
                 </div>
-                <div className='grow'>
-                  <label htmlFor="firstName" className='text-sm'>
-                    Last Name <span className='text-[#E71717]'>*</span>
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                    Last Name <span className="text-red-500">*</span>
                   </label>
-                  <div className='w-full h-[40px] mt-1'>
-
-                    <input type="text" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
-                      placeholder="Last Name" />
-                    {formErrors.lastName && <p className="absolute  text-red-500 text-[10px]">{formErrors.lastName}</p>}
-
-                  </div>
-                </div>
-              </div>
-
-
-              <div className='flex flex-col md:flex-row gap-3 md:gap-5  '>
-                <div className='mt-3  grow'>
-                  <label htmlFor="firstName" className='text-sm'>
-                    Phone <span className='text-[#E71717]'>*</span>
-                  </label>
-                  <div className='w-full h-[40px] mt-1'>
-
-                    <input type="Phone" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      placeholder="Phone Number"
-                    />
-                    {formErrors.phoneNumber && <p className="absolute  text-red-500 text-[10px]">{formErrors.phoneNumber}</p>}
-
-                  </div>
-                </div>
-                <div className='mt-3  grow'>
-                  <label htmlFor="firstName" className='text-sm'>
-                    Email <span className='text-[#E71717]'>*</span>
-                  </label>
-                  <div className='w-full h-[40px] mt-1'>
-
-                    <input type="email" className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={email}
-                      onChange={(e) => setEmail(e.target.value)} placeholder=" Email"
-                    />
-                    {formErrors.email && <p className="absolute  text-red-500 text-[10px]">{formErrors.email}</p>}
-
-                  </div>
+                  <input
+                    type="text"
+                    id="lastName"
+                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xs"
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    placeholder="Last Name"
+                  />
+                  {formErrors.lastName && (
+                    <span className="text-red-500 text-sm">{formErrors.lastName}</span>
+                  )}
                 </div>
               </div>
 
-              <div className='flex flex-col md:flex-row gap-3 md:gap-5 mt-4 '>
-                <div className='grow'>
-                  <label htmlFor="firstName" className='text-sm'>
-                    Password <span className='text-[#E71717]'>*</span>
+              <div className="flex flex-col md:flex-row gap-4 mt-4"> 
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="phoneNumber" className="block text-sm font-medium text-gray-700">
+                    Phone <span className="text-red-500">*</span>
                   </label>
-                  <div className='relative w-full h-[40px] mt-1'>
+                  <input
+                    type="tel" 
+                    id="phoneNumber"
+                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xs"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="Phone Number"
+                  />
+                  {formErrors.phoneNumber && (
+                    <span className="text-red-500 text-sm">{formErrors.phoneNumber}</span>
+                  )}
+                </div>
 
-                    <input type={`${showPassword ? " text" : "password"}`} className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' value={password}
-                      onChange={(e) => setPassword(e.target.value)} placeholder="Password"
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Email <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    className="mt-1 px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xs"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Email"
+                  />
+                  {formErrors.email && (
+                    <span className="text-red-500 text-sm">{formErrors.email}</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col md:flex-row gap-4 mt-4">
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    Password <span className="text-red-500">*</span>
+                  </label>
+                  <div className="relative mt-1">
+                    <input
+                      type={showPassword ? 'text' : 'password'}
+                      id="password"
+                      className="px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xs"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="Password"
                     />
                     <button
                       type="button"
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                      className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
                       onClick={togglePasswordVisibility}
                     >
                       {showPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
-                    {formErrors.password && <p className="absolute  text-red-500 text-[10px]">{formErrors.password}</p>}
-
                   </div>
+                  {formErrors.password && (
+                    <span className="text-red-500 text-sm">{formErrors.password}</span>
+                  )}
                 </div>
-                <div className='grow'>
-                  <label htmlFor="firstName" className='text-sm'>
-                    Confirm password <span className='text-[#E71717]'>*</span>
+                <div className="w-full md:w-1/2">
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                    Confirm Password <span className="text-red-500">*</span>
                   </label>
-                  <div className='relative w-full h-[40px] mt-1'>
-
-                    <input type={`${showConfirmPassword ? " text" : "password"}`} className='border-[1px] text-sm px-2 border-[#E1E1E2] w-full h-full rounded-lg' placeholder='Confirm password'
+                  <div className="relative mt-1">
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      id="confirmPassword"
+                      className="px-3 py-2 border border-gray-300 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-xs"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-
+                      placeholder="Confirm Password"
                     />
                     <button
                       type="button"
-                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600"
+                      className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-700"
                       onClick={toggleConfirmPasswordVisibility}
                     >
                       {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                     </button>
-                    {validateErrors && (
-                      <p className='absolute text-red-500 text-[10px]'>{validateErrors}</p>
-                    )}
-
                   </div>
+                   
                 </div>
               </div>
-           
 
-              <div className='w-full mt-8 md:mt-5 flex items-center  gap-2'>
-                <input type="checkbox" name="" id="" className='w-5 h-5 md:w-4 md:h-4 border border-[#E1E1E2]' />
-                <p className='text-[14px] '>Accepting Terms & Condition</p>
-
+              <div className="mt-6 flex items-center">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  className="form-checkbox h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded placeholder:text-xs"
+                />
+                <label htmlFor="terms" className="ml-2 block text-sm text-gray-900">
+                  Accepting Terms & Condition
+                </label>
               </div>
-       
 
-        <div
-          onClick={handleSubmit}
-          className="w-full h-[48px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4"
-        >
-          <p className="text-base font-semibold">Sign up</p>
-        </div>
-    
+              <button 
+                type="submit" 
+                className="w-full bg-[#E9F358] hover:bg-[#e8ee92] text-[#104B53] font-bold py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-6"
+              >
+                Sign up
+              </button>
 
-        <div className="flex mt-4 mb-4 items-center justify-center ">
-          <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
-          <p className="text-gray-500 text-[14px] md:text-base font-normal mx-[10px]">
-            or continue with
-          </p>
-          <hr className="w-[25%] lg:w-[30%] border-1 border-gray-300" />
-        </div>
+              <div className="mt-6 flex items-center justify-center">
+                <hr className="w-1/3 border-gray-300" />
+                <span className="mx-2 text-gray-500">or continue with</span>
+                <hr className="w-1/3 border-gray-300" />
+              </div>
 
-        <div className="flex flex-col md:flex-row gap-2 justify-center items-center md:justify-between mt-2">
-          <button className="w-[200px] h-[40px] text-base flex items-center rounded-3xl gap-1 justify-center md:gap-2 text-black p-2 box-radius border border-black">
-            <img src={google_logo} alt="Google logo" /> <p className="">Google</p>
-          </button>
-          <button className="w-[200px] h-[40px] flex text-base items-center rounded-3xl justify-center gap-1 md:gap-2 text-black p-2 box-radius border border-black ">
-            <img src={apple_logo} alt="apple" />
-            <p>Apple</p>
-          </button>
-        </div>
+              <div className="mt-4 flex justify-center space-x-4">
+                <button className="flex items-center justify-center border border-gray-300 rounded-md py-2 px-4 hover:bg-gray-100">
+                  <img src={google_logo} alt="Google logo" className="h-5 w-5 mr-2" />
+                  Google
+                </button>
+                <button className="flex items-center justify-center border border-gray-300 rounded-md py-2 px-4 hover:bg-gray-100">
+                  <img src={apple_logo} alt="Apple logo" className="h-5 w-5 mr-2" />
+                  Apple
+                </button>
+              </div>
 
-        <p className="text-[14px] md:text-sm font-normal mt-8 md:mt-4 text-center md:text-left">
-          By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
-        </p>
-        <div className="flex justify-center">
-          <Link
-            to={'/signin'}
-            className="text-[14px] md:text-[16px] font-semibold mt-12 md:mt-4 text-center"
-          >
-            Already on TopEquator ? Log in
-          </Link>
+              <p className="text-gray-600 text-sm mt-6 text-center"> 
+                By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
+              </p>
+              <div className="text-center mt-2"> 
+                <Link to="/signin" className="text-blue-500 hover:text-blue-700 font-medium">
+                  Already on TopEquator? Log in
+                </Link>
+              </div>
+            </form>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
-        </div >
-        
-      </div >
-    </div >
-
   );
 };
 

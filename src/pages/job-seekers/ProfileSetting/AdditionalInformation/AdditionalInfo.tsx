@@ -165,41 +165,43 @@ const AdditionalInfo: React.FC = () => {
 
   return (
     <div className="w-full   pb-20 bg-[#F6F6F8]">
-      <div className="max-w-[1280px] h-48  m-auto">
+     <div className="max-w-[1200px] h-48  m-auto">
         <div className="">
           <div className="flex  flex-col  space-y-4 md:flex-row  md:justify-between md:items-center p-4">
-            <h1 className="text-xl font-semibold">Setting up your profile</h1>
+            <h1 className="text-sm font-semibold">Setting up your profile</h1>
 
             <div className="flex justify-between md:justify-center items-center space-x-10">
-              <p className="font-semibold text-[#104B53]">Cancel </p>
-              <p className=" w-32 h-10 text-xs bg-[#104B53] md:bg-transparent  text-white md:w-40 md:h-10 rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
+              <p className="font-semibold text-sm text-[#104B53] cursor-pointer">Cancel </p>
+              <p className=" w-24 cursor-pointer h-8 text-[10px] bg-[#104B53] md:bg-transparent  text-white   rounded-full md:text-[#104B53]  flex justify-center items-center border border-[#104B53]">
                 Save & Exit
               </p>
             </div>
           </div>
           <hr />
 
-          <div className="w-full p-4">
-            <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-sm">
+          <div className="w-full p-1">
+            <ol className="flex items-center justify-between w-full text-sm font-medium text-center text-gray-500 dark:text-gray-400 sm:text-base">
               <li className="flex md:w-full items-center text-[#104B53]   sm:after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
                 <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 flex justify-center items-center md:w-14 h-10 bg-[#104B53] text-white rounded-full">
-                    <TiTick />
+                  <span className="me-2 p-2 text-[10px] w-10   flex justify-center items-center h-8 bg-[#104B53] text-white rounded-full">
+                    1
                   </span>
-                  <p className="hidden md:block">Upload Resume</p>
+                  <p className="hidden text-xs md:block">Upload Resume</p>
                 </span>
               </li>
               <li className="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
-                <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
-                  <span className="me-2 p-2 w-10 md:w-14 h-10 bg-[#104B53] text-white rounded-full">
+              <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                  <span className="me-2 p-2 text-[10px] w-10   flex justify-center items-center h-8 bg-[#104B53] text-white rounded-full">
                     2
                   </span>
-                  <p className="hidden text-[#104B53]   md:block"> Additional Information</p>
+                  <p className="hidden text-xs md:block">Additional Information</p>
                 </span>
               </li>
               <li className="flex items-center">
-                <span className="me-2 p-2 w-10 h-10 bg-[#C7C9D9] rounded-full">3</span>
-                <p className="hidden md:block"> Review</p>
+                <span className="me-2 p-2 w-8 h-8 text-[10px] flex justify-center items-center bg-[#C7C9D9] rounded-full">
+                  3
+                </span>
+                <p className="hidden md:block  text-xs"> Review</p>
               </li>
             </ol>
           </div>
@@ -208,15 +210,15 @@ const AdditionalInfo: React.FC = () => {
 
       {/* Informations  */}
 
-      <div className="max-w-[1080px] h-full rounded-lg   bg-white m-auto p-4 pb-4 mt-3">
-        <div className="w-full max-w-[1064px] m-auto pt-10 flex flex-col space-y-5">
+      <div className="max-w-[1200px] h-full rounded-md   bg-white m-auto pb-4 ">
+        <div className="w-full max-w-[1064px] m-auto pt-4 flex flex-col space-y-5">
           <div className=" flex flex-col space-y-3">
-            <h1 className="text-lg font-semibold">Summary</h1>
+            <h1 className="text-sm font-semibold">Summary</h1>
             <div className="  border-[#EBEBF0] rounded-lg">
               <textarea
                 name="descriptionOfExperience"
                 className="text-[#535354] border p-2 text-sm min-h-32 w-full"
-                placeholder="Write you profile Summary"
+                placeholder="Write your profile summary"
                 onChange={(e) => setSummery({ summary: e.target.value })}
               ></textarea>
             </div>
@@ -225,40 +227,16 @@ const AdditionalInfo: React.FC = () => {
           {/* Work Experiences  */}
 
           <div className=" flex flex-col space-y-3">
-            <h1 className="text-lg font-semibold">Work Experience</h1>
+            <h1 className="text-sm font-semibold">Work Experience</h1>
 
             <div className="w-full flex flex-col space-y-5  p-4">
-              {/* Total Experience  */}
-              <div className="flex flex-col space-y-2">
-                <div className="flex ">
-                  <label htmlFor="" className="text-sm">
-                    Total Experience
-                  </label>
-                  <span className="text-red-500">*</span>
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    placeholder="In years"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-
-                  {/* in Months  */}
-
-                  <input
-                    type="text"
-                    placeholder="In Months"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
-                  />
-                </div>
-              </div>
+        
 
               <div className="w-full grid grid-cols-2 gap-3">
                 {/* Role  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Role
                     </label>
                     <span className="text-red-500">*</span>
@@ -271,7 +249,7 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Select Company
                     </label>
                     <span className="text-red-500">*</span>
@@ -292,7 +270,7 @@ const AdditionalInfo: React.FC = () => {
                 {/* Domain Worked  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Domain Worked
                     </label>
                   </div>
@@ -304,7 +282,7 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Job Type
                     </label>
                   </div>
@@ -317,7 +295,7 @@ const AdditionalInfo: React.FC = () => {
                 {/* Date Started  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Date Started
                     </label>
                     <span className="text-red-500">*</span>
@@ -329,7 +307,7 @@ const AdditionalInfo: React.FC = () => {
                     name="durationStart"
                     value={experience.durationStart}
                     onChange={handleChange}
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -337,7 +315,7 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Date Ended
                     </label>
                     <span className="text-red-500">*</span>
@@ -352,13 +330,13 @@ const AdditionalInfo: React.FC = () => {
                       experience.presentEmployer ? new Date().toISOString() : experience.durationEnd
                     }
                     onChange={handleChange}
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 border text-sm border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
 
               <div className="w-full grid grid-cols-2 gap-3">
-                <div className="flex  justify-start items-center space-x-5">
+                <div className="flex  justify-start items-center space-x-2">
                   <input
                     type="checkbox"
                     placeholder="Date Started"
@@ -375,13 +353,13 @@ const AdditionalInfo: React.FC = () => {
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
-                  <p>I am currently work here</p>
+                  <p className='text-xs'>I am currently work here</p>
                 </div>
               </div>
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-sm">
+                  <label htmlFor="" className="text-[12px]">
                     Location
                   </label>
                   <span className="text-red-500">*</span>
@@ -391,7 +369,7 @@ const AdditionalInfo: React.FC = () => {
               </div>
 
               <div className=" flex flex-col space-y-3 ">
-                <h1 className="text-lg font-semibold"> Work Summery</h1>
+                <h1 className="text-sm font-semibold"> Work Summery</h1>
                 <div className="border  border-[#EBEBF0] rounded-lg">
                   <textarea
                     name="descriptionOfExperience"
@@ -402,9 +380,9 @@ const AdditionalInfo: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex space-x-2 justify-start items-center">
-                <FaPlus color="#104B53" size={20} />
-                <p className="text-[#104B53] text-lg font-semibold cursor-pointer">
+              <div className="flex   justify-start items-center">
+                <FaPlus color="#104B53" size={15} />
+                <p className="text-[#104B53] text-xs uppercase font-semibold cursor-pointer">
                   Add Experiences
                 </p>
               </div>
@@ -415,27 +393,27 @@ const AdditionalInfo: React.FC = () => {
            */}
 
           <div className=" flex flex-col space-y-3">
-            <h1 className="text-lg font-semibold">Education</h1>
+            <h1 className="text-sm font-semibold">Education</h1>
 
             <div className="w-full flex flex-col space-y-5  p-4">
               {/* Collage Name  */}
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-sm">
+                  <label htmlFor="" className="text-[12px]">
                     Collage Name
                   </label>
                   <span className="text-red-500">*</span>
                 </div>
 
                 <input
-                  type="email"
+                  type="text"
                   name="schoolName"
                   value={education.schoolName}
                   onChange={handleEducationChange}
                   placeholder="
                 Enter Your Collage Name"
-                  className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                  className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
 
@@ -444,7 +422,7 @@ const AdditionalInfo: React.FC = () => {
               degree  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Degree
                     </label>
                     <span className="text-red-500">*</span>
@@ -456,7 +434,7 @@ const AdditionalInfo: React.FC = () => {
                     value={education.degree}
                     onChange={handleEducationChange}
                     placeholder="Degree"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -464,7 +442,7 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Major
                     </label>
                     <span className="text-red-500">*</span>
@@ -476,7 +454,7 @@ const AdditionalInfo: React.FC = () => {
                     placeholder="Major"
                     value={education.major}
                     onChange={handleEducationChange}
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -485,7 +463,7 @@ const AdditionalInfo: React.FC = () => {
                 {/* Date Started  */}
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Date Started
                     </label>
                     <span className="text-red-500">*</span>
@@ -497,7 +475,7 @@ const AdditionalInfo: React.FC = () => {
                     name="durationStart"
                     value={education.durationStart}
                     onChange={handleEducationChange}
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -505,7 +483,7 @@ const AdditionalInfo: React.FC = () => {
 
                 <div className="flex flex-col space-y-2">
                   <div className="flex ">
-                    <label htmlFor="" className="text-sm">
+                    <label htmlFor="" className="text-[12px]">
                       Date Ended
                     </label>
                     <span className="text-red-500">*</span>
@@ -522,13 +500,13 @@ const AdditionalInfo: React.FC = () => {
                     onChange={handleEducationChange}
                     name="durationEnd"
                     placeholder="Date Ended"
-                    className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
 
               <div className="w-full grid grid-cols-2 gap-3">
-                <div className="flex  justify-start items-center space-x-5">
+                <div className="flex  justify-start items-center space-x-1">
                   <input
                     type="checkbox"
                     placeholder="Date Started"
@@ -545,13 +523,13 @@ const AdditionalInfo: React.FC = () => {
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
-                  <p>I am currently studying here</p>
+                  <p className='text-xs'>I am currently studying here</p>
                 </div>
               </div>
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-sm">
+                  <label htmlFor="" className="text-[12px]">
                     Location
                   </label>
                   <span className="text-red-500">*</span>
@@ -560,9 +538,9 @@ const AdditionalInfo: React.FC = () => {
                 <LocationSearch setSelectedLocation={setSelectedEducationLocation} />
               </div>
 
-              <div className="flex space-x-2 justify-start items-center">
-                <FaPlus color="#104B53" size={20} />
-                <p className="text-[#104B53] text-lg font-semibold cursor-pointer">
+              <div className="flex  justify-start items-center">
+                <FaPlus color="#104B53" size={15} />
+                <p className="text-[#104B53] text-xs uppercase font-semibold cursor-pointer">
                   Add Educations
                 </p>
               </div>
@@ -575,13 +553,13 @@ const AdditionalInfo: React.FC = () => {
           <div className="flex w-full  justify-between md:justify-end items-center  space-x-4">
             <Link
               to={'/upload-resume'}
-              className="flex justify-center items-center w-full md:w-36 h-10  rounded-full cursor-pointer border border-[#104B53] text-[#104B53]"
+              className="flex justify-center items-center w-full md:w-24 h-8 text-xs  rounded-full cursor-pointer border border-[#104B53] text-[#104B53]"
             >
               Back
             </Link>
             <p
               onClick={handleContinue}
-              className="flex justify-center items-center w-full md:w-36 h-10  rounded-full cursor-pointer bg-[#E9F358] "
+              className="flex justify-center items-center w-full md:w-24 h-8 text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
               Continue
             </p>
