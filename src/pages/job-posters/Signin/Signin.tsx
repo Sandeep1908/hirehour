@@ -216,7 +216,7 @@ const Signin: React.FC = () => {
                 type="submit"
                 className="w-full h-[40px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4"
               >
-                <p className="text-base font-semibold">{mutation?.isPending?<Spinner size={20} color='#000000' />:'Log In'}</p>
+                <p className="text-base font-semibold">{mutation?.isPending?<Spinner size={5} color='#000000' />:'Log In'}</p>
               </button>
 
               <div className="flex mt-2 items-center justify-center ">
@@ -238,7 +238,7 @@ const Signin: React.FC = () => {
               </div>
 
               <p className="text-[14px]  font-normal mt-8 md:mt-4 text-center md:text-left">
-                By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
+                By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
               </p>
               <div className="flex justify-center">
                 <Link

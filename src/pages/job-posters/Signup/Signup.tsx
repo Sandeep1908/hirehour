@@ -282,7 +282,7 @@ const Signup: React.FC = () => {
                 className="w-full h-[48px] flex justify-center cursor-pointer items-center bg-[#E9F358] rounded-3xl mt-4"
               >
                 <p className="text-base font-semibold">
-                  {mutation?.isPending ?  <Spinner size={20} />:'Sign up'}
+                  {mutation?.isPending ?  <Spinner size={5} />:'Sign up'}
                  
                 </p>
               </div>
@@ -307,7 +307,7 @@ const Signup: React.FC = () => {
               </div>
 
               <p className="text-[14px] md:text-sm font-normal mt-8 md:mt-4 text-center md:text-left">
-                By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
+                By clicking Continue, you agree to TopEquator Terms of Service & Privacy Policy.
               </p>
               <div className="flex justify-center">
                 <Link
