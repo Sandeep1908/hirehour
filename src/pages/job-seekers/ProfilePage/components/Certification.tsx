@@ -14,9 +14,11 @@ type CertificationProps = {
 
     setAddCertificationPopup:(agr:boolean) => void
     setCertificationPopup:(agr:boolean) => void
+    setEditCertPopup:(agr:boolean) => void
+    setEditCertData:any
   }
 
-const Certification:React.FC<CertificationProps> = ({setAddCertificationPopup}) => {
+const Certification:React.FC<CertificationProps> = ({setAddCertificationPopup,setEditCertData,setEditCertPopup}) => {
 
     const { data: userDetails } = useQuery({
         queryKey: ['userDetails'],
@@ -45,6 +47,12 @@ const Certification:React.FC<CertificationProps> = ({setAddCertificationPopup}) 
       const handleDeleteCertificate = (id: number) => {
         certificateMutation.mutate(id);
       };
+      const handleEditeCertificate = (data: any) => {
+    
+        setEditCertPopup(true)
+        setEditCertData(data)
+        console.log("data",data)
+      };
 
   return (
   <div className="bg-white w-full p-5 rounded-lg mt-3">
@@ -67,7 +75,7 @@ const Certification:React.FC<CertificationProps> = ({setAddCertificationPopup}) 
                     {userDetails?.candidatedetailslicensescerts?.map((item:any,i:number)=>{
                         return(<div className="border p-7 border-[#EBEBF0] rounded-lg" key={i}>
                              <div className="flex justify-end items-center space-x-4">
-                                                <div className="flex items-center  " >
+                                                <div className="flex items-center  " onClick={()=>{handleEditeCertificate(item)}}>
                                                   <FaEdit size={14} color="#104B53" />
                                                   <p className="text-[#104B53] text-xs">Edit</p>
                                                 </div>

@@ -8,10 +8,13 @@ import { toast } from 'react-toastify'
 import { AxiosError } from 'axios'
 
 type JobAlertProps = {
-    setJobAlertPopup:(agr:boolean) => void
+  setShowEditjobAlert:(agr:boolean) => void
+  editId:number |undefined
+    // editData:any
  }
 
- type AddPreferences= {
+ type EditPreferences= {
+  id:number | undefined,
   jobRoleName: string,
   jobRoleType: string,
   experienceLevel: string,
@@ -20,8 +23,19 @@ type JobAlertProps = {
   location: string;
 
 }
+//  type EditDetails= {
+//   id:number | undefined,
+//   jobRoleName: string,
+//   jobRoleType: string,
+//   experienceLevel: string,
+//   salaryRange: string;
+//   salaryRangeType: string;
+//   TypesOfAuthorizationToHave: string;
+//   location: string;
 
-const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
+// }
+
+const EditJobAlert:React.FC<JobAlertProps> = ({setShowEditjobAlert,editId}) => {
 
   const { data: jobRoles } = useQuery({queryKey: ['jobroles'],queryFn: fetchRoles,});
   //  const employmentTypes = ['Full-time', 'Part-time'];
@@ -32,6 +46,7 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
      const [isJobAlertChecked, setIsJobAlertChecked] = useState<boolean>(false);
 
      
+     const [id, setId] = useState<number>();
      const [jobRoleSelect, setJobRoleSelect] = useState<number>();
      const [jobRoleName, setJobRoleName] = useState<string>("");
      const [jobRoleType, setJobRoleType] = useState<string>("");
@@ -41,7 +56,33 @@ const AddJobAlert:React.FC<JobAlertProps> = ({setJobAlertPopup}) => {
      const [TypesOfAuthorizationToHave, setTypesOfAuthorizationToHave] = useState<string>("");
      const [location, setLocation] = useState<string>("");
 
+
+    //  const [editDetails, setEditDetails] = useState<EditDetails>({
+    //   id: editData?.ID || "",
+    //   jobRoleName: editData?.jobRoleName || "",
+    //   jobRoleType: editData?.jobRoleType || "",
+    //   experienceLevel: editData?.experienceLevel || "",
+    //   salaryRange: editData?.salaryRange || "",
+    //   salaryRangeType: editData?.salaryRangeType || "",
+    //   TypesOfAuthorizationToHave: editData?.TypesOfAuthorizationToHave || "",
+    //   location: editData?.location || "",
+    // });
+
+
+    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    //   console.log("e.target",e.target)
+    //   const { name, value } = e.target;
+    //   console.log("Input Change - Name:", name, "Value:", value);
+    //   setEditDetails((prevState) => ({
+    //     ...prevState,
+    //     [name]: value,
+    //   }));
+    // };
+     
+
 useEffect(() => {
+   setId(editId)
+ 
    if(jobRoles){
     jobRoles.jobRoles.map((data:any)=>{
       if(jobRoleSelect && jobRoleSelect === data.id){
@@ -61,27 +102,28 @@ useEffect(() => {
 
 const mutation = useMutation({
         
-  mutationFn: async (addPreferences: AddPreferences) => {
-    const response = await axiosInstance.post("/api/candidate/details/create-job-preference", addPreferences);
+  mutationFn: async (editPreferences: EditPreferences) => {
+    const response = await axiosInstance.post("/api/candidate/details/update-job-preference", editPreferences);
     console.log("response.data",response.data)
     return response.data;
   
   },
   onSuccess: () => {
       
-    toast.success('Job Preferences added successfully');
+    toast.success('Job Preferences edit successfully');
   },
   onError: (error) => {
-       const axiosError = error as AxiosError<{message:string}>;
-                toast.error(axiosError?.response?.data?.message)
+      const axiosError = error as AxiosError<{message:string}>;
+           toast.error(axiosError?.response?.data?.message)
 
    },
 });
 
 
     const handleSubmit = (e: React.FormEvent) => {
+      // console.log("editData",editData)
         e.preventDefault();
-        const formData = { jobRoleName, jobRoleType, experienceLevel, salaryRange,salaryRangeType, TypesOfAuthorizationToHave,location };
+        const formData = { id,jobRoleName, jobRoleType, experienceLevel, salaryRange,salaryRangeType, TypesOfAuthorizationToHave,location };
         console.log("formData",formData)
         mutation.mutate(formData);
       };  
@@ -92,8 +134,8 @@ const mutation = useMutation({
 
         <div className='max-w-[600px]  h-full md:h-auto w-full  bg-white rounded-lg  shadow-lg overflow-y-auto z-30'>
             <div className=' p-4 flex justify-between items-center'>
-                 <p className='text-xl font-bold'>Add Job Alert</p>
-                 <IoMdClose size={30}  className="cursor-pointer" onClick={()=>{setJobAlertPopup(false)}} />
+                 <p className='text-xl font-bold'>Edit Job Alert</p>
+                 <IoMdClose size={30}  className="cursor-pointer" onClick={()=>{setShowEditjobAlert(false)}} />
             </div>
             <hr />
             <div className='w-full p-4'>
@@ -196,7 +238,11 @@ const mutation = useMutation({
                    </select>                </div>
                 <div className='w-full '>
                    <p className='text-sm font-medium'>Experience level </p>
-                   <select name="" id="" onChange={(e) => setExperienceLevel(e.target.value)} className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
+                   <select name="" id="" 
+                    onChange={(e) => setExperienceLevel(e.target.value)}
+                  
+
+                     className='w-full h-[40px] text-xs rounded-md border-[1px] border-[#E1E1E2] mt-2 px-4 ' >
                       <option value="Associate Level"> Associate Level </option>
                       <option value="Mid"> Mid </option>
                       <option value="Senior"> Senior </option>
@@ -266,4 +312,4 @@ const mutation = useMutation({
   )
 }
 
-export default AddJobAlert
+export default EditJobAlert

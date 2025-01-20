@@ -6,6 +6,7 @@ import { useMutation, useQuery } from '@tanstack/react-query'
 import { fetchAllJobPreferenceDetails } from '../../../utils/jobseekers/getAllJobPreference'
 import axiosInstance from '../../../axios/axiosInstance'
 import { toast } from 'react-toastify'
+import EditJobAlert from '../../../components/job-seekers/EditJobAlert'
 
 type DeleteId={
      id : number,
@@ -16,6 +17,9 @@ const JobPreference:React.FC = () => {
      const { data: allJobPreference } = useQuery({queryKey: ['allJobPreference'],queryFn: fetchAllJobPreferenceDetails,}); 
 
     const [showJobAlert, setShowjobAlert] = useState<boolean>(false)
+    const [editId, setEditId] = useState<number | undefined>()
+    // const [editData, setEditData] = useState<any>()
+    const [showEditJobAlert, setShowEditjobAlert] = useState<boolean>(false)
     const [isJobAlertChecked, setIsJobAlertChecked] = useState<boolean>(false);
 
     useEffect(() => {
@@ -47,6 +51,16 @@ const JobPreference:React.FC = () => {
     const handleDelete = (id:number)  => {
      mutationDelete.mutate({id});
     }
+    const handleEdit = (id:number)  => {
+     setEditId(id)
+     console.log("setEditId",editId)
+     setShowEditjobAlert(true)
+    }
+    // const handleEdit = (data:any)  => {
+    // //  setEditId(id)
+    //  setEditData(data)
+    //  setShowEditjobAlert(true)
+    // }
 
 
  
@@ -105,7 +119,7 @@ const JobPreference:React.FC = () => {
                       </div>
  
                       <div className="hidden  w-full md:flex justify-end items-start space-x-4">
-                         <div className="flex items-center mt-1 " >
+                         <div className="flex items-center mt-1  " onClick={()=>{handleEdit(detail.ID)}} >
                          <FaEdit color="#104B53" size={14} />
                          <p className="text-[#104B53] text-xs">Edit</p>
                          </div>
@@ -145,6 +159,10 @@ const JobPreference:React.FC = () => {
      
 
        {showJobAlert && <AddJobAlert setJobAlertPopup={setShowjobAlert}/>}
+       {showEditJobAlert && <EditJobAlert setShowEditjobAlert={setShowEditjobAlert} 
+       editId={editId}
+     //   editData={editData}
+       />}
     </div>
   )
 }
