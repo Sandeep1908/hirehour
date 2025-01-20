@@ -282,7 +282,7 @@ const Signup: React.FC = () => {
                 className="w-full h-[48px] flex justify-center cursor-pointer items-center bg-[#E9F358] rounded-3xl mt-4"
               >
                 <p className="text-base font-semibold">
-                  {mutation?.isPending ?  <Spinner loading={mutation.isPending} size={20} />:'Sign up'}
+                  {mutation?.isPending ?  <Spinner size={20} />:'Sign up'}
                  
                 </p>
               </div>

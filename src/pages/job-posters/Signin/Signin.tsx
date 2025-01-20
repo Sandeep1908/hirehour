@@ -216,7 +216,7 @@ const Signin: React.FC = () => {
                 type="submit"
                 className="w-full h-[40px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4"
               >
-                <p className="text-base font-semibold">{mutation?.isPending?<Spinner size={20} color='#000000' loading={mutation.isPending}/>:'Log In'}</p>
+                <p className="text-base font-semibold">{mutation?.isPending?<Spinner size={20} color='#000000' />:'Log In'}</p>
               </button>
 
               <div className="flex mt-2 items-center justify-center ">
