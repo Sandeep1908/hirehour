@@ -2,8 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {IoMdClose} from 'react-icons/io'
 import { FaEdit } from "react-icons/fa";
+// import { useMutation } from "@tanstack/react-query";
+// import axiosrecruiterinstance from "../../../axios/axiosrecruiterinstance";
+// import { toast } from "react-toastify";
+// import { AxiosError } from "axios";
 
+// type EmailId = {
+//     email: string;
+
+// }
 const ProfileSetting:React.FC=()=>{
+
+    // const [email, setEmail] = useState<string>('');
     const [isChangeEmail,setIsChangeEmail]=useState<boolean>(false)
     const titles = [
         {
@@ -19,6 +29,29 @@ const ProfileSetting:React.FC=()=>{
             link:'/job-poster/privacy-setting'
         }
       ];
+
+    //   const mutation = useMutation({
+    //     mutationFn: async (emailId: EmailId) => {
+    //         const response = await axiosrecruiterinstance.post("/api/recruiter/signup/forgot-pass", emailId);
+    //         console.log("response.data", response.data)
+    //         return response.data;
+    //     },
+    //     onSuccess: () => {
+    //         toast.success('Link send successfully');
+    //     },
+    //     onError: (error) => {
+    //         const axiosError = error as AxiosError<{ message: string }>;
+    //         toast.error(axiosError?.response?.data?.message);
+
+    //     },
+    // })
+
+    const handleChangePassword = () => {
+        // setEmail(userDetails?.user?.email)
+        // if (email) {
+            // mutation.mutate({ email });
+        // }
+    };
     
     return(
         <div className="w-full h-[calc(100vh-60px)]  bg-[#F2F2F5] p-2  relative" >
@@ -79,7 +112,7 @@ const ProfileSetting:React.FC=()=>{
                                                         </div>
                                                         
 
-                                                        <p className="p-2 w-full md:w-auto text-[#104B53] text-xs text-center rounded-full border border-[#104B53]" onClick={()=>setIsChangeEmail(true)}>Change password</p>
+                                                        <p className="p-2 w-full md:w-auto text-[#104B53] text-xs text-center rounded-full border border-[#104B53]" onClick={handleChangePassword}>Change password</p>
                                                     </div>
 
 
