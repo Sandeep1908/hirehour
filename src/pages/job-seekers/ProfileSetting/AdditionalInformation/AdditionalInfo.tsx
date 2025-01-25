@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 
-
 import { FaPlus } from 'react-icons/fa6';
 import { Link } from 'react-router-dom';
 import axiosInstance from '../../../../axios/axiosInstance';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import JobRoles from '../../../../utils/JobRoles';
 import Domains from '../../../../utils/Domains';
@@ -13,6 +12,7 @@ import LocationSearch from '../../../../utils/LocationSearch';
 import formatLocation from '../../../../utils/jobseekers/formatedLocation';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
+import { fetchDomains, fetchRoles } from '../../../../utils/jobseekers/getUserDetails';
 
 type WorkExperience = {
   companydetails: string;
@@ -31,14 +31,14 @@ type EducationDetails = {
   durationEnd: string;
   netMarks: number;
   outOf: number;
-  major:string
+  major: string;
   isCurrentlyAttending: boolean;
 };
 
 const AdditionalInfo: React.FC = () => {
   const navigate = useNavigate();
-  const [role, setRole] = useState<number | null>(null);
-  const [domain, setDomain] = useState<number | null>(null);
+  const [domain, setDomain] = useState<string>('');
+  const [role, setRole] = useState<string>('');
   const [jobtype, setType] = useState<number | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<LocationValue | null>(null);
   const [selectedEducationLocation, setSelectedEducationLocation] = useState<LocationValue | null>(
@@ -62,7 +62,7 @@ const AdditionalInfo: React.FC = () => {
     durationEnd: '',
     isCurrentlyAttending: false,
     netMarks: 100,
-    major:'',
+    major: '',
     outOf: 100,
   });
 
@@ -105,11 +105,10 @@ const AdditionalInfo: React.FC = () => {
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ message: string }>;
-      console.log("eduerror",error);
+      console.log('eduerror', error);
       toast.error(axiosError?.response?.data?.message);
     },
   });
-
 
   //summery
 
@@ -137,13 +136,32 @@ const AdditionalInfo: React.FC = () => {
     }));
   };
 
+  const { data: domains } = useQuery({
+    queryKey: ['domains'],
+    queryFn: fetchDomains,
+  });
+
+  const { data: jobRole } = useQuery({
+    queryKey: ['roles'],
+    queryFn: fetchRoles,
+  });
+
+  const getRoleIdByName = (name: string) =>
+    jobRole?.jobRoles?.find((role: { id: number; roleName: string }) => role.roleName === name)
+      ?.id || 'N/A';
+
+  const getDomainIdByName = (name: string) =>
+    domains?.domains?.find(
+      (domain: { id: number; domainName: string }) => domain.domainName === name,
+    )?.id || 'N/A';
+
   const handleContinue = async () => {
     const expeirenceData = {
       ...experience,
       jobType: jobtype,
-      role: role,
-      domain: domain,
-      place: formatLocation(selectedLocation),
+      role: getRoleIdByName(role),
+      domain: getDomainIdByName(domain),
+      place: formatLocation(selectedLocation) || '',
     };
 
     const educationData = {
@@ -164,8 +182,8 @@ const AdditionalInfo: React.FC = () => {
   };
 
   return (
-    <div className="w-full   pb-20 bg-[#F6F6F8]">
-     <div className="max-w-[1200px] h-48  m-auto">
+    <div className="w-full p-3   pb-20 bg-[#F6F6F8]">
+      <div className="max-w-[1200px] h-48  m-auto">
         <div className="">
           <div className="flex  flex-col  space-y-4 md:flex-row  md:justify-between md:items-center p-4">
             <h1 className="text-sm font-semibold">Setting up your profile</h1>
@@ -190,7 +208,7 @@ const AdditionalInfo: React.FC = () => {
                 </span>
               </li>
               <li className="flex md:w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
-              <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
+                <span className="flex items-center   sm:after:hidden after:mx-2 after:text-gray-200 dark:after:text-gray-500">
                   <span className="me-2 p-2 text-[10px] w-10   flex justify-center items-center h-8 bg-[#104B53] text-white rounded-full">
                     2
                   </span>
@@ -210,9 +228,9 @@ const AdditionalInfo: React.FC = () => {
 
       {/* Informations  */}
 
-      <div className="max-w-[1200px] h-full rounded-md   bg-white m-auto pb-4 ">
+      <div className="max-w-[1200px] h-full rounded-md  p-2  bg-white m-auto pb-4 ">
         <div className="w-full max-w-[1064px] m-auto pt-4 flex flex-col space-y-5">
-          <div className=" flex flex-col space-y-3">
+          <div className="flex flex-col space-y-3 p-2">
             <h1 className="text-sm font-semibold">Summary</h1>
             <div className="  border-[#EBEBF0] rounded-lg">
               <textarea
@@ -230,8 +248,6 @@ const AdditionalInfo: React.FC = () => {
             <h1 className="text-sm font-semibold">Work Experience</h1>
 
             <div className="w-full flex flex-col space-y-5  p-4">
-        
-
               <div className="w-full grid grid-cols-2 gap-3">
                 {/* Role  */}
                 <div className="flex flex-col space-y-2">
@@ -353,7 +369,7 @@ const AdditionalInfo: React.FC = () => {
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
-                  <p className='text-xs'>I am currently work here</p>
+                  <p className="text-xs">I am currently work here</p>
                 </div>
               </div>
 
@@ -400,7 +416,7 @@ const AdditionalInfo: React.FC = () => {
 
               <div className="flex flex-col space-y-2">
                 <div className="flex ">
-                  <label htmlFor="" className="text-[12px]">
+                  <label htmlFor="" className="text-sm">
                     Collage Name
                   </label>
                   <span className="text-red-500">*</span>
@@ -411,8 +427,7 @@ const AdditionalInfo: React.FC = () => {
                   name="schoolName"
                   value={education.schoolName}
                   onChange={handleEducationChange}
-                  placeholder="
-                Enter Your Collage Name"
+                  placeholder="Enter Your Collage Name"
                   className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                 />
               </div>
@@ -450,7 +465,7 @@ const AdditionalInfo: React.FC = () => {
 
                   <input
                     type="text"
-                    name='major'
+                    name="major"
                     placeholder="Major"
                     value={education.major}
                     onChange={handleEducationChange}
@@ -523,7 +538,7 @@ const AdditionalInfo: React.FC = () => {
                     className="p-3 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
 
-                  <p className='text-xs'>I am currently studying here</p>
+                  <p className="text-xs">I am currently studying here</p>
                 </div>
               </div>
 

@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Select, { SingleValue } from 'react-select';
 
-// Define the types for location data
+// Define types for location data
+type LocationValue = {
+  city: string;
+  state: string;
+  country: string;
+  latitude: number;
+  longitude: number;
+};
 
 type OptionType = {
   value: LocationValue;
@@ -11,12 +18,11 @@ type OptionType = {
 
 type LocationProps = {
   setSelectedLocation: (e: LocationValue | null) => void;
-  selectedValue?:string
+  selectedValue?: string;
 };
 
 type Feature = {
   properties: {
-    name: string;
     city: string;
     state: string;
     country: string;
@@ -26,18 +32,18 @@ type Feature = {
   };
 };
 
-const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
+const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation, selectedValue }) => {
   // State definitions
   const [query, setQuery] = useState<string>('');
   const [options, setOptions] = useState<OptionType[]>([]);
-
+  const [isTyped, setIsTyped] = useState(false);
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 
   // Fetch locations from Photon API
   const getLocation = async () => {
     if (!query.trim()) {
-      setError('Query parameter "q" is required');
+      setError('Please enter a valid search query');
       return;
     }
 
@@ -52,19 +58,23 @@ const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
       });
 
       if (response.data && response.data.features.length > 0) {
-        const formattedOptions: OptionType[] = response.data.features.map((feature: Feature) => ({
-          value: {
-            // place: feature.properties.name || 'Unknown',
-            city: feature.properties.city || '',
-            state: feature.properties.state || '',
-            country: feature.properties.country || '',
-            latitude: feature.geometry.coordinates[1],
-            longitude: feature.geometry.coordinates[0],
-          },
-          label: `  ${feature.properties.city || ''}${
-            feature.properties.city ? ',':  ''
-          } ${feature.properties.state || ''}${feature.properties.state?',': ''} ${feature.properties.country || ''}`
-        }));
+        const formattedOptions: OptionType[] = response.data.features.map((feature: Feature) => {
+          const { city, state, country } = feature.properties;
+
+          // Dynamically build the label based on available fields
+          const label = [city, state, country].filter(Boolean).join(', ');
+
+          return {
+            value: {
+              city: city || '',
+              state: state || '',
+              country: country || '',
+              latitude: feature.geometry.coordinates[1],
+              longitude: feature.geometry.coordinates[0],
+            },
+            label,
+          };
+        });
 
         setOptions(formattedOptions);
       } else {
@@ -72,7 +82,7 @@ const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
       }
     } catch (err) {
       console.error('Error fetching locations:', (err as Error).message);
-      setError('Internal Server Error');
+      setError('Failed to fetch locations. Please try again.');
     } finally {
       setLoading(false);
     }
@@ -91,22 +101,27 @@ const LocationSearch: React.FC<LocationProps> = ({ setSelectedLocation }) => {
     setSelectedLocation(selectedOption?.value || null);
   };
 
-
-
-  
   return (
     <div className="w-full">
-      <Select
-        options={options}
-        
-        onInputChange={handleInputChange}
-        onChange={handleSelection}
-        placeholder="Enter location"
-        isLoading={loading}
-        noOptionsMessage={() => (error ? error : 'Start typing to search')}
-        className="react-select-container text-xs"
-        classNamePrefix="react-select"
-      />
+      {selectedValue && !isTyped ? (
+        <input
+          type="text"
+          value={selectedValue}
+          className="text-sm w-full border p-2 rounded-md"
+          onChange={() => setIsTyped(true)}
+        />
+      ) : (
+        <Select
+          options={options}
+          onInputChange={handleInputChange}
+          onChange={handleSelection}
+          placeholder="Enter location"
+          isLoading={loading}
+          noOptionsMessage={() => (error ? error : 'Start typing to search')}
+          className="react-select-container text-xs"
+          classNamePrefix="react-select"
+        />
+      )}
     </div>
   );
 };

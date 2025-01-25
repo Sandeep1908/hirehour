@@ -7,23 +7,23 @@ import Logo from '../../../../assets/logo/hirehour.png';
 import { BsInfoCircleFill } from 'react-icons/bs';
 import { useQuery } from '@tanstack/react-query';
 import { fetchRTRs } from '../../../../utils/jobseekers/getRTR';
+import ViewRTR from '../../../../components/common/ViewRTR';
 
 const Accepted: React.FC = () => {
   const [isRTROpen, setIsRTROpen] = useState<boolean>(false);
-   
+  const [isViewRTROpen, setIsViewRTROpen] = useState<boolean>(false);
+  const [rtrId,setRTRId]=useState<number>()
   const [isPreviewRTR, isSetPreviewRTR] = useState<boolean>(false);
   const { data: rtr } = useQuery({
     queryKey: ['all-rtr'],
     queryFn: fetchRTRs,
   });
 
-    
-  const acceptedRtrCount=rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate)
-  const newRTRCount=rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate)
-
+  const acceptedRtrCount = rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate);
+  const newRTRCount = rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate);
 
   useEffect(() => {
-    if (isRTROpen  || isPreviewRTR) {
+    if (isRTROpen || isPreviewRTR) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'auto';
@@ -49,24 +49,25 @@ const Accepted: React.FC = () => {
     },
   ];
   const tags = [
-    { label: 'New', count:newRTRCount?.length ,link: '/right-to-represent' },
-    { label: 'Accepted',count:acceptedRtrCount?.length ,link: '/rtr-accepted' },
-    { label: 'Decline', count:'',link: '/rtr-decline' },
-    { label: 'Expire', count:'', link: '/rtr-expired' },
+    { label: 'New', count: newRTRCount?.length, link: '/right-to-represent' },
+    { label: 'Accepted', count: acceptedRtrCount?.length, link: '/rtr-accepted' },
+    { label: 'Decline', count: '', link: '/rtr-decline' },
+    { label: 'Expire', count: '', link: '/rtr-expired' },
   ];
 
   const handlePreview = () => {
     isSetPreviewRTR(true);
     setIsRTROpen(false);
   };
+
+  const handleViewRtr=(rtrId:number)=>{
+    setRTRId(rtrId)
+    setIsViewRTROpen(true)
+  }
   return (
     <div className="w-full  min-h-screen bg-[#F2F2F5]  relative  ">
-       <div className=" w-full max-w-[1280px]  flex     m-auto mt-3 rounded-lg   ">
-
-   
-
-
-       <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
+      <div className=" w-full max-w-[1280px]  flex     m-auto mt-3 rounded-lg   ">
+        <div className="hidden sm:flex justify-between bg-white h-fit rounded-lg w-full sticky top-2   mr-2 max-w-[200px] ">
           <ul className="w-full  flex flex-col justify-start items-end      relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
             {titles?.map((item, id) => {
               return (
@@ -82,46 +83,47 @@ const Accepted: React.FC = () => {
           </ul>
         </div>
 
-        
+        <div className="w-full  p-3 bg-white  ">
+          <div className="w-full overflow-auto sm:hidden">
+            <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
+              {titles?.map((item, id) => {
+                return (
+                  <Link
+                    to={item.link}
+                    className={`text-sm p-2 w-full font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
+                    key={id}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </ul>
+          </div>
 
-<div className='w-full  p-3 bg-white  '>
+          <div className="w-full overflow-auto flex justify-between items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] mt-3">
+            <ul className="w-screen md:w-auto overflow-auto flex items-center space-x-7 p-2 sm:p-3">
+              {tags?.map((item, id) => {
+                return (
+                  <Link
+                    to={item.link}
+                    className={` text-xs   font-[600] cursor-pointer  ${id === 1 ? 'text-[#104B53]' : ''}`}
+                    key={id}
+                  >
+                    {item.label}({item.count})
+                  </Link>
+                );
+              })}
+            </ul>
 
-<div className="w-full overflow-auto sm:hidden">
-                    <ul className="w-full  flex justify-start items-center space-x-6  relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC]">
-        {titles?.map((item, id) => {
-          return (
-            <Link
-              to={item.link}
-              className={`text-sm p-2 w-full font-[500]  ${id == 1 ? 'border-[#104B53] border-b-4' : ''}  md:p-2`}
-              key={id}
+            <p
+              className="hidden md:flex justify-center cursor-pointer items-center  bg-[#E9F358] w-[130px] h-[30px] text-sm text-[#104B53] rounded-full "
+              onClick={() => setIsRTROpen(true)}
             >
-              {item.label}
-            </Link>
-          );
-        })}
-      </ul>
-                    </div>
+              <BiPlus color="#104B53" /> <span className="text-sm font-[600]">Add RTR</span>
+            </p>
+          </div>
 
-    <div className="w-full overflow-auto flex justify-between items-center relative before:absolute before:bottom-0 before:w-full before:h-0.5 before:bg-[#ECECEC] mt-3">
-  <ul className="w-screen md:w-auto overflow-auto flex items-center space-x-7 p-2 sm:p-3">
-    {tags?.map((item, id) => {
-      return (
-        <Link to={item.link}  className={` text-xs   font-[600] cursor-pointer  ${id===1?'text-[#104B53]':''}`} key={id}>
-        {item.label}({item.count})
-      </Link>
-      );
-    })}
-  </ul>
-
-  <p
-    className="hidden md:flex justify-center cursor-pointer items-center  bg-[#E9F358] w-[130px] h-[30px] text-sm text-[#104B53] rounded-full "
-    onClick={() => setIsRTROpen(true)}
-  >
-    <BiPlus color="#104B53" /> <span className='text-sm font-[600]'>Add RTR</span>
-  </p>
-</div>
-   
-<div className=" p-4 flex justify-start space-x-4 w-full overflow-auto    items-center">
+          <div className=" p-4 flex justify-start space-x-4 w-full overflow-auto    items-center">
             <div className="w-full sm:w-auto  flex justify-center items-center border border-[#A2A9B4] p-1 rounded-full">
               <p className="text-[10px]  text-[#6B7588] font-[500]">Recevied Date:</p>
 
@@ -186,125 +188,117 @@ const Accepted: React.FC = () => {
             </div>
           </div>
 
+          <div className="w-full pb-5 pt-3 md:hidden">
+            <p
+              className="flex w-full justify-center items-center space-x-2 bg-[#E9F358]   h-10 text-sm text-[#104B53] rounded-lg "
+              onClick={() => setIsRTROpen(true)}
+            >
+              <BiPlus color="#104B53" /> <span className="font-[600]">Add RTR</span>
+            </p>
+          </div>
+          {/*RTR */}
 
-<div className="w-full pb-5 pt-3 md:hidden">
-  <p
-    className="flex w-full justify-center items-center space-x-2 bg-[#E9F358]   h-10 text-sm text-[#104B53] rounded-lg "
-    onClick={() => setIsRTROpen(true)}
-  >
-    <BiPlus color="#104B53" /> <span className='font-[600]'>Add RTR</span>
-  </p>
-</div>
-{/*RTR */}
+          <div className="flex flex-col space-y-4">
+            {rtr?.data?.map((item: ALLRTRTYPES, i: number) => {
+              if (item?.isSignedByCandidate) {
+                return (
+                  <div
+                    key={i}
+                    className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg"
+                  >
+                    <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
+                      <div className="flex items-center space-x-4">
+                        <span className="text-sm text-[#6B7588]">Job Title: </span>
+                        <p className="text-sm font-semibold">{item?.job?.jobRoleName}</p>
+                        <div className="flex items-center space-x-2">
+                          <span className="text-xs text-[#7B8496]">- {item?.job?.jobLocation}</span>
+                          <p className="w-8 h-4 bg-[#E9F358] text-[#104B53] rounded-full text-[10px] font-semibold flex justify-center items-center">
+                            RTR
+                          </p>
+                          <BsInfoCircleFill fill="#104B53" />
+                        </div>
+                      </div>
 
+                      <div>
+                        <p className="text-sm">Rate : ${item?.agreedUponRateForCandidate} / HR</p>
+                      </div>
+                    </div>
 
-<div className='flex flex-col space-y-4'>
-  {rtr?.data?.map((item:ALLRTRTYPES,i:number)=>{
-    if(item?.isSignedByCandidate){
-return(
-  <div  key={i}className="w-full max-w-[1200px]  h-full m-auto border border-[#E1E1E2] rounded-lg">
-  <div className="w-full flex  flex-col justify-end items-end space-y-3 md:space-y-0 md:flex-row md:justify-between md:items-center p-3 bg-[#F2F2F5] rounded-t-lg">
-    <div className="flex items-center space-x-4">
-      <span className="text-sm text-[#6B7588]">Job Title: </span>
-      <p className="text-sm font-semibold">{item?.job?.jobRoleName}</p>
-      <div className='flex items-center space-x-2'>
-                  <span className="text-xs text-[#7B8496]">- {item?.job?.jobLocation}</span>
-                  <p className='w-8 h-4 bg-[#E9F358] text-[#104B53] rounded-full text-[10px] font-semibold flex justify-center items-center'>RTR</p>
-                  <BsInfoCircleFill   fill='#104B53'   />
+                    <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
+                      <div className="flex flex-col space-y-1">
+                        <h1 className="text-sm">From</h1>
+                        <p className="text-sm">
+                          <strong>Send by</strong>: {item?.recruiter?.user?.firstName}
+                        </p>
+                        <p className="text-sm">
+                          <strong>Company</strong>:Insight Global
+                        </p>
+                      </div>
 
+                      <div className="flex flex-col space-y-1">
+                        <h1 className="text-sm">To</h1>
+                        <p className="text-sm">
+                          <strong>Employer name</strong>: {item?.employer?.user?.firstName}
+                        </p>
+                        <p className="text-sm">
+                          <strong>Employer Company</strong>: AA Tech
+                        </p>
+                        <p className="text-sm">
+                          <strong>Applicant Name</strong>: {item?.candidate?.firstName}
+                        </p>
+                      </div>
+
+                      <div className="flex flex-col space-y-3  ">
+                        <div className="flex justify- space-x-3 items-center">
+                          <MdOutlineFileDownload size={20} color="#104B53" />
+                          <p className="text-[#104B53] text-sm font-[600]">Export</p>
+                          <p onClick={()=>handleViewRtr(item?.ID)} className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+                            View
+                          </p>
+                        </div>
+
+                        <p className="text-sm">
+                          <strong>Valid Till</strong>: {item?.validityPeriod}
+                        </p>
+                      </div>
+                    </div>
+
+                    <hr />
+
+                    <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
+                      <div className="flex justify-center items-center space-x-5">
+                        <div className="flex flex-col space-y-3">
+                          <p className="text-sm">
+                            <strong>Client</strong>: {item?.clientCompany}
+                          </p>
+                          <p className="text-sm">
+                            <strong>Prime Vendor </strong>: {item?.primeVendorCompany}
+                          </p>
+                        </div>
+
+                        <div className="flex flex-col space-y-3">
+                          <p className="text-sm">
+                            <strong>Implementation</strong>: {item?.implementationCompany}
+                          </p>
+                          <p className="text-sm">
+                            <strong>Vendor </strong>: {item?.vendorCompany}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex w-full md:w-auto items-center justify-center space-x-5">
+                        <p className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#B4FEDD] text-[#07A560] p-2 text-center rounded-full">
+                          Signed
+                        </p>
+                      </div>
+                    </div>
                   </div>
-    </div>
-
-    <div>
-      <p className='text-sm'>Rate : ${item?.agreedUponRateForCandidate} / HR</p>
-    </div>
-  </div>
-
-  <div className="w-full flex flex-col space-y-5 md:space-y-0 md:flex-row md:justify-between md:items-start p-3">
-    <div className="flex flex-col space-y-1">
-      <h1 className="text-sm">From</h1>
-      <p className='text-sm'>
-        <strong >Send by</strong>: {item?.recruiter?.user?.firstName}
-      </p>
-      <p className='text-sm'>
-        <strong>Company</strong>:Insight Global
-      </p>
-    </div>
-
-    <div className="flex flex-col space-y-1">
-      <h1 className="text-sm">To</h1>
-      <p className='text-sm'>
-        <strong>Employer name</strong>: {item?.employer?.user?.firstName}
-      </p>
-      <p className='text-sm'>
-        <strong>Employer Company</strong>: AA Tech
-      </p>
-      <p className='text-sm'>
-        <strong>Applicant Name</strong>: {item?.candidate?.firstName}
-      </p>
-    </div>
-
-    <div className="flex flex-col space-y-3  ">
-      <div className="flex justify- space-x-3 items-center">
-        <MdOutlineFileDownload size={20} color="#104B53" />
-        <p className="text-[#104B53] text-sm font-[600]">Export</p>
-        <p className="border text-sm text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
-          View
-        </p>
+                );
+              }
+            })}
+          </div>
+        </div>
       </div>
-
-      <p className='text-sm'>
-        <strong>Valid Till</strong>: {item?.validityPeriod}
-      </p>
-    </div>
-  </div>
-
-  <hr />
-
-  <div className="w-full flex flex-col space-y-5 md:flex-row justify-between items-center p-5">
-    <div className="flex justify-center items-center space-x-5">
-      <div className="flex flex-col space-y-3">
-        <p className='text-sm'>
-          <strong>Client</strong>: {item?.clientCompany}
-        </p>
-        <p className='text-sm'>
-          <strong>Prime Vendor </strong>: {item?.primeVendorCompany}
-        </p>
-      </div>
-
-      <div className="flex flex-col space-y-3">
-        <p className='text-sm'>
-          <strong>Implementation</strong>: {item?.implementationCompany}
-        </p>
-        <p className='text-sm'>
-          <strong>Vendor </strong>: {item?.vendorCompany}
-        </p>
-      </div>
-    </div>
-
-    <div className="flex w-full md:w-auto items-center justify-center space-x-5">
-       
-      <p   className="w-full sm:w-[120px] cursor-pointer text-sm bg-[#B4FEDD] text-[#07A560] p-2 text-center rounded-full">
-        Signed
-      </p>
-    </div>
-  </div>
-</div>
-)
-    }
-  })}
-  
-
-
- 
-
-
-    </div>
-</div>
-
-
-
-</div>
 
       {/* ADD RTR FORM  */}
 
@@ -740,7 +734,9 @@ return(
         </div>
       </div>
 
-      
+
+      <ViewRTR isViewRTROpen={isViewRTROpen} setIsViewRTROpen={setIsViewRTROpen} rtrId={rtrId} />
+
     </div>
   );
 };

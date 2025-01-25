@@ -211,7 +211,7 @@ const MyJobs: React.FC = () => {
                     {/* more section  */}
 
                     {activeCard === i && (
-                      <div className="w-36   bg-white absolute  top-0 right-[-140px] rounded-lg  z-[10] transition-all ">
+                      <div className="w-36 shadow-md   bg-white absolute  top-0 right-[-140px] rounded-lg  z-[10] transition-all ">
                         <ul className="flex flex-col p-3 space-y-4 text-xs ">
                           {moreSection.map((item, id) => {
                             return (

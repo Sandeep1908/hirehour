@@ -48,9 +48,9 @@ const sidebarItems = [
     component: <RTR />,
   },
   {
-    label: 'Interviews',
+    label: 'Shortlisted',
     icon: interviewIcon,
-    path: 'interviews',
+    path: 'shortlisted',
     count: '',
     component: <Interviews />,
   },

@@ -2,31 +2,28 @@ import React, { useEffect, useState } from 'react';
 
 import { ResourseCard } from '../../../config/home';
 
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Footer from '../../../components/Footer';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPostedJob } from '../../../utils/jobposters/jobboards/getJobs';
 
 const JobPosterHome: React.FC = () => {
   const [homeCards, setHomeCards] = useState<HomeCardTypes[]>();
-  const navigate=useNavigate()
-  const {data:postedJob}=useQuery({
-    queryKey:['postedjobs'],
-    queryFn:fetchPostedJob
-  })
+  const navigate = useNavigate();
+  const { data: postedJob } = useQuery({
+    queryKey: ['postedjobs'],
+    queryFn: fetchPostedJob,
+  });
 
-
-  const handlePostJob=()=>{
-      if(postedJob?.jobs?.length===0){
-        navigate('/job-poster/job-basis')
-      }else{
-        navigate('/job-poster/dashboard?key=myjobs')
-      }
-  }
- 
+  const handlePostJob = () => {
+    if (postedJob?.jobs?.length === 0) {
+      navigate('/job-poster/job-basis');
+    } else {
+      navigate('/job-poster/dashboard?key=myjobs');
+    }
+  };
 
   useEffect(() => {
-  
     setHomeCards(ResourseCard);
   }, []);
 
@@ -54,10 +51,6 @@ const JobPosterHome: React.FC = () => {
                 className="w-32 h-8 text-xs flex justify-center items-center rounded-full cursor-pointer bg-[#E9F358] text-[#1D5552]"
               >
                 Post a Job
-              </p>
-
-              <p className="w-32 h-8 text-xs flex justify-center items-center rounded-full cursor-pointer  text-white border border-white">
-                Resume Sourcing
               </p>
             </div>
           </div>

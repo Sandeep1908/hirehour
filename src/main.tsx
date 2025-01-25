@@ -109,9 +109,9 @@ const router = createBrowserRouter(
       <Route
         path="/searchjob"
         element={
-          <CandidateProtectedRoute>
+          
             <JobDescription />
-          </CandidateProtectedRoute>
+          
         }
       />
 

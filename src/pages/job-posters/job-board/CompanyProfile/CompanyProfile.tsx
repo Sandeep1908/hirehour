@@ -22,13 +22,15 @@ type CompanyDetailsRequest = {
   domainItWorksIn: string;
   companyWebsiteURL: string;
   companyPhoneNumber: string;
+  companyAddress:string;
+
+
 };
 
 const CompanyProfile: React.FC = () => {
   const navigate = useNavigate();
   const [company, setCompany] = useState<number | null>(null);
   const [headquaterLocation, setHeadQuaterLocation] = useState<LocationValue | null>(null);
-  const [companyAddress, setCompanyAddress] = useState<LocationValue | null>(null);
   const [location, setLocation] = useState<LocationValue | null>(null);
   const jobId = useLocation().state?.jobId;
 
@@ -46,6 +48,7 @@ const CompanyProfile: React.FC = () => {
     domainItWorksIn: 'NA',
     companyWebsiteURL: '',
     companyPhoneNumber: '',
+    companyAddress:'',
   });
 
   const { data: companyDetail } = useQuery({
@@ -169,7 +172,6 @@ const CompanyProfile: React.FC = () => {
         ...formData,
         headquartersLocation: formatLocation(headquaterLocation),
         location: formatLocation(location),
-        companyAddress: formatLocation(companyAddress),
       };
       companyDescritionMutation.mutate(newCompanyDescription);
     } else {
@@ -341,7 +343,14 @@ const CompanyProfile: React.FC = () => {
                 <span className="text-red-500">*</span>
               </div>
 
-              <LocationSearch setSelectedLocation={setCompanyAddress} />
+              <input
+                type="text"
+                placeholder="Company Address"
+                value={formData.companyAddress}
+                name="companyAddress"
+                onChange={handleChange}
+                className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
+              />
             </div>
           </div>
 

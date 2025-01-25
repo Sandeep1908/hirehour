@@ -7,10 +7,35 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchPostedJob } from '../../../utils/jobposters/jobboards/getJobs';
 import VerifyJobIco from '../../../assets/dashboardrtr/nothing.png';
 
- 
+const ActiveJobs: React.FC<{ activeJobs: JobTypes[] }> = ({ activeJobs }) => {
+  // const [qStringParam,setQueryParams]=useState<string>('')    
+  const stats = [
+    {
+      label: 'View Jobs',
+      count: 0,
+      qString: '',
+    },
 
-const ActiveJobs: React.FC<{activeJobs:JobTypes[]}> = ({activeJobs}) => {
- 
+    {
+      label: 'Applicants',
+      count: 0,
+      qString: 'applicants',
+    },
+
+    {
+      label: 'Reviewed',
+      count: 0,
+      qString: 'shortlisted',
+    },
+
+    {
+      label: 'Pending',
+      count: 0,
+      qString: '',
+    },
+  ];
+
+  
   return (
     <div className="space-y-3 ">
       {activeJobs?.length !== 0 ? (
@@ -55,11 +80,16 @@ const ActiveJobs: React.FC<{activeJobs:JobTypes[]}> = ({activeJobs}) => {
               <div className="w-full flex flex-col md:flex-row justify-between items-center p-3">
                 <div className="w-full max-w-xl ">
                   <ul className="flex justify-between pl-5">
-                    {Array.from({ length: 4 }).map((_, i) => {
+                    {stats.map((_, i) => {
                       return (
                         <li key={i} className="flex flex-col border-r p-2">
-                          <span className="text-sm">0</span>
-                          <span className="text-[#104B53] text-xs font-semibold">Job Views</span>
+                          <span className="text-sm">{_?.count}</span>
+                          <span
+                            // onClick={() => setQueryParams(_?.qString)}
+                            className="text-[#104B53] text-xs font-semibold"
+                          >
+                            {_.label}
+                          </span>
                         </li>
                       );
                     })}
@@ -110,12 +140,10 @@ const ActiveJobs: React.FC<{activeJobs:JobTypes[]}> = ({activeJobs}) => {
   );
 };
 
-const PausedJobs: React.FC<{pausedJob:JobTypes[]}> = ({pausedJob}) => {
- 
+const PausedJobs: React.FC<{ pausedJob: JobTypes[] }> = ({ pausedJob }) => {
   return (
     <div className="space-y-3">
       {pausedJob?.map((item: JobTypes, id: number) => {
-       
         return (
           <div className="w-full h-auto border flex flex-col rounded-lg" key={id}>
             <div className="w-full flex justify-between items-center bg-[#F2F2F5]   p-2 ">
@@ -436,7 +464,7 @@ const MyJobsDashBoard: React.FC = () => {
           {jobFilters?.map((item, i) => {
             return (
               <li
-              key={i}
+                key={i}
                 className={`text-[10px] rounded-full   w-full p-1   cursor-pointer  flex justify-center items-center space-x-4 transition-all duration-300 ${jobFilterIdx === i ? 'bg-[#104B53] text-white' : ''}`}
                 onClick={() => setJobFilterIdx(i)}
               >

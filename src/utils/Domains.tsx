@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Select, { SingleValue } from 'react-select';
 import axiosInstance from '../axios/axiosInstance';
 import { useQuery } from '@tanstack/react-query';
 
 type JobRolesProps = {
-  setDomain: (e: number) => void;
+  setDomain: (e: string) => void;
+  domainName?:string
 };
 type OptionType = {
-  value: number;
+  value: string;
   label: string;
 };
 
@@ -17,22 +18,25 @@ const fetchDomains = async () => {
   return response.data;
 };
 
-const Domains: React.FC<JobRolesProps> = ({ setDomain }) => {
+const Domains: React.FC<JobRolesProps> = ({ setDomain,domainName }) => {
   const { data: domains } = useQuery({
     queryKey: ['domains'],
     queryFn: fetchDomains,
   });
 
+  const [selectedRole, setSelectedRole] = useState<string | null>(domainName || null);
+
    
   const options = domains?.domains?.map((item: { domainName: string; id: number }) => {
     return {
       label: item?.domainName,
-      value: item?.id,
+      value: item?.domainName,
     };
   });
 
   const handleSelectChange = (e: SingleValue<OptionType>) => {
     if (e?.value !== undefined) {
+      setSelectedRole(e.value)
       setDomain(e.value);
     }
   };
@@ -42,6 +46,7 @@ const Domains: React.FC<JobRolesProps> = ({ setDomain }) => {
       <Select
         options={options}
         onChange={handleSelectChange}
+        value={selectedRole ? { value: selectedRole, label: selectedRole } : null}
         placeholder="Select Role"
         className="react-select-container text-xs"
         classNamePrefix="react-select"

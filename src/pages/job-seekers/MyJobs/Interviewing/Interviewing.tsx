@@ -147,7 +147,7 @@ const Interviewing: React.FC = () => {
             </div>
           </div>
 
-          <div className="w-full mt-10 flex justify-around flex-wrap items-center gap-5">
+          <div className="w-full mt-10 grid grid-cols-3 gap-5">
             {Array.from({ length: 2 }).map((_, id) => {
               return (
                 <div

@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import google_logo from '../../../assets/Google.svg';
 import apple_logo from '../../../assets/apple.svg';
@@ -14,6 +14,7 @@ import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
 import { fetchGeoLocation } from '../../../utils/getGeolocation';
 import axiosInstance from '../../../axios/axiosInstance';
 import Spinner from '../../../components/Spinner';
+import { fetchPostedJob } from '../../../utils/jobposters/jobboards/getJobs';
 
 interface UserCredentials {
   email: string;
@@ -40,15 +41,15 @@ interface JwtPayload {
   iat: number;
   exp: number;
 }
-type geoData={
-  ip: string
-  city: string
-  region: string
-  country: string
-  loc: string
-  org:string
-  postal: string
-}
+type geoData = {
+  ip: string;
+  city: string;
+  region: string;
+  country: string;
+  loc: string;
+  org: string;
+  postal: string;
+};
 
 const Signin: React.FC = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -60,20 +61,23 @@ const Signin: React.FC = () => {
   const navigate = useNavigate();
 
   const { data: geoLocation } = useQuery({ queryKey: ['geoLocation'], queryFn: fetchGeoLocation });
+  const { data: postedJob } = useQuery({
+    queryKey: ['postedjobs'],
+    queryFn: fetchPostedJob,
+  });
 
   const geoLocationMutation = useMutation({
     mutationFn: async (geoData: geoData) => {
-      const response = await axiosInstance.post("/api/misc/logger/geolocation", geoData);
-       
+      const response = await axiosInstance.post('/api/misc/logger/geolocation', geoData);
+
       return response.data;
     },
 
     onSuccess: () => {
-     console.log("GeoLocationMutation success")
-
+      console.log('GeoLocationMutation success');
     },
     onError: () => {
-      console.log("GeoLocationMutation error")
+      console.log('GeoLocationMutation error');
     },
   });
 
@@ -87,20 +91,24 @@ const Signin: React.FC = () => {
       toast.success('Logged In Successfull');
       localStorage.setItem('topequatorrecruitertoken', data?.token);
       const redirectTo = location.state?.from?.pathname || '/job-poster';
-      const redirectToRTR = location.state?.from?.pathname || '/dashboard-rtr?key=right-to-represent';
-
+      const redirectToRTR =
+        location.state?.from?.pathname || '/dashboard-rtr?key=right-to-represent';
       const decodedToken = jwtDecode<JwtPayload>(data?.token);
-
       if (decodedToken) {
-        if (decodedToken.permissions.includes("advanced_recruiter_perms")) {
-          navigate(redirectTo); 
+        if (decodedToken.permissions.includes('advanced_recruiter_perms')) {
+          if(postedJob?.jobs?.length === 0){
+            navigate('/job-poster/dashboard')
+          }
+          
+          else{
+            navigate(redirectTo);
+          }
+         
         } else {
-          navigate(redirectToRTR); 
+          navigate(redirectToRTR);
         }
       }
       geoLocationMutation.mutate(geoLocation);
-      // const redirectTo = location.state?.from?.pathname || '/';
-      // navigate(redirectTo);
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ message: string }>;
@@ -207,7 +215,10 @@ const Signin: React.FC = () => {
                   <p className="text-[14px] ">Remember me</p>
                 </div>
 
-                <Link to={"/job-poster/forget-password"} className="font-medium text-[14px] md:text-base underline">
+                <Link
+                  to={'/job-poster/forget-password'}
+                  className="font-medium text-[14px] md:text-base underline"
+                >
                   Forgot Password?
                 </Link>
               </div>
@@ -216,7 +227,9 @@ const Signin: React.FC = () => {
                 type="submit"
                 className="w-full h-[40px] flex justify-center items-center bg-[#E9F358] rounded-3xl mt-4"
               >
-                <p className="text-base font-semibold">{mutation?.isPending?<Spinner size={5} color='#000000' />:'Log In'}</p>
+                <p className="text-base font-semibold">
+                  {mutation?.isPending ? <Spinner size={5} color="#000000" /> : 'Log In'}
+                </p>
               </button>
 
               <div className="flex mt-2 items-center justify-center ">

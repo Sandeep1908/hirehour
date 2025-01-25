@@ -10,7 +10,6 @@ export const employmentTypeOptions = [
     { value: 'GreenCard', label: 'Green Card' },
   ];
 
-
   
   export const sponshorshipOption = [
     { value: true, label: 'Yes' },

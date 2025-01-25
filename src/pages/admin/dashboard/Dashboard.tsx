@@ -55,7 +55,7 @@ const sideBarItems = [
   },
   { label: 'Users', icon: icons.applicant, queryString: 'users', component: <Users /> },
   {
-    label: 'Verification',
+    label: 'Job Verification',
     icon: icons.applicant,
     queryString: 'job-verification',
     component: <Verification />,

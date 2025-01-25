@@ -10,6 +10,12 @@ type ResumeUploadProps = {
   setIsUploadResumeOpen: (e: boolean) => void;
 };
 
+type ResumeProps = {
+  id: number;
+  resumeLink: string;
+  createdAt?: string;
+};
+
 const ResumeUpload: React.FC<ResumeUploadProps> = ({ setIsUploadResumeOpen }) => {
   const { data: resumes } = useQuery({
     queryKey: ['resumes'],
@@ -24,7 +30,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ setIsUploadResumeOpen }) =>
   const queryClient = useQueryClient();
 
   const defaultResumeMutation = useMutation({
-    mutationFn: async (selectedResume:string) => {
+    mutationFn: async (selectedResume: string) => {
       const response = await axiosInstance.post('/api/candidate/details/update-details', {
         selectedResume: selectedResume,
       });
@@ -32,8 +38,7 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ setIsUploadResumeOpen }) =>
     },
     onSuccess: () => {
       toast.success('Marked as default resume!');
-      queryClient.invalidateQueries({ queryKey: ['resumes','userdetail'] });
-       
+      queryClient.invalidateQueries({ queryKey: ['resumes', 'userdetail'] });
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ message: string }>;
@@ -62,40 +67,47 @@ const ResumeUpload: React.FC<ResumeUploadProps> = ({ setIsUploadResumeOpen }) =>
           </label>
         </div>
       </div>
+      <div className="w-full h-full grid grid-cols-2 gap-2 p-3">
+        {resumes?.resumes
+          ?.sort((a: ResumeProps, b: ResumeProps) => {
+            const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+            const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+            return dateB - dateA; // Sort in descending order
+          })
+          .map((res: ResumeProps, i: number) => {
+            return (
+              <div
+                key={i}
+                className={`flex w-full h-[60px] justify-between items-center border ${
+                  userDetail?.selectedResume === res?.resumeLink ? 'border-black' : ''
+                } overflow-hidden rounded-lg`}
+              >
+                <div className="w-[50px] h-full flex justify-center items-center bg-[#E3EDFF]">
+                  <p className="text-sm font-semibold text-[#1F4AF1]">PDF</p>
+                </div>
 
-      <div className="w-full h-full     grid grid-cols-2 gap-2 p-3 ">
-        {resumes?.resumes?.map((res: { resumeLink: string }, i: number) => {
-          return (
-            <div
-              key={i}
-              className={`flex w-full  h-[60px] justify-between items-center  border ${userDetail?.selectedResume === res?.resumeLink ? 'border-black' : ''}  overflow-hidden rounded-lg `}
-            >
-              <div className=" w-[50px] h-full flex justify-center items-center bg-[#E3EDFF]">
-                <p className="text-sm font-semibold text-[#1F4AF1] ">PDF</p>
-              </div>
+                <div className="flex flex-col space-y-1">
+                  <h1 className="text-sm font-semibold">{res.resumeLink.split('@@')[1]}</h1>
+                  <p className="text-xs text-[#6B7588] hover:text-blue-500 cursor-pointer">
+                    {userDetail?.selectedResume === res?.resumeLink ? (
+                      'Default'
+                    ) : (
+                      <span onClick={() => handleDefaultResume(res?.resumeLink)}>
+                        Mark as default
+                      </span>
+                    )}
+                  </p>
+                </div>
 
-              <div className="flex flex-col space-y-1">
-                <h1 className="text-sm font-semibold">{res.resumeLink.split('@@')[1]}</h1>
-                <p className="text-xs text-[#6B7588] hover:text-blue-500 cursor-pointer">
-                  {userDetail?.selectedResume === res?.resumeLink ? (
-                    'Default'
-                  ) : (
-                    <span onClick={() => handleDefaultResume(res?.resumeLink)}>
-                      Mark as default
-                    </span>
-                  )}
-                </p>
+                <div className="flex justify-center items-center space-x-4 pr-4">
+                  <a href={res?.resumeLink} className="text-xs text-[#104B53]">
+                    Preview
+                  </a>
+                  <MdDeleteOutline size={20} />
+                </div>
               </div>
-
-              <div className="flex justify-center items-center space-x-4 pr-4">
-                <a href={res?.resumeLink} className="text-xs text-[#104B53]">
-                  Preview
-                </a>
-                <MdDeleteOutline size={20} />
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

@@ -11,6 +11,7 @@ import axiosInstance from '../../../axios/axiosInstance';
 import { toast } from 'react-toastify';
 import { AxiosError } from 'axios';
 import Spinner from '../../../components/Spinner';
+import NoRTRImg from '../../../assets/dashboard/NoRTR.png';
 
 const SignRTR: React.FC<{
   setSignRTR: (e: boolean) => void;
@@ -198,7 +199,9 @@ const SignRTR: React.FC<{
                         {viewRTR?.employerSignatureName}
                       </p>
 
-                      <p className="text-xs">{new Date(viewRTR?.updatedAt).toISOString().split('T')[0]}</p>
+                      <p className="text-xs">
+                        {new Date(viewRTR?.updatedAt).toISOString().split('T')[0]}
+                      </p>
 
                       <p className="text-[#104B53] text-[10px] w-[100px] p-2 rounded-full text-center bg-[#B4FEDD]">
                         Signed
@@ -223,7 +226,9 @@ const SignRTR: React.FC<{
                       {viewRTR?.candidateSignatureName}
                     </p>
 
-                    <p className="text-xs">{new Date(viewRTR?.updatedAt).toISOString().split('T')[0]}</p>
+                    <p className="text-xs">
+                      {new Date(viewRTR?.updatedAt).toISOString().split('T')[0]}
+                    </p>
 
                     <p className="text-[#104B53] text-[10px] w-24 h-7 flex justify-center items-center   rounded-full text-center bg-[#B4FEDD]">
                       Signed
@@ -243,7 +248,7 @@ const SignRTR: React.FC<{
 
                     <p
                       onClick={() => handleSign()}
-                      className="text-white text-[10px] w-[100px] p-2 cursor-pointer rounded-full text-center bg-[#07A561]"
+                      className="text-white text-[10px] w-[100px] flex justify-center items-center p-2 cursor-pointer rounded-full text-center bg-[#07A561]"
                     >
                       {signMutation.isPending ? <Spinner color={'white'} size={5} /> : 'Sign'}
                     </p>
@@ -269,8 +274,8 @@ const RightToRepresent: React.FC = () => {
     queryFn: fetchRTRs,
   });
 
-  const acceptedRtrCount = rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate);
-  const newRTRCount = rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate);
+  const acceptedRtrCount = rtr?.data?.filter((i: ALLRTRTYPES) => i.isSignedByCandidate);
+  const newRTRCount = rtr?.data?.filter((i: ALLRTRTYPES) => !i.isSignedByCandidate);
 
   useEffect(() => {
     if (isRTROpen || isSignRTR || isPreviewRTR) {
@@ -314,6 +319,8 @@ const RightToRepresent: React.FC = () => {
     isSetPreviewRTR(true);
     setIsRTROpen(false);
   };
+
+  console.log('object', rtr);
   return (
     <div className="w-full  min-h-screen bg-[#F2F2F5]  relative  ">
       <div className=" w-full max-w-[1280px]  flex     m-auto mt-3 rounded-lg  ">
@@ -449,6 +456,13 @@ const RightToRepresent: React.FC = () => {
           {/*RTR */}
 
           <div className="flex flex-col space-y-4">
+            {newRTRCount?.length === 0 && (
+              <div className="h-[60vh] w-full flex flex-col justify-center items-center max-w-5xl space-y-5">
+                <img src={NoRTRImg} className="w-56 h-48" alt="no RTR" />
+                <h1 className="text-sm font-semibold text-center">No RTRs Received</h1>
+              </div>
+            )}
+
             {rtr?.data?.map((item: ALLRTRTYPES, i: number) => {
               if (!item?.isSignedByCandidate) {
                 return (

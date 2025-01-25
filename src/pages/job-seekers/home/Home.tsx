@@ -3,22 +3,37 @@ import { IoSearchOutline } from 'react-icons/io5';
 import { SlLocationPin } from 'react-icons/sl';
 import { ResourseCard } from '../../../config/home';
 import { BsUpload } from 'react-icons/bs';
-import { Link, useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import Footer from '../../../components/Footer';
+import { useQuery } from '@tanstack/react-query';
+import { fetchUserDetails } from '../../../utils/jobseekers/getUserDetails';
 
 // Assuming you have a type definition for HomeCardTypes
 type HomeCardTypes = {
   imgUrl: string;
   title: string;
   description: string;
-}; 
+};
 
 const Home: React.FC = () => {
   const [homeCards, setHomeCards] = useState<HomeCardTypes[]>();
   const [searchTerm, setSearchTerm] = useState('');
   const [locationTerm, setLocationTerm] = useState('');
   const [workType, setWorkType] = useState('');
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
+
+  const { data: userDetails } = useQuery({
+    queryKey: ['userDetails'],
+    queryFn: fetchUserDetails,
+  });
+
+  const handleResumeUpload = () => {
+    if (userDetails?.selectedResume?.length === 0) {
+      navigate('/upload-resume');
+    } else {
+      navigate('/searchjob');
+    }
+  };
 
   useEffect(() => {
     setHomeCards(ResourseCard);
@@ -66,8 +81,8 @@ const Home: React.FC = () => {
                         type="text"
                         className="p-4 ml-1 w-72 text-xs text-black outline-none  placeholder:text-xs"
                         placeholder="Company name, job Tittle or keywords"
-                        value={searchTerm} 
-                        onChange={(e) => setSearchTerm(e.target.value)} 
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
                       />
 
                       <IoSearchOutline
@@ -82,7 +97,7 @@ const Home: React.FC = () => {
                         type="text"
                         className="p-4 ml-1 w-64 text-xs text-black outline-none  placeholder:text-xs"
                         placeholder="City, state, zip code or remote"
-                        value={locationTerm} 
+                        value={locationTerm}
                         onChange={(e) => setLocationTerm(e.target.value)}
                       />
                       <SlLocationPin
@@ -100,7 +115,7 @@ const Home: React.FC = () => {
                         value={workType}
                         onChange={(e) => setWorkType(e.target.value)}
                       >
-                        <option value="">All</option> 
+                        <option value="">All</option>
                         <option value="remote">Remote</option>
                         <option value="hybrid">Hybrid</option>
                         <option value="on-site">On-Site</option>
@@ -108,12 +123,12 @@ const Home: React.FC = () => {
                     </div>
 
                     <div className="mr-2">
-                      <button 
-                        className=" bg-[#E9F358] flex justify-center text-xs items-center text-[#104B53] w-28 h-8 rounded-full text-sm font-[500] cursor-pointer"
+                      <button
+                        className=" bg-[#E9F358] flex justify-center   items-center text-[#104B53] w-28 h-8 rounded-full text-sm font-[500] cursor-pointer"
                         onClick={handleSearch}
                       >
                         Search
-                      </button> 
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -125,13 +140,13 @@ const Home: React.FC = () => {
                   <span className="text-sm ">Let employers find you</span>
                 </div>
 
-                <Link
-                  to="/upload-resume"
+                <p
+                  onClick={() => handleResumeUpload()}
                   className={`flex justify-center items-center w-36 h-7 p-0.5 rounded-full cursor-pointer bg-[#E9F358]   `}
                 >
                   <BsUpload size={13} color="#104B53" className="" />
                   <span className={`text-xs text-[#104B53]  font-[500] pl-2`}>Upload Resume</span>
-                </Link>
+                </p>
               </div>
             </div>
 

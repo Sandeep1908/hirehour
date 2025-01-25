@@ -1,13 +1,23 @@
+import { useQuery } from '@tanstack/react-query';
 import Logo from '../../assets/logo/hirehour.png';
+import { fetchAllRTR } from '../../utils/jobposters/jobboards/RTR';
 
 
 type ViewRTRProps={
     isViewRTROpen:boolean,
-    setIsViewRTROpen:(e:boolean)=>void
+    setIsViewRTROpen:(e:boolean)=>void,
+    rtrId?:number
 }
  
-const ViewRTR:React.FC<ViewRTRProps>=({isViewRTROpen,setIsViewRTROpen})=>{
-     
+const ViewRTR:React.FC<ViewRTRProps>=({isViewRTROpen,setIsViewRTROpen,rtrId})=>{
+
+      const {data:rtr}=useQuery({
+        queryKey:['all-rtr'],
+        queryFn:fetchAllRTR
+      })
+
+      const rtrOne=rtr?.data?.filter((i:ALLRTRTYPES)=>i.ID===rtrId)?.[0]
+      console.log("rtrOne",rtrOne);
     return(
         <div
         className={`w-full h-full p-3    flex justify-center items-center   fixed inset-0 transition-all ease-in-out duration-300  ${isViewRTROpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'}  `}

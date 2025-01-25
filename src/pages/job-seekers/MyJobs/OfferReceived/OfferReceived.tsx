@@ -147,7 +147,7 @@ const OfferReceived: React.FC = () => {
             </div>
           </div>
 
-          <div className="w-full mt-10 flex justify-around flex-wrap items-center gap-5">
+          <div className="w-full mt-10 grid grid-cols-3 gap-5">
             {Array.from({ length: 1 }).map((_, id) => {
               return (
                 <div
@@ -198,7 +198,7 @@ const OfferReceived: React.FC = () => {
                              {activeCard ===id && (
 
 
-<div className='w-36   bg-white absolute  top-0 right-[-140px] rounded-lg  z-[10] transition-all '>
+<div className='w-36  shadow-md  bg-white absolute  top-0 right-[-140px] rounded-lg  z-[10] transition-all '>
 <ul className='flex flex-col p-3 space-y-4 text-xs '>
     {moreSection.map((item,id)=>{
         return(

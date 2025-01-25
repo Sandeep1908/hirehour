@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Select from 'react-select';
@@ -15,14 +15,16 @@ import LocationSearch from '../../../utils/LocationSearch';
 import JobRoles from '../../../utils/JobRoles';
 import Domains from '../../../utils/Domains';
 import formatLocation from '../../../utils/jobseekers/formatedLocation';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { fetchDomains, fetchRoles } from '../../../utils/jobseekers/getUserDetails';
+import { useMutation } from '@tanstack/react-query';
+
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axiosrecruiterinstance from '../../../axios/axiosrecruiterinstance';
+import Spinner from '../../../components/Spinner';
 
 type JobBoardData = {
+  id?: number;
   hasOwnATS: boolean;
   atsLink?: string;
   willingnessToRelocateQuestionnaire: boolean;
@@ -33,11 +35,14 @@ type JobBoardData = {
   experienceLevelNeeded: string;
   yearsOfExpNeeded: number;
   accommodationType: string;
+  jobRoleName: string;
+  jobLocation: string;
+  jobDomain: string;
 };
 
 const JobBasis: React.FC = () => {
-  const [jobTitle, setTitle] = useState<number>();
-  const [domain, setDomain] = useState<number | null>(null);
+  const [jobTitle, setTitle] = useState<string>();
+  const [domain, setDomain] = useState<string>();
   const [workingCompanyLocation, setWorkingCompanyLocation] = useState<LocationValue | null>(null);
   const navigate = useNavigate();
 
@@ -52,27 +57,29 @@ const JobBasis: React.FC = () => {
     experienceLevelNeeded: '',
     yearsOfExpNeeded: 0,
     accommodationType: '',
+    jobRoleName: '',
+    jobLocation: '',
+    jobDomain: '',
   });
 
+  useEffect(() => {
+    const savedFormData = sessionStorage.getItem('jobBoard');
 
-  console.log("jobBoard",jobBoard);
-  const { data: role } = useQuery({
-    queryKey: ['roles'],
-    queryFn: fetchRoles,
-  });
+    if (savedFormData) {
+      const parsedData = JSON.parse(savedFormData).part1;
 
-  const { data: domains } = useQuery({
-    queryKey: ['domains'],
-    queryFn: fetchDomains,
-  });
+      if (typeof parsedData.employmentType === 'string') {
+        parsedData.employmentType = JSON.parse(parsedData.employmentType);
+      }
 
-  const getRoleNameById = (id: number) =>
-    role?.jobRoles?.find((role: { id: number; roleName: string }) => role.id === id)?.roleName ||
-    'N/A';
+      if (typeof parsedData.workAuthorizationAccepting === 'string') {
+        parsedData.workAuthorizationAccepting = JSON.parse(parsedData.workAuthorizationAccepting);
+      }
 
-  const getDomainNameById = (id: number) =>
-    domains?.domains?.find((domain: { id: number; domainName: string }) => domain.id === id)
-      ?.domainName || 'N/A';
+      setJobBoard(parsedData);
+      console.log(parsedData);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
@@ -82,16 +89,30 @@ const JobBasis: React.FC = () => {
       ...prev,
       [name]: type === 'checkbox' ? checked : type === 'radio' ? value === 'true' : value,
     }));
+
+    sessionStorage.setItem(
+      'jobBoard',
+      JSON.stringify({
+        ...jobBoard,
+        [name]: type === 'checkbox' ? checked : type === 'radio' ? value === 'true' : value,
+      }),
+    );
   };
 
   const jobBoardMutation = useMutation({
-    mutationFn: async (jobBoard: JobBoardData) => {
-      const response = await axiosrecruiterinstance.post('/api/recruiter/jobs/part1', jobBoard);
-      return response.data;
+    mutationFn: async ({ jobBoardData, id }: { jobBoardData: JobBoardData; id?: number }) => {
+      if (id) {
+        return axiosrecruiterinstance.post(`/api/recruiter/jobs/part1/${id}`, jobBoardData);
+      }
+      return axiosrecruiterinstance.post('/api/recruiter/jobs/part1', jobBoardData);
     },
     onSuccess: (data) => {
       toast.success('Job Basis Data Saved');
-      navigate('/job-poster/job-description', { state: { jobId: data?.job?.id } });
+      sessionStorage.setItem(
+        'jobBoard',
+        JSON.stringify({ part1: jobBoard, id: data.data?.job?.id }),
+      );
+      navigate('/job-poster/job-description', { state: { jobId: data?.data.job?.id } });
     },
     onError: (error) => {
       const axiosError = error as AxiosError<{ error: [{ message: string }] }>;
@@ -100,18 +121,31 @@ const JobBasis: React.FC = () => {
   });
 
   const handleJobBoardSubmit = () => {
+    const workingLocation = formatLocation(workingCompanyLocation);
     const newJobBoard = {
       ...jobBoard,
-      jobRoleName: getRoleNameById(jobTitle || 0),
-      jobLocation: formatLocation(workingCompanyLocation),
-      jobDomain: getDomainNameById(domain || 0),
+      jobRoleName: jobTitle || jobBoard.jobRoleName,
+      jobLocation: workingLocation === null ? jobBoard.jobLocation : workingLocation,
+      jobDomain: domain || jobBoard.jobDomain,
     };
-    jobBoardMutation.mutate(newJobBoard);
+
+    setJobBoard(newJobBoard);
+
+    const savedJobBoard = sessionStorage.getItem('jobBoard');
+
+    if (savedJobBoard) {
+      const parsedData = JSON.parse(savedJobBoard);
+      const jobId = parsedData?.id;
+
+      jobBoardMutation.mutate({ jobBoardData: newJobBoard, id: jobId });
+    } else {
+      jobBoardMutation.mutate({ jobBoardData: newJobBoard });
+    }
   };
 
   return (
-    <div className="w-full  h-full  md:pb-20  ">
-      <div className="max-w-[1080px]  pt-2 rounded-lg m-auto">
+    <div className="w-full  h-screen p-3  md:pb-20  ">
+      <div className="max-w-[1080px]   pt-2 rounded-lg m-auto">
         <div className=" bg-white">
           <div className="flex  flex-col    md:flex-row  md:justify-between md:items-center p-4">
             <h1 className="text-xl font-semibold">Create a Job Board</h1>
@@ -253,7 +287,7 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <JobRoles setRole={setTitle} />
+                  <JobRoles setRole={setTitle} JobRoleName={jobBoard?.jobRoleName} />
                 </div>
 
                 {/* Job Location  */}
@@ -270,6 +304,9 @@ const JobBasis: React.FC = () => {
                     options={jobTypeOption}
                     name="accommodationType"
                     className="text-xs text-[#9CA3AF]"
+                    value={jobTypeOption.find(
+                      (option) => option.value === jobBoard.accommodationType,
+                    )}
                     onChange={(selectedVal) => {
                       const value = selectedVal?.value || '';
                       setJobBoard((prev) => ({
@@ -291,7 +328,10 @@ const JobBasis: React.FC = () => {
                     <span className="text-red-500">*</span>
                   </div>
 
-                  <LocationSearch setSelectedLocation={setWorkingCompanyLocation} />
+                  <LocationSearch
+                    setSelectedLocation={setWorkingCompanyLocation}
+                    selectedValue={jobBoard.jobLocation}
+                  />
                 </div>
 
                 {/* Working Country  */}
@@ -306,7 +346,9 @@ const JobBasis: React.FC = () => {
                   <input
                     type="text"
                     placeholder="Country"
-                    className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    disabled
+                    value="United State"
+                    className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
@@ -341,7 +383,7 @@ const JobBasis: React.FC = () => {
                     </label>
                   </div>
 
-                  <Domains setDomain={setDomain} />
+                  <Domains setDomain={setDomain} domainName={jobBoard.jobDomain} />
                 </div>
               </div>
 
@@ -359,6 +401,9 @@ const JobBasis: React.FC = () => {
                     options={employmentTypeOptions}
                     isMulti
                     className="text-xs text-[#9CA3AF]"
+                    value={employmentTypeOptions.filter((option) =>
+                      jobBoard.employmentType.includes(option.value),
+                    )} // Default selected values
                     onChange={(selectedOptions) => {
                       const values = selectedOptions
                         ? selectedOptions.map((option) => option.value)
@@ -384,6 +429,9 @@ const JobBasis: React.FC = () => {
                   <Select
                     options={sponshorshipOption}
                     className="text-xs text-[#9CA3AF]"
+                    value={sponshorshipOption.find(
+                      (option) => option.value === jobBoard.isVisaSponsorshipProvided,
+                    )}
                     onChange={(selectedVal) => {
                       const value = selectedVal?.value || false;
                       setJobBoard((prev) => ({
@@ -409,6 +457,9 @@ const JobBasis: React.FC = () => {
                     options={workAuthorizationOptions}
                     isMulti
                     className="text-xs text-[#9CA3AF]"
+                    value={workAuthorizationOptions.filter((option) =>
+                      jobBoard.workAuthorizationAccepting.includes(option.value),
+                    )} // Default selected values
                     onChange={(selectedOptions) => {
                       const values = selectedOptions
                         ? selectedOptions.map((option) => option.value)
@@ -434,6 +485,9 @@ const JobBasis: React.FC = () => {
                   <Select
                     options={numberOfPostionOption}
                     className="text-xs text-[#9CA3AF]"
+                    value={numberOfPostionOption.find(
+                      (option) => option.value === jobBoard.numberOfPositionsHiring,
+                    )}
                     onChange={(selectedValue) => {
                       const value = selectedValue?.value || 1;
                       setJobBoard((prev) => ({
@@ -458,6 +512,9 @@ const JobBasis: React.FC = () => {
                   <Select
                     options={experienceLevelOptoion}
                     className="text-xs text-[#9CA3AF]"
+                    value={experienceLevelOptoion.find(
+                      (option) => option.value === jobBoard.experienceLevelNeeded,
+                    )}
                     onChange={(selectedValue) => {
                       const value = selectedValue?.value || '';
                       setJobBoard((prev) => ({
@@ -479,7 +536,7 @@ const JobBasis: React.FC = () => {
 
                   <input
                     type="number"
-                    name='yearsOfExpNeeded'
+                    name="yearsOfExpNeeded"
                     placeholder="Year of experience"
                     className="p-2 border border-[#EBEBF0] rounded-md placeholder:text-xs"
                     value={jobBoard.yearsOfExpNeeded}
@@ -503,7 +560,14 @@ const JobBasis: React.FC = () => {
               onClick={() => handleJobBoardSubmit()}
               className="flex justify-center items-center w-full md:w-28 h-8  text-xs rounded-full cursor-pointer bg-[#E9F358] "
             >
-              {jobBoardMutation.isPending ? 'Saving.....' : 'Continue'}
+              {jobBoardMutation.isPending ? (
+                <div className="flex space-x-1 justify-center items-center">
+                  <p>Saving...</p>
+                  <Spinner size={5} color="#104B53" />
+                </div>
+              ) : (
+                'Continue'
+              )}
             </p>
           </div>
         </div>

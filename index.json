@@ -1,0 +1,30 @@
+{
+  "part1": {
+    "hasOwnATS": false,
+    "atsLink": "",
+    "willingnessToRelocateQuestionnaire": false,
+    "employmentType": [
+      "contract"
+    ],
+    "isVisaSponsorshipProvided": true,
+    "workAuthorizationAccepting": [
+      "H1B",
+      "GreenCard"
+    ],
+    "numberOfPositionsHiring": 2,
+    "experienceLevelNeeded": "senior",
+    "yearsOfExpNeeded": "1",
+    "accommodationType": "hybrid",
+    "jobRoleName": "AWS Solutions Architect",
+    "jobLocation": "Dallas, Texas, United States",
+    "jobDomain": "Automobile",
+    "id": 53
+  },
+  "id": 53
+}
+
+
+{
+  "id": "1",
+  "page1": "object request from page1"
+}

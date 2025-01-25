@@ -143,7 +143,7 @@ const UploadResume: React.FC = () => {
 
     submitContactInfoMutation.mutate(formData);
 
-    const locationData = { location: formatLocation(selectedLocation) };
+    const locationData = { location: formatLocation(selectedLocation) || '' };
     submitLocation.mutate(locationData);
   };
 
