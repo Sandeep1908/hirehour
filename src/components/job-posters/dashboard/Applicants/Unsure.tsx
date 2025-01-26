@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { AiOutlineDislike, AiOutlineLike } from 'react-icons/ai'
 import { BiMessageDetail } from 'react-icons/bi'
 import { FaBehanceSquare, FaGithub, FaLinkedin, FaRegTrashAlt } from 'react-icons/fa'
@@ -17,8 +17,34 @@ import { BsInfoCircleFill } from 'react-icons/bs'
 
 
 type AppliedJobProps = {
-  allAppliedJobs: any;
+  allAppliedJobs: {
+    applications: {
+      id: number;
+      candidate: {
+        user: {
+          firstName: string;
+        };
+        location: string;
+        candidatedetailsexperiences: {
+          companydetails: string;
+          durationStart: string;
+          durationEnd: string;
+        }[];
+        candidatedetailseducationdetails: {
+          degree: string;
+          schoolName: string;
+        }[];
+        candidatedetailsskills: {
+          skillName: string;
+        }[];
+        candidatedetailslicensescerts: {
+          certName: string;
+        }[];
+      };
+    }[];
+  };
 };
+
 const Unsure:React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
 
     const [like, setLike] = useState<boolean>(false);
@@ -31,11 +57,7 @@ const Unsure:React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
       const [message, setMessage] = useState<boolean>(false);
       const [showProfile, setShowProfile] = useState<boolean>(false);
       const [showFullProfile, setShowFullProfile] = useState<boolean>(false);
-    
-      useEffect(() => {
-    
-        console.log("allAppliedJobs", allAppliedJobs)
-      }, [])
+   
   return (
     <div className='w-full h-auto'>
     <div className='w-full h-auto'>
@@ -190,14 +212,14 @@ const Unsure:React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
                   {/* <RxCross2 onClick={() => { setShowProfile(!showProfile) }} className='absolute top-2 right-2 cursor-pointer' size={15} /> */}
                   <div className='w-[20%]'>
                     <div className='w-16 h-16 bg-[#95FAF9] rounded-full flex justify-center items-center'>
-                      <p className='text-lg font-semibold text-[#3A3A3C]'>{appliedJob.candidate.user.firstName.charAt[0]}</p>
+                      <p className='text-lg font-semibold text-[#3A3A3C]'>{appliedJob?.candidate?.user?.firstName?.[0]}</p>
                     </div>
                   </div>
 
                   <div className='w-full'>
                     <div className='flex w-full justify-between'>
                       <div>
-                        <p className='text-[14px] font-semibold text-[#3A3A3C]'>{appliedJob.candidate.user.firstName}</p>
+                        <p className='text-[14px] font-semibold text-[#3A3A3C]'>{appliedJob?.candidate?.user?.firstName}</p>
                         <div className='flex gap-2 mt-2'>
                           <GrLocation />
 
@@ -271,7 +293,7 @@ const Unsure:React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
                         <td className='px-4 py-3'> <div className='flex gap-4 items-center' onMouseEnter={() => { setProfileId(appliedJob.id) }} >
                           <input type="checkbox" className='w-[18px] h-[18px]' name="" id="" />
                           <div className='text-[12px] cursor-pointer' onMouseEnter={() => { setShowProfile(!showProfile) }}  >
-                            <p>{appliedJob.candidate.user.firstName}</p>
+                            <p>{appliedJob?.candidate?.user?.firstName}</p>
                             <p>{appliedJob?.job?.jobRoleName} <br />
                               {appliedJob?.job?.jobLocation} - Date Applied :  </p>
                           </div>
@@ -410,9 +432,9 @@ const Unsure:React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
 
                     <div className='flex flex-col justify-center items-center mt-3'>
                       <div className='w-[80px] h-[80px] rounded-full bg-[#CBFFFC] flex justify-center items-center '>
-                        <p className='text-[30px] font-extrabold'>{appliedJob.candidate.user.firstName.charAt(0)}</p>
+                        <p className='text-[30px] font-extrabold'>{appliedJob?.candidate?.user?.firstName.charAt(0)}</p>
                       </div>
-                      <p className='text-sm font-semibold mt-3'>{appliedJob.candidate.user.firstName}</p>
+                      <p className='text-sm font-semibold mt-3'>{appliedJob?.candidate?.user?.firstName}</p>
                       <div className='flex gap-2 mt-2'>
                         <GrLocation />
 
@@ -433,7 +455,7 @@ const Unsure:React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
                       <div className='flex items-center gap-2 '>
                         <MdOutlineMail size={20} />
 
-                        <p className='text-[12px] font-medium text-[#3A3A3C] '>{appliedJob.candidate.user.email}</p>
+                        <p className='text-[12px] font-medium text-[#3A3A3C] '>{appliedJob?.candidate?.user?.email}</p>
                       </div>
 
                     </div>
@@ -441,7 +463,7 @@ const Unsure:React.FC<AppliedJobProps> = ({allAppliedJobs}) => {
                       <div className='flex items-center gap-2 '>
                         <IoCallOutline size={20} />
 
-                        <p className='text-[12px] font-medium text-[#3A3A3C] '>{appliedJob.candidate.user.phoneNumber}</p>
+                        <p className='text-[12px] font-medium text-[#3A3A3C] '>{appliedJob?.candidate?.user?.phoneNumber}</p>
                       </div>
 
                     </div>
