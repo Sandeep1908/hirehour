@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {  useState } from 'react'
 import { CiFilter, CiSearch } from 'react-icons/ci';
 import { FaBehanceSquare, FaCaretDown, FaEdit, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { GiRingingBell } from 'react-icons/gi';
