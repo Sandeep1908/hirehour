@@ -24,6 +24,8 @@ import { fetchJobsList, fetchUserDetails } from '../../../utils/jobseekers/getUs
 import axiosInstance from '../../../axios/axiosInstance'
 import { toast } from 'react-toastify'
 import { AxiosError } from 'axios'
+import { GiProgression, GiTakeMyMoney } from 'react-icons/gi'
+import {  useNavigate } from 'react-router-dom'
 
 type ProfileDetails = {
     firstName: string;
@@ -50,41 +52,36 @@ const JobDescription: React.FC = () => {
     const [jobDataId, setJobDataId] = useState<number>(0);
     const [jobMainId, setJobMainId] = useState<number>(0);
     const [jobFilterData, setFilterData] = useState<jobDescriptionTypes[]>([]);
-
-
     const [jobsListAll, setJobsListAll] = useState<any>([]); 
-    useEffect(() => {
-      const fetchUsers = async () => {
-        const token = localStorage.getItem('topequatortoken'); // Fetch the token
+
+
+    // useEffect(() => {
+    //   const fetchUsers = async () => {
+    //     const token = localStorage.getItem('topequatortoken'); // Fetch the token
   
-        if (!token) {
-          console.error("No token found in localStorage");
-          return;
-        }
+    //     if (!token) {
+    //       console.error("No token found in localStorage");
+    //       return;
+    //     }
   
-        try {
-          const response = await axiosInstance.get("/api/candidate/jobs/jobs", {
-            headers: {
-              Authorization: `Bearer ${token}`, // Include the token
-            },
-          });
-          setJobsListAll(response.data); // Assuming response.data contains the user array
+    //     try {
+    //       const response = await axiosInstance.get("/api/candidate/jobs/jobs", {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`, // Include the token
+    //         },
+    //       });
+    //       setJobsListAll(response.data); // Assuming response.data contains the user array
        
 
-        } catch (error) {
-          // console.error("Error fetching users:", error.response?.data || error.message);
-        }
-      };
+    //     } catch (error) {
+    //       // console.error("Error fetching users:", error.response?.data || error.message);
+    //     }
+    //   };
   
-      fetchUsers();
-    }, []);
+    //   fetchUsers();
+    // }, []);
 
     useEffect(() => {
-
-     console.log("jobsList",jobsListAll?.jobs)  
-     console.log("jobsList",userDetails)  
-
-
      setJobData(JobDescriptionDetails)
     
      if(!jobFilterData){
@@ -96,12 +93,6 @@ const JobDescription: React.FC = () => {
         const filterData=jobData.filter(item=>item.id===jobDataId)
         setFilterData(filterData)
     }
-
-  
-    
-    
-
-
     }, [jobDataId,jobData,setJobData,]);
 
 
@@ -153,7 +144,7 @@ const JobDescription: React.FC = () => {
 
 
     // const [dropdown, setDropdown] = useState(0);
-    const [selectedOptionMode, setSelectedOptionMode] = useState<string>("");
+    // const [selectedOptionMode, setSelectedOptionMode] = useState<string>("");
     const [selectedOption, setSelectedOption] = useState<string>("");
     const [selectedOptionQuickApply, setSelectedOptionQuickApply] = useState<boolean>(false);
     const [selectedOptionVisa, setSelectedOptionVisa] = useState<boolean>(false);
@@ -164,11 +155,11 @@ const JobDescription: React.FC = () => {
 
     const [isSelected, setIsSelected] = useState(0);
 
-    const handleOptionMode = (value: string) => {
-        setSelectedOptionMode(value);
-        setDropdown(0);
+    // const handleOptionMode = (value: string) => {
+    //     // setSelectedOptionMode(value);
+    //     setDropdown(0);
       
-    };
+    // };
     const handleOptionClick = (value: string) => {
         setSelectedOption(value);
         setDropdown(0);
@@ -342,7 +333,41 @@ const JobDescription: React.FC = () => {
     };
 
 
+      const [searchTerm, setSearchTerm] = useState('');
+      const [locationTerm, setLocationTerm] = useState('');
+      const [workType, setWorkType] = useState('');
+       const navigate = useNavigate(); 
 
+      const handleSearch = () => {
+        const queryParams = new URLSearchParams({
+          jobName: searchTerm,
+          location: locationTerm,
+          type: workType,
+        });
+        navigate(`/searchjob?${queryParams.toString()}`);
+        fetchUsers();
+      };
+
+
+    //   useEffect(() => {
+        const fetchUsers = async () => {
+          const token = localStorage.getItem('topequatortoken'); // Fetch the token
+          try {
+            const response = await axiosInstance.get(`/api/candidate/jobs/jobs?jobRoleName="${searchTerm}"&jobLocation="${locationTerm}"&accommodationType="${workType}"`, {
+              headers: {
+                Authorization: `Bearer ${token}`, 
+              },
+            });
+            setJobsListAll(response.data);
+            console.log(jobsListAll) 
+         
+  
+          } catch (error) {
+          }
+        };
+      
+        
+    //   }, []);
 
 
     return (
@@ -353,11 +378,22 @@ const JobDescription: React.FC = () => {
                     <div className='w-full h-[60px] border-2 border-[##DFDFDF] rounded-xl flex flex-col md:flex-row justify-between px-4 py-2 md:py-0'>
                         <div className='flex md:justify-center items-center gap-2'>
                             <img src={search_icon} alt="" />
-                            <p className='font-normal text-[#3A3A3C]'>UI/UX Designer</p>
+                            {/* <p className='font-normal text-[#3A3A3C]'>UI/UX Designer</p> */}
+                            <input type="text"
+                             className='font-normal w-full text-black text-sm outline-none  placeholder:text-xs' 
+                             placeholder='UI/UX Designer' 
+                             value={searchTerm} 
+                             onChange={(e) => setSearchTerm(e.target.value)}/>
                         </div>
                         <div className='flex md:justify-center items-center gap-2'>
                             <img src={Location} alt="" />
-                            <p className='font-normal text-[#3A3A3C]'>Allen, TX, US</p>
+                            {/* <p className='font-normal text-[#3A3A3C]'></p> */}
+                            <input type="text" 
+                            className='font-normal w-full text-black text-sm outline-none  placeholder:text-xs' 
+                            placeholder='Allen, TX, US' 
+                            value={locationTerm} 
+                            onChange={(e) => setLocationTerm(e.target.value)}/>
+
                         </div>
                         <div className='hidden  md:flex justify-center items-center gap-4 '>
                             {/* <div className='relative'>
@@ -400,7 +436,7 @@ const JobDescription: React.FC = () => {
 
                             </div> */}
 
-                            <div className='relative'>
+                            {/* <div className='relative w-[150px]'>
                             <div onClick={() => setDropdown(6)} className={`flex justify-center items-center gap-2 px-4 py-1 border border-[#114B53] rounded-full 
                                   ${selectedOptionMode.length > 0 ? 'bg-[#114B53] text-white'  : 'bg-white text-[#114B53]'} transition-colors duration-500`}>
                                 <p className="text-[14px] font-normal "> {selectedOptionMode ? selectedOptionMode : "Remote"} </p>
@@ -408,7 +444,7 @@ const JobDescription: React.FC = () => {
                             </div>
 
                             {dropdown === 6 && (
-                                <div className='absolute top-12 left-0 w-[302px] h-5 z-40'>
+                                <div className='absolute top-12 left-0 w-[250px] h-5 z-40'>
                                     <div className='w-full bg-[#FFFFFF] rounded-lg shadow-lg py-2' >
                                         {["All Jobs", "Remote jobs", "Hybrid jobs", "On Site jobs"].map(option => (
                                             // <div key={option} className='w-full px-4 py-3 flex gap-2' onClick={() => handleOptionClick(option)}>
@@ -421,19 +457,32 @@ const JobDescription: React.FC = () => {
                                             //     <label className='text-[#333333] text-[12px] font-medium'>{option}</label>
                                             // </div>
 
-                                             <div key={option}  className='w-full px-6 py-3 flex gap-2 ' onClick={() => handleOptionMode(option)}>
+                                             <div key={option}  className='w-full px-6 py-2 flex gap-2 ' onClick={() => handleOptionMode(option)}>
 
                                              <input type="radio" name="value1" id="" checked={selectedOptionMode === option} />
-                                             <label htmlFor="" className='text-[#333333] text-base font-semibold'>{option}   </label>
+                                             <label htmlFor="" className='text-[#333333] text-sm font-semibold'>{option}   </label>
                                          </div>
                                         ))}
                                     </div>
                                 </div>
                             )}
-                        </div>
+                        </div> */}
+
+                    <div className="relative w-[150px]">
+                    <select
+                        className={` w-full outline-none py-1 px-4 text-[#333333] text-sm font-medium border border-[#114B53] rounded-full`}
+                        value={workType}
+                        onChange={(e) => setWorkType(e.target.value)}
+                    >
+                        <option value="">All Jobs</option>
+                        <option value="remote">Remote jobs</option>
+                        <option value="hybrid">Hybrid jobs</option>
+                        <option value="on-site">On Site jobs</option>
+                    </select>
+                    </div>
 
 
-                            <div className='hidden  w-[300px] py-1 md:flex justify-center bg-[#114B53] rounded-full'>
+                            <div onClick={handleSearch} className='hidden  w-[300px] py-1 md:flex justify-center bg-[#114B53] rounded-full'>
                                 <p className='text-white font-semibold'>Search</p>
                             </div>
                         </div>
@@ -808,10 +857,10 @@ const JobDescription: React.FC = () => {
 
                                                     <img className='absolute top-[-20px]  w-full h-full' src={jobImg} alt="" />
                                                 </div>
-                                                <div>
+                                                <div className='max-w-[450px]'>
                                         <div className='flex gap-4 items-center'>                                                    <p className='font-bold text-[20px]'>{details.jobRoleName}</p> <p className='text-[#1F4AF1]  text-xs bg-[#90B9FF80] px-3 py-1 rounded-xl h-fit '>Multiple Position</p>
                                         </div>
-                                                    <ul className='flex  gap-8 text-sm mt-1'>
+                                                    <ul className='flex gap-2 text-sm mt-1'>
                                                         {/* <li>{details.company}</li> */}
                                                         <li>{details.jobDomain}</li>
                                                         <li>{details.jobLocation}</li>
@@ -819,9 +868,9 @@ const JobDescription: React.FC = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="flex justify-between items-center gap-4">
-                                                <p className="text-[#A9A9A9] text-[12px] font-normal ">Posted {details?.updatedAt.split('T')[0]}</p>
-                                                <div className=" px-6 py-2 bg-[#E9F358] rounded-full">
+                                            <div className="flex justify-between items-center gap-4 max-w-[300px]">
+                                                <p className="text-[#A9A9A9] text-[12px] font-normal  w-fit">Posted {details?.updatedAt.split('T')[0]}</p>
+                                                <div className=" py-2 bg-[#E9F358] rounded-full w-28 flex justify-center">
                                                     <p className="text-[#114B53] text-sm font-semibold">Quick Apply</p>
                                                 </div>
                                             </div>
@@ -855,13 +904,15 @@ const JobDescription: React.FC = () => {
                                                         </div>
                                                     </div>
                                                     <div className='flex gap-2'>
-                                                        <img src={Location2} alt="" />
+                                                        {/* <img src={Location2} alt="" /> */}
+                                                        <GiTakeMyMoney size={20} className='text-[#6B7588]' />
                                                         <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
                                                             <p className='text-[12px]'>{details.salaryOfferedRangeEnd}$ -{details.salaryOfferedRangeStart}$ {details.salaryOfferedRangeType}</p>
                                                         </div>
                                                     </div>
                                                     <div className='flex gap-2'>
-                                                        <img src={Location2} alt="" />
+                                                        <GiProgression  size={18} className='text-[#6B7588]' />
+                                                        
                                                         <div className=' px-4 py-1 bg-[#F2F2F5] rounded-full'>
                                                             <p className='text-[12px]'>{JSON.parse(details.employmentType)}</p>
                                                         </div>
@@ -1058,7 +1109,7 @@ workAuthorizationAccepting)} </p>
                                     <input
                                         id={`question-${item.ID}`}
                                         type="text"
-                                        className="w-full h-[40px] mt-2 border-[1px] rounded-lg"
+                                        className="w-full h-[40px] mt-2 px-2 outline-none border-[1px] rounded-lg"
                                         value={responses[item.ID] || ""}
                                         onChange={(e) => handleInputChange(item.ID, e.target.value)}
                                     />
