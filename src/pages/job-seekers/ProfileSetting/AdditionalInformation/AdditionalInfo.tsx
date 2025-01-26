@@ -385,7 +385,7 @@ const AdditionalInfo: React.FC = () => {
               </div>
 
               <div className=" flex flex-col space-y-3 ">
-                <h1 className="text-sm font-semibold"> Work Summery</h1>
+                <h1 className="text-sm font-semibold"> Work Summary</h1>
                 <div className="border  border-[#EBEBF0] rounded-lg">
                   <textarea
                     name="descriptionOfExperience"
@@ -490,7 +490,7 @@ const AdditionalInfo: React.FC = () => {
                     name="durationStart"
                     value={education.durationStart}
                     onChange={handleEducationChange}
-                    className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 text-xs border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
 
@@ -515,7 +515,7 @@ const AdditionalInfo: React.FC = () => {
                     onChange={handleEducationChange}
                     name="durationEnd"
                     placeholder="Date Ended"
-                    className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
+                    className="p-2 text-xs border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>
               </div>
