@@ -32,9 +32,7 @@ type SendRTRModalProps = {
 const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
 
-    
 
-    const [viewResumeId, setViewResumeId] = useState<number>(4);
 
     const [viewResumedata, setViewResumeData] = useState<any>();
 
@@ -51,8 +49,8 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
 
     const mutation = useMutation({
-      mutationFn: async () => {
-        const response = await axiosrecruiterinstance.get(`/api/recruiter/resume-sourcing/resume/${viewResumeId}`);
+      mutationFn: async (id:number) => {
+        const response = await axiosrecruiterinstance.get(`/api/recruiter/resume-sourcing/resume/${id}`);
         setViewResumeData(response.data.sourcingRecord); 
         return response.data;
       },
@@ -60,9 +58,8 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
 
     const handleResumeClick = (id:number) => {
-      // console.log("sourcedRecord",sourcedRecord)
-      setViewResumeId(id);
-      mutation.mutate();
+      // setViewResumeId(id);
+      mutation.mutate(id);
       console.log("setViewResumeData",viewResumedata)
     };
 
@@ -98,9 +95,7 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
     };
 
-    useEffect(()=>{
-  console.log("sourcedRecord",sourcedRecord)
-    },[])
+ 
 
 
     return (
