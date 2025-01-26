@@ -8,7 +8,7 @@ import { MdOutlineEmail } from 'react-icons/md';
 import { TiTick } from 'react-icons/ti';
 import { TbPhoneCalling } from 'react-icons/tb';
 import { PiSuitcase } from 'react-icons/pi';
- 
+
 
 import { BiPlus } from 'react-icons/bi';
 import publicEye from '../../../assets/icon/public.png';
@@ -20,7 +20,6 @@ import Experience from '../../../components/job-seekers/profile/Experience';
 import SummaryEdit from '../../../components/job-seekers/profile/Summary';
 import ProfileComplition from '../../../components/job-seekers/profile/ProfileComplition';
 import Achievement from '../../../components/job-seekers/profile/Achievement';
-import { SlArrowDown } from 'react-icons/sl';
 import Skills from '../../../components/job-seekers/profile/Skills';
 import ResumeUpload from './components/ResumeUploads';
 import Summary from './components/Summary';
@@ -49,6 +48,12 @@ type AdditionalDetailsProps = {
 
 };
 
+type PublicPrivateProps = {
+  isVisibleToRecruiters: boolean | null;
+
+
+};
+
 
 const Profile: React.FC = () => {
 
@@ -67,118 +72,118 @@ const Profile: React.FC = () => {
   // const [educationPopup, setEducationPopup] = useState<boolean>(false);
   const [certificationPopup, setCertificationPopup] = useState<boolean>(false);
   const [achievementPopup, setAchievementPopup] = useState<boolean>(false);
-  const [isPublic, setIsPublic] = useState<boolean>(true);
+  // const [isVisibleToRecruiters, setIsVisibleToRecruiters] = useState<boolean>(true);
   const [isUploadResumeOpen, setIsUploadResumeOpen] = useState(false);
-  
-  const [editCertData,setEditCertData] = useState<any>()
-  const [editCertPopup,setEditCertPopup] = useState<boolean>(false)
+
+  const [editCertData, setEditCertData] = useState<any>()
+  const [editCertPopup, setEditCertPopup] = useState<boolean>(false)
 
 
-// Checek Profile Complition
+  // Checek Profile Complition
 
-const [signingUpwithTopEquator,setSigningUpWithTopEquator] = useState<boolean>(false);
-const [addResume,setAddResume] = useState<boolean>(false);
-const [addAboutMe,setAddAboutMe] = useState<boolean>(false);
-// const [jobPreference,setJobPreference] = useState<boolean>(false);
-const [addSkillSet,setAddSkillSet] = useState<boolean>(false);
-const [addSociallinks, setAddSociallinks] = useState<boolean>(false);
-const [addDomain, setAddDomain] = useState<boolean>(false);
-const [completionPercentage, setCompletionPercentage] = useState<number>(0);
-const [counttotal, setCountTotal] = useState<number>(0);
-
-
+  const [signingUpwithTopEquator, setSigningUpWithTopEquator] = useState<boolean>(false);
+  const [addResume, setAddResume] = useState<boolean>(false);
+  const [addAboutMe, setAddAboutMe] = useState<boolean>(false);
+  // const [jobPreference,setJobPreference] = useState<boolean>(false);
+  const [addSkillSet, setAddSkillSet] = useState<boolean>(false);
+  const [addSociallinks, setAddSociallinks] = useState<boolean>(false);
+  const [addDomain, setAddDomain] = useState<boolean>(false);
+  const [completionPercentage, setCompletionPercentage] = useState<number>(0);
+  const [counttotal, setCountTotal] = useState<number>(0);
 
 
-// const [skillDetails, setSkillDetails] = useState<any>()
-const [skillSectionId, setSkillSectionId] = useState<number>(0)
-// setSkillDetails(userDetails)
-const skillSection =[
-  {
+
+
+  // const [skillDetails, setSkillDetails] = useState<any>()
+  const [skillSectionId, setSkillSectionId] = useState<number>(0)
+  // setSkillDetails(userDetails)
+  const skillSection = [
+    {
       id: 0,
       label: "Overall Skill",
-      component : <OverallSkill userDetails={userDetails} />
-  },
-  {
+      component: <OverallSkill userDetails={userDetails} />
+    },
+    {
       id: 1,
       label: "Current Skill",
-      component : <CurrentSkill/>
-  }
-]
+      component: <CurrentSkill />
+    }
+  ]
 
-let count = 0; 
+  let count = 0;
 
-const handelProfileComplition = () => { 
-  
-  console.log("userDetails", userDetails);
+  const handelProfileComplition = () => {
 
-  
-  // Check and update count based on conditions
-  if (userDetails.user?.firstName) {
-    setSigningUpWithTopEquator(true)
-    count++;
-    console.log("signingUpwithTopEquator",signingUpwithTopEquator)
-  }
-
-  if (userDetails.selectedResume) {
-    setAddResume(true);
-    count++;
-  } else {
-    setAddResume(false);
-  }
-
-  if (userDetails.profilePictureLink) {
-    setAddAboutMe(true);
-    count++;
-    console.log("addAboutMe",addAboutMe)
-  } else {
-    setAddAboutMe(false);
-  }
-
- 
-  if (userDetails.candidatedetailsskills?.length > 0) {
-    setAddSkillSet(true);
-    count++;
-    console.log("addSkillSet",addSkillSet)
-  } else { 
-    setAddSkillSet(false);
-  }
-
-  if (userDetails.candidatedetailsworks.length > 0) {
-    setAddSociallinks(true);
-    count++;
-    console.log("addSociallinks",addSociallinks)
-  } else {
-    setAddSociallinks(false);
-  }
-
-  if (userDetails.candidatedetailsexperiences.length > 0) {
-    setAddDomain(true);
-    count++;
-    console.log("addDomain",addDomain)
-  } else {
-    setAddDomain(false);
-  }
-
-  calculateCompletion(count)
-
-  console.log("Profile Completion Count:", count);
-};
+    console.log("userDetails", userDetails);
 
 
-const calculateCompletion = (count:number) => {
-  const percentage = Math.round((count / 7) * 100);
-  setCompletionPercentage(percentage);
-  setCountTotal(count)
-  console.log("percentage",completionPercentage)
-  console.log("count",count)
-};
+    // Check and update count based on conditions
+    if (userDetails.user?.firstName) {
+      setSigningUpWithTopEquator(true)
+      count++;
+      console.log("signingUpwithTopEquator", signingUpwithTopEquator)
+    }
 
-useEffect(() => {
-  if (userDetails) {
-    handelProfileComplition();
-  }
+    if (userDetails.selectedResume) {
+      setAddResume(true);
+      count++;
+    } else {
+      setAddResume(false);
+    }
 
-}, [userDetails]); 
+    if (userDetails.profilePictureLink) {
+      setAddAboutMe(true);
+      count++;
+      console.log("addAboutMe", addAboutMe)
+    } else {
+      setAddAboutMe(false);
+    }
+
+
+    if (userDetails.candidatedetailsskills?.length > 0) {
+      setAddSkillSet(true);
+      count++;
+      console.log("addSkillSet", addSkillSet)
+    } else {
+      setAddSkillSet(false);
+    }
+
+    if (userDetails.candidatedetailsworks.length > 0) {
+      setAddSociallinks(true);
+      count++;
+      console.log("addSociallinks", addSociallinks)
+    } else {
+      setAddSociallinks(false);
+    }
+
+    if (userDetails.candidatedetailsexperiences.length > 0) {
+      setAddDomain(true);
+      count++;
+      console.log("addDomain", addDomain)
+    } else {
+      setAddDomain(false);
+    }
+
+    calculateCompletion(count)
+
+    console.log("Profile Completion Count:", count);
+  };
+
+
+  const calculateCompletion = (count: number) => {
+    const percentage = Math.round((count / 7) * 100);
+    setCompletionPercentage(percentage);
+    setCountTotal(count)
+    console.log("percentage", completionPercentage)
+    console.log("count", count)
+  };
+
+  useEffect(() => {
+    if (userDetails) {
+      handelProfileComplition();
+    }
+
+  }, [userDetails]);
 
 
   // Add State 
@@ -191,18 +196,18 @@ useEffect(() => {
 
   const [isVisibleToRecruiters, setIsVisibleToRecruiters] = useState<boolean | null>(null);
   const [needVisaSponsorship, setNeedVisaSponsorship] = useState<boolean | null>(null);
-  
+
 
   //Edit states
-  
-  const [experienceId,setExperienceId]=useState<number | null>(null)
+
+  const [experienceId, setExperienceId] = useState<number | null>(null)
 
 
 
-       // Mutation for submitting form data
+  // Mutation for submitting form data
   const additionaldetailsMutation = useMutation({
     mutationFn: async (AddData: AdditionalDetailsProps) => {
-      console.log("add",AddData)
+      console.log("add", AddData)
       const response = await axiosInstance.post(
         '/api/candidate/details/update-details',
         AddData,
@@ -214,21 +219,48 @@ useEffect(() => {
       queryClient.invalidateQueries({ queryKey: ['userDetails'] });
     },
     onError: (error) => {
-      const axiosError=error as AxiosError<{message:string}>
+      const axiosError = error as AxiosError<{ message: string }>
       toast.error(axiosError?.response?.data?.message);
     },
   });
 
 
   const handleAdditionalDetails = () => {
-    const additionalDetails = {isVisibleToRecruiters,needVisaSponsorship}
+    const additionalDetails = { isVisibleToRecruiters, needVisaSponsorship }
     additionaldetailsMutation.mutate(additionalDetails);
     setAdditionalInfoPopup(false);
   };
 
+  // Mutation for submitting form data
+  const publicPrivateMutation = useMutation({
+    mutationFn: async (AddData: PublicPrivateProps) => {
+      console.log("add", AddData)
+      const response = await axiosInstance.post(
+        '/api/candidate/details/update-details',
+        AddData,
+      );
+      return response.data;
+    },
+    onSuccess: () => {
+      toast.success('Information Saved');
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ message: string }>
+      toast.error(axiosError?.response?.data?.message);
+    },
+  });
 
-  
-  
+  const handlePublicPrivate = (p: boolean) => {
+    setIsVisibleToRecruiters(!p)
+    const additionalDetails = { isVisibleToRecruiters }
+    publicPrivateMutation.mutate(additionalDetails);
+
+  };
+
+
+
+
 
   return (
     <div className="w-full h-full relative ">
@@ -254,7 +286,7 @@ useEffect(() => {
                   <div className="w-full bg-[#FFF1C6] rounded-full  ">
                     <div
                       className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
-                      style={{ width: completionPercentage+"%" }}
+                      style={{ width: completionPercentage + "%" }}
                     >
                       {' '}
                       {completionPercentage}%
@@ -266,7 +298,7 @@ useEffect(() => {
                 <div className=" pt-4 flex justify-end items-end w-full">
                   <p
                     className="w-32 text-sm h-8 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center items-center p-3 "
-                    onClick={()=>{setProfilePopup(true)}}
+                    onClick={() => { setProfilePopup(true) }}
                   >
                     Let's Go{' '}
                   </p>
@@ -276,17 +308,17 @@ useEffect(() => {
 
             <div className="flex justify-between items-start bg-white p-3 rounded-lg  ">
               <div className="flex flex-col space-y-2">
-                <h1 className="text-sm font-semibold">{isPublic ? 'Public' : 'Private'}</h1>
+                <h1 className="text-sm font-semibold">{userDetails?.isVisibleToRecruiters ? 'Public' : 'Private'}</h1>
                 <p className="text-xs text-[#A4A5B7]">
-                  {isPublic ? 'Visible to employers' : 'Not Visible to employers'}
+                  {userDetails?.isVisibleToRecruiters ? 'Visible to employers' : 'Not Visible to employers'}
                 </p>
               </div>
 
               <img
-                src={isPublic ? publicEye : privateEye}
+                src={userDetails?.isVisibleToRecruiters ? publicEye : privateEye}
                 className="w-8 h-8"
                 alt="public-eye"
-                onClick={() => setIsPublic((p) => !p)}
+                onClick={() => handlePublicPrivate(userDetails?.isVisibleToRecruiters)}
               />
             </div>
 
@@ -310,8 +342,8 @@ useEffect(() => {
 
               <div className="w-full flex flex-col  space-y-3 justify-center items-center p-5 relative before:absolute before:bottom-0 before:w-full before:h-0.5  before:mb-3 before:bg-[#EFF1F3]">
                 <div className="w-16 h-16 bg-[#CBFFFC] rounded-full flex justify-center items-center">
-                  {userDetails?.profilePictureLink ?  <img src={userDetails?.profilePictureLink} className='w-full h-full rounded-full object-cover' alt="profile-alt" />:userDetails?.user.firstName.charAt(0)}
-                
+                  {userDetails?.profilePictureLink ? <img src={userDetails?.profilePictureLink} className='w-full h-full rounded-full object-cover' alt="profile-alt" /> : userDetails?.user.firstName.charAt(0)}
+
                 </div>
 
                 <div className="flex flex-col justify-center items-center">
@@ -334,7 +366,7 @@ useEffect(() => {
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-2 items-center">
                     <MdOutlineEmail size={18} color="#3A3A3C" />
-                    <p className="text-[#3A3A3C] text-xs">John@example.com</p>
+                    <p className="text-[#3A3A3C] text-xs">{userDetails?.user?.email}</p>
                   </div>
 
                   <span className=" w-4  flex justify-center items-center  h-4 bg-[#07A560] text-white rounded-full">
@@ -345,7 +377,7 @@ useEffect(() => {
                 <div className="flex justify-between items-center">
                   <div className="flex space-x-2 items-center">
                     <TbPhoneCalling size={18} color="#3A3A3C" />
-                    <p className="text-[#3A3A3C] text-xs">+1 xxxx98xx9</p>
+                    <p className="text-[#3A3A3C] text-xs">{userDetails?.user?.phoneNumber}</p>
                   </div>
 
                   <span className=" w-4  flex justify-center items-center  h-4 bg-[#07A560] text-white rounded-full">
@@ -381,12 +413,12 @@ useEffect(() => {
               <div className="flex flex-col space-y-5 p-2">
                 <div className="flex flex-col space-y-2">
                   <p className="text-sm text-[#8F90A6]">Willing to work / Looking for job change</p>
-                  <h1 className="text-xs font-semibold">{userDetails?.isVisibleToRecruiters === true ? "Yes":"No"} </h1>
+                  <h1 className="text-xs font-semibold">{userDetails?.isVisibleToRecruiters === true ? "Yes" : "No"} </h1>
                 </div>
 
                 <div className="flex flex-col space-y-2">
                   <p className="text-sm text-[#8F90A6]">Visa Sponsorship</p>
-                  <h1 className="text-xs font-semibold">{userDetails?.needVisaSponsorship === true ? "Yes":"No"} </h1>
+                  <h1 className="text-xs font-semibold">{userDetails?.needVisaSponsorship === true ? "Yes" : "No"} </h1>
                 </div>
 
                 <div className="flex flex-col space-y-2">
@@ -412,34 +444,35 @@ useEffect(() => {
                 </div>
               </div>
               <div className="flex gap-1 ">
-                {skillSection?.map((item,id)=>{
-                  return(
-                  <div key={id} onClick={()=>{setSkillSectionId(id)}} className={` ${item.id === skillSectionId ?"bg-[#114B53]":""} pt-1  rounded-tl-lg rounded-tr-lg`}>
-                  <p className="text-[#114B53] text-sm px-3 py-1 bg-white">{item.label}</p>
-                </div>
+                {skillSection?.map((item, id) => {
+                  return (
+                    <div key={id} onClick={() => { setSkillSectionId(id) }} className={` ${item.id === skillSectionId ? "bg-[#114B53]" : ""} pt-1  rounded-tl-lg rounded-tr-lg`}>
+                      <p className="text-[#114B53] text-sm px-3 py-1 bg-white">{item.label}</p>
+                    </div>
                   )
                 })}
-               
+
               </div>
               <hr className="mt-2" />
 
-              {skillSection?.map((item,id)=>{
-                if(item.id === skillSectionId){
-                  return(
+              {skillSection?.map((item, id) => {
+                if (item.id === skillSectionId) {
+                  return (
                     <div key={id}>
                       {item.component}
                     </div>
-                  )}
-                })}              
+                  )
+                }
+              })}
               <div>
-               
+
               </div>
 
-              <div className="flex gap-2 items-center justify-center mt-5">
+              {/* <div className="flex gap-2 items-center justify-center mt-5">
                 <SlArrowDown size={15} />
 
                 <p className="text-sm text-[#114B53] font-semibold">View all 20</p>
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -460,7 +493,7 @@ useEffect(() => {
                   <div className="w-full bg-[#FFF1C6] rounded-full  ">
                     <div
                       className="bg-[#FFD05B] text-xs  text-black text-center  leading-none rounded-full"
-                      style={{ width: completionPercentage+"%" }}
+                      style={{ width: completionPercentage + "%" }}
                     >
                       {' '}
                       {completionPercentage}%
@@ -472,7 +505,7 @@ useEffect(() => {
                 <div className="w-1/4 flex justify-end items-center">
                   <p
                     className="w-36 h-10 bg-[#E9F358] text-[#104B53] font-semibold rounded-full flex justify-center text-xs cursor-pointer items-center p-3 "
-                    onClick={()=>{setProfilePopup(true)}}
+                    onClick={() => { setProfilePopup(true) }}
                   >
                     Let's Go{' '}
                   </p>
@@ -493,11 +526,11 @@ useEffect(() => {
 
             {/* Education  */}
 
-            <Education setAddEducationPopup={setAddEducationPopup}/>
+            <Education setAddEducationPopup={setAddEducationPopup} />
 
             {/* Certification  */}
 
-            <Certification setCertificationPopup={setCertificationPopup} setAddCertificationPopup={setAddCertificationPopup} setEditCertData={setEditCertData} setEditCertPopup={setEditCertPopup}/>
+            <Certification setCertificationPopup={setCertificationPopup} setAddCertificationPopup={setAddCertificationPopup} setEditCertData={setEditCertData} setEditCertPopup={setEditCertPopup} />
 
 
             {/* Acheivment  */}
@@ -558,34 +591,33 @@ useEffect(() => {
 
       {/* Edit About us Popup */}
 
-      {profilePopup && <ProfileComplition setProfilePopup={setProfilePopup} signingUpwithTopEquator={signingUpwithTopEquator} addResume={addResume} addAboutMe={addAboutMe} addSkillSet={addSkillSet} addSociallinks={addSociallinks} addDomain={addDomain} completionPercentage={completionPercentage} count={counttotal}/>}    
+      {profilePopup && <ProfileComplition setAboutusPop={setAboutusPop} setSkillsPopup={setSkillsPopup} setProfilePopup={setProfilePopup} setAddExperiencePopup={setAddExperiencePopup} signingUpwithTopEquator={signingUpwithTopEquator} addResume={addResume} addAboutMe={addAboutMe} addSkillSet={addSkillSet} addSociallinks={addSociallinks} addDomain={addDomain} completionPercentage={completionPercentage} count={counttotal} />}
       {aboutusPop && <AboutMe setAboutPop={setAboutusPop} />}
-      {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} handleAdditionalDetails={handleAdditionalDetails} setIsVisibleToRecruiters={setIsVisibleToRecruiters} setNeedVisaSponsorship={setNeedVisaSponsorship}/>}
+      {additionalInfoPopup && <AdditionalDetails setAdditionalInfoPopup={setAdditionalInfoPopup} handleAdditionalDetails={handleAdditionalDetails} setIsVisibleToRecruiters={setIsVisibleToRecruiters} setNeedVisaSponsorship={setNeedVisaSponsorship} />}
       {skillsPopup && <Skills setSkillsPopup={setSkillsPopup} />}
       {summaryPopup && <SummaryEdit setSummaryPopup={setSummaryPopup} />}
       {experiencePopup && <Experience setExperiencePopup={setExperiencePopup} expeirenceId={experienceId} />}
       {/* {educationPopup && <EducationEdit setEducationPopup={setEducationPopup} />} */}
-      {certificationPopup && <CertificationEdit setCerticationPopup={setCertificationPopup}  />}
+      {certificationPopup && <CertificationEdit setCerticationPopup={setCertificationPopup} />}
       {achievementPopup && <Achievement setAchievementPopup={setAchievementPopup} />}
 
-       {/* Add Popus  */}
+      {/* Add Popus  */}
 
 
-       {addEducationPopup && <AddEducation setAddEducationPopup={setAddEducationPopup} />}
-       {addExperiencePopup && <AddExperience setAddExperiencePopup={setAddExperiencePopup} />}
-       {addCertificationPopup && <AddCertification setAddCertificationPopup={setAddCertificationPopup} />}
+      {addEducationPopup && <AddEducation setAddEducationPopup={setAddEducationPopup} />}
+      {addExperiencePopup && <AddExperience setAddExperiencePopup={setAddExperiencePopup} />}
+      {addCertificationPopup && <AddCertification setAddCertificationPopup={setAddCertificationPopup} />}
 
 
-       {/* edit popups */}
+      {/* edit popups */}
 
-       {editCertPopup && <EditCertification setEditCertPopup={setEditCertPopup} editCertData={editCertData} />}
+      {editCertPopup && <EditCertification setEditCertPopup={setEditCertPopup} editCertData={editCertData} />}
 
 
 
       <div
-        className={`w-full h-full flex justify-center items-center fixed inset-0 transition-all duration-500 ${
-          isUploadResumeOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'
-        }`}
+        className={`w-full h-full flex justify-center items-center fixed inset-0 transition-all duration-500 ${isUploadResumeOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'
+          }`}
       >
         <div className="z-[10] w-full max-w-[500px] shadow-xl bg-white rounded-lg space-y-6 p-6">
           <div className="flex justify-between items-center">

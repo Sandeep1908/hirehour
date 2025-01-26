@@ -5,7 +5,12 @@ import ViewJob from '../../../components/job-seekers/ViewJob';
 import ExpiredJob from '../../../components/job-seekers/ExpiredJob';
 import { useQuery } from '@tanstack/react-query';
 import { appliedJobs } from '../../../utils/jobseekers/appliedJobs';
+type job={
+  id:number,
+  jobRoleName:string
+}
 type AppliesJobType = {
+  job:job
   jobID: number;
   jobTitle: string;
   jobDescription: string;
@@ -17,10 +22,13 @@ type AppliesJobType = {
   jobCreatedOn: string;
 };
 
+
 const MyJobs: React.FC = () => {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const [viewJobPopup, setViewJobPopup] = useState<boolean>(false);
   const [expiredJobPopup, setExpiredJobPopupPopup] = useState<boolean>(false);
+  const [jobId, setJobId] = useState<number>(0);
+
 
   const titles = [
     {
@@ -79,6 +87,11 @@ const MyJobs: React.FC = () => {
     queryKey: ['appliedjobs'],
     queryFn: appliedJobs,
   });
+
+  const handleViewJob=(id:number)=>{
+        setJobId(id)
+        setViewJobPopup(true)
+  }
 
   return (
     <div className="w-full  h-full bg-[#F2F2F5]  ">
@@ -172,7 +185,7 @@ const MyJobs: React.FC = () => {
                   <div className="flex w-full space-x-3 items-center">
                     <img src="/images/emplogo.png" className="w-12 h-12" alt="emp-logo" />
                     <div className="flex flex-col space-y-1">
-                      <h1 className="text-sm font-semibold">{item?.jobTitle}</h1>
+                      <h1 className="text-sm font-semibold">{item?.job?.jobRoleName}</h1>
                       <ul className="flex space-x-2">
                         <li className="text-xs  ">Figma</li>
                         <li className="text-xs  ">{item?.location}</li>
@@ -194,7 +207,7 @@ const MyJobs: React.FC = () => {
                   <div className="w-full flex justify-between items-center space-x-6 ">
                     <p
                       onClick={() => {
-                        setViewJobPopup(true);
+                        handleViewJob(item?.job?.id);
                       }}
                       className="cursor-pointer w-full border border-[#104B53] rounded-full p-1 flex justify-center items-center text-xs"
                     >
@@ -239,7 +252,7 @@ const MyJobs: React.FC = () => {
       </div>
 
       {/* view Job  */}
-      {viewJobPopup && <ViewJob setViewJobPopup={setViewJobPopup} />}
+      {viewJobPopup && <ViewJob setViewJobPopup={setViewJobPopup} jobId={jobId} />}
       {expiredJobPopup && <ExpiredJob setExpiredJobPopupPopup={setExpiredJobPopupPopup} />}
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiFilter, CiSearch } from 'react-icons/ci';
 import { FaBehanceSquare, FaCaretDown, FaEdit, FaGithub, FaLinkedin } from 'react-icons/fa';
 import { GiRingingBell } from 'react-icons/gi';
@@ -8,6 +8,7 @@ import {  IoIosMail, IoMdClose } from 'react-icons/io';
 import { IoCallOutline, IoLocationOutline, IoMail } from 'react-icons/io5';
 import { MdDeleteOutline, MdOutlineMail } from 'react-icons/md';
 import resume from '../../../assets/resume.svg'
+// import noData from '../../../assets/dashboard/Applicants/shortlist.png'
 import CandidateCard from './CandidateCard';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { fetchListResumeSoucing } from '../../../utils/jobposters/jobboards/listResumeSourcing';
@@ -31,9 +32,7 @@ type SendRTRModalProps = {
 const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
 
-    
 
-    const [viewResumeId, setViewResumeId] = useState<number>(4);
 
     const [viewResumedata, setViewResumeData] = useState<any>();
 
@@ -50,8 +49,8 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
 
     const mutation = useMutation({
-      mutationFn: async () => {
-        const response = await axiosrecruiterinstance.get(`/api/recruiter/resume-sourcing/resume/${viewResumeId}`);
+      mutationFn: async (id:number) => {
+        const response = await axiosrecruiterinstance.get(`/api/recruiter/resume-sourcing/resume/${id}`);
         setViewResumeData(response.data.sourcingRecord); 
         return response.data;
       },
@@ -59,9 +58,8 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
 
 
     const handleResumeClick = (id:number) => {
-      // console.log("id",id)
-      setViewResumeId(id);
-      mutation.mutate();
+      // setViewResumeId(id);
+      mutation.mutate(id);
       console.log("setViewResumeData",viewResumedata)
     };
 
@@ -96,6 +94,8 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
         setDropdown(0);
 
     };
+
+ 
 
 
     return (
@@ -256,10 +256,15 @@ const SearchCandidate: React.FC<ResumeSourcingProps> = ({sourcedRecord}) => {
             </div>
 
             <div className='w-full px-5 '>
+
+
+
                
                 <div className='w-full h-[520px] overflow-x-hidden overflow-y-auto flex gap-5 mt-1'>
                     <div className='w-[28%] h-full flex flex-col overflow-x-hidden overflow-y-auto gap-5'>
+                      {/* if user no has subscribed */}
                       {sourcedRecord?.sourcedRecords?.map((details:any, i:number)=>{
+                      
                        
                         return(
                           <div key={i} onClick={()=>{handleResumeClick(details.id)}} >

@@ -2,10 +2,14 @@ import React from 'react'
 import { FaRegArrowAltCircleRight } from 'react-icons/fa'
 import { IoMdClose } from 'react-icons/io'
 import { MdFileDownloadDone } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 type ProfileProps={
-    setProfilePopup : (arg:boolean) => void
-    signingUpwithTopEquator : boolean
+   setProfilePopup : (arg:boolean) => void
+   setAboutusPop : (arg:boolean) => void
+   setSkillsPopup : (arg:boolean) => void
+   setAddExperiencePopup : (arg:boolean) => void
+   signingUpwithTopEquator : boolean
     addResume : boolean
     addAboutMe : boolean
     addSkillSet : boolean
@@ -15,7 +19,9 @@ type ProfileProps={
     count: number
   }
 
-const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,signingUpwithTopEquator,addResume,addAboutMe,addSociallinks,addDomain,addSkillSet,completionPercentage,count}) => {
+const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,setAboutusPop,setSkillsPopup,setAddExperiencePopup,signingUpwithTopEquator,addResume,addAboutMe,addSociallinks,addDomain,addSkillSet,completionPercentage,count}) => {
+
+    const navigate = useNavigate();
   return (
     <div className='w-full h-full flex  p-3  justify-center items-center  fixed inset-0 transition-all duration-500 opacity-1 scale-[1.01] z-[40] '>
     <div className='w-full h-full absolute opacity-[.7] after:absolute after:left-0 after:w-full after:h-full after:bg-black '></div>
@@ -59,7 +65,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,signingUpwith
              <FaRegArrowAltCircleRight size={20} className={`${addResume?  "text-[#8F90A6]":" text-black"}`}/>
 
           </div>
-          <div className={` ${addAboutMe? "bg-white":" bg-[#F2F2F5]"} border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between`}>
+          <div onClick={()=>{setAboutusPop(true), setProfilePopup(false)}} className={` ${addAboutMe? "bg-white":" bg-[#F2F2F5]"} border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between`}>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone className={`${addAboutMe?  "text-black":"text-[#8F90A6]"}`}/>
               <p className={`${addAboutMe?  "text-[#8F90A6]":"text-black"} text-sm font-medium`}>Add about me</p>
@@ -67,7 +73,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,signingUpwith
              <FaRegArrowAltCircleRight size={20} className={`${addAboutMe?  "text-[#8F90A6]":" text-black"}`}/>
 
           </div>
-          <div className='border-[1px] border-[#C7C9D9] bg-[#F2F2F5] rounded-lg p-3 flex justify-between'>
+          <div onClick={()=>{navigate("/job-preference")}} className='border-[1px] border-[#C7C9D9] bg-[#F2F2F5] rounded-lg p-3 flex justify-between'>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone color='#8F90A6' />
               <p className='text-[#000000] text-sm font-medium'>Job preference</p>
@@ -75,7 +81,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,signingUpwith
              <FaRegArrowAltCircleRight size={20} />
 
           </div>
-          <div className={` ${addSkillSet ? "bg-white":" bg-[#F2F2F5]"}  border-[1px] border-[#C7C9D9]  rounded-lg p-3 flex justify-between`}>
+          <div onClick={()=>{setSkillsPopup(true), setProfilePopup(false)}} className={` ${addSkillSet ? "bg-white":" bg-[#F2F2F5]"}  border-[1px] border-[#C7C9D9]  rounded-lg p-3 flex justify-between`}>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone className={`${addSkillSet?  "text-black":"text-[#8F90A6]"}`}/>
               <p className={`${addSkillSet?  "text-[#8F90A6]":"text-black"} text-sm font-medium`}>Add Skill Set</p>
@@ -83,7 +89,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,signingUpwith
              <FaRegArrowAltCircleRight size={20} className={`${addSkillSet?  "text-[#8F90A6]":" text-black"}`}/>
 
           </div>
-          <div className={` ${addSociallinks ? "bg-white":" bg-[#F2F2F5]"} border-[1px] border-[#C7C9D9]  rounded-lg p-3 flex justify-between`}>
+          <div onClick={()=>{setAboutusPop(true), setProfilePopup(false)}} className={` ${addSociallinks ? "bg-white":" bg-[#F2F2F5]"} border-[1px] border-[#C7C9D9]  rounded-lg p-3 flex justify-between`}>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone className={`${addSociallinks?  "text-black":"text-[#8F90A6]"}`}/>
               <p className={`${addSociallinks?  "text-[#8F90A6]":"text-black"} text-sm font-medium`}>Add Social links</p>
@@ -91,7 +97,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,signingUpwith
              <FaRegArrowAltCircleRight size={20} className={`${addSociallinks?  "text-[#8F90A6]":" text-black"}`}/>
 
           </div>
-          <div className={` ${addDomain ? "bg-white":" bg-[#F2F2F5]"} border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between`}>
+          <div onClick={()=>{setAddExperiencePopup(true), setProfilePopup(false)}} className={` ${addDomain ? "bg-white":" bg-[#F2F2F5]"} border-[1px] border-[#C7C9D9] rounded-lg p-3 flex justify-between`}>
              <div className='flex items-center gap-2'>
              <MdFileDownloadDone className={`${addDomain?  "text-black":"text-[#8F90A6]"}`} />
               <p className={`${addDomain?  "text-[#8F90A6]":"text-black"} text-sm font-medium`}>Add domain to your work experience</p>
@@ -102,7 +108,7 @@ const ProfileComplition:React.FC<ProfileProps> = ({setProfilePopup,signingUpwith
         </div>
 
         <div className='w-full flex justify-end  gap-10  items-center mt-3'>
-            <div className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer ' >
+            <div onClick={()=>{setProfilePopup(false)}} className='bg-[#E9F358] w-[140px] h-[42px] flex justify-center items-center rounded-full cursor-pointer ' >
                 <p className='text-sm font-semibold text-[#114B53] cursor-pointer'>Submit</p>
             </div>
         </div>

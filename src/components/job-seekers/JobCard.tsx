@@ -48,7 +48,7 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,details,jobDataId }) => {
                     <img className='w-[46px] h-[46px]' src={jobImg} alt="" />
                     <div className='h-auto'>
                         <p className='text-base font-semibold'>{details?.jobRoleName}</p>
-                        <ul className='flex  gap-4  text-[12px] mt-1'>
+                        <ul className='flex  gap-2 justify-start text-[12px] mt-1'>
                            
                             {/* <li>{details.accommodationType}</li> */}
                             <li>{details?.jobDomain}</li>
@@ -87,10 +87,10 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,details,jobDataId }) => {
                     
             </div>
 
-            <div className='flex gap-1 md:gap-2 h-auto'>
+            <div className='flex flex-wrap gap-1 md:gap-2 h-auto'>
 
                 
-                <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
+                <div className='px-4 py-1  bg-[#F2F2F5] rounded-full'>
                     <p className='text-[12px]'>{details.accommodationType}</p>
                 </div>
                 <div className='px-4 py-1 bg-[#F2F2F5] rounded-full'>
@@ -135,8 +135,8 @@ const JobCard: React.FC<JobCardProps> = ({setIsOpen,details,jobDataId }) => {
 
 
             {showReport &&<ReportJob setShowReport={setShowReport}  setShowReportSubmit={setShowReportSubmit}  /> }
-{/* {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail}  setShowReportSubmit={setShowReportSubmit}/> } */}
-{showReportSubmit &&<ReportSubmit setShowReport={setShowReport} setShowReportSubmit={setShowReportSubmit} /> }
+            {/* {showReportDetail &&<ReportDetal setShowReportDetail={setShowReportDetail}  setShowReportSubmit={setShowReportSubmit}/> } */}
+            {showReportSubmit &&<ReportSubmit setShowReport={setShowReport} setShowReportSubmit={setShowReportSubmit} /> }
 
             
         </a>
