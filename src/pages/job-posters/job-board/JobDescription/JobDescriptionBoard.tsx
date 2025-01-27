@@ -292,12 +292,15 @@ const JobDescriptionBoard: React.FC = () => {
 
             {/* Job Description */}
             <div className="w-full p-2">
-              <div className="flex justify-between">
+              <div className="flex justify-between bg-[#F2F2F5] p-2 rounded-md">
                 <div>
                   <label htmlFor="jobDescription" className="text-xs">
                     Job Description
                   </label>
+
+                  
                 </div>
+                <p className='bg-[#104B53] text-white px-4 rounded-full flex justify-center items-center text-xs'>Ask AI to generate</p>
               </div>
               <textarea
                 name="jobDescription"
