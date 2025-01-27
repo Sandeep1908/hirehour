@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { GiSettingsKnobs } from 'react-icons/gi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoIosInformationCircleOutline } from 'react-icons/io';
 import { useQuery } from '@tanstack/react-query';
 import { fetchPostedJob } from '../../../utils/jobposters/jobboards/getJobs';
 import VerifyJobIco from '../../../assets/dashboardrtr/nothing.png';
 
 const ActiveJobs: React.FC<{ activeJobs: JobTypes[] }> = ({ activeJobs }) => {
-  // const [qStringParam,setQueryParams]=useState<string>('')    
+  const navigate = useNavigate();
   const stats = [
     {
       label: 'View Jobs',
       count: 0,
-      qString: '',
+      qString: 'applicants',
     },
 
     {
@@ -31,11 +31,14 @@ const ActiveJobs: React.FC<{ activeJobs: JobTypes[] }> = ({ activeJobs }) => {
     {
       label: 'Pending',
       count: 0,
-      qString: '',
+      qString: 'pending',
     },
   ];
 
-  
+  const handleQstring = (qString: string) => {
+    navigate(`/job-poster/dashboard?key=${qString}`);
+  };
+
   return (
     <div className="space-y-3 ">
       {activeJobs?.length !== 0 ? (
@@ -85,8 +88,8 @@ const ActiveJobs: React.FC<{ activeJobs: JobTypes[] }> = ({ activeJobs }) => {
                         <li key={i} className="flex flex-col border-r p-2">
                           <span className="text-sm">{_?.count}</span>
                           <span
-                            // onClick={() => setQueryParams(_?.qString)}
-                            className="text-[#104B53] text-xs font-semibold"
+                            onClick={() => handleQstring(_?.qString)}
+                            className="text-[#104B53] text-xs font-semibold cursor-pointer"
                           >
                             {_.label}
                           </span>

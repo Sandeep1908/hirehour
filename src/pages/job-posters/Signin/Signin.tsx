@@ -96,15 +96,15 @@ const Signin: React.FC = () => {
       const decodedToken = jwtDecode<JwtPayload>(data?.token);
       if (decodedToken) {
         if (decodedToken.permissions.includes('advanced_recruiter_perms')) {
-          if(postedJob?.jobs?.length === 0){
-            navigate('/job-poster/dashboard')
-          }
-          
-          else{
+
+          if (postedJob?.jobs?.length !== 0) {
+            navigate('/job-poster/dashboard');
+          } 
+          else {
             navigate(redirectTo);
           }
-         
-        } else {
+        } 
+        else {
           navigate(redirectToRTR);
         }
       }

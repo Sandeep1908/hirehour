@@ -9,19 +9,19 @@ export const showPayByOption = [
     value: 'range',
     label: 'Range',
   },
+  {
+    value: 'fixed',
+    label: 'Fixed',
+  },
 ];
 
 export const workStackOptions = [
-    { value: 'Node.js', label: 'Node.js' },
-    { value: 'Express', label: 'Express' },
-    { value: 'MySQL', label: 'MySQL' },
-  ];
+  { value: 'Node.js', label: 'Node.js' },
+  { value: 'Express', label: 'Express' },
+  { value: 'MySQL', label: 'MySQL' },
+];
 
-
-  export const benefitsOption = [
-    { value: 'Health Insurance', label: 'Health Insurance' },
+export const benefitsOption = [
+  { value: 'Health Insurance', label: 'Health Insurance' },
   { value: 'Paid Time Off', label: 'Paid Time Off' },
-  ];
- 
-
- 
+];

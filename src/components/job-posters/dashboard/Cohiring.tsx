@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import {  useState } from 'react';
+import { useState } from 'react';
 
 import { FaEdit } from 'react-icons/fa';
 import { IoMdClose } from 'react-icons/io';
@@ -124,9 +124,9 @@ const AddUserModal: React.FC<AddUseModalProps> = ({ isOpen, setIsOpen }) => {
     queryFn: fetchAllTeamMembers,
   });
 
-  console.log("allTeams",);
+  console.log('allTeams');
   const inviteMutation = useMutation({
-    mutationFn: async (teamMemberID: {teamMemberID:number}) => {
+    mutationFn: async (teamMemberID: { teamMemberID: number }) => {
       const response = await axiosrecruiterinstance.post(
         '/api/recruiter/team-management/assign-to-own-team',
         teamMemberID,
@@ -149,16 +149,14 @@ const AddUserModal: React.FC<AddUseModalProps> = ({ isOpen, setIsOpen }) => {
     setSelectedUser(e.target.value);
   };
 
-  const handleAddUser=()=>{
-    if(selectedUser==='not-selected'){
-      setIsOpen(false)
+  const handleAddUser = () => {
+    if (selectedUser === 'not-selected') {
+      setIsOpen(false);
       return toast.warning('User Not Selected');
     }
 
     inviteMutation.mutate({ teamMemberID: Number(selectedUser) });
-    
-
-  }
+  };
   return (
     <div
       className={`w-full h-full flex   justify-center items-center  fixed inset-0 transition-all duration-500 ${isOpen ? 'opacity-1 scale-[1.01]' : 'opacity-0 z-[-10]'} `}
@@ -262,7 +260,10 @@ const AddUserModal: React.FC<AddUseModalProps> = ({ isOpen, setIsOpen }) => {
         <div className="p-4">
           <div className="w-full flex justify-center items-center  space-x-3 md:justify-end md:mt-4">
             <p className="text-xs text-[#104B53]">Cancle</p>
-            <p onClick={()=>handleAddUser()} className="flex justify-center items-center text-xs w-20 h-7    rounded-full cursor-pointer bg-[#E9F358] ">
+            <p
+              onClick={() => handleAddUser()}
+              className="flex justify-center items-center text-xs w-20 h-7    rounded-full cursor-pointer bg-[#E9F358] "
+            >
               Add
             </p>
           </div>
@@ -294,6 +295,9 @@ const Cohiring: React.FC = () => {
 
     return [];
   };
+
+
+
 
   const options = [
     {
@@ -358,7 +362,7 @@ const Cohiring: React.FC = () => {
                     {item?.isOwnerOfSaidCompany ? 'Admin' : 'Hiring Partner'}
                   </td>
                   <td className="text-xs p-2">{item?.reportsTo_user?.firstName}</td>
-                  <td className="text-xs p-2">''</td>
+                  <td className="text-xs p-2">{item?.isOwnerOfSaidCompany ? 'Access for all jobs and resume sourcing' : 'Limit to Resume Sourcing'}</td>
                   <td className="text-xs p-2 flex justify-center items-center space-x-2">
                     <RiDeleteBin5Line size={18} color="#104B53" />
                     <FaEdit size={18} color="#104B53" />

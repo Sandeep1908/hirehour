@@ -35,6 +35,9 @@ const JobDescriptionBoard: React.FC = () => {
     additionalBenefits: [],
   });
 
+  const [range, setRange] = useState<'fixed' | 'range'>('range');
+  
+
   const navigate = useNavigate();
   const jobId = useLocation().state?.jobId;
 
@@ -70,7 +73,8 @@ const JobDescriptionBoard: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
-
+    
+    
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : type === 'radio' ? value === 'true' : value,
@@ -194,46 +198,72 @@ const JobDescriptionBoard: React.FC = () => {
                       <label htmlFor="">Show pay by</label>
                     </div>
 
-                    <Select options={showPayByOption} className="text-xs text-[#9CA3AF]" />
+                    <Select
+                      onChange={(e) => setRange((e?.value as 'fixed' | 'range') || 'range')}
+                      options={showPayByOption}
+                      className="text-xs text-[#9CA3AF]"
+                    />
                   </div>
 
-                  {/* Min */}
-                  <div className="flex flex-col space-y-2">
-                    <div className="flex text-xs">
-                      <label htmlFor="salaryOfferedRangeStart">Minimum Salary</label>
-                    </div>
-                    <div className="flex items-center border border-[#EBEBF0] rounded-md">
-                      <span className="px-2 text-sm text-[#104B53]">$</span>
-                      <input
-                        type="number"
-                        id="salaryOfferedRangeStart"
-                        name="salaryOfferedRangeStart"
-                        value={formData.salaryOfferedRangeStart}
-                        onChange={handleChange}
-                        placeholder="Minimum Salary ($/hour)"
-                        className="p-2 text-sm border-none placeholder:text-[10px] w-full"
-                      />
-                    </div>
-                  </div>
+                  {range === 'range' ? (
+                    <>
+                      {/* Min */}
+                      <div className="flex flex-col space-y-2">
+                        <div className="flex text-xs">
+                          <label htmlFor="salaryOfferedRangeStart">Minimum Salary</label>
+                        </div>
+                        <div className="flex items-center border border-[#EBEBF0] rounded-md">
+                          <span className="px-2 text-sm text-[#104B53]">$</span>
+                          <input
+                            type="number"
+                            id="salaryOfferedRangeStart"
+                            name="salaryOfferedRangeStart"
+                            value={formData.salaryOfferedRangeStart}
+                            onChange={handleChange}
+                            placeholder="Minimum Salary ($/hour)"
+                            className="p-2 text-sm border-none placeholder:text-[10px] w-full"
+                          />
+                        </div>
+                      </div>
 
-                  {/* Max */}
-                  <div className="flex flex-col space-y-2">
-                    <div className="flex text-xs">
-                      <label htmlFor="salaryOfferedRangeEnd">Maximum Salary</label>
+                      {/* Max */}
+                      <div className="flex flex-col space-y-2">
+                        <div className="flex text-xs">
+                          <label htmlFor="salaryOfferedRangeEnd">Maximum Salary</label>
+                        </div>
+                        <div className="flex items-center border border-[#EBEBF0] rounded-md">
+                          <span className="px-2 text-sm text-[#104B53]">$</span>
+                          <input
+                            type="number"
+                            id="salaryOfferedRangeEnd"
+                            name="salaryOfferedRangeEnd"
+                            value={formData.salaryOfferedRangeEnd}
+                            onChange={handleChange}
+                            placeholder="Maximum Salary ($/hour)"
+                            className="p-2 text-sm border-none placeholder:text-[10px] w-full"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  ) : (
+                    <div className="flex flex-col space-y-2 col-span-2">
+                      <div className="flex text-xs">
+                        <label htmlFor="fixed">Amount</label>
+                      </div>
+                      <div className="flex items-center border border-[#EBEBF0] rounded-md">
+                        <span className="px-2 text-sm text-[#104B53]">$</span>
+                        <input
+                          type="number"
+                          id="fixed"
+                          name="salaryOfferedRangeStart"
+                          value={formData.salaryOfferedRangeStart}
+                          onChange={handleChange}
+                          placeholder="Maximum Salary ($/hour)"
+                          className="p-2 text-sm border-none placeholder:text-[10px] w-full"
+                        />
+                      </div>
                     </div>
-                    <div className="flex items-center border border-[#EBEBF0] rounded-md">
-                      <span className="px-2 text-sm text-[#104B53]">$</span>
-                      <input
-                        type="number"
-                        id="salaryOfferedRangeEnd"
-                        name="salaryOfferedRangeEnd"
-                        value={formData.salaryOfferedRangeEnd}
-                        onChange={handleChange}
-                        placeholder="Maximum Salary ($/hour)"
-                        className="p-2 text-sm border-none placeholder:text-[10px] w-full"
-                      />
-                    </div>
-                  </div>
+                  )}
 
                   {/* Pay type */}
                   <div className="flex flex-col space-y-2">

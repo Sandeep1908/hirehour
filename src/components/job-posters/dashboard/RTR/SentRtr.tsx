@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import { fetchCreatedRTR } from '../../../../utils/jobposters/jobboards/RTR';
 import Spinner from '../../../Spinner';
 import NoRTRImg from '../../../../assets/dashboard/NoRTR.png';
 import { AxiosError } from 'axios';
+import ViewRTR from '../../../common/ViewRTR';
  
 
  
@@ -17,6 +18,8 @@ const SentRTR: React.FC = () => {
     queryKey: ['sentrtr'],
     queryFn: fetchCreatedRTR,
   });
+
+    const [isViewRTROpen, setIsViewRTROpen] = useState<boolean>(false);
 
    
 
@@ -125,7 +128,7 @@ const SentRTR: React.FC = () => {
                     <div className="flex justify- space-x-3 items-center">
                       <MdOutlineFileDownload size={20} color="#104B53" />
                       <p className="text-[#104B53] text-xs font-[600]">Export</p>
-                      <p className="border text-xs text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+                      <p onClick={()=>setIsViewRTROpen(true)} className="border cursor-pointer text-xs text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
                         View
                       </p>
                     </div>
@@ -144,6 +147,8 @@ const SentRTR: React.FC = () => {
           </>
         )}
       </div>
+
+      <ViewRTR isViewRTROpen={isViewRTROpen} setIsViewRTROpen={setIsViewRTROpen} />
     </div>
   );
 };

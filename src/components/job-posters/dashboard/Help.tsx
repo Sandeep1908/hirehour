@@ -64,10 +64,10 @@ const Help: React.FC = () => {
       <hr />
 
       {/* all jobs  */}
-      <div className="w-full   p-5   overflow-auto md:h-[60vh] grid grid-cols-2 md:grid-cols-4 place-items-center gap-3">
+      <div className="w-full   p-5   overflow-auto md:h-[60vh] grid grid-cols-2 md:grid-cols-5 place-items-center gap-3">
         {helpCards?.map((item, i) => {
           return (
-            <div className="flex flex-col justify-between p-3 space-y-3 border rounded-lg max-w-44 h-44 " key={i}>
+            <div className="flex flex-col justify-between p-3 space-y-3 border rounded-lg max-w-56 h-44 " key={i}>
               
               <h1 className="text-sm font-[500] text-[#104B53]">{item.label}</h1>
               <p className="text-[10px] text-[#6B7588]">{item.content} </p>
