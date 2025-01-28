@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { MdOutlineFileDownload } from 'react-icons/md';
 import { fetchCreatedRTR } from '../../../../utils/jobposters/jobboards/RTR';
@@ -8,23 +8,28 @@ import { AxiosError } from 'axios';
 import ViewRTR from '../../../common/ViewRTR';
  
 
- 
-
 const SentRTR: React.FC = () => {
-  const { data: sentRTR, isPending, error } = useQuery<
-    { data: ALLRTRTYPES[] },
-    AxiosError<{ message: string }>
-  >({
+  const [isViewRTROpen, setIsViewRTROpen] = useState<boolean>(false);
+
+  const {
+    data: sentRTR,
+    isPending,
+    error,
+  } = useQuery<{ data: ALLRTRTYPES[] }, AxiosError<{ message: string }>>({
     queryKey: ['sentrtr'],
     queryFn: fetchCreatedRTR,
   });
 
-    const [isViewRTROpen, setIsViewRTROpen] = useState<boolean>(false);
+  // const componentRef = useRef();
 
-   
+  // const handlePrint = useReactToPrint({
+  //   content: () => componentRef.current,
+  //   documentTitle: 'Invoice', // Title of the PDF
+  //   onAfterPrint: () => alert('PDF generated successfully!'), // Optional callback after printing
+  // });
 
   return (
-    <div className="w-full">
+    <div className="w-full" >
       <div className="flex flex-col space-y-4">
         {isPending && (
           <div className="flex justify-center items-center w-full h-[60vh]">
@@ -45,7 +50,7 @@ const SentRTR: React.FC = () => {
                       <span className="text-xs text-[#7B8496]"> - {item.job.jobLocation}</span>
                     </div>
                     <div>
-                      <p className="text-xs">Rate: $60 / HR</p> 
+                      <p className="text-xs">Rate: $60 / HR</p>
                     </div>
                   </div>
 
@@ -66,7 +71,8 @@ const SentRTR: React.FC = () => {
                         <strong>Employer name: </strong> {item.employer.user.firstName}
                       </p>
                       <p className="text-xs">
-                        <strong>Employer Company:</strong> {/* Replace with actual employer company data */}
+                        <strong>Employer Company:</strong>{' '}
+                        {/* Replace with actual employer company data */}
                       </p>
                       <p className="text-xs">
                         <strong>Applicant Name:</strong> {item.candidate.firstName}
@@ -97,7 +103,8 @@ const SentRTR: React.FC = () => {
                       </div>
 
                       <p className="text-xs">
-                        <strong>Valid Till:</strong> {new Date(item.validityPeriod).toLocaleDateString()}
+                        <strong>Valid Till:</strong>{' '}
+                        {new Date(item.validityPeriod).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
@@ -108,27 +115,35 @@ const SentRTR: React.FC = () => {
                     <div className="flex justify-center items-center space-x-5">
                       <div className="flex flex-col space-y-3">
                         <p className="text-xs">
-                          <strong>Client:</strong> {item.clientCompany} 
+                          <strong>Client:</strong> {item.clientCompany}
                         </p>
                         <p className="text-xs">
-                          <strong>Prime Vendor:</strong> {item.primeVendorCompany} 
+                          <strong>Prime Vendor:</strong> {item.primeVendorCompany}
                         </p>
                       </div>
 
                       <div className="flex flex-col space-y-3">
                         <p className="text-xs">
-                          <strong>Implementation:</strong> {item.implementationCompany} 
+                          <strong>Implementation:</strong> {item.implementationCompany}
                         </p>
                         <p className="text-xs">
-                          <strong>Vendor:</strong> {item.vendorCompany} 
+                          <strong>Vendor:</strong> {item.vendorCompany}
                         </p>
                       </div>
                     </div>
 
                     <div className="flex justify- space-x-3 items-center">
                       <MdOutlineFileDownload size={20} color="#104B53" />
-                      <p className="text-[#104B53] text-xs font-[600]">Export</p>
-                      <p onClick={()=>setIsViewRTROpen(true)} className="border cursor-pointer text-xs text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full">
+                      <p
+                        
+                        className="text-[#104B53] text-xs font-[600]"
+                      >
+                        Export
+                      </p>
+                      <p
+                        onClick={() => setIsViewRTROpen(true)}
+                        className="border cursor-pointer text-xs text-[#104B53] border-[#104B53] p-1 flex justify-center items-center w-[80px] rounded-full"
+                      >
                         View
                       </p>
                     </div>

@@ -5,8 +5,7 @@ import Logo from '../../../assets/logo/logo.png';
 import { useReactToPrint } from 'react-to-print';
 import { FaDownload } from 'react-icons/fa';
 import { RxCross1 } from 'react-icons/rx';
-import { MdOutlineFileCopy } from "react-icons/md";
-
+import { MdOutlineFileCopy } from 'react-icons/md';
 
 const Plan: React.FC = () => {
   const [selector, setSelector] = useState<number>(0);
@@ -41,7 +40,7 @@ const Plan: React.FC = () => {
             onClick={() => {
               setSelector(0);
             }}
-            className={` border ${selector===0 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
+            className={` border ${selector === 0 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
           >
             <div className="flex-col">
               <p className="text-lg font-semibold ">Post a Job for Free</p>
@@ -82,7 +81,7 @@ const Plan: React.FC = () => {
             </div>
 
             <div
-              className={`${selector ===0 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
+              className={`${selector === 0 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
             >
               <p className=" text-xs">Select package</p>
             </div>
@@ -92,7 +91,7 @@ const Plan: React.FC = () => {
             onClick={() => {
               setSelector(1);
             }}
-            className={` border ${selector===1 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
+            className={` border ${selector === 1 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
           >
             <div className="flex-col ">
               <p className="text-sm font-semibold ">Resume Sourcing</p>
@@ -107,30 +106,9 @@ const Plan: React.FC = () => {
             </div>
 
             <div
-              className={` ${selector===1 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
+              className={` ${selector === 1 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
             >
-              <p className=" text-xs">Select package</p>
-            </div>
-          </div>
-
-
-          <div
-            onClick={() => {
-              setSelector(2);
-            }}
-            className={` border ${selector===2 && 'border-[1px] border-black'} max-w-[260px] h-96   w-full rounded-lg  p-3 bg-white flex justify-between flex-col`}
-          >
-            <div className="flex-col ">
-              <p className="text-sm font-semibold ">Bulk Hiring</p>
-               
-
-              
-            </div>
-
-            <div
-              className={` ${selector===2 && 'bg-[#114B53]  text-white'} w-full h-8 border-[1px] text-[#114B53] border-[#114B53] rounded-full flex justify-center items-center mt-10`}
-            >
-              <p className=" text-xs">Contact Us</p>
+              <p className=" text-xs">Upgrade Plan</p>
             </div>
           </div>
         </div>
@@ -146,19 +124,21 @@ const Plan: React.FC = () => {
         </p>
       </div>
 
- 
+      <div className="max-w-xl border rounded-lg p-2   m-auto mt-2 flex justify-between items-center">
+        <div className="flex flex-col space-y-1">
+          <h1 className="text-sm">Bulk Hiring</h1>
+        </div>
+        <p className="text-white bg-[#104B53] cursor-pointer border border-[#104B53] w-28 text-xs flex justify-center items-center rounded-full h-8">
+          Contact Us
+        </p>
+      </div>
     </div>
   );
 };
 
 const CardDetails: React.FC = () => {
- 
   return (
     <div className="w-full h-full">
-    
-
-       
-
       <div className="w-full border rounded-lg p-2   m-auto mt-2 flex justify-between items-center">
         <div className="flex flex-col space-y-1">
           <h1 className="text-sm">Card in the bag</h1>
@@ -168,14 +148,12 @@ const CardDetails: React.FC = () => {
           Replace Card
         </p>
       </div>
-
- 
     </div>
   );
 };
 
 const Invoice: React.FC = () => {
-  const componentRef = useRef<HTMLDivElement>(null); // Reference to the component for printing
+  const componentRef = useRef<HTMLDivElement>(null); 
   const [isOpen, setIsOpen] = useState(false);
 
   // Function to handle printing
@@ -425,7 +403,10 @@ const BulkHiring: React.FC = () => {
                   >
                     View & Pay
                   </p>
-                  <p className="w-20 h-7 bg-[#104B53] text-white rounded-full text-[10px] flex justify-center items-center" onClick={()=>setIsHireCodeOpen(true)}>
+                  <p
+                    className="w-20 h-7 bg-[#104B53] text-white rounded-full text-[10px] flex justify-center items-center"
+                    onClick={() => setIsHireCodeOpen(true)}
+                  >
                     View Hirecode
                   </p>
                 </td>
@@ -553,9 +534,8 @@ const BulkHiring: React.FC = () => {
           <div className="flex flex-col items-center space-y-3 mt-4 w-full">
             <div className="w-full border-dashed border border-gray-400 p-2 rounded-md flex justify-between items-center">
               <p className="text-lg w-full font-bold tracking-widest text-center">X1X2X3X4</p>
-              <MdOutlineFileCopy onClick={handleCopyCode} className='cursor-pointer' />
+              <MdOutlineFileCopy onClick={handleCopyCode} className="cursor-pointer" />
             </div>
-         
 
             <div className="flex justify-between w-full text-xs mt-4">
               <div>

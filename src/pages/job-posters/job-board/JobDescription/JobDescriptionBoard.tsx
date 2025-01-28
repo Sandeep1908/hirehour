@@ -25,7 +25,17 @@ type JobDescriptionRequest = {
   additionalBenefits: string[];
 };
 
+type AiDescriptionTypes = {
+  jobTitle: string;
+  jobLocation: string;
+  workingCountry: string;
+  workingLocation: string;
+  experienceLevel: string;
+  yearsOfExperience: string;
+};
+
 const JobDescriptionBoard: React.FC = () => {
+  const [jobDescription, setJobDescription] = useState<string>('');
   const [formData, setFormData] = useState<JobDescriptionRequest>({
     salaryOfferedRangeStart: 0,
     salaryOfferedRangeEnd: 0,
@@ -36,7 +46,6 @@ const JobDescriptionBoard: React.FC = () => {
   });
 
   const [range, setRange] = useState<'fixed' | 'range'>('range');
-  
 
   const navigate = useNavigate();
   const jobId = useLocation().state?.jobId;
@@ -51,6 +60,12 @@ const JobDescriptionBoard: React.FC = () => {
     'Remote Work',
     'Flexible Hours',
   ]);
+
+  
+
+ 
+
+
 
   const handleSuggestedBenefitClick = (benefit: string) => {
     setFormData((prev) => {
@@ -73,8 +88,7 @@ const JobDescriptionBoard: React.FC = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
     const checked = type === 'checkbox' && (e.target as HTMLInputElement).checked;
-    
-    
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : type === 'radio' ? value === 'true' : value,
@@ -117,6 +131,71 @@ const JobDescriptionBoard: React.FC = () => {
       additionalBenefits: selectedBenefits,
     }));
   };
+
+  // Generate Job Description from AI
+
+  const generateJdFromAI = useMutation({
+    mutationFn: async (aiData: AiDescriptionTypes) => {
+      const response = await axiosrecruiterinstance.post(
+        '/api/misc/ai/generate-job-description',
+        aiData,
+      );
+      return response.data;
+    },
+    onSuccess: (data) => {
+      const formattedContent = formatJobDescription(data?.jobDescription);
+      console.log('formattedcontent', formattedContent);
+      setJobDescription((prev) => prev + (prev ? '\n\n' : '') + formattedContent);
+      setFormData((prev) => ({
+        ...prev,
+        jobDescription: formattedContent,
+      }));
+    },
+    onError: (error) => {
+      const axiosError = error as AxiosError<{ errors: [{ message: string }] }>;
+      toast.error(axiosError?.response?.data?.errors[0].message);
+    },
+  });
+
+  const handleJobDescription = () => {
+    const job = sessionStorage.getItem('jobBoard') || '';
+    const { part1 } = JSON.parse(job);
+    const aiData: AiDescriptionTypes = {
+      jobTitle: part1?.jobRoleName,
+      jobLocation: part1?.jobLocation,
+      workingCountry: 'United States',
+      workingLocation: part1?.jobLocation,
+      experienceLevel: part1?.experienceLevelNeeded,
+      yearsOfExperience: part1?.yearsOfExpNeeded,
+    };
+
+    generateJdFromAI.mutate(aiData);
+  };
+
+  const formatJobDescription = (data:{jobDescription:string,responsibilities:string[],skills:string[]}) => {
+    const { jobDescription, responsibilities, skills } = data;
+
+    // Format responsibilities and skills into lists
+    const formattedResponsibilities = responsibilities
+      .map((res: string, index: number) => `${index + 1}. ${res}`)
+      .join('\n');
+
+    const formattedSkills = skills
+      .map((skill: string, index: number) => `${index + 1}. ${skill}`)
+      .join('\n');
+
+    return `
+  ${jobDescription}
+  
+  Responsibilities:
+  ${formattedResponsibilities}
+  
+  Skills:
+  ${formattedSkills}
+  `.trim();
+  };
+
+  console.log(formData);
 
   return (
     <div className="w-full md:pb-20 bg-[#F6F6F8]">
@@ -292,22 +371,26 @@ const JobDescriptionBoard: React.FC = () => {
 
             {/* Job Description */}
             <div className="w-full p-2">
-              <div className="flex justify-between bg-[#F2F2F5] p-2 rounded-md">
+              <div className="flex justify-between   p-2 rounded-md">
                 <div>
                   <label htmlFor="jobDescription" className="text-xs">
                     Job Description
                   </label>
-
-                  
                 </div>
-                <p className='bg-[#104B53] text-white px-4 rounded-full flex justify-center items-center text-xs'>Ask AI to generate</p>
+                <p
+                  onClick={() => handleJobDescription()}
+                  className="bg-[#104B53] cursor-pointer text-white px-4 rounded-full flex justify-center items-center text-xs"
+                >
+                  {generateJdFromAI?.isPending ? 'Generating.....' : 'Ask AI to generate'}
+                </p>
               </div>
+
               <textarea
                 name="jobDescription"
-                value={formData.jobDescription}
+                value={formData?.jobDescription ? formData.jobDescription : jobDescription}
                 onChange={handleChange}
                 placeholder="Job Description"
-                className="text-xs min-h-44 text-[#9CA3AF] w-full rounded-md border p-3 placeholder:text-[10px] focus:outline-none"
+                className="text-xs min-h-44 text-black w-full rounded-md border p-3 placeholder:text-[10px] focus:outline-none"
               />
             </div>
             {/* Work Stack */}

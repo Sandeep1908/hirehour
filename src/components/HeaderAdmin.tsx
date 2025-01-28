@@ -116,7 +116,7 @@ const HeaderAdmin: React.FC = () => {
 
             {/* Account Modal  */}
 
-            <AccountModal isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} />
+            <AccountModal name='SuperAdmin' email='superadmin@gmail.com' isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} />
           </div>
         </div>
       </div>

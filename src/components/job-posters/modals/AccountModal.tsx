@@ -10,9 +10,11 @@ import { GrUserSettings } from "react-icons/gr";
 type AccountModalProps = {
   isAccountOpen: boolean;
   setIsAccountOpen:(e:boolean)=>void
+  name:string,
+  email:string
 };
 
-const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountOpen }) => {
+const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountOpen ,name,email}) => {
   const navigate=useNavigate()
   const accountOptions = [
     {
@@ -46,12 +48,12 @@ const AccountModal: React.FC<AccountModalProps> = ({ isAccountOpen,setIsAccountO
       <div className="flex flex-col justify-between items-center">
         <div className="flex justify-start items-center space-x-3 relative before:absolute before:w-full before:bottom-[-10px] before:bg-[#E3E7EA] before:h-[1px] ">
           <p className="text-xs text-[#104B53] w-8 h-8 flex justify-center items-center bg-[#CBFFFC] rounded-full ">
-            M
+            {name?.charAt(0)}
           </p>
 
           <div className="flex flex-col">
-            <h1 className="text-sm">Mathew</h1>
-            <p className="text-[8px]">mathew@example.com </p>
+            <h1 className="text-sm">{name}</h1>
+            <p className="text-[8px]">{email} </p>
           </div>
         </div>
 

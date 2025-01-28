@@ -24,22 +24,20 @@ import jobLogo from '../assets/header/jobs.svg';
 import { useLocation } from 'react-router-dom';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUserDetails } from '../utils/jobseekers/getUserDetails';
-import {isCandidateAuthenticated} from './isAuthenicated';
+import { isCandidateAuthenticated } from './isAuthenicated';
 
 const Header: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
   const [isAccountOpen, setIsAccountOpen] = useState<boolean>(false);
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
- 
-  
- 
+
   const { data: userDetails } = useQuery({
     queryKey: ['userDetails'],
     queryFn: fetchUserDetails,
-    enabled:isCandidateAuthenticated()
+    enabled: isCandidateAuthenticated(),
   });
-  const queryClient=useQueryClient()
-  const params=useLocation().pathname
+  const queryClient = useQueryClient();
+  const params = useLocation().pathname;
 
   const handlNavBar = () => {
     setIsAccountOpen(false);
@@ -48,7 +46,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     if (isCandidateAuthenticated()) {
-      queryClient.invalidateQueries({queryKey:['userDetails']}); 
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
     }
   }, [isCandidateAuthenticated(), queryClient]);
 
@@ -88,14 +86,11 @@ const Header: React.FC = () => {
     },
   ];
 
-  const isParameters = [
-    '/signup',
-    '/signin',
-    '/upload-resume',
-    '/additional-information'
-  ].includes(params);
+  const isParameters = ['/signup', '/signin', '/upload-resume', '/additional-information'].includes(
+    params,
+  );
   return (
-    <div className={`w-full h-14 bg-white relative   ${isParameters?'hidden':''}`}>
+    <div className={`w-full h-14 bg-white relative   ${isParameters ? 'hidden' : ''}`}>
       <div className="w-full  flex justify-between items-center p-2 px-4">
         {/* Logo */}
         <div className="flex justify-center items-center space-x-5">
@@ -226,7 +221,12 @@ const Header: React.FC = () => {
 
               {/* Account Modal  */}
 
-              <AccountModal isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} username={userDetails?.user?.firstName} email={userDetails?.user?.email} />
+              <AccountModal
+                isAccountOpen={isAccountOpen}
+                setIsAccountOpen={setIsAccountOpen}
+                username={userDetails?.user?.firstName}
+                email={userDetails?.user?.email}
+              />
             </div>
           </div>
         )}

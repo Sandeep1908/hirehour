@@ -347,7 +347,7 @@ const JobBasis: React.FC = () => {
                     type="text"
                     placeholder="Country"
                     disabled
-                    value="United State"
+                    value="United States"
                     className="p-2 text-sm border border-[#EBEBF0] rounded-md placeholder:text-xs"
                   />
                 </div>

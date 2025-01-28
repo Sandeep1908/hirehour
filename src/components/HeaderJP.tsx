@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../assets/logo/hirehour.svg';
 import { IoNotificationsOutline } from 'react-icons/io5';
 import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
@@ -16,6 +16,8 @@ import dashLogoOpen from '../assets/header/dashclose.png';
 import { useLocation } from 'react-router-dom';
 import useHeaderContext from '../context/HeaderContext';
 import { isRecruiterAuthenticated } from './isAuthenicated';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchRecruiterDetails } from '../utils/jobposters/recruiterDetails';
 
 const HeaderJP: React.FC = () => {
   const [isNotification, setIsNotificationOpen] = useState<boolean>(false);
@@ -25,6 +27,20 @@ const HeaderJP: React.FC = () => {
   const { isDashboardOpen, setIsDashBoardOpen, setIsDashboardMobileNav, isDashboardMobileNav } =
     useHeaderContext();
   const pathname = useLocation().pathname.includes('/dashboard');
+  const { data: userDetails } = useQuery({
+    queryKey: ['userDetails'],
+    queryFn: fetchRecruiterDetails,
+    enabled: isRecruiterAuthenticated(),
+  });
+  const queryClient = useQueryClient();
+
+   
+
+  useEffect(() => {
+    if (isRecruiterAuthenticated()) {
+      queryClient.invalidateQueries({ queryKey: ['userDetails'] });
+    }
+  }, [queryClient]);
 
   const isParameters = [
     '/job-poster/company-profile',
@@ -124,9 +140,9 @@ const HeaderJP: React.FC = () => {
             >
               <div className="flex justify-center items-center space-x-2">
                 <p className="w-8 h-8 text-sm rounded-full bg-[#CBFFFC] flex justify-center items-center">
-                  M
+                  {userDetails?.recruiterDetails?.user?.firstName?.charAt(0)}
                 </p>
-                <p className="text-sm">Mathew</p>
+                <p className="text-sm">{userDetails?.recruiterDetails?.user?.firstName}</p>
               </div>
 
               <MdOutlineKeyboardArrowDown
@@ -135,7 +151,7 @@ const HeaderJP: React.FC = () => {
 
               {/* Account Modal  */}
 
-              <AccountModal isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} />
+              <AccountModal name={userDetails?.recruiterDetails?.user?.firstName} email={userDetails?.recruiterDetails?.user?.email} isAccountOpen={isAccountOpen} setIsAccountOpen={setIsAccountOpen} />
             </div>
           </div>
         )}

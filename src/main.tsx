@@ -85,7 +85,7 @@ import AdminDashboard from './pages/admin/dashboard/Dashboard.tsx';
 import AdminSignin from './pages/admin/Auth/Signin/Signin.tsx';
 import PrivacySetting from './pages/job-seekers/AccountSettings/PrivacySetting/PrivacySetting.tsx';
 import ReceivedNewRTR from './pages/emails/ReceivedNewRTR.tsx';
-import PrivacySettingJP from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRPrivacySetting.tsx';
+import PrivacySettingJP from './pages/job-posters/userprofile/PrivacySettingJP.tsx';
 import IntrestedRecruiter from './pages/emails/IntrestedRecruiter.tsx';
 import RTRProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRProfile.tsx';
 import RTRCompanyProfile from './pages/job-posters/dashboard/dashboardRTR/userprofile/RTRCompanyProfile.tsx';
